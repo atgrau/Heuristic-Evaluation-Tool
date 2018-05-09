@@ -1,7 +1,12 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Dashboard <?php echo $_GET["module"]; ?></h1>
+            <h1 class="page-header">Dashboard -> Resource: <?php echo $_GET["resource"]; ?>, Action: <?php echo $_GET["action"]; ?></h1>
+            <form method="post" action="/account/login">
+              <input name="email" type="email" />
+              <input name="password" type="password" />
+              <input type="submit" value="Submit">
+            </form>
         </div>
         <!-- /.col-lg-12 -->
     </div>

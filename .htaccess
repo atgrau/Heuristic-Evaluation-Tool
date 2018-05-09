@@ -1,0 +1,19 @@
+Options -Indexes
+Options +FollowSymLinks
+RewriteEngine On
+
+RewriteCond $1 !^(index\.php)
+
+# Redirect 1st param (Resource)
+RewriteRule ^([a-z0-9\-]+)/?$ /src/controllers/controller.php?resource=$1 [NC,L]
+
+# Redirect 2nd param (Action)
+RewriteRule ^([a-z0-9\-]+)/([a-z0-9\-]+)/?$ /src/controllers/controller.php?resource=$1&action=$2 [NC,L]
+
+# Redirect Errors
+ErrorDocument 400 /
+ErrorDocument 401 /
+ErrorDocument 402 /
+ErrorDocument 403 /
+ErrorDocument 404 /index.php?module=404
+ErrorDocument 500 /
