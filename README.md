@@ -1,6 +1,12 @@
 # Heuristic Evaluation Tool
-Heuristic Evaluation Tool built with PHP & MySQL
+Heuristic Evaluation Tool built with PHP & MySQL, developed by Albert Grau and Jennifer Soliz (TFG UDL 2018)
 
-## Modules
-- Login 0%
-- Main Structure 10%
+## Change Log
+### Controllers
+- Added Account Controller
+
+### Views
+- Added Main View
+
+### Models
+- Added UserModel

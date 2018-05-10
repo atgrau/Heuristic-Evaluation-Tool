@@ -1,1 +1,1 @@
-<?php include("public/index.php"); ?>
+<?php include("src/core/UriHandler.php"); ?>
