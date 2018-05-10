@@ -1,15 +1,14 @@
 # Heuristic Evaluation Tool
 Heuristic Evaluation Tool built with PHP & MySQL
 
-## Modules
+## Change Log
 ### Controllers
-
+#### AccountController
+- Added Account Controller
 
 ### Views
-
+- Added Main View
 
 ### Models
-#### - User 0%
-
-- MVC Strcuture
-- Main Structure 10%
+#### User
+- Added UserModel
