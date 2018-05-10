@@ -3,12 +3,10 @@ Heuristic Evaluation Tool built with PHP & MySQL, developed by Albert Grau and J
 
 ## Change Log
 ### Controllers
-#### AccountController
 - Added Account Controller
 
 ### Views
 - Added Main View
 
 ### Models
-#### User
 - Added UserModel
