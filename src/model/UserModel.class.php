@@ -16,11 +16,12 @@
     private $Country;
     private $Entity;
 
-    function __construct($id, $role, $email, $firstName, $lastName, $gender, $entity, $country)
+    function __construct($id, $role, $email, $password, $firstName, $lastName, $gender, $entity, $country)
     {
       $this->Id = $id;
       $this->Role = $role;
       $this->Email = $email;
+      $this->Password = $password;
       $this->FirstName = $firstName;
       $this->LastName = $lastName;
       $this->Gender = $gender;
@@ -38,6 +39,18 @@
 
     function GetEmail() {
       return $this->Email;
+    }
+
+    function SetEmail($value) {
+      $this->Email = $value;
+    }
+
+    function GetPassword() {
+      return $this->Password;
+    }
+
+    function SetPassword($value) {
+      $this->Password = $value;
     }
 
     function GetFirstName() {
@@ -87,11 +100,13 @@
     function Store() {
       if (!empty($this->Id)) {
         DB::update("users", array(
+          "email" => $this->Email,
+          "password" => $this->Password,
           "firstname" => $this->FirstName,
           "lastname" => $this->LastName,
           "gender" => $this->Gender,
           "entity" => $this->Entity,
-          "country" => $this->Country
+          "country" => $this->Country->GetIso()
         ), "ID=%i", $this->Id);
       }
     }
@@ -100,7 +115,7 @@
   function GetUserById($userId) {
     $account = DB::queryFirstRow("SELECT users.*, countries.iso, countries.name FROM users LEFT JOIN countries on users.country = countries.iso WHERE users.ID=%i", $userId);
     if ($account) {
-      return new UserModel($account["ID"], $account["role"], $account["email"], $account["firstname"], $account["lastname"], $account["gender"], $account["entity"], new Country($account["iso"], $account["name"]));
+      return new UserModel($account["ID"], $account["role"], $account["email"], $account["password"], $account["firstname"], $account["lastname"], $account["gender"], $account["entity"], new Country($account["iso"], $account["name"]));
     } else {
       return null;
     }

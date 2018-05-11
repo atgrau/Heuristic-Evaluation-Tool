@@ -20,17 +20,26 @@
             </div>
           <?php } ?>
             <!-- Nav tabs -->
+            <?php
+              if ($this->Tab == 0) {
+                $change0 = "active";
+                $change1 = "";
+              } else {
+                $change0 = "";
+                $change1 = "active";
+              }
+            ?>
             <ul class="nav nav-tabs">
-                <li class="active">
+                <li class="<?php echo $change0; ?>">
                   <a href="#profile" data-toggle="tab">Datos personales</a>
                 </li>
-                <li>
+                <li class="<?php echo $change1; ?>">
                   <a href="#password" data-toggle="tab">Contraseña</a>
                 </li>
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
-                <div class="tab-pane fade in active" id="profile">
+                <div class="tab-pane fade in <?php echo $change0; ?>" id="profile">
                   <form class="margin margin-lg-t" method="POST" action="/account/update-profile">
                     <div class="form-group">
                       <label for="email">Correo Electrónico:</label>
@@ -84,19 +93,19 @@
                     <button type="submit" class="btn btn-primary">Guardar</button>
                   </form>
                 </div>
-                <div class="tab-pane fade" id="password">
-                  <form class="margin margin-lg-t">
+                <div class="tab-pane fade in <?php echo $change1; ?>" id="password">
+                  <form class="margin margin-lg-t" method="POST" action="/account/update-password">
                     <div class="form-group">
-                      <label for="email">Contraseña Actual:</label>
-                      <input type="password" class="form-control" id="email" placeholder="Introduzca un contraseña">
+                      <label for="password">Contraseña Actual:</label>
+                      <input name="password" type="password" class="form-control" id="password" placeholder="Introduzca un contraseña">
                     </div>
                     <div class="form-group">
-                      <label for="email">Nueva Contraseña:</label>
-                      <input type="password" class="form-control" id="email" placeholder="Introduzca un contraseña">
+                      <label for="newpassword">Nueva Contraseña:</label>
+                      <input name="newpassword" type="password" class="form-control" id="newpassword" placeholder="Introduzca un contraseña">
                     </div>
                     <div class="form-group">
-                      <label for="email">Repite la Nueva Contraseña:</label>
-                      <input type="password" class="form-control" id="email" placeholder="Introduzca un contraseña">
+                      <label for="newpassword2">Repite la Nueva Contraseña:</label>
+                      <input name="newpassword2" type="password" class="form-control" id="newpassword2" placeholder="Introduzca un contraseña">
                     </div>
                     <br />
                     <button type="submit" class="btn btn-primary">Guardar</button>

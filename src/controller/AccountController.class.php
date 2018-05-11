@@ -43,12 +43,20 @@
       $entity = $_POST["entity"];
       $country = $_POST["country"];
 
-      if ((strlen($firstname) < 3) || (strlen($firstname) > 45)) {
-        $this->Error .= "<li>El nombre tiene que tener entre 3 y 45 carácteres.</li>";
+      if (empty($firstname)) {
+        $this->Error .= "<li>El nombre introducido no es correcto.</li>";
       }
 
-      if ((strlen($lastname) < 3) || (strlen($lastname) > 45)) {
-        $this->Error .= "<li>Los apellidos tienen que tener entre 3 y 45 carácteres.</li>";
+      if (strlen($firstname) > 45) {
+        $this->Error .= "<li>El nombre no puede contener más de 45 carácteres.</li>";
+      }
+
+      if (empty($lastname)) {
+        $this->Error .= "<li>Los apellidos introducidos no son correctos.</li>";
+      }
+
+      if (strlen($lastname) > 45) {
+        $this->Error .= "<li>Los apellidos no pueden contener más de 45 carácteres.</li>";
       }
 
       if (($gender != 0) && ($gender != 1)) {
@@ -64,14 +72,14 @@
       }
 
       if (!empty($this->Error)) {
-        $this->Error = "Tu perfil contiene errores: <br /><ul>".$this->Error."</ul>";
+        $this->Error = "Tu nuevo perfil contiene errores: <br /><ul>".$this->Error."</ul>";
       } else {
         $User = GetUserById($UserId);
         $User->SetFirstName($firstname);
         $User->SetLastName($lastname);
         $User->SetGender($gender);
         $User->SetEntity($entity);
-        $User->SetCountry($country);
+        $User->SetCountry(new Country($country, GetCountryByIso($country)));
 
         $User->Store();
 
@@ -83,7 +91,47 @@
 
       // Render View
       $this->SetContentView("profile");
+      $this->Tab = 0;
       $this->Render();
+    }
+
+    function UpdatePassword() {
+      if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        header("Location: /account/profile");
+      }
+      $UserId = $GLOBALS["UserSession"]->GetId();
+
+      $clearpassword = $_POST["newpassword"];
+      $password = md5($_POST["password"]);
+      $newpassword = md5($_POST["newpassword"]);
+      $newpassword2 = md5($_POST["newpassword2"]);
+
+      $User = GetUserById($UserId);
+
+      if ($User->GetPassword() != $password) {
+        $this->Error .= "<li>La contraseña actual no correcta.</li>";
+      } else if (strlen($clearpassword) < 6) {
+        $this->Error .= "<li>La contraseña tiene que tener como mínimo 6 carácteres.</li>";
+      } else if ($newpassword != $newpassword2) {
+        $this->Error .= "<li>Las contraseñas no coinciden.</li>";
+      }
+
+      if (!empty($this->Error)) {
+        $this->Error = "Tu solicitud de cambio de contraseña contiene errores: <br /><ul>".$this->Error."</ul>";
+      } else {
+
+        $User->SetPassword($newpassword);
+
+        $User->Store();
+
+        $this->Success = "¡Tu contraseña ha sido actualizada correctamente!";
+      }
+
+      // Render View
+      $this->SetContentView("profile");
+      $this->Tab = 1;
+      $this->Render();
+
     }
   }
 ?>

@@ -10,11 +10,11 @@
         <a class="navbar-brand" href="/">
           <?php
             if ($GLOBALS["UserSession"]->GetGender() == 0) {
-              echo "Bienvenido ";
+              echo "¡Bienvenido ";
             } else {
-              echo "Bienvenida ";
+              echo "¡Bienvenida ";
             }
-            echo $GLOBALS["UserSession"]->GetName()."!";
+            echo $GLOBALS["UserSession"]->GetFirstName()."!";
           ?>
         </a>
     </div>
