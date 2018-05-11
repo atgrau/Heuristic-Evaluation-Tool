@@ -9,8 +9,12 @@
         </button>
         <a class="navbar-brand" href="/">
           <?php
-            GLOBAL $UserSession;
-            echo "Bienvenido ".$UserSession->GetName()."!";
+            if ($GLOBALS["UserSession"]->GetGender() == 0) {
+              echo "Bienvenido ";
+            } else {
+              echo "Bienvenida ";
+            }
+            echo $GLOBALS["UserSession"]->GetName()."!";
           ?>
         </a>
     </div>
@@ -162,12 +166,12 @@
                 <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a href="/account/profile"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                <li><a href="/account/profile"><i class="fa fa-user fa-fw"></i> Perfil de Usuario</a>
                 </li>
-                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Opciones</a>
                 </li>
                 <li class="divider"></li>
-                <li><a href="/account/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                <li><a href="/account/logout"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesión</a>
                 </li>
             </ul>
             <!-- /.dropdown-user -->

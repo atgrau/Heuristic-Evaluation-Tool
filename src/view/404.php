@@ -40,10 +40,10 @@
           <h1 class="text-center"><?php echo APP_TITLE; ?></h1>
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">404 - No existe la página solicitada</h3>
+                    <h3 class="panel-title">Página no encontrada</h3>
                 </div>
                 <div class="panel-body">
-                  Puedes reportar el error...
+                  La página solicitada no está disponible.<br />Haz click <a href="/">aquí</a> para volver a la página principal.
                 </div>
             </div>
         </div>

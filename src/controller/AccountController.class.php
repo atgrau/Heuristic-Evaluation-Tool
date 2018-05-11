@@ -7,7 +7,7 @@
   class AccountController extends BaseController
   {
     function Login($email, $password) {
-      if (DoLogin($email, hash('sha256', $password))) {
+      if (DoLogin($email, md5($password))) {
         header("Location: /");
       } else {
         $this->SetView("login");
@@ -22,6 +22,12 @@
       $_SESSION = array();
       session_destroy();
       header("Location: /");
+    }
+
+    function Profile() {
+      $this->SetView("index");
+      $this->content = "profile";
+      $this->Render();
     }
   }
 ?>

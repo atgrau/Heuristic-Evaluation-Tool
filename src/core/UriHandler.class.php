@@ -10,11 +10,11 @@
   {
     // Defined Uris and minmium role to acces in
     private $Uris = array(
-      "/" => 1,
-      "/signin" => 0,
-      "/account/login" => 0,
+      "/" => -1,
+      "/signin" => -1,
+      "/account/login" => -1,
       "/account/logout" => 0,
-      "/account/profile" => 1
+      "/account/profile" => 0
     );
 
     private $Uri;
@@ -64,14 +64,12 @@
     }
 
     function CheckUriAndPermissions() {
-      GLOBAL $UserSession;
-
       if (($this->Uri == "/signin") || ($this->Uri == "/account/login")) { // User tries to sign in
         return true;
-      } else if ((!isset($UserSession)) && ($this->Uri == "/")) { // First page
+      } else if ((!isset($GLOBALS["UserSession"])) && ($this->Uri == "/")) { // First page
         $this->Uri = "/signin";
         return true;
-      } else if ((!isset($UserSession)) || ($this->Uris[$this->Uri] > $UserSession->GetRole())) { // User tries to access private content without a minumum role level
+      } else if ((!isset($GLOBALS["UserSession"])) || ($this->Uris[$this->Uri] > $GLOBALS["UserSession"]->GetRole())) { // User tries to access private content without a minumum role level
         return false;
       } else {
         return true;

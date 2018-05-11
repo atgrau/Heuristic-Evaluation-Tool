@@ -9,14 +9,12 @@
   // Include Uri Handler class
   require_once(BASE_URI."core/UriHandler.class.php");
 
-  // Include SessionHandler
-  require_once(BASE_URI."core/Session.class.php");
-
   // Initialize a Session Handler
   session_start();
   if (isset($_SESSION["UserId"])) {
-    $UserSession = new Session($_SESSION["UserId"]);
-    $UserSession->Update();
+    require_once(BASE_URI."model/UserModel.class.php");
+    $UserSession = GetUserById($_SESSION["UserId"]);
+    $GLOBALS["UserSession"] = $UserSession;
   }
 
   // Parse URI
