@@ -21,6 +21,20 @@
             <label for="lastname">Apellidos:</label>
             <input type="text" class="form-control" id="lastname" placeholder="Apellidos" value="<?php echo $GLOBALS["UserSession"]->GetLastName(); ?>">
           </div>
+          <label>Sexo:</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="gender" id="cbMale" value="male" <?php if ($GLOBALS["UserSession"]->GetGender() == 0) { echo "checked"; }?>>
+            <label class="form-check-label" for="cbMale">
+              Masculino
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="gender" id="cbFemale" value="female" <?php if ($GLOBALS["UserSession"]->GetGender() == 1) { echo "checked"; }?>>
+            <label class="form-check-label" for="cbFemale">
+              Femenino
+            </label>
+          </div>
+          <br />
           <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
     </div>
