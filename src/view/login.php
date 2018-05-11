@@ -40,7 +40,7 @@
               <h1 class="text-center"><?php echo APP_TITLE; ?></h1>
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Please Sign In</h3>
+                        <h3 class="panel-title text-center font-weight-bold">Iniciar Sesión</h3>
                     </div>
                     <div class="panel-body">
                         <form role="form" method="POST" action="/account/login">

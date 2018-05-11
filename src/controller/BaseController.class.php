@@ -4,14 +4,22 @@
    */
   class BaseController
   {
-    private $View;
+    private $View = "index";
+    private $Content;
 
-    function __construct($view) {
+    function __construct($view, $content) {
       $this->View = $view;
+      $this->Content = $content;
     }
 
-    function SetView($view) {
+    function SetView($view, $content) {
       $this->View = $view;
+      $this->Content = $content;
+    }
+
+    function SetContentView($content) {
+      $this->View = "index";
+      $this->Content = $content;
     }
 
     function Render() {

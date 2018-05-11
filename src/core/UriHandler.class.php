@@ -14,7 +14,8 @@
       "/signin" => -1,
       "/account/login" => -1,
       "/account/logout" => 0,
-      "/account/profile" => 0
+      "/account/profile" => 0,
+      "/account/update-profile" => 0
     );
 
     private $Uri;
@@ -47,16 +48,17 @@
         $view = new BaseController("login");
         $view->Render();
       } else if ($this->Uri == "/account/login") {
-        $email = $_POST["email"];
-        $password = $_POST["password"];
         $controller = new AccountController();
-        $controller->Login($email, $password);
+        $controller->Login($_POST["email"], $_POST["password"]);
       } else if ($this->Uri == "/account/logout") {
         $controller = new AccountController();
         $controller->Logout();
       } else if ($this->Uri == "/account/profile") {
         $controller = new AccountController();
-        $controller->Profile();
+        $controller->ShowProfile();
+      } else if ($this->Uri == "/account/update-profile") {
+        $controller = new AccountController();
+        $controller->UpdateProfile();
       } else {
         include(BASE_URI."view/index.php");
       }
