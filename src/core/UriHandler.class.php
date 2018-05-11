@@ -16,7 +16,8 @@
       "/account/logout" => 0,
       "/account/profile" => 0,
       "/account/update-profile" => 0,
-      "/account/update-password" => 0
+      "/account/update-password" => 0,
+      "/admin/users" => 2
     );
 
     private $Uri;
@@ -63,6 +64,9 @@
       } else if ($this->Uri == "/account/update-password") {
         $controller = new AccountController();
         $controller->UpdatePassword();
+      } else if ($this->Uri == "/admin/users") {
+        $controller = new AccountController();
+        $controller->ShowUserList();
       } else {
         include(BASE_URI."view/index.php");
       }

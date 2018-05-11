@@ -5,16 +5,15 @@
                 <a href="/"><i class="fa fa-dashboard fa-fw"></i> Inicio</a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Proyectos Asignados<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a href="flot.html">Proyecto 1</a>
-                    </li>
-                    <li>
-                        <a href="morris.html">Proyecto 2</a>
-                    </li>
-                </ul>
-                <!-- /.nav-second-level -->
+              <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Proyectos<span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level">
+                <li>
+                    <a href="flot.html">Proyectos Asignados</a>
+                </li>
+                <li>
+                    <a href="flot.html">Mis Proyectos</a>
+                </li>
+              </ul>
             </li>
             <?php if ($GLOBALS["UserSession"]->GetRole() >= 1) { ?>
               <li>
@@ -25,12 +24,15 @@
               <li>
                   <a href="#"><i class="fa fa-wrench fa-fw"></i> Administración<span class="fa arrow"></span></a>
                   <ul class="nav nav-second-level">
-                      <li>
-                          <a href="panels-wells.html">Usuarios</a>
-                      </li>
-                      <li>
-                          <a href="buttons.html">Plantilla de Evaluación</a>
-                      </li>
+                    <li>
+                        <a href="/admin/users">Usuarios</a>
+                    </li>
+                    <li>
+                        <a href="/admin/projects">Proyectos</a>
+                    </li>
+                    <li>
+                        <a href="/admin/template">Plantilla de Evaluación</a>
+                    </li>
                   </ul>
                   <!-- /.nav-second-level -->
               </li>

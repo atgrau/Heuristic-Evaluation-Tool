@@ -76,7 +76,7 @@
                       <label for="country">País:</label>
                       <select name="country" class="form-control">
                         <?php
-                          foreach(GetCountries() as $country) {
+                          foreach (GetCountries() as $country) {
                               if ($GLOBALS["UserSession"]->GetCountry()->GetIso() == $country->GetIso()) {
                                 $selected = "selected";
                               } else {
@@ -85,8 +85,6 @@
                               echo "<option value='".$country->GetIso()."' ".$selected.">".$country->GetName()."</option>";
                           }
                         ?>
-
-
                      </select>
                     </div>
                     <br />

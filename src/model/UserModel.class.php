@@ -37,6 +37,12 @@
       return $this->Role;
     }
 
+    function GetRoleName() {
+      if ($this->Role == 0) return "Evaluador";
+      else if ($this->Role == 1) return "Responsable";
+      else return "Administrador";
+    }
+
     function GetEmail() {
       return $this->Email;
     }
@@ -116,6 +122,19 @@
     $account = DB::queryFirstRow("SELECT users.*, countries.iso, countries.name FROM users LEFT JOIN countries on users.country = countries.iso WHERE users.ID=%i", $userId);
     if ($account) {
       return new UserModel($account["ID"], $account["role"], $account["email"], $account["password"], $account["firstname"], $account["lastname"], $account["gender"], $account["entity"], new Country($account["iso"], $account["name"]));
+    } else {
+      return null;
+    }
+  }
+
+  function GetUsers() {
+    $userlist = array();
+    $users = DB::query("SELECT users.*, countries.iso, countries.name FROM users LEFT JOIN countries on users.country = countries.iso ORDER BY users.ID");
+    if ($users) {
+      foreach ($users as $row) {
+        array_push($userlist, new UserModel($row["ID"], $row["role"], $row["email"], $row["password"], $row["firstname"], $row["lastname"], $row["gender"], $row["entity"], new Country($row["iso"], $row["name"])));
+      }
+      return $userlist;
     } else {
       return null;
     }

@@ -40,7 +40,7 @@
     $country = DB::query("SELECT iso, name FROM countries");
     if ($country) {
       foreach ($country as $row) {
-          array_push($countries, new Country($row["iso"], $row["name"]));
+        array_push($countries, new Country($row["iso"], $row["name"]));
       }
       return $countries;
     } else {

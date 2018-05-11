@@ -9,12 +9,13 @@
         </button>
         <a class="navbar-brand" href="/">
           <?php
+            echo "¡".$GLOBALS["UserSession"]->GetFirstName().", ";
             if ($GLOBALS["UserSession"]->GetGender() == 0) {
-              echo "¡Bienvenido ";
+              echo " bienvenido ";
             } else {
-              echo "¡Bienvenida ";
+              echo " bienvenida ";
             }
-            echo $GLOBALS["UserSession"]->GetFirstName()."!";
+            echo " a ".APP_TITLE."!";
           ?>
         </a>
     </div>

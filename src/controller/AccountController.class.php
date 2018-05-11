@@ -26,7 +26,7 @@
     }
 
     function ShowProfile() {
-      $this->SetContentView("profile");
+      $this->SetContentView("account/profile");
       $this->Render();
     }
 
@@ -90,7 +90,7 @@
       }
 
       // Render View
-      $this->SetContentView("profile");
+      $this->SetContentView("account/profile");
       $this->Tab = 0;
       $this->Render();
     }
@@ -128,10 +128,18 @@
       }
 
       // Render View
-      $this->SetContentView("profile");
+      $this->SetContentView("account/profile");
       $this->Tab = 1;
       $this->Render();
 
     }
+
+    // Admin Functions below
+
+    function ShowUserList() {
+      $this->SetContentView("admin/userlist");
+      $this->Render();
+    }
+
   }
 ?>

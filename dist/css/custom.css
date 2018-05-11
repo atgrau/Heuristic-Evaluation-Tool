@@ -29,3 +29,10 @@
 .margin-lg-r {
   margin-right: 20px;
 }
+
+.padding {
+  padding: 10px;
+}
+.padding-l {
+  padding-left: 10px;
+}
