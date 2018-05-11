@@ -8,6 +8,8 @@ Heuristic Evaluation Tool built with PHP & MySQL, developed by Albert Grau and J
 ### Views
 - Added Main View
 - Added Profile View
+- Added User List View
 
 ### Models
 - Added UserModel
+- Added CountryModel
