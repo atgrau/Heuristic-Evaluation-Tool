@@ -3,7 +3,6 @@ Heuristic Evaluation Tool built with *PHP & MySQL*, developed by **Albert Grau**
 
 ## Vision
 
-
 ## Change Log
 - 12/05/2018: Added Main View
 - 12/05/2018: Added UserModel
