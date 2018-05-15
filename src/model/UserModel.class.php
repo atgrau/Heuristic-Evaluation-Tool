@@ -127,7 +127,7 @@
     }
   }
 
-  function GetUsers() {
+  function GetUsers($filter) {
     $userlist = array();
     $users = DB::query("SELECT users.*, countries.iso, countries.name FROM users LEFT JOIN countries on users.country = countries.iso ORDER BY users.ID");
     if ($users) {

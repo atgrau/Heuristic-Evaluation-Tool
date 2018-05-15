@@ -12,9 +12,8 @@
       $this->Content = $content;
     }
 
-    function SetView($view, $content) {
+    function SetView($view) {
       $this->View = $view;
-      $this->Content = $content;
     }
 
     function SetContentView($content) {

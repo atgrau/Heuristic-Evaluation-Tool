@@ -5,10 +5,13 @@ RewriteEngine On
 RewriteCond $1 !^(index\.php)
 
 # Redirect 1st param (Resource)
-RewriteRule ^([a-z0-9\-]+)/?$ /src/core/UriHandler.php?resource=$1 [NC,L]
+RewriteRule ^([a-z0-9\-]+)/?$ /src/core/UriHandler.php?resource=$1 [QSA,NC,L]
 
 # Redirect 2nd param (Action)
-RewriteRule ^([a-z0-9\-]+)/([a-z0-9\-]+)/?$ /src/core/UriHandler.php?resource=$1&action=$2 [NC,L]
+RewriteRule ^([a-z0-9\-]+)/([a-z0-9\-]+)/?$ /src/core/UriHandler.php?resource=$1&action=$2 [QSA,NC,L]
+
+# Redirect 3rd param (Param)
+RewriteRule ^([a-z0-9\-]+)/([a-z0-9\-]+)/([a-z0-9\-]+)/?$ /src/core/UriHandler.php?resource=$1&action=$2&param=$3 [QSA,NC,L]
 
 # Redirect Errors
 ErrorDocument 400 /

@@ -7,8 +7,11 @@
    */
   class AccountController extends BaseController
   {
-    function Login($email, $password) {
-      if (DoLogin($email, md5($password))) {
+
+    function __construct() { }
+
+    function Login() {
+      if (DoLogin($_POST["email"], md5($_POST["password"]))) {
         header("Location: /");
       } else {
         $this->SetView("login");
@@ -25,16 +28,27 @@
       header("Location: /");
     }
 
-    function ShowProfile() {
+    function ShowProfile($adminView, $userId) {
       $this->SetContentView("account/profile");
+      $this->User = GetUserById($userId);
+      if ($adminView) {
+        $this->Action = "/admin/update-profile";
+      } else {
+        $this->Action = "/account/update-profile";
+      }
       $this->Render();
     }
 
-    function UpdateProfile() {
+    function UpdateProfile($isAdmin) {
       if ($_SERVER["REQUEST_METHOD"] != "POST") {
         header("Location: /account/profile");
       }
-      $UserId = $GLOBALS["UserSession"]->GetId();
+
+      if ($isAdmin) {
+        $UserId = $_POST["UserId"];
+      } else {
+        $UserId = $GLOBALS["UserSession"]->GetId();
+      }
 
       // Getting POST paramters
       $firstname = $_POST["firstname"];
@@ -72,7 +86,7 @@
       }
 
       if (!empty($this->Error)) {
-        $this->Error = "Tu nuevo perfil contiene errores: <br /><ul>".$this->Error."</ul>";
+        $this->Error = "El nuevo perfil contiene errores: <br /><ul>".$this->Error."</ul>";
       } else {
         $User = GetUserById($UserId);
         $User->SetFirstName($firstname);
@@ -84,15 +98,19 @@
         $User->Store();
 
         // Actualizamos la información de la Sesión
-        $GLOBALS["UserSession"] = GetUserById($UserId);
+        if ($GLOBALS["UserSession"]->GetId() == $UserId) {
+          $GLOBALS["UserSession"] = GetUserById($UserId);
+        }
 
-        $this->Success = "¡Tu perfil ha sido actualizado correctamente!";
+        $this->Success = "¡Los datos han sido actualizados correctamente!";
       }
-
-      // Render View
-      $this->SetContentView("account/profile");
       $this->Tab = 0;
-      $this->Render();
+
+      if ($isAdmin) {
+        $this->ShowProfile(true, $_POST["UserId"]);
+      } else {
+        $this->ShowProfile(false, $GLOBALS["UserSession"]->GetId());
+      }
     }
 
     function UpdatePassword() {
@@ -138,6 +156,7 @@
 
     function ShowUserList() {
       $this->SetContentView("admin/userlist");
+      $this->query = $_GET["q"];
       $this->Render();
     }
 

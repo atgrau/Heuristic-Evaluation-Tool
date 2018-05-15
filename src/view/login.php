@@ -47,7 +47,7 @@
                             <fieldset>
                               <?php if($this->required) { ?>
                                 <div class="alert alert-warning" role="alert">
-                                 No tienes permisos suficientes para acceder a esta sección.
+                                 Necesitas iniciar sesión para acceder a este contenido.
                                 </div>
                               <?php } else if ($this->error) { ?>
                                 <div class="alert alert-danger" role="alert">

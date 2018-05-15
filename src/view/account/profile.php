@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Perfil de <?php echo $GLOBALS["UserSession"]->GetName(); ?></h1>
+        <h1 class="page-header">Perfil de <?php echo $this->User->GetName(); ?></h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -10,6 +10,9 @@
     <div class="col-lg">
         <!-- /.panel-heading -->
         <div class="panel-body">
+          <?php if($this->Action == "/admin/update-profile"): ?>
+            <a href="/admin/users" title="Listado de Usuarios" class="btn btn-primary">Volver al listado de Usuarios</a><br /><br />
+          <?php endif; ?>
           <?php if (isset($this->Success)) { ?>
             <div class="alert alert-info" role="alert">
              <?php echo $this->Success; ?>
@@ -40,29 +43,30 @@
             <!-- Tab panes -->
             <div class="tab-content">
                 <div class="tab-pane fade in <?php echo $change0; ?>" id="profile">
-                  <form class="margin margin-lg-t" method="POST" action="/account/update-profile">
+                  <form class="margin margin-lg-t" method="POST" action="<?= $this->Action; ?>">
+                    <input type="hidden" name="UserId" value="<?= $this->User->GetId(); ?>" />
                     <div class="form-group">
                       <label for="email">Correo Electrónico:</label>
-                      <input type="email" class="form-control" id="email" readonly placeholder="Introduzca un Email" value="<?php echo $GLOBALS["UserSession"]->GetEmail(); ?>">
+                      <input type="email" class="form-control" id="email" readonly placeholder="Introduzca un Email" value="<?php echo $this->User->GetEmail(); ?>">
                       <small id="emailHelp" class="form-text text-muted">La dirección de correo electrónico no se puede modificar.</small>
                     </div>
                     <div class="form-group">
                       <label for="firstname">Nombre:</label>
-                      <input name="firstname" type="text" class="form-control" id="firstname" placeholder="Nombre" value="<?php echo $GLOBALS["UserSession"]->GetFirstName(); ?>">
+                      <input name="firstname" type="text" class="form-control" id="firstname" placeholder="Nombre" value="<?php echo $this->User->GetFirstName(); ?>">
                     </div>
                     <div class="form-group">
                       <label for="lastname">Apellidos:</label>
-                      <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Apellidos" value="<?php echo $GLOBALS["UserSession"]->GetLastName(); ?>">
+                      <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Apellidos" value="<?php echo $this->User->GetLastName(); ?>">
                     </div>
                     <label>Sexo:</label>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gender" id="cbMale" value="0" <?php if ($GLOBALS["UserSession"]->GetGender() == 0) { echo "checked"; }?>>
+                      <input class="form-check-input" type="radio" name="gender" id="cbMale" value="0" <?php if ($this->User->GetGender() == 0) { echo "checked"; }?>>
                       <label class="form-check-label" for="cbMale">
                         Masculino
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gender" id="cbFemale" value="1" <?php if ($GLOBALS["UserSession"]->GetGender() == 1) { echo "checked"; }?>>
+                      <input class="form-check-input" type="radio" name="gender" id="cbFemale" value="1" <?php if ($this->User->GetGender() == 1) { echo "checked"; }?>>
                       <label class="form-check-label" for="cbFemale">
                         Femenino
                       </label>
@@ -70,14 +74,14 @@
                     <br />
                     <div class="form-group">
                       <label for="entity">Organización:</label>
-                      <input name="entity" type="text" class="form-control" id="entity" placeholder="Organización" value="<?php echo $GLOBALS["UserSession"]->GetEntity(); ?>">
+                      <input name="entity" type="text" class="form-control" id="entity" placeholder="Organización" value="<?php echo $this->User->GetEntity(); ?>">
                     </div>
                     <div class="form-group">
                       <label for="country">País:</label>
                       <select name="country" class="form-control">
                         <?php
                           foreach (GetCountries() as $country) {
-                              if ($GLOBALS["UserSession"]->GetCountry()->GetIso() == $country->GetIso()) {
+                              if ($this->User->GetCountry()->GetIso() == $country->GetIso()) {
                                 $selected = "selected";
                               } else {
                                 $selected = "";
