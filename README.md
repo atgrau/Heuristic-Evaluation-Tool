@@ -3,6 +3,18 @@ Heuristic Evaluation Tool built with *PHP & MySQL*, developed by **Albert Grau**
 
 ## Vision
 
+
+## Features per Stakeholder
+
+| Evaluator                     | Project Manager                         | Administrator
+| ----------------------------- | --------------------------------------- | --------------------------------------- |
+| Update his own profile        | Update his own profile                  | Update his own profile                  |
+| Make an evaluation            | Make an evaluation                      | Make an evaluation                      |
+|                               | Create a new Project                    | Create a new Project                    |
+|                               | Assign evaluators to their own projects | Assign evaluators to their own projects |
+|                               |                                         | Create/Update/Delete Users              |
+|                               |                                         | Modify evaluation template              |
+
 ## Change Log
 - 12/05/2018: Added Main View
 - 12/05/2018: Added UserModel
@@ -14,8 +26,8 @@ Heuristic Evaluation Tool built with *PHP & MySQL*, developed by **Albert Grau**
 ## Tasks
 - [x] Core Program
 - [ ] UserList View with CRUD
-- [ ] Template
+- [ ] Modify evaluatio template
 - [ ] Create a new Project
 
 ## Entities Model
-![Entities Model Diagram](http://www.plantuml.com/plantuml/png/ZLLDJnin4BtlhvWk1x9LFcYfUeYYY2WDBH8VKaXxAIXouadMZTVUsbx2gkf_xzZPPHD05LnipxnvxytC0cVMCUEAJ4R7KAYbpZ9K3boA88L2MA3KMn0hA7LnR10AAzGQ29ON3WriXKk1WK4d50CkR2vPIKns8rJE3Ck0vm9EJqwYTnnNdd365X9RYcNOvcYN2ImbinPy09Y5s0TZ60oWDMiVdP-Fw2U1uP0ujrwT76d9OQKDv4Pap9ImGQ-uDeYAZ4bjGhPGudU1b62AquEZiKjjCEIKTdDLI5cRggdcHDLwJ62m63uEUejXdQ_8GYeez8EQ1uLd0woP0xJmWC9RrpHF0uwjBR079gIVGP_Y0p4Sz0GXI98jD_tnpUNDT5Ypjc5BPLWr9QYskePXqPcwJ5QXfUQ-sLOOsNYSqDqYzWdYydwlHsjHVibTsbmlJ1njrvSVNMc3KIeuGeOkrTpk7jQHidPbZZOYBbHEEE7lk_tH8amROd_SgTPtEa0eq8K1Mr9fbiG9_8dsnofu0XVNiydNoJHwcb8rLq_ZUqeI-36QZh-DfZzFFzuti9pyRhNXJVhpf_leRss6Uh52A_9JtSXITGlhzlHlDKJG-N-irhm1ywgPm90RlH8IoT7-aspTwWn1g9K6lNhTrqiBR8rmUpMwlAH0j4R_AJVlXJ0kvQo4BwFPP7PnDMcSh8qkSh8GJj8EPwrhtpYGi9RzhJphj1Pf7gHaK397KxAfU18CluS1y8QMzvEXvY3xImk5VCxSGTF7i2zhwQqLTfpkq76GYeATJWVsTmDzY4SXGcMoX3kLCkiPe0B4Eq9m6Z9MlaeuXFghQyWyDcKFj7kwgh96M4yN0e5F7H9IRiGvnSsc-jCBKcnmfnD_Y8DM_3w6PkhF91T87OXACm18CPnD_KctU_sI8bmz1n4ijNAiPl508Zb3nVr_Yty0)
+![Entities Model Diagram](http://www.plantuml.com/plantuml/png/XL9HQniz47o_Nx6Vyn0VEB7vqj9YZ8anILj86p1fNveGvDFQjqGdNRLIdQFqltUbd9q42hqNIREZcTNidNDGFiJ65CSGRUMQ1cs0K2COiWXhD6u7j87EnMEF49di5eJMne0UTXHgKE0na5MWYLkZEb7Y1xAjyge1tHASJIR5VnetIV16hGqEhMfmf96h4YgZc241e1W62Hp0R0R3cz7HvUL2lXBcSz7S9NVfo1aD6-UXzTGety439iUjHxJIc74-LwEb7n6beAoMWqRFbVEOQzQ5UnkDEJJLIzsBrF2nXDbw_ZWRh-VxUY-MIzbXcjqIAHyFn8DofiP4YAbr9tbw26hBe7ugCYc3gU0pci_690onLDN3T7bzTRsQxrL7i9Dhs3-Av6w_pM79MeV6z53bT7hiC4UsN9QoPyIfK48x7OzbB3OD-LGcDyw98v-cwqUV9PIY9etGOAYTvgS31t5seMkH2z526oXGsZ_DBpBw4GpISck7NsK1ilcluKwkDkMWX5_5orX9b_3foyt5XujLaL9wYiaxWw_n3FTvOoDPbILyMwoM7nUhxs_UtZrpMiMySru_by_-loisv3daV5vUCkelu1RJNt4mpq_i3entaxkYSj46_uo9_kzz0drDGkXtaiCLSG2tWML62FdVCUId4BlofSchLjzFigiCmQDHWPpbcbekKlPmSWBx9gSmM406YK6oeQr5VMk30sTnpneKvsXrRCmV)
