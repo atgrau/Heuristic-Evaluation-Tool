@@ -10,7 +10,13 @@ Heuristic Evaluation Tool built with *PHP & MySQL*, developed by **Albert Grau**
 - 15/05/2018: Added User List View (Admin)
 
 ## Tasks
+<<<<<<< HEAD
 - [x] Core Program
 - [ ] UserList View with CRUD
 - [ ] Template
 - [ ] Create a new Project
+=======
+[x] Core Program
+[] UserList View with CRUD
+[] Template
+>>>>>>> a0747b8c7407066314125ada485de52364c220c9
