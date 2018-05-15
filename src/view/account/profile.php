@@ -36,9 +36,11 @@
                 <li class="<?php echo $change0; ?>">
                   <a href="#profile" data-toggle="tab">Datos personales</a>
                 </li>
+                <?php if($this->Action != "/admin/update-profile"): ?>
                 <li class="<?php echo $change1; ?>">
                   <a href="#password" data-toggle="tab">Contraseña</a>
                 </li>
+              <?php endif; ?>
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
@@ -92,7 +94,7 @@
                      </select>
                     </div>
                     <br />
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-success">Guardar</button>
                   </form>
                 </div>
                 <div class="tab-pane fade in <?php echo $change1; ?>" id="password">
@@ -110,7 +112,7 @@
                       <input name="newpassword2" type="password" class="form-control" id="newpassword2" placeholder="Introduzca un contraseña">
                     </div>
                     <br />
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-success">Guardar</button>
                   </form>
                 </div>
             </div>

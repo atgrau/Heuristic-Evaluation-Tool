@@ -129,7 +129,16 @@
 
   function GetUsers($filter) {
     $userlist = array();
-    $users = DB::query("SELECT users.*, countries.iso, countries.name FROM users LEFT JOIN countries on users.country = countries.iso ORDER BY users.ID");
+    $qry = "SELECT users.*, countries.iso, countries.name FROM users LEFT JOIN countries on users.country = countries.iso";
+    if (!empty($filter)) {
+      $condition = " WHERE users.email like %ss OR users.firstname like %ss OR users.lastname like %ss";
+      $qry .= $condition." ORDER BY users.ID";
+      $users = DB::query($qry, $filter, $filter, $filter);
+    } else {
+      $qry .= " ORDER BY users.ID";
+      $users = DB::query($qry);
+    }
+
     if ($users) {
       foreach ($users as $row) {
         array_push($userlist, new UserModel($row["ID"], $row["role"], $row["email"], $row["password"], $row["firstname"], $row["lastname"], $row["gender"], $row["entity"], new Country($row["iso"], $row["name"])));

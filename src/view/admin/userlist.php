@@ -35,7 +35,8 @@
     </thead>
     <tbody>
       <?php
-      foreach (GetUsers() as $user) { ?>
+      $userList = GetUsers($_GET["q"]);
+      foreach ($userList as $user) { ?>
           <tr>
             <th scope="row"><?= $user->GetId(); ?></th>
             <td><?= $user->GetName(); ?></td>
@@ -49,5 +50,10 @@
       <?php } ?>
     </tbody>
   </table>
+  <?php
+    if (empty($userList)) {
+      echo "No se han encontrado usuarios...";
+    }
+  ?>
 </div>
 <!-- /.row -->

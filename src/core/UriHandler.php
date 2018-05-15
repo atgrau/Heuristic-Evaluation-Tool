@@ -6,6 +6,9 @@
   // Include configuration files
   require_once(BASE_URI."config/global.php");
 
+  // Include general funcions
+  require_once(BASE_URI."core/functions.php");
+
   // Include Uri Handler class
   require_once(BASE_URI."core/UriHandler.class.php");
 

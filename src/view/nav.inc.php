@@ -8,21 +8,14 @@
             <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="/">
-          <?php
-            echo "¡".$GLOBALS["UserSession"]->GetFirstName().", ";
-            if ($GLOBALS["UserSession"]->GetGender() == 0) {
-              echo " bienvenido ";
-            } else {
-              echo " bienvenida ";
-            }
-            echo " a ".APP_TITLE."!";
-          ?>
+          <?= APP_TITLE; ?>
         </a>
     </div>
     <!-- /.navbar-header -->
 
     <ul class="nav navbar-top-links navbar-right">
         <!-- /.dropdown -->
+        <span class="label label-primary"><?= GetRoleName($GLOBALS["UserSession"]->GetRole()); ?></span>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -164,7 +157,7 @@
         <!-- /.dropdown -->
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                <?= $GLOBALS["UserSession"]->GetName(); ?> <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
                 <li><a href="/account/profile"><i class="fa fa-user fa-fw"></i> Perfil de Usuario</a>
