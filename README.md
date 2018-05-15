@@ -1,12 +1,15 @@
 # Heuristic Evaluation Tool
 Heuristic Evaluation Tool built with *PHP & MySQL*, developed by **Albert Grau** and **Jennifer Soliz**
 
+## Vision
+
+
 ## Change Log
-- 15/05/2018: Added Main View
-- 15/05/2018: Added UserModel
-- 15/05/2018: Added Account Controller
-- 15/05/2018: Added CountryModel
-- 15/05/2018: Added Profile View (including a password change form)
+- 12/05/2018: Added Main View
+- 12/05/2018: Added UserModel
+- 12/05/2018: Added Account Controller
+- 13/05/2018: Added CountryModel
+- 14/05/2018: Added Profile View (including a password change form)
 - 15/05/2018: Added User List View (Admin)
 
 ## Tasks
@@ -14,3 +17,5 @@ Heuristic Evaluation Tool built with *PHP & MySQL*, developed by **Albert Grau**
 - [ ] UserList View with CRUD
 - [ ] Template
 - [ ] Create a new Project
+
+## Entities Model
