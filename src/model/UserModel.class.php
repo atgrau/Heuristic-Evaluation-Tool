@@ -2,7 +2,7 @@
   require_once(BASE_URI."config/database.php");
 
   /**
-   *
+   * Users
    */
   class UserModel
   {
@@ -35,12 +35,6 @@
 
     function GetRole() {
       return $this->Role;
-    }
-
-    function GetRoleName() {
-      if ($this->Role == 0) return "Evaluador";
-      else if ($this->Role == 1) return "Responsable";
-      else return "Administrador";
     }
 
     function GetEmail() {

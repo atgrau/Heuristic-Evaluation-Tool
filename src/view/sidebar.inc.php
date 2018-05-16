@@ -11,7 +11,7 @@
                     <a href="flot.html">Proyectos Asignados</a>
                 </li>
                 <li>
-                    <a href="flot.html">Mis Proyectos</a>
+                    <a href="/my-projects">Mis Proyectos</a>
                 </li>
               </ul>
             </li>

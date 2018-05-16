@@ -2,6 +2,7 @@
   // Controllers
   require_once(BASE_URI."controller/BaseController.class.php");
   require_once(BASE_URI."controller/AccountController.class.php");
+  require_once(BASE_URI."controller/ProjectController.class.php");
 
   /**
    * Uri Handler -> Call controller
@@ -16,8 +17,9 @@
       "/account/logout" => 0,
       "/account/profile" => 0,
       "/account/update-profile" => 0,
-      "/admin/update-profile" => 2,
       "/account/update-password" => 0,
+      "/my-projects" => 1,
+      "/admin/update-profile" => 2,
       "/admin/users" => 2,
       "/admin/profile" => 2
     );
@@ -63,12 +65,15 @@
       } else if ($this->Uri == "/account/update-profile") {
         $controller = new AccountController();
         $controller->UpdateProfile(false);
-      } else if ($this->Uri == "/admin/update-profile") {
-        $controller = new AccountController();
-        $controller->UpdateProfile(true);
       } else if ($this->Uri == "/account/update-password") {
         $controller = new AccountController();
         $controller->UpdatePassword();
+      } else if ($this->Uri == "/my-projects") {
+        $controller = new ProjectController();
+        $controller->ShowProjectList();
+      } else if ($this->Uri == "/admin/update-profile") {
+        $controller = new AccountController();
+        $controller->UpdateProfile(true);
       } else if ($this->Uri == "/admin/users") {
         $controller = new AccountController();
         $controller->ShowUserList();

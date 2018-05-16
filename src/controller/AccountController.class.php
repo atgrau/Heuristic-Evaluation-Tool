@@ -58,7 +58,7 @@
       $country = $_POST["country"];
 
       if (empty($firstname)) {
-        $this->Error .= "<li>El nombre introducido no es correcto.</li>";
+        $this->Error .= "<li>El nombre es obligatorio.</li>";
       }
 
       if (strlen($firstname) > 45) {
@@ -66,7 +66,7 @@
       }
 
       if (empty($lastname)) {
-        $this->Error .= "<li>Los apellidos introducidos no son correctos.</li>";
+        $this->Error .= "<li>Los apellidos son obligatorios.</li>";
       }
 
       if (strlen($lastname) > 45) {
@@ -104,6 +104,7 @@
 
         $this->Success = "¡Los datos han sido actualizados correctamente!";
       }
+
       $this->Tab = 0;
 
       if ($isAdmin) {
@@ -146,11 +147,11 @@
       }
 
       // Render View
-      $this->SetContentView("account/profile");
       $this->Tab = 1;
-      $this->Render();
+      $this->ShowProfile(false, $GLOBALS["UserSession"]->GetId());
 
     }
+
 
     // Admin Functions below
 

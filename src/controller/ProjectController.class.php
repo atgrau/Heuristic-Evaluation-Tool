@@ -1,0 +1,15 @@
+<?php
+  require_once(BASE_URI."model/ProjectModel.class.php");
+
+  class ProjectController extends BaseController
+  {
+    function __construct() { }
+
+    function ShowProjectList() {
+      $this->SetContentView("project/projectlist");
+      $this->query = $_GET["q"];
+      $this->Render();
+    }
+  }
+
+?>
