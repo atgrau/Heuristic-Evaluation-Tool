@@ -21,7 +21,8 @@
       "/my-projects" => 1,
       "/admin/update-profile" => 2,
       "/admin/users" => 2,
-      "/admin/profile" => 2
+      "/admin/profile" => 2,
+      "/admin/new-user" => 2,
     );
 
     private $uri;
@@ -80,6 +81,9 @@
       } else if ($this->uri == "/admin/profile") {
         $controller = new AccountController();
         $controller->showProfile(true);
+      } else if ($this->uri == "/admin/new-user") {
+        $controller = new AccountController();
+        $controller->addNewUser();
       } else {
         include(BASE_URI."view/index.php");
       }

@@ -6,8 +6,9 @@
 </div>
 <!-- /.row -->
 <div class="row margin-lg-b">
-  <a href="/admin/add-user" title="Añadir nuevo Usuario" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Añadir nuevo Usuario</a>
+  <a href="/admin/new-user" title="Añadir nuevo Usuario" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Añadir nuevo Usuario</a>
 </div>
+
 <div class="row margin-lg-b">
   <div id="custom-search-input">
     <form action="/admin/users" method="GET">

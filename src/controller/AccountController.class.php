@@ -186,5 +186,11 @@
       $this->render();
     }
 
+    function addNewUser() {
+      $this->setContentView("account/profile");
+      $this->admin = true;
+      $this->render();
+    }
+
   }
 ?>
