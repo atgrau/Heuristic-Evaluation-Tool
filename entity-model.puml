@@ -18,25 +18,35 @@ hide stereotypes
 
 ' entities
 
-Table(user, "user\n(User in the system)") {
-primary_key(id) INTEGER
-not__null(role) INTEGER
+Table(user, "User\n(User in the system)") {
+primary_key(ID) INTEGER
+not_null(role) INTEGER
 not_null(unique(email)) VARCHAR[45]
 not_null(password) VARCHAR[32]
-firstname VARCHAR[45]
-lastname VARCHAR[45]
+not_null(firstname) VARCHAR[45]
+not_null(lastname) VARCHAR[45]
 gender INTEGER
 entity VARCHAR[70]
 country VARCHAR[2]
 }
 
-Table(country, "country\n(List of Countries)") {
-primary_key(id) INTEGER
+Table(country, "Country\n(List of Countries)") {
+primary_key(ID) INTEGER
 not_null(iso) VARCHAR[2]
 name VARCHAR[80]
+}
+
+Table(project, "Project\n(List of Projects)") {
+primary_key(ID) INTEGER
+not_null(id_user) INTEGER
+creation_date DATETIME
+not_null(name) VARCHAR[50]
+not_null(description) VARCHAR[1000]
+link VARCHAR[50]
 }
 
 
 ' relationships
 user -- country : "A user is assigned\nto one country"
+project -- user : "A user (with role greater than 0) can create one or more projects"
 @enduml

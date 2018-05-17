@@ -6,113 +6,117 @@
    */
   class UserModel
   {
-    private $Id;
-    private $Role;
-    private $Email;
-    private $Password;
-    private $FirstName;
-    private $LastName;
-    private $Gender;
-    private $Country;
-    private $Entity;
+    private $id;
+    private $role;
+    private $email;
+    private $password;
+    private $firstName;
+    private $lastName;
+    private $gender;
+    private $country;
+    private $entity;
 
     function __construct($id, $role, $email, $password, $firstName, $lastName, $gender, $entity, $country)
     {
-      $this->Id = $id;
-      $this->Role = $role;
-      $this->Email = $email;
-      $this->Password = $password;
-      $this->FirstName = $firstName;
-      $this->LastName = $lastName;
-      $this->Gender = $gender;
-      $this->Country = $country;
-      $this->Entity = $entity;
+      $this->id = $id;
+      $this->role = $role;
+      $this->email = $email;
+      $this->password = $password;
+      $this->firstName = $firstName;
+      $this->lastName = $lastName;
+      $this->gender = $gender;
+      $this->country = $country;
+      $this->entity = $entity;
     }
 
-    function GetId() {
-      return $this->Id;
+    function getId() {
+      return $this->id;
     }
 
-    function GetRole() {
-      return $this->Role;
+    function getRole() {
+      return $this->role;
     }
 
-    function GetEmail() {
-      return $this->Email;
+    function setRole($value) {
+      $this->role = $value;
     }
 
-    function SetEmail($value) {
-      $this->Email = $value;
+    function getEmail() {
+      return $this->email;
     }
 
-    function GetPassword() {
-      return $this->Password;
+    function setEmail($value) {
+      $this->email = $value;
     }
 
-    function SetPassword($value) {
-      $this->Password = $value;
+    function getPassword() {
+      return $this->password;
     }
 
-    function GetFirstName() {
-      return $this->FirstName;
+    function setPassword($value) {
+      $this->password = $value;
     }
 
-    function SetFirstName($value) {
-      $this->FirstName = $value;
+    function getFirstName() {
+      return $this->firstName;
     }
 
-    function GetLastName() {
-      return $this->LastName;
+    function setFirstName($value) {
+      $this->firstName = $value;
     }
 
-    function SetLastName($value) {
-      $this->LastName = $value;
+    function getLastName() {
+      return $this->lastName;
     }
 
-    function GetName() {
-      return $this->FirstName." ".$this->LastName;
+    function setLastName($value) {
+      $this->lastName = $value;
     }
 
-    function GetGender() {
-      return $this->Gender;
+    function getName() {
+      return $this->firstName." ".$this->lastName;
     }
 
-    function SetGender($value) {
-      $this->Gender = $value;
+    function getGender() {
+      return $this->gender;
     }
 
-    function GetEntity() {
-      return $this->Entity;
+    function setGender($value) {
+      $this->gender = $value;
     }
 
-    function SetEntity($value) {
-      $this->Entity = $value;
+    function getEntity() {
+      return $this->entity;
     }
 
-    function GetCountry() {
-      return $this->Country;
+    function setEntity($value) {
+      $this->entity = $value;
     }
 
-    function SetCountry($value) {
-      $this->Country = $value;
+    function getCountry() {
+      return $this->country;
     }
 
-    function Store() {
-      if (!empty($this->Id)) {
+    function setCountry($value) {
+      $this->country = $value;
+    }
+
+    function store() {
+      if (!empty($this->id)) {
         DB::update("users", array(
-          "email" => $this->Email,
-          "password" => $this->Password,
-          "firstname" => $this->FirstName,
-          "lastname" => $this->LastName,
-          "gender" => $this->Gender,
-          "entity" => $this->Entity,
-          "country" => $this->Country->GetIso()
-        ), "ID=%i", $this->Id);
+          "role" => $this->role,
+          "password" => $this->password,
+          "firstname" => $this->firstName,
+          "lastname" => $this->lastName,
+          "gender" => $this->gender,
+          "entity" => $this->entity,
+          "country" => $this->country->getIso()
+        ), "ID=%i", $this->id);
       }
     }
   }
 
-  function GetUserById($userId) {
+  function getUserById($userId) {
     $account = DB::queryFirstRow("SELECT users.*, countries.iso, countries.name FROM users LEFT JOIN countries on users.country = countries.iso WHERE users.ID=%i", $userId);
     if ($account) {
       return new UserModel($account["ID"], $account["role"], $account["email"], $account["password"], $account["firstname"], $account["lastname"], $account["gender"], $account["entity"], new Country($account["iso"], $account["name"]));
@@ -121,7 +125,7 @@
     }
   }
 
-  function GetUsers($filter) {
+  function getUsers($filter) {
     $userlist = array();
     $qry = "SELECT users.*, countries.iso, countries.name FROM users LEFT JOIN countries on users.country = countries.iso";
     if (!empty($filter)) {
@@ -143,7 +147,7 @@
     }
   }
 
-  function DoLogin($email, $password) {
+  function doLogin($email, $password) {
     $account = DB::queryFirstRow("SELECT ID FROM users WHERE email=%s and password=%s", $email, $password);
     if ($account) {
       // Create new Session

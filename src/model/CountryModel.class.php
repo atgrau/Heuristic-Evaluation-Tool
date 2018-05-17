@@ -4,24 +4,24 @@
    */
   class Country
   {
-    private $Iso;
-    private $Name;
+    private $iso;
+    private $name;
 
     function __construct($iso, $name) {
-      $this->Iso = $iso;
-      $this->Name = $name;
+      $this->iso = $iso;
+      $this->name = $name;
     }
 
-    function GetIso() {
-      return $this->Iso;
+    function getIso() {
+      return $this->iso;
     }
 
-    function GetName() {
-      return $this->Name;
+    function getName() {
+      return $this->name;
     }
   }
 
-  function GetCountryByIso($iso) {
+  function getCountryByIso($iso) {
     $country = DB::queryFirstRow("SELECT iso, name FROM countries WHERE iso=%s", $iso);
     if ($account) {
       return new Country($country["iso"], $country["name"]);
@@ -30,12 +30,12 @@
     }
   }
 
-  function CountryExists($iso) {
+  function countryExists($iso) {
     DB::query("SELECT iso, name FROM countries WHERE iso=%s", $iso);
     return DB::count() > 0;
   }
 
-  function GetCountries() {
+  function getCountries() {
     $countries = array();
     $country = DB::query("SELECT iso, name FROM countries");
     if ($country) {

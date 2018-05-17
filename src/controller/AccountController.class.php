@@ -10,155 +10,180 @@
 
     function __construct() { }
 
-    function Login() {
-      if (DoLogin($_POST["email"], md5($_POST["password"]))) {
+    function login() {
+      if (doLogin($_POST["email"], md5($_POST["password"]))) {
         header("Location: /");
       } else {
-        $this->SetView("login");
+        $this->setView("login");
         $this->error = true;
         $this->email = $email;
-        $this->Render();
+        $this->render();
       }
     }
 
-    function Logout() {
+    function logout() {
       session_start();
       session_destroy();
       unset($_SESSION);
       header("Location: /");
     }
 
-    function ShowProfile($adminView, $userId) {
-      $this->SetContentView("account/profile");
-      $this->User = GetUserById($userId);
-      if ($adminView) {
-        $this->Action = "/admin/update-profile";
+    function showProfile($adminView) {
+      $this->setContentView("account/profile");
+      $this->admin = $adminView;
+
+      if (($this->admin) && (!empty($_POST["UserId"]))){
+        $this->user = getUserById($_POST["UserId"]);
+        $this->action = "/admin/update-profile";
+      } else if (($this->admin) && (!empty($_GET["param"]))){
+        $this->user = getUserById($_GET["param"]);
+        $this->action = "/admin/update-profile";
       } else {
-        $this->Action = "/account/update-profile";
+        $this->user = getUserById($GLOBALS["USER_SESSION"]->GetId());
+        $this->action = "/account/update-profile";
       }
-      $this->Render();
+      $this->render();
     }
 
-    function UpdateProfile($isAdmin) {
+    function updateProfile($isAdmin) {
       if ($_SERVER["REQUEST_METHOD"] != "POST") {
         header("Location: /account/profile");
       }
 
       if ($isAdmin) {
-        $UserId = $_POST["UserId"];
+        $userId = $_POST["UserId"];
       } else {
-        $UserId = $GLOBALS["UserSession"]->GetId();
+        $userId = $GLOBALS["USER_SESSION"]->getId();
       }
 
       // Getting POST paramters
+      $role = $_POST["role"];
       $firstname = $_POST["firstname"];
       $lastname = $_POST["lastname"];
       $gender = $_POST["gender"];
       $entity = $_POST["entity"];
       $country = $_POST["country"];
 
+      if (($isAdmin) && ($role != 0) && ($role != 1) && ($role != 2)) {
+        $this->error .= "<li>El rol especificado no es correto.</li>";
+      }
+
+      if (($isAdmin) && ($role != 2) && ($userId == $GLOBALS["USER_SESSION"]->getId())) {
+        $this->error .= "<li>No puedes re-asignarte un rol a ti mismo.</li>";
+      }
+
       if (empty($firstname)) {
-        $this->Error .= "<li>El nombre es obligatorio.</li>";
+        $this->error .= "<li>El nombre es obligatorio.</li>";
       }
 
       if (strlen($firstname) > 45) {
-        $this->Error .= "<li>El nombre no puede contener más de 45 carácteres.</li>";
+        $this->error .= "<li>El nombre no puede contener más de 45 carácteres.</li>";
       }
 
       if (empty($lastname)) {
-        $this->Error .= "<li>Los apellidos son obligatorios.</li>";
+        $this->error .= "<li>Los apellidos son obligatorios.</li>";
       }
 
       if (strlen($lastname) > 45) {
-        $this->Error .= "<li>Los apellidos no pueden contener más de 45 carácteres.</li>";
+        $this->error .= "<li>Los apellidos no pueden contener más de 45 carácteres.</li>";
       }
 
       if (($gender != 0) && ($gender != 1)) {
-        $this->Error .= "<li>El género indicado no es correcto.</li>";
+        $this->error .= "<li>El género indicado no es correcto.</li>";
       }
 
       if (strlen($entity) > 70) {
-        $this->Error .= "<li>El nombre de la organización no puede sobrepasar los 70 carácteres.</li>";
+        $this->error .= "<li>El nombre de la organización no puede sobrepasar los 70 carácteres.</li>";
       }
 
       if (!CountryExists($country)) {
-        $this->Error .= "<li>El país indicado no existe.</li>";
+        $this->error .= "<li>El país indicado no existe.</li>";
       }
 
-      if (!empty($this->Error)) {
-        $this->Error = "El nuevo perfil contiene errores: <br /><ul>".$this->Error."</ul>";
+      if (!empty($this->error)) {
+        $this->error = "El nuevo perfil contiene errores: <br /><ul>".$this->error."</ul>";
       } else {
-        $User = GetUserById($UserId);
-        $User->SetFirstName($firstname);
-        $User->SetLastName($lastname);
-        $User->SetGender($gender);
-        $User->SetEntity($entity);
-        $User->SetCountry(new Country($country, GetCountryByIso($country)));
+        $user = getUserById($userId);
 
-        $User->Store();
+        // Only if is Admin
+        if ($isAdmin) {
+          $user->setRole($role);
+        }
+        $user->setFirstName($firstname);
+        $user->setLastName($lastname);
+        $user->setGender($gender);
+        $user->setEntity($entity);
+        $user->setCountry(new Country($country, getCountryByIso($country)));
+
+        $user->store();
 
         // Actualizamos la información de la Sesión
-        if ($GLOBALS["UserSession"]->GetId() == $UserId) {
-          $GLOBALS["UserSession"] = GetUserById($UserId);
+        if ($GLOBALS["USER_SESSION"]->getId() == $userId) {
+          $GLOBALS["USER_SESSION"] = getUserById($userId);
         }
 
-        $this->Success = "¡Los datos han sido actualizados correctamente!";
+        $this->success = "¡Los datos han sido actualizados correctamente!";
       }
 
-      $this->Tab = 0;
+      $this->tab = 0;
 
       if ($isAdmin) {
-        $this->ShowProfile(true, $_POST["UserId"]);
+        $this->showProfile(true, $_POST["UserId"]);
       } else {
-        $this->ShowProfile(false, $GLOBALS["UserSession"]->GetId());
+        $this->showProfile(false, $GLOBALS["USER_SESSION"]->getId());
       }
     }
 
-    function UpdatePassword() {
+    function updatePassword() {
       if ($_SERVER["REQUEST_METHOD"] != "POST") {
         header("Location: /account/profile");
       }
-      $UserId = $GLOBALS["UserSession"]->GetId();
+      $userId = $GLOBALS["USER_SESSION"]->getId();
 
       $clearpassword = $_POST["newpassword"];
       $password = md5($_POST["password"]);
       $newpassword = md5($_POST["newpassword"]);
       $newpassword2 = md5($_POST["newpassword2"]);
 
-      $User = GetUserById($UserId);
+      $user = getUserById($userId);
 
-      if ($User->GetPassword() != $password) {
-        $this->Error .= "<li>La contraseña actual no correcta.</li>";
-      } else if (strlen($clearpassword) < 6) {
-        $this->Error .= "<li>La contraseña tiene que tener como mínimo 6 carácteres.</li>";
-      } else if ($newpassword != $newpassword2) {
-        $this->Error .= "<li>Las contraseñas no coinciden.</li>";
+      if ($user->getPassword() != $password) {
+        $this->error .= "<li>La contraseña actual no correcta.</li>";
       }
 
-      if (!empty($this->Error)) {
-        $this->Error = "Tu solicitud de cambio de contraseña contiene errores: <br /><ul>".$this->Error."</ul>";
+      if (strlen($clearpassword) < 6) {
+        $this->error .= "<li>La contraseña tiene que tener como mínimo 6 carácteres.</li>";
+      }
+
+      if ($newpassword != $newpassword2) {
+        $this->error .= "<li>Las contraseñas no coinciden.</li>";
+      }
+
+      if (!empty($this->error)) {
+        $this->error = "Tu solicitud de cambio de contraseña contiene errores: <br /><ul>".$this->error."</ul>";
       } else {
 
-        $User->SetPassword($newpassword);
+        $user->setPassword($newpassword);
 
-        $User->Store();
+        $user->store();
 
-        $this->Success = "¡Tu contraseña ha sido actualizada correctamente!";
+        $this->success = "¡Tu contraseña ha sido actualizada correctamente!";
       }
 
       // Render View
-      $this->Tab = 1;
-      $this->ShowProfile(false, $GLOBALS["UserSession"]->GetId());
+      $this->tab = 1;
+      $this->showProfile(false, $GLOBALS["USER_SESSION"]->getId());
 
     }
 
 
     // Admin Functions below
 
-    function ShowUserList() {
-      $this->SetContentView("admin/userlist");
+    function showUserList() {
+      $this->setContentView("admin/userlist");
       $this->query = $_GET["q"];
-      $this->Render();
+      $this->userList = getUsers($this->query);
+      $this->render();
     }
 
   }

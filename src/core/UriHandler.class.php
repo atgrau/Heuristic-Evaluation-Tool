@@ -10,7 +10,7 @@
   class UriHandler
   {
     // Defined Uris and minmium role to acces in
-    private $Uris = array(
+    private $uris = array(
       "/" => -1,
       "/signin" => -1,
       "/account/login" => -1,
@@ -24,75 +24,75 @@
       "/admin/profile" => 2
     );
 
-    private $Uri;
+    private $uri;
 
     function __construct($uri) {
-      $this->Uri = $uri;
+      $this->uri = $uri;
     }
 
-    function Execute() {
+    function execute() {
 
       // 1- Firstly, check if Uri exists
-      if (!isset($this->Uris[$this->Uri])) {
+      if (!isset($this->uris[$this->uri])) {
         $view = new BaseController("404","");
-        $view->Render();
+        $view->render();
       }
 
       // 2- Check Uri and permissions
-      if (!$this->CheckUriAndPermissions()) {
+      if (!$this->checkUriAndPermissions()) {
         // Can't access or Uri doesn't exist!!
         $view = new BaseController("login","");
         $view->required = true;
-        $view->Render();
+        $view->render();
       }
 
       // 3- Load Controller
-      if ($this->Uri == "/") {
+      if ($this->uri == "/") {
         $view = new BaseController("index","");
-        $view->Render();
-      } else if ($this->Uri == "/signin") {
+        $view->render();
+      } else if ($this->uri == "/signin") {
         $view = new BaseController("login","");
-        $view->Render();
-      } else if ($this->Uri == "/account/login") {
+        $view->render();
+      } else if ($this->uri == "/account/login") {
         $controller = new AccountController();
-        $controller->Login();
-      } else if ($this->Uri == "/account/logout") {
+        $controller->login();
+      } else if ($this->uri == "/account/logout") {
         $controller = new AccountController();
-        $controller->Logout();
-      } else if ($this->Uri == "/account/profile") {
+        $controller->logout();
+      } else if ($this->uri == "/account/profile") {
         $controller = new AccountController();
-        $controller->ShowProfile(false, $GLOBALS["UserSession"]->GetId());
-      } else if ($this->Uri == "/account/update-profile") {
+        $controller->showProfile(false);
+      } else if ($this->uri == "/account/update-profile") {
         $controller = new AccountController();
-        $controller->UpdateProfile(false);
-      } else if ($this->Uri == "/account/update-password") {
+        $controller->updateProfile(false);
+      } else if ($this->uri == "/account/update-password") {
         $controller = new AccountController();
-        $controller->UpdatePassword();
-      } else if ($this->Uri == "/my-projects") {
+        $controller->updatePassword();
+      } else if ($this->uri == "/my-projects") {
         $controller = new ProjectController();
-        $controller->ShowProjectList();
-      } else if ($this->Uri == "/admin/update-profile") {
+        $controller->showProjectList();
+      } else if ($this->uri == "/admin/update-profile") {
         $controller = new AccountController();
-        $controller->UpdateProfile(true);
-      } else if ($this->Uri == "/admin/users") {
+        $controller->updateProfile(true);
+      } else if ($this->uri == "/admin/users") {
         $controller = new AccountController();
-        $controller->ShowUserList();
-      } else if ($this->Uri == "/admin/profile") {
+        $controller->showUserList();
+      } else if ($this->uri == "/admin/profile") {
         $controller = new AccountController();
-        $controller->ShowProfile(true, $_GET["param"]);
+        $controller->showProfile(true);
       } else {
         include(BASE_URI."view/index.php");
       }
 
     }
 
-    function CheckUriAndPermissions() {
-      if (($this->Uri == "/signin") || ($this->Uri == "/account/login")) { // User tries to sign in
+    function checkUriAndPermissions() {
+      if (($this->uri == "/signin") || ($this->uri == "/account/login")) { // User tries to sign in
         return true;
-      } else if ((!isset($GLOBALS["UserSession"])) && ($this->Uri == "/")) { // First page
-        $this->Uri = "/signin";
+      } else if ((!isset($GLOBALS["USER_SESSION"])) && ($this->uri == "/")) { // First page
+        $this->uri = "/signin";
         return true;
-      } else if ((!isset($GLOBALS["UserSession"])) || ($this->Uris[$this->Uri] > $GLOBALS["UserSession"]->GetRole())) { // User tries to access private content without a minumum role level
+      } else if ((!isset($GLOBALS["USER_SESSION"])) || ($this->uris[$this->uri] > $GLOBALS["USER_SESSION"]->GetRole())) { // User tries to access private content without a minumum role level
         return false;
       } else {
         return true;

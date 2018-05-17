@@ -4,25 +4,25 @@
    */
   class BaseController
   {
-    private $View = "index";
-    private $Content;
+    private $view = "index";
+    private $content;
 
     function __construct($view, $content) {
-      $this->View = $view;
-      $this->Content = $content;
+      $this->view = $view;
+      $this->content = $content;
     }
 
-    function SetView($view) {
-      $this->View = $view;
+    function setView($view) {
+      $this->view = $view;
     }
 
-    function SetContentView($content) {
-      $this->View = "index";
-      $this->Content = $content;
+    function setContentView($content) {
+      $this->view = "index";
+      $this->content = $content;
     }
 
-    function Render() {
-      include(BASE_URI."view/".$this->View.".php");
+    function render() {
+      include(BASE_URI."view/".$this->view.".php");
       exit;
     }
   }

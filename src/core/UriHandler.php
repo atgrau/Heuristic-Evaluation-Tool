@@ -16,8 +16,8 @@
   session_start();
   if (isset($_SESSION["UserId"])) {
     require_once(BASE_URI."model/UserModel.class.php");
-    $UserSession = GetUserById($_SESSION["UserId"]);
-    $GLOBALS["UserSession"] = $UserSession;
+    $userSession = getUserById($_SESSION["UserId"]);
+    $GLOBALS["USER_SESSION"] = $userSession;
   }
 
   // Parse URI
@@ -27,6 +27,6 @@
   }
 
   // Handle URI
-  $UriHandler = new UriHandler($uri);
-  $UriHandler->Execute();
+  $uriHandler = new UriHandler($uri);
+  $uriHandler->execute();
 ?>

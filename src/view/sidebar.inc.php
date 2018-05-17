@@ -15,12 +15,12 @@
                 </li>
               </ul>
             </li>
-            <?php if ($GLOBALS["UserSession"]->GetRole() >= 1) { ?>
+            <?php if ($GLOBALS["USER_SESSION"]->GetRole() >= 1) { ?>
               <li>
                   <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Crear Nuevo Proyecto</a>
               </li>
             <?php } ?>
-            <?php if ($GLOBALS["UserSession"]->GetRole() >= 2) { ?>
+            <?php if ($GLOBALS["USER_SESSION"]->GetRole() >= 2) { ?>
               <li>
                   <a href="#"><i class="fa fa-wrench fa-fw"></i> Administración<span class="fa arrow"></span></a>
                   <ul class="nav nav-second-level">
