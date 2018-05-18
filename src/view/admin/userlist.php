@@ -8,7 +8,11 @@
 <div class="row margin-lg-b">
   <a href="/admin/new-user" title="Añadir nuevo Usuario" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Añadir nuevo Usuario</a>
 </div>
-
+<?php if ($this->addMessage): ?>
+  <div class="row alert alert-info" role="alert">
+   User <strong><?= $this->recentUser; ?></strong> has beed added successfully!
+  </div>
+<?php endif; ?>
 <div class="row margin-lg-b">
   <div id="custom-search-input">
     <form action="/admin/users" method="GET">

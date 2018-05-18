@@ -1,6 +1,10 @@
 <div class="row">
     <div class="col-lg-12">
+      <?php if ($this->new): ?>
+        <h1 class="page-header">New User</h1>
+      <?php else: ?>
         <h1 class="page-header">Perfil de <?= $this->user->getName(); ?></h1>
+      <?php endif; ?>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -34,11 +38,11 @@
             ?>
             <ul class="nav nav-tabs">
                 <li class="<?php echo $change0; ?>">
-                  <a href="#profile" data-toggle="tab">Datos personales</a>
+                  <a href="#profile" data-toggle="tab">Personal Data</a>
                 </li>
                 <?php if(!$this->admin): ?>
                 <li class="<?php echo $change1; ?>">
-                  <a href="#password" data-toggle="tab">Contraseña</a>
+                  <a href="#password" data-toggle="tab">Password</a>
                 </li>
               <?php endif; ?>
             </ul>

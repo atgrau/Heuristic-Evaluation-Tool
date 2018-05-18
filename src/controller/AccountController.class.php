@@ -186,10 +186,18 @@
       $this->render();
     }
 
-    function addNewUser() {
+    function addNewUserView() {
       $this->setContentView("account/profile");
+      $this->new = true;
       $this->admin = true;
+      $this->action = "/admin/add-user";
       $this->render();
+    }
+
+    function addNewUser() {
+      $this->addMessage = true;
+      $this->recentUser = "Toni";
+      $this->showUserList();
     }
 
   }

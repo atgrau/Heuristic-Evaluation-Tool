@@ -23,6 +23,7 @@
       "/admin/users" => 2,
       "/admin/profile" => 2,
       "/admin/new-user" => 2,
+      "/admin/add-user" => 2
     );
 
     private $uri;
@@ -83,6 +84,9 @@
         $controller->showProfile(true);
       } else if ($this->uri == "/admin/new-user") {
         $controller = new AccountController();
+        $controller->addNewUserView();
+      } else if ($this->uri == "/admin/add-user") {
+        $controller = new AccountController();
         $controller->addNewUser();
       } else {
         include(BASE_URI."view/index.php");
@@ -96,7 +100,7 @@
       } else if ((!isset($GLOBALS["USER_SESSION"])) && ($this->uri == "/")) { // First page
         $this->uri = "/signin";
         return true;
-      } else if ((!isset($GLOBALS["USER_SESSION"])) || ($this->uris[$this->uri] > $GLOBALS["USER_SESSION"]->GetRole())) { // User tries to access private content without a minumum role level
+      } else if ((!isset($GLOBALS["USER_SESSION"])) || ($this->uris[$this->uri] > $GLOBALS["USER_SESSION"]->getRole())) { // User tries to access private content without a minumum role level
         return false;
       } else {
         return true;
