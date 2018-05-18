@@ -31,6 +31,7 @@
     function showProfile($adminView) {
       $this->setContentView("account/profile");
       $this->admin = $adminView;
+      $this->new = false;
 
       if (($this->admin) && (!empty($_POST["UserId"]))){
         $this->user = getUserById($_POST["UserId"]);
@@ -64,6 +65,7 @@
       $entity = $_POST["entity"];
       $country = $_POST["country"];
 
+      // Validation
       if (($isAdmin) && ($role != 0) && ($role != 1) && ($role != 2)) {
         $this->error .= "<li>El rol especificado no es correto.</li>";
       }
@@ -71,6 +73,44 @@
       if (($isAdmin) && ($role != 2) && ($userId == $GLOBALS["USER_SESSION"]->getId())) {
         $this->error .= "<li>No puedes re-asignarte un rol a ti mismo.</li>";
       }
+
+      $this->validateProfile($firstname, $lastname, $gender, $entity, $country);
+
+      if (!empty($this->error)) {
+        $this->error = "El nuevo perfil contiene errores: <br /><ul>".$this->error."</ul>";
+      } else {
+        $user = getUserById($userId);
+
+        // Only if is Admin
+        if ($isAdmin) {
+          $user->setRole($role);
+        }
+        $user->setFirstName($firstname);
+        $user->setLastName($lastname);
+        $user->setGender($gender);
+        $user->setEntity($entity);
+        $user->setCountry(new Country($country, getCountryByIso($country)));
+
+        $user->update();
+
+        // Actualizamos la información de la Sesión
+        if ($GLOBALS["USER_SESSION"]->getId() == $userId) {
+          $GLOBALS["USER_SESSION"] = getUserById($userId);
+        }
+
+        $this->success = "¡Los datos han sido actualizados correctamente!";
+      }
+
+      $this->tab = 0;
+
+      if ($isAdmin) {
+        $this->showProfile(true, $_POST["UserId"]);
+      } else {
+        $this->showProfile(false, $GLOBALS["USER_SESSION"]->getId());
+      }
+    }
+
+    function validateProfile($firstname, $lastname, $gender, $entity, $country) {
 
       if (empty($firstname)) {
         $this->error .= "<li>El nombre es obligatorio.</li>";
@@ -88,6 +128,7 @@
         $this->error .= "<li>Los apellidos no pueden contener más de 45 carácteres.</li>";
       }
 
+      $gender = (int) $gender;
       if (($gender != 0) && ($gender != 1)) {
         $this->error .= "<li>El género indicado no es correcto.</li>";
       }
@@ -98,39 +139,6 @@
 
       if (!CountryExists($country)) {
         $this->error .= "<li>El país indicado no existe.</li>";
-      }
-
-      if (!empty($this->error)) {
-        $this->error = "El nuevo perfil contiene errores: <br /><ul>".$this->error."</ul>";
-      } else {
-        $user = getUserById($userId);
-
-        // Only if is Admin
-        if ($isAdmin) {
-          $user->setRole($role);
-        }
-        $user->setFirstName($firstname);
-        $user->setLastName($lastname);
-        $user->setGender($gender);
-        $user->setEntity($entity);
-        $user->setCountry(new Country($country, getCountryByIso($country)));
-
-        $user->store();
-
-        // Actualizamos la información de la Sesión
-        if ($GLOBALS["USER_SESSION"]->getId() == $userId) {
-          $GLOBALS["USER_SESSION"] = getUserById($userId);
-        }
-
-        $this->success = "¡Los datos han sido actualizados correctamente!";
-      }
-
-      $this->tab = 0;
-
-      if ($isAdmin) {
-        $this->showProfile(true, $_POST["UserId"]);
-      } else {
-        $this->showProfile(false, $GLOBALS["USER_SESSION"]->getId());
       }
     }
 
@@ -161,19 +169,15 @@
 
       if (!empty($this->error)) {
         $this->error = "Tu solicitud de cambio de contraseña contiene errores: <br /><ul>".$this->error."</ul>";
+
+        // Render View
+        $this->tab = 1;
+        $this->showProfile(false, $GLOBALS["USER_SESSION"]->getId());
       } else {
-
         $user->setPassword($newpassword);
-
-        $user->store();
-
+        $user->update();
         $this->success = "¡Tu contraseña ha sido actualizada correctamente!";
       }
-
-      // Render View
-      $this->tab = 1;
-      $this->showProfile(false, $GLOBALS["USER_SESSION"]->getId());
-
     }
 
 
@@ -195,10 +199,55 @@
     }
 
     function addNewUser() {
-      $this->addMessage = true;
-      $this->recentUser = "Toni";
-      $this->showUserList();
-    }
+      if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        header("Location: /admin/users");
+      }
 
+      // Getting POST paramters
+      $email = $_POST["email"];
+      $role = $_POST["role"];
+      $firstname = $_POST["firstname"];
+      $lastname = $_POST["lastname"];
+      $gender = $_POST["gender"];
+      $entity = $_POST["entity"];
+      $country = $_POST["country"];
+
+      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $this->error .= "<li>Invalid email format.</li>";
+      }
+
+      if (($isAdmin) && ($role != 0) && ($role != 1) && ($role != 2)) {
+        $this->error .= "<li>El rol especificado no es correto.</li>";
+      }
+
+      $this->validateProfile($firstname, $lastname, $gender, $entity, $country);
+
+      if (!empty($this->error)) {
+        $this->error = "El nuevo perfil contiene errores: <br /><ul>".$this->error."</ul>";
+
+        $this->setContentView("account/profile");
+        $this->new = true;
+        $this->admin = true;
+        $this->action = "/admin/add-user";
+        $this->render();
+      } else {
+
+        $user = UserModel::create();
+
+        $user->setEmail($email);
+        $user->setRole($role);
+        $user->setFirstName($firstname);
+        $user->setLastName($lastname);
+        $user->setGender($gender);
+        $user->setEntity($entity);
+        $user->setCountry(new Country($country, getCountryByIso($country)));
+
+        // Insert new user to database
+        $user->insert();
+        $this->addMessage = true;
+        $this->recentUser = "Toni";
+        $this->showUserList();
+      }
+    }
   }
 ?>

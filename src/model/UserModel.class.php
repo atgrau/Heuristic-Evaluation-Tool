@@ -16,6 +16,11 @@
     private $country;
     private $entity;
 
+    public static function create() {
+        $instance = new self(0, 0, '', '', '', '', 0, '', '', null);
+        return $instance;
+    }
+
     function __construct($id, $role, $email, $password, $firstName, $lastName, $gender, $entity, $country)
     {
       $this->id = $id;
@@ -101,7 +106,7 @@
       $this->country = $value;
     }
 
-    function store() {
+    function update() {
       if (!empty($this->id)) {
         DB::update("users", array(
           "role" => $this->role,
@@ -113,6 +118,10 @@
           "country" => $this->country->getIso()
         ), "ID=%i", $this->id);
       }
+    }
+
+    function insert() {
+
     }
   }
 
@@ -145,6 +154,11 @@
     } else {
       return null;
     }
+  }
+
+  function userExists($userId) {
+    DB::query("SELECT ID FROM users WHERE ID=%i", $userId);
+    return DB::count() > 0;
   }
 
   function doLogin($email, $password) {
