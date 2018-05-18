@@ -53,7 +53,7 @@
                     <input type="hidden" name="UserId" value="<?php if(!$this->new) echo $this->user->getId(); ?>" />
                     <div class="form-group">
                       <label for="email">Correo Electrónico:</label>
-                      <input name="email" type="email" class="form-control" id="email" <?php if(!$this->new) echo "readonly" ; ?> placeholder="E-mail" value="
+                      <input autofocus name="email" type="email" class="form-control" id="email" <?php if(!$this->new) echo "readonly" ; ?> placeholder="E-mail" value="
                       <?php
                         if (!$this->new)
                           echo $this->user->getEmail();
@@ -121,15 +121,13 @@
                       ?>">
                     </div>
                     <div class="form-group">
-                      <label for="country">País:</label>
+                      <label for="country">País:</label><?=$_POST["country"];?>
                       <select name="country" class="form-control">
                         <?php
                           foreach (getCountries() as $country) {
-                              if ($_POST["country"] == $country->getIso()) {
+                              if (($_POST["country"] == $country->getIso())) {
                                 $selected = "selected";
                               } else if ((!$this->new) && ($this->user->getCountry()->getIso() == $country->getIso() && $selected != "selected")) {
-                                $selected = "selected";
-                              } else if (($country->getIso() == "ES") && (empty($_POST["country"]))) {
                                 $selected = "selected";
                               } else {
                                 $selected = "";

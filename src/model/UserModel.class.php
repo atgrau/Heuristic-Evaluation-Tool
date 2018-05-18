@@ -1,5 +1,6 @@
 <?php
   require_once(BASE_URI."config/database.php");
+  require_once(BASE_URI."core/lib/Mailer.class.php");
 
   /**
    * Users
@@ -121,7 +122,21 @@
     }
 
     function insert() {
+      // Generate new password
+      $clearPassword = substr( md5(microtime()), 1, 8);
+      $this->password = md5($clearPassword);
+      DB::insert('users', array(
+        "email" => $this->email,
+        "role" => $this->role,
+        "password" => $this->password,
+        "firstname" => $this->firstName,
+        "lastname" => $this->lastName,
+        "gender" => $this->gender,
+        "entity" => $this->entity,
+        "country" => $this->country->getIso()
+      ));
 
+      // Enviar Email
     }
   }
 

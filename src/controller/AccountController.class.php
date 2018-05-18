@@ -16,7 +16,7 @@
       } else {
         $this->setView("login");
         $this->error = true;
-        $this->email = $email;
+        $this->email = $_POST["email"];
         $this->render();
       }
     }
@@ -231,7 +231,6 @@
         $this->action = "/admin/add-user";
         $this->render();
       } else {
-
         $user = UserModel::create();
 
         $user->setEmail($email);
@@ -245,7 +244,7 @@
         // Insert new user to database
         $user->insert();
         $this->addMessage = true;
-        $this->recentUser = "Toni";
+        $this->recentUser = $firstname;
         $this->showUserList();
       }
     }
