@@ -17,7 +17,7 @@
             </li>
             <?php if ($GLOBALS["USER_SESSION"]->GetRole() >= 1) { ?>
               <li>
-                  <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Crear Nuevo Proyecto</a>
+                  <a href="/projects/new"><i class="fa fa-edit fa-fw"></i> Crear Nuevo Proyecto</a>
               </li>
             <?php } ?>
             <?php if ($GLOBALS["USER_SESSION"]->GetRole() >= 2) { ?>

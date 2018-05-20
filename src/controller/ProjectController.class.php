@@ -12,6 +12,11 @@
       $this->projectList = getProjects($this->query);
       $this->Render();
     }
+
+    function addNewProject() {
+      $this->SetContentView("project/project");
+      $this->Render();
+    }
   }
 
 ?>
