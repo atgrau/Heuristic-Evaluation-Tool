@@ -1,5 +1,6 @@
 <?php
   require_once(BASE_URI."config/database.php");
+  require_once(BASE_URI."core/lib/Mailer.class.php");
 
   /**
    * Users
@@ -15,6 +16,11 @@
     private $gender;
     private $country;
     private $entity;
+
+    public static function create() {
+        $instance = new self(0, 0, '', '', '', '', 0, '', '', null);
+        return $instance;
+    }
 
     function __construct($id, $role, $email, $password, $firstName, $lastName, $gender, $entity, $country)
     {
@@ -101,7 +107,7 @@
       $this->country = $value;
     }
 
-    function store() {
+    function update() {
       if (!empty($this->id)) {
         DB::update("users", array(
           "role" => $this->role,
@@ -113,6 +119,24 @@
           "country" => $this->country->getIso()
         ), "ID=%i", $this->id);
       }
+    }
+
+    function insert() {
+      // Generate new password
+      $clearPassword = substr( md5(microtime()), 1, 8);
+      $this->password = md5($clearPassword);
+      DB::insert('users', array(
+        "email" => $this->email,
+        "role" => $this->role,
+        "password" => $this->password,
+        "firstname" => $this->firstName,
+        "lastname" => $this->lastName,
+        "gender" => $this->gender,
+        "entity" => $this->entity,
+        "country" => $this->country->getIso()
+      ));
+
+      // Enviar Email
     }
   }
 
@@ -145,6 +169,11 @@
     } else {
       return null;
     }
+  }
+
+  function userExists($userId) {
+    DB::query("SELECT ID FROM users WHERE ID=%i", $userId);
+    return DB::count() > 0;
   }
 
   function doLogin($email, $password) {

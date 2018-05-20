@@ -1,6 +1,10 @@
 <div class="row">
     <div class="col-lg-12">
+      <?php if ($this->new): ?>
+        <h1 class="page-header">New User</h1>
+      <?php else: ?>
         <h1 class="page-header">Perfil de <?= $this->user->getName(); ?></h1>
+      <?php endif; ?>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -34,11 +38,11 @@
             ?>
             <ul class="nav nav-tabs">
                 <li class="<?php echo $change0; ?>">
-                  <a href="#profile" data-toggle="tab">Datos personales</a>
+                  <a href="#profile" data-toggle="tab">Personal Data</a>
                 </li>
                 <?php if(!$this->admin): ?>
                 <li class="<?php echo $change1; ?>">
-                  <a href="#password" data-toggle="tab">Contraseña</a>
+                  <a href="#password" data-toggle="tab">Password</a>
                 </li>
               <?php endif; ?>
             </ul>
@@ -46,35 +50,54 @@
             <div class="tab-content">
                 <div class="tab-pane fade in <?php echo $change0; ?>" id="profile">
                   <form class="margin margin-lg-t" method="POST" action="<?= $this->action; ?>">
-                    <input type="hidden" name="UserId" value="<?= $this->user->getId(); ?>" />
+                    <input type="hidden" name="UserId" value="<?php if(!$this->new) echo $this->user->getId(); ?>" />
                     <div class="form-group">
                       <label for="email">Correo Electrónico:</label>
-                      <input type="email" class="form-control" id="email" readonly placeholder="E-mail" value="<?= $this->user->getEmail(); ?>">
-                      <small id="emailHelp" class="form-text text-muted">La dirección de correo electrónico no se puede modificar.</small>
+                      <input autofocus name="email" type="email" class="form-control" id="email" <?php if(!$this->new) echo "readonly" ; ?> placeholder="E-mail" value="
+                      <?php
+                        if (!$this->new)
+                          echo $this->user->getEmail();
+                        else
+                          echo $_POST["email"];
+                      ?>">
+                      <?php if(!$this->new): ?>
+                        <small id="emailHelp" class="form-text text-muted">La dirección de correo electrónico no se puede modificar.</small>
+                      <?php endif; ?>
                     </div>
                     <?php if ($this->admin): ?>
                       <div class="form-group">
                         <label for="country">Rol:</label>
                         <select name="role" class="form-control">
-                          <option value="0" <?php if ($this->user->getRole() == 0) echo "selected"; ?>>Evaluador</option>
-                          <option value="1" <?php if ($this->user->getRole() == 1) echo "selected"; ?>>Responsable de Proyecto</option>
-                          <option value="2" <?php if ($this->user->getRole() == 2) echo "selected"; ?>>Administrador</option>
+                          <option value="0" <?php if ((!$this->new) && ($this->user->getRole() == 0)) echo "selected"; ?>>Evaluador</option>
+                          <option value="1" <?php if ((!$this->new) && ($this->user->getRole() == 1)) echo "selected"; ?>>Responsable de Proyecto</option>
+                          <option value="2" <?php if ((!$this->new) && ($this->user->getRole() == 2)) echo "selected"; ?>>Administrador</option>
                         </select>
                        </div>
                     <?php endif; ?>
                     <div class="form-group">
                       <label for="firstname">Nombre:</label>
-                      <input name="firstname" type="text" class="form-control" id="firstname" placeholder="Nombre" value="<?php echoDef($_POST["firstname"], $this->user->getFirstName()); ?>">
+                      <input name="firstname" type="text" class="form-control" id="firstname" placeholder="Nombre" value="<?php
+                        if (!$this->new)
+                          echoDef($_POST["firstname"], $this->user->getFirstName());
+                        else
+                          echo $_POST["firstname"];
+                      ?>">
                     </div>
                     <div class="form-group">
                       <label for="lastname">Apellidos:</label>
-                      <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Apellidos" value="<?php echoDef($_POST["lastname"], $this->user->getLastName()); ?>">
+                      <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Apellidos" value="<?php
+                        if (!$this->new)
+                          echoDef($_POST["lastname"], $this->user->getLastName());
+                        else
+                          echo $_POST["lastname"];
+                      ?>">
                     </div>
                     <label>Sexo:</label>
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="gender" id="cbMale" value="0" <?php
                       if ($_POST["gender"] == "0") echo "checked";
-                      else if ($this->user->getGender() == 0) { echo "checked"; }?>>
+                      else if ((!$this->new) && ($this->user->getGender() == 0)) { echo "checked"; }
+                      else echo "checked"; ?>>
                       <label class="form-check-label" for="cbMale">
                         Masculino
                       </label>
@@ -82,7 +105,7 @@
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="gender" id="cbFemale" value="1" <?php
                       if ($_POST["gender"] == "1") echo "checked";
-                      else if ($this->user->getGender() == 1) { echo "checked"; }?>>
+                        else if ((!$this->new) && ($this->user->getGender() == 1)) { echo "checked"; }?>>
                       <label class="form-check-label" for="cbFemale">
                         Femenino
                       </label>
@@ -90,16 +113,21 @@
                     <br />
                     <div class="form-group">
                       <label for="entity">Organización:</label>
-                      <input name="entity" type="text" class="form-control" id="entity" placeholder="Organización" value="<?php echoDef($_POST["entity"], $this->user->getEntity()); ?>">
+                      <input name="entity" type="text" class="form-control" id="entity" placeholder="Organización" value="<?php
+                        if (!$this->new)
+                          echoDef($_POST["entity"], $this->user->getEntity());
+                        else
+                          echo $_POST["entity"];
+                      ?>">
                     </div>
                     <div class="form-group">
-                      <label for="country">País:</label>
+                      <label for="country">País:</label><?=$_POST["country"];?>
                       <select name="country" class="form-control">
                         <?php
                           foreach (getCountries() as $country) {
-                              if ($_POST["country"] == $country->getIso()) {
+                              if (($_POST["country"] == $country->getIso())) {
                                 $selected = "selected";
-                              } else if ($this->user->getCountry()->getIso() == $country->getIso() && $selected != "selected") {
+                              } else if ((!$this->new) && ($this->user->getCountry()->getIso() == $country->getIso() && $selected != "selected")) {
                                 $selected = "selected";
                               } else {
                                 $selected = "";
