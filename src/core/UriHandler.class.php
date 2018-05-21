@@ -39,6 +39,9 @@
       // 1- Firstly, check if Uri exists
       if (!isset($this->uris[$this->uri])) {
         $view = new BaseController("404","");
+        if ($this->uri != "/404"){
+          $view->requestedUri = $this->uri;
+        }
         $view->render();
       }
 
