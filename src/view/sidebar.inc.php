@@ -2,36 +2,36 @@
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
             <li>
-                <a href="/"><i class="glyphicon glyphicon-home"></i> Inicio</a>
+                <a href="/"><i class="glyphicon glyphicon-home"></i> Home</a>
             </li>
             <li>
-              <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Proyectos<span class="fa arrow"></span></a>
+              <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Projects<span class="fa arrow"></span></a>
               <ul class="nav nav-second-level">
                 <li>
-                    <a href="flot.html">Proyectos Asignados</a>
+                    <a href="flot.html">Assigned Projects</a>
                 </li>
                 <li>
-                    <a href="/my-projects">Mis Proyectos</a>
+                    <a href="/my-projects">My Projects</a>
                 </li>
               </ul>
             </li>
             <?php if ($GLOBALS["USER_SESSION"]->GetRole() >= 1) { ?>
               <li>
-                  <a href="/projects/new"><i class="fa fa-edit fa-fw"></i> Crear Nuevo Proyecto</a>
+                  <a href="/projects/new"><i class="fa fa-edit fa-fw"></i> Create a new Project</a>
               </li>
             <?php } ?>
             <?php if ($GLOBALS["USER_SESSION"]->GetRole() >= 2) { ?>
               <li>
-                  <a href="#"><i class="fa fa-wrench fa-fw"></i> Administración<span class="fa arrow"></span></a>
+                  <a href="#"><i class="fa fa-wrench fa-fw"></i> Administration<span class="fa arrow"></span></a>
                   <ul class="nav nav-second-level">
                     <li>
-                        <a href="/admin/users">Usuarios</a>
+                        <a href="/admin/users">Users</a>
                     </li>
                     <li>
-                        <a href="/admin/projects">Proyectos</a>
+                        <a href="/admin/projects">Projects</a>
                     </li>
                     <li>
-                        <a href="/admin/template">Plantilla de Evaluación</a>
+                        <a href="/admin/template">Evaluation Template</a>
                     </li>
                   </ul>
                   <!-- /.nav-second-level -->

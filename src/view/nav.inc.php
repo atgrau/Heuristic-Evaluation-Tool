@@ -29,7 +29,7 @@
                               <span class="pull-right text-muted">40% Completado</span>
                           </p>
                           <div class="progress progress-striped active">
-                              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                              <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
                                   <span class="sr-only">40% Completado</span>
                               </div>
                           </div>
@@ -61,7 +61,7 @@
                               <span class="pull-right text-muted">10% Completado</span>
                           </p>
                           <div class="progress progress-striped active">
-                              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
+                              <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
                                   <span class="sr-only">10% Completado</span>
                               </div>
                           </div>
@@ -117,12 +117,12 @@
                 <?= $GLOBALS["USER_SESSION"]->getName(); ?> <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a href="/account/profile"><i class="fa fa-user fa-fw"></i> Perfil de Usuario</a>
+                <li><a href="/account/profile"><i class="fa fa-user fa-fw"></i> Profile</a>
                 </li>
-                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Opciones</a>
+                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Options</a>
                 </li>
                 <li class="divider"></li>
-                <li><a href="/account/logout"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesión</a>
+                <li><a href="/account/logout"><i class="fa fa-sign-out fa-fw"></i> Sign Out</a>
                 </li>
             </ul>
             <!-- /.dropdown-user -->
