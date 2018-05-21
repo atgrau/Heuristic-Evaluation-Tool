@@ -24,7 +24,8 @@
       "/admin/users" => 2,
       "/admin/profile" => 2,
       "/admin/new-user" => 2,
-      "/admin/add-user" => 2
+      "/admin/add-user" => 2,
+      "/admin/template" => 2
     );
 
     private $uri;
@@ -92,6 +93,9 @@
       } else if ($this->uri == "/admin/add-user") {
         $controller = new AccountController();
         $controller->addNewUser();
+      } else if ($this->uri == "/admin/template") {
+        $controller = new TemplateController();
+        $controller->showTemplate();
       } else {
         include(BASE_URI."view/index.php");
       }
