@@ -144,6 +144,7 @@
       if ($_SERVER["REQUEST_METHOD"] != "POST") {
         header("Location: /account/profile");
       }
+
       $userId = $GLOBALS["USER_SESSION"]->getId();
 
       $clearpassword = $_POST["newpassword"];
@@ -165,22 +166,19 @@
         $this->error .= "<li>Las contraseñas no coinciden.</li>";
       }
 
+      $this->tab = 1;
+
       if (!empty($this->error)) {
         $this->error = "Tu solicitud de cambio de contraseña contiene errores: <br /><ul>".$this->error."</ul>";
-
-        // Render View
-        $this->tab = 1;
-        $this->showProfile(false, $GLOBALS["USER_SESSION"]->getId());
       } else {
         $user->setPassword($newpassword);
         $user->update();
         $this->success = "¡Tu contraseña ha sido actualizada correctamente!";
       }
+      $this->showProfile(false, $GLOBALS["USER_SESSION"]->getId());
     }
 
-
     // Admin Functions below
-
     function showUserList() {
       $this->setContentView("admin/userlist");
       $this->query = $_GET["q"];
