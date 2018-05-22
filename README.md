@@ -27,10 +27,14 @@ Heuristic Evaluation Tool is a web application that allows to perform an heurist
 
 ## Tasks
 - [x] Core Program
+- [x] Send Email to recipient when a new account has been created
 - [ ] UserList View with CRUD
 - [ ] CRUD of Evaluation Template
 - [ ] Create a new Project
 - [ ] ProjectList View CRUD
+- [ ] Template Categories
+- [ ] Template Questions
+- [ ] Template Answers
 
 ## Entities Model
 ![Entities Model Diagram](http://www.plantuml.com/plantuml/png/ZLHHRnez47o_Nx4b3-4a4gvDetv220KHqaPAcWhnzQM9a3aluEAphrvV2Qhwtxis1qUbL0eljcTdP-onZolomlcgqCafL2QtHO76WryXQ6KGvgZj1jG2jhOwTGWLARC4ffMLHmSRvLSWmA5NHe1KL6gnPILQArCA9mgGfOABB4lUI5m4mQcOQsmRKM178kKfv5eGGG104BG2s89-7zhJpidDpP1_AGm6hBa9xhmZgoKih8FIgKAuBQmnE2uTee7SQkjYjJBgHuLS44RoGgAZt3gCDMFzp5HQ7pPLIyrOglsSGdy-UEvtvuDzlHQBfUZGYsw159SDSQySgLKWL67hblDquCMIGFmKIeSCUeptrQ3VLSnWIv6lUwE7kuV9OA_QWGstONqenRtrD8R5uyeNkePoAyDXsp6oqIZbEI7scEBBNhVBrsB29P_ppNLZuaZdeVtatZfCLaeY5EXNLj9kGPwThT-MI0bheV7Agp3VtLz5w3hG-f-7HzCE0oWJNmrjkRL8ModyIevZlRrEuVRpTFnnF4aEAJchyGMuZXiBZYfDuUjmCleqd7nxV_dKS4f1jB5EDkMBTqVbXNBaGqx_QDVYfV8ImqCvR2YUUdjWVCYUajnMnhi6Oy_V-r3g6kSosiqucZj57km2TeX2UcKoYcnwR1BsUbZ_bnsvbiv-nzopwvVTxCYrHbvjAcVXOfjAxb1uPSrC2ezmFPoEfxVtuwRXxmGliwE0mtViL1cw6yRRB6EELcRTDCMpX3VcK4SpMgcIah0HE3k3VU0zQ0qXWef04AcbGVbel0LhSCzg9NKQeJEIcxPs_AyABmwMuLWC-PKmaAMGyv17B8fP1uLr2BKMjP8hDB8gz1y0)
