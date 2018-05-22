@@ -8,7 +8,7 @@
   // Email Configuration
   define("SMTP_SERVER", "smtp.gmail.com");
   define("SMTP_PORT", 587);
-  define("SMTP_USER", "**");
+  define("SMTP_USER", "**s");
   define("SMTP_PASSWORD", "**");
   define("SMTP_SECURE", "tls");
   define("SMTP_AUTH", true);
