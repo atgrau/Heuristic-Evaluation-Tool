@@ -48,6 +48,16 @@
     function getLink() {
       return $this->link;
     }
+
+    function insert() {
+      DB::insert('projects', array(
+        "id_user" => $this->user->getId(),
+        "creation_date" => date('Y-m-d H:i:s', time()),
+        "name" => $this->name,
+        "description" => $this->description,
+        "link" => $this->link
+      ));
+    }
   }
 
   function getProjectById($projectId) {
@@ -59,19 +69,31 @@
     }
   }
 
-  function getProjects($filter) {
+  function getProjects($userId, $filter) {
     $projectList = array();
-    $qry = "SELECT * FROM projects";
-    if (!empty($filter)) {
-      $condition = " WHERE projects.name like %ss OR projects.description like %ss";
-      $qry .= $condition." ORDER BY ID";
+    $qry = "SELECT * FROM projects ";
 
-      $projects = DB::query($qry, $filter, $filter);
+
+
+    if (!empty($userId)) {
+      $condition .= " WHERE active = 1 AND projects.id_user = %i";
     } else {
-      $qry .= " ORDER BY ID";
-
-      $projects = DB::query($qry);
+      $condition .= " WHERE 1=1";
     }
+
+    if (!empty($filter))
+      $condition .= " AND (projects.name like %ss OR projects.description like %ss)";
+
+    $qry .= $condition." ORDER BY ID";
+
+    if ((!empty($userId)) && (!empty($filter)))
+      $projects = DB::query($qry, $userId, $filter, $filter);
+    else if (!empty($userId))
+      $projects = DB::query($qry, $userId);
+    else if (!empty($filter))
+      $projects = DB::query($qry, $filter, $filter);
+    else
+      $projects = DB::query($qry);
 
     if ($projects) {
       foreach ($projects as $row) {

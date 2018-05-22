@@ -130,8 +130,6 @@
         "entity" => $this->entity,
         "country" => $this->country->getIso()
       ));
-
-      // Enviar Email
     }
   }
 

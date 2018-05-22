@@ -102,9 +102,9 @@
       $this->tab = 0;
 
       if ($isAdmin) {
-        $this->showProfile(true, $_POST["UserId"]);
+        $this->showProfile(true);
       } else {
-        $this->showProfile(false, $GLOBALS["USER_SESSION"]->getId());
+        $this->showProfile(false);
       }
     }
 
@@ -180,7 +180,7 @@
 
     // Admin Functions below
     function showUserList() {
-      $this->setContentView("admin/userlist");
+      $this->setContentView("account/userlist");
       $this->query = $_GET["q"];
       $this->userList = getUsers($this->query);
       $this->render();

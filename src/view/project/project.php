@@ -19,7 +19,7 @@
              <?php echo $this->error; ?>
             </div>
           <?php } ?>
-            <form action="#" method="POST">
+            <form action="/projects/add" method="POST">
               <div class="form-group">
                 <label for="name">Project's Name:</label>
                 <input name="name" type="text" class="form-control" id="name" placeholder="Name of project" value="">

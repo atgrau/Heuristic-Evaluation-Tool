@@ -8,19 +8,24 @@
 <div class="row margin-lg-b">
   <a href="/projects/new" title="Añadir nuevo Usuario" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Añadir nuevo Proyecto</a>
 </div>
+<?php if ($this->addMessage): ?>
+  <div class="row alert alert-info" role="alert">
+   Project <strong><?= $this->recentProject; ?></strong> has beed added successfully!
+  </div>
+<?php endif; ?>
 <div class="row margin-lg-b">
-            <div id="custom-search-input">
-              <form action="/my-projects" method="GET">
-                <div class="input-group col-md-12">
-                    <input name="q" type="text" class="form-control input" placeholder="Buscar por nombre o descripción..." value="<?= $this->query; ?>" />
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary btn" type="submit">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </button>
-                    </span>
-                </div>
-              </form>
-            </div>
+    <div id="custom-search-input">
+      <form action="/my-projects" method="GET">
+        <div class="input-group col-md-12">
+            <input name="q" type="text" class="form-control input" placeholder="Buscar por nombre o descripción..." value="<?= $this->query; ?>" />
+            <span class="input-group-btn">
+                <button class="btn btn-primary btn" type="submit">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </span>
+        </div>
+      </form>
+    </div>
 	</div>
 <div class="row">
   <table class="table table-hover">

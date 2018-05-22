@@ -16,6 +16,8 @@
       "/account/update-password" => 0,
       "/my-projects" => 1,
       "/projects/new" => 1,
+      "/projects/add" => 1,
+      "/admin/projects" => 2,
       "/admin/update-profile" => 2,
       "/admin/users" => 2,
       "/admin/profile" => 2,
@@ -73,10 +75,16 @@
         $controller->updatePassword();
       } else if ($this->uri == "/my-projects") {
         $controller = new ProjectController();
-        $controller->showProjectList();
+        $controller->showProjectList(true);
       } else if ($this->uri == "/projects/new") {
         $controller = new ProjectController();
+        $controller->addNewProjectView();
+      } else if ($this->uri == "/projects/add") {
+        $controller = new ProjectController();
         $controller->addNewProject();
+      } else if ($this->uri == "/admin/projects") {
+        $controller = new ProjectController();
+        $controller->showProjectList(false);
       } else if ($this->uri == "/admin/update-profile") {
         $controller = new AccountController();
         $controller->updateProfile(true);
