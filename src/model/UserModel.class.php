@@ -120,9 +120,6 @@
     }
 
     function insert() {
-      // Generate new password
-      $clearPassword = substr( md5(microtime()), 1, 8);
-      $this->password = md5($clearPassword);
       DB::insert('users', array(
         "email" => $this->email,
         "role" => $this->role,

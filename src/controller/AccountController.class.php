@@ -231,7 +231,12 @@
       } else {
         $user = UserModel::create();
 
+        // Generate new Password
+        $password = randomPassword();
+        $md5Password = md5($password);
+
         $user->setEmail($email);
+        $user->setPassword($md5Password);
         $user->setRole($role);
         $user->setFirstName($firstname);
         $user->setLastName($lastname);
@@ -241,6 +246,22 @@
 
         // Insert new user to database
         $user->insert();
+
+        // Send and Email with Password
+        $subject = "Welcome to ".APP_TITLE;
+        $body = "Hello <b>".$user->getName()."</b>, <br /><br />";
+        $body .= "Welcome to <b>".APP_TITLE."</b>, your account has been created successfully!<br /><br />";
+        $body .= "You can access using the following credentials:<br />";
+        $body .= "<b>Email:</b> ".$email."<br />";
+        $body .= "<b>Password:</b> ".$password."<br /><br />";
+        $body .= "<a href='".URL."' target='_blank'>Click here to Sign In</a><br /><br />";
+        $body .= "Regards, <br />";
+        $body .= APP_TITLE." team";
+
+        $email = new Email($email, $subject, $body, $body);
+        $email->send();
+
+        // Render View
         $this->addMessage = true;
         $this->recentUser = $firstname;
         $this->showUserList();
