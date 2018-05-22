@@ -1,9 +1,7 @@
 <?php
-  require_once(BASE_URI."model/UserModel.class.php");
-  require_once(BASE_URI."model/CountryModel.class.php");
 
   /**
-   *
+   * Account Controller
    */
   class AccountController extends BaseController
   {

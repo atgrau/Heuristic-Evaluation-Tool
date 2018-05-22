@@ -1,6 +1,7 @@
 <?php
+
   /**
-   * Countries
+   * Countries Model
    */
   class Country
   {

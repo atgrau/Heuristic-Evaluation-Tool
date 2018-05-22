@@ -1,9 +1,7 @@
 <?php
-  require_once(BASE_URI."controller/ProjectController.class.php");
-  require_once(BASE_URI."config/database.php");
 
   /**
-   *
+   * Project Model
    */
   class ProjectModel
   {

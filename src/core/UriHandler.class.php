@@ -1,8 +1,4 @@
 <?php
-  // Controllers
-  require_once(BASE_URI."controller/BaseController.class.php");
-  require_once(BASE_URI."controller/AccountController.class.php");
-  require_once(BASE_URI."controller/ProjectController.class.php");
 
   /**
    * Uri Handler -> Call controller

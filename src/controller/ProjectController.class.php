@@ -1,6 +1,4 @@
 <?php
-  require_once(BASE_URI."model/ProjectModel.class.php");
-  require_once(BASE_URI."model/UserModel.class.php");
 
   class ProjectController extends BaseController
   {

@@ -1,6 +1,7 @@
 <?php
+
   /**
-   * Questions
+   * Questions Model
    */
   class Question
   {

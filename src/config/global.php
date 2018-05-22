@@ -4,4 +4,7 @@
   //error_reporting(~E_ALL);
 
   define("APP_TITLE", "Heuristic Evaluation Tool");
+
+  // Email Configuration
+
 ?>

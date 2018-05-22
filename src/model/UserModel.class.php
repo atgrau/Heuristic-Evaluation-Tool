@@ -1,6 +1,4 @@
 <?php
-  require_once(BASE_URI."config/database.php");
-  require_once(BASE_URI."core/lib/Mailer.class.php");
 
   /**
    * Users
