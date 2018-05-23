@@ -105,6 +105,12 @@
       $this->country = $value;
     }
 
+    function setNewToken($token) {
+      DB::update("users", array(
+        "token" => $token
+      ), "ID=%i", $this->id);
+    }
+
     function update() {
       if (!empty($this->id)) {
         DB::update("users", array(
@@ -135,6 +141,15 @@
 
   function getUserById($userId) {
     $account = DB::queryFirstRow("SELECT users.*, countries.iso, countries.name FROM users LEFT JOIN countries on users.country = countries.iso WHERE users.ID=%i", $userId);
+    if ($account) {
+      return new UserModel($account["ID"], $account["role"], $account["email"], $account["password"], $account["firstname"], $account["lastname"], $account["gender"], $account["entity"], new Country($account["iso"], $account["name"]));
+    } else {
+      return null;
+    }
+  }
+
+  function getUserByEmail($email) {
+    $account = DB::queryFirstRow("SELECT users.*, countries.iso, countries.name FROM users LEFT JOIN countries on users.country = countries.iso WHERE users.email=%s", $email);
     if ($account) {
       return new UserModel($account["ID"], $account["role"], $account["email"], $account["password"], $account["firstname"], $account["lastname"], $account["gender"], $account["entity"], new Country($account["iso"], $account["name"]));
     } else {

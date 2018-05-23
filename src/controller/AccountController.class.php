@@ -27,6 +27,44 @@
       header("Location: /");
     }
 
+    function forgot() {
+      if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        header("Location: /forgot");
+      }
+
+      if (!userEmailExists($_POST["email"])) {
+        $this->error = "<span class='glyphicon glyphicon-remove-sign'></span> E-mail does not exists in our database";
+      } else {
+        // Generate a token
+        $token = md5(randomPassword());
+
+        $user = getUserByEmail($_POST["email"]);
+        $user->setNewToken($token);
+
+        // Send and Email
+        $subject = APP_TITLE." - Reset Password";
+        $body = "Hello <b>".$user->getName()."</b>, <br /><br />";
+        $body .= "You have requested to reset your password.<br /><br />";
+        $body .= "You can proceed by doing click below:<br />";
+        $body .= "<a href='".URL."/forgot/reset?token=".$token."' target='_blank'>".URL."/forgot/reset/?token=".$token."</a><br /><br />";
+        $body .= "If you have not request a password reset, please remove this e-mail.<br /><br />";
+        $body .= "Regards, <br />";
+        $body .= APP_TITLE." team";
+
+        $email = new Email($_POST["email"], $subject, $body);
+        $email->send();
+
+        $this->recovered = "<span class='glyphicon glyphicon-info-sign'></span> Check your email for more information on how to reset your password.";
+      }
+      $this->setView("login");
+      $this->setContent("forgot");
+      $this->render();
+    }
+
+    function reset() {
+      echo "Not implemented yet...";
+    }
+
     function showProfile($adminView) {
       $this->setContentView("account/profile");
       $this->admin = $adminView;
@@ -264,7 +302,7 @@
         $body .= "Regards, <br />";
         $body .= APP_TITLE." team";
 
-        $email = new Email($email, $subject, $body, $body);
+        $email = new Email($email, $subject, $body);
         $email->send();
 
         // Render View

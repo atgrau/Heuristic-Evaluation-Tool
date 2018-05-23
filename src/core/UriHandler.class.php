@@ -10,6 +10,8 @@
       "/" => -1,
       "/signin" => -1,
       "/forgot" => -1,
+      "/forgot/send" => -1,
+      "/forgot/reset" => -1,
       "/account/login" => -1,
       "/account/logout" => 0,
       "/account/profile" => 0,
@@ -62,6 +64,12 @@
       }  else if ($this->uri == "/forgot") {
         $view = new BaseController("login","forgot");
         $view->render();
+      } else if ($this->uri == "/forgot/send") {
+        $controller = new AccountController();
+        $controller->forgot();
+      } else if ($this->uri == "/forgot/reset") {
+        $controller = new AccountController();
+        $controller->reset();
       } else if ($this->uri == "/account/login") {
         $controller = new AccountController();
         $controller->login();

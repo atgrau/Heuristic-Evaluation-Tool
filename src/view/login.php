@@ -37,15 +37,15 @@
                             </fieldset>
                         </form>
                       <?php else: ?>
-                        <form role="form" method="POST" action="/account/forgot">
+                        <form role="form" method="POST" action="/forgot/send">
                             <fieldset>
                               <?php if($this->recovered) { ?>
-                                <div class="alert alert-warning" role="alert">
-                                  <span class="glyphicon glyphicon-warning-sign"></span> Se ha enviado...
+                                <div class="alert alert-info" role="alert">
+                                  <?= $this->recovered; ?>
                                 </div>
                               <?php } else if ($this->error) { ?>
                                 <div class="alert alert-danger" role="alert">
-                                  <span class="glyphicon glyphicon-remove-sign"></span> User credentials are not valid.
+                                  <?= $this->error; ?>
                                 </div>
                               <?php } ?>
                                 <div class="form-group">

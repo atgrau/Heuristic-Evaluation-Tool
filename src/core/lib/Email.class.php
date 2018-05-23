@@ -13,14 +13,12 @@
     private $to;
     private $subject;
     private $body;
-    private $altBody;
 
-    function __construct($to, $subject, $body, $altBody)
+    function __construct($to, $subject, $body)
     {
       $this->to = $to;
       $this->subject = $subject;
       $this->body = $body;
-      $this->altBody = $altBody;
     }
 
     function send() {
@@ -44,7 +42,6 @@
           $mail->isHTML(true);
           $mail->Subject = $this->subject;
           $mail->Body    = $this->body;
-          $mail->AltBody = $this->altBody;
 
           $mail->send();
           return true;
