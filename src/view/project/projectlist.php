@@ -6,18 +6,18 @@
 </div>
 <!-- /.row -->
 <div class="row margin-lg-b">
-  <a href="/projects/new" title="Añadir nuevo Usuario" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Añadir nuevo Proyecto</a>
+  <a href="/projects/new" title="Add new Project" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add new Project</a>
 </div>
 <?php if ($this->addMessage): ?>
   <div class="row alert alert-info" role="alert">
-   Project <strong><?= $this->recentProject; ?></strong> has beed added successfully!
+   <span class="glyphicon glyphicon-info-sign"></span> Project <strong><?= $this->recentProject; ?></strong> has beed added successfully!
   </div>
 <?php endif; ?>
 <div class="row margin-lg-b">
     <div id="custom-search-input">
       <form action="/my-projects" method="GET">
         <div class="input-group col-md-12">
-            <input name="q" type="text" class="form-control input" placeholder="Buscar por nombre o descripción..." value="<?= $this->query; ?>" />
+            <input name="q" type="text" class="form-control input" placeholder="Search by name or description..." value="<?= $this->query; ?>" />
             <span class="input-group-btn">
                 <button class="btn btn-primary btn" type="submit">
                     <i class="glyphicon glyphicon-search"></i>
@@ -32,8 +32,8 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Descripción</th>
+        <th scope="col">Project's Name</th>
+        <th scope="col">Description</th>
         <th scope="col">Link</th>
         <th scope="col"></th>
       </tr>
@@ -48,8 +48,8 @@
             <td><?= $project->getDescription(); ?></td>
             <td><?= $project->getLink(); ?> <a href="<?= $project->getLink(); ?>" target="_blank" title="Link a <?= $project->getName(); ?>"><span class="glyphicon glyphicon-link"></span></a></td>
             <td>
-              <a href="/projects/<?= $project->getId(); ?>" title="Editar Proyecto"><span class="glyphicon glyphicon-pencil padding-l"></span></a>
-              <a href="#" title="Eliminar Proyecto" class="text-danger"><span class="glyphicon glyphicon-remove padding-l"></span></a>
+              <a href="/projects/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil padding-l"></span></a>
+              <a href="#" title="Remove Proyecto" class="text-danger"><span class="glyphicon glyphicon-remove padding-l"></span></a>
             </td>
           </tr>
       <?php
@@ -60,9 +60,9 @@
   </table>
   <?php
     if (empty($this->projectList)) {
-      echo "No se han encontrado proyectos... <br /><br />";
+      echo "No projects found... <br /><br />";
     } else {
-      echo "<strong>Total de Proyectos:</strong> ".sizeof($this->projectList);
+      echo "<strong>Total projects:</strong> ".sizeof($this->projectList);
     }
   ?>
 </div>

@@ -169,6 +169,11 @@
     return DB::count() > 0;
   }
 
+  function userEmailExists($email) {
+    DB::query("SELECT ID FROM users WHERE email=%s", $email);
+    return DB::count() > 0;
+  }
+
   function doLogin($email, $password) {
     $account = DB::queryFirstRow("SELECT ID FROM users WHERE email=%s and password=%s", $email, $password);
     if ($account) {

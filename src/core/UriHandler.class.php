@@ -9,6 +9,7 @@
     private $uris = array(
       "/" => -1,
       "/signin" => -1,
+      "/forgot" => -1,
       "/account/login" => -1,
       "/account/logout" => 0,
       "/account/profile" => 0,
@@ -46,7 +47,7 @@
       // 2- Check Uri and permissions
       if (!$this->checkUriAndPermissions()) {
         // Can't access or Uri doesn't exist!!
-        $view = new BaseController("login","");
+        $view = new BaseController("login","signin");
         $view->required = true;
         $view->render();
       }
@@ -56,7 +57,10 @@
         $view = new BaseController("index","");
         $view->render();
       } else if ($this->uri == "/signin") {
-        $view = new BaseController("login","");
+        $view = new BaseController("login","signin");
+        $view->render();
+      }  else if ($this->uri == "/forgot") {
+        $view = new BaseController("login","forgot");
         $view->render();
       } else if ($this->uri == "/account/login") {
         $controller = new AccountController();
@@ -110,10 +114,9 @@
     }
 
     function checkUriAndPermissions() {
-      if (($this->uri == "/signin") || ($this->uri == "/account/login")) { // User tries to sign in
-        return true;
-      } else if ((!isset($GLOBALS["USER_SESSION"])) && ($this->uri == "/")) { // First page
-        $this->uri = "/signin";
+      if ((!isset($GLOBALS["USER_SESSION"])) && ($this->uri == "/")) { // First page
+        header("Location: /signin");
+      } else if ($this->uris[$this->uri] < 0) { // User tries to access public content
         return true;
       } else if ((!isset($GLOBALS["USER_SESSION"])) || ($this->uris[$this->uri] > $GLOBALS["USER_SESSION"]->getRole())) { // User tries to access private content without a minumum role level
         return false;

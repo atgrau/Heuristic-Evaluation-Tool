@@ -38,6 +38,7 @@ name VARCHAR[80]
 
 Table(project, "Project\n(List of Projects)") {
 primary_key(ID) INTEGER
+active BIT
 not_null(id_user) INTEGER
 creation_date DATETIME
 not_null(name) VARCHAR[50]
@@ -48,5 +49,5 @@ link VARCHAR[50]
 
 ' relationships
 user -- country : "A user is assigned\nto one country"
-project -- user : "A user (with role greater than 0) can create one or more projects"
+project -- user : "A user (with role greater than 0)\ncan create one or more projects"
 @enduml

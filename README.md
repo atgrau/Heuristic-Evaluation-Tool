@@ -2,7 +2,7 @@
 Heuristic Evaluation Tool is a *Final Degree Project* built with *PHP & MySQL*
 
 ## Vision
-Heuristic Evaluation Tool is a web application that allows to perform an heuristic evaluation of the interface of an interactive system.
+A web application that allows to perform an heuristic evaluation of the interface of an interactive system.
 
 ## Features per Stakeholder
 
@@ -10,31 +10,22 @@ Heuristic Evaluation Tool is a web application that allows to perform an heurist
 | ----------------------------- | --------------------------------------- | --------------------------------------- |
 | Update his own profile        | Update his own profile                  | Update his own profile                  |
 | Make an evaluation            | Make an evaluation                      | Make an evaluation                      |
-|                               | Create a new project                    | Create a new project                    |
+|                               | Create/Update/Delete their own projects | Create/Update/Delete their own projects |
 |                               | Assign evaluators to their own projects | Assign evaluators to their own projects |
 |                               |                                         | Create/Update/Delete Users              |
 |                               |                                         | Modify evaluation template              |
 
-## Change Log
-- 12/05/2018: Added Main View
-- 12/05/2018: Added UserModel
-- 12/05/2018: Added Account Controller
-- 13/05/2018: Added CountryModel
-- 14/05/2018: Added Profile View (including a password change form)
-- 15/05/2018: Added ProjectModel
-- 17/05/2018: Fixed some bugs
-- 17/05/2018: Added ProjectController
-
 ## Tasks
 - [x] Core Program
 - [x] Send Email to recipient when a new account has been created
-- [ ] UserList View with CRUD
+- [ ] CRUD of Users
+- [ ] CRUD of Projects
 - [ ] CRUD of Evaluation Template
-- [ ] Create a new Project
-- [ ] ProjectList View CRUD
 - [ ] Template Categories
 - [ ] Template Questions
 - [ ] Template Answers
+- [ ] Forgot password
+- [ ] Start a new Evaluation
 
 ## Entities Model
-![Entities Model Diagram](http://www.plantuml.com/plantuml/png/ZLHHRnez47o_Nx4b3-4a4gvDetv220KHqaPAcWhnzQM9a3aluEAphrvV2Qhwtxis1qUbL0eljcTdP-onZolomlcgqCafL2QtHO76WryXQ6KGvgZj1jG2jhOwTGWLARC4ffMLHmSRvLSWmA5NHe1KL6gnPILQArCA9mgGfOABB4lUI5m4mQcOQsmRKM178kKfv5eGGG104BG2s89-7zhJpidDpP1_AGm6hBa9xhmZgoKih8FIgKAuBQmnE2uTee7SQkjYjJBgHuLS44RoGgAZt3gCDMFzp5HQ7pPLIyrOglsSGdy-UEvtvuDzlHQBfUZGYsw159SDSQySgLKWL67hblDquCMIGFmKIeSCUeptrQ3VLSnWIv6lUwE7kuV9OA_QWGstONqenRtrD8R5uyeNkePoAyDXsp6oqIZbEI7scEBBNhVBrsB29P_ppNLZuaZdeVtatZfCLaeY5EXNLj9kGPwThT-MI0bheV7Agp3VtLz5w3hG-f-7HzCE0oWJNmrjkRL8ModyIevZlRrEuVRpTFnnF4aEAJchyGMuZXiBZYfDuUjmCleqd7nxV_dKS4f1jB5EDkMBTqVbXNBaGqx_QDVYfV8ImqCvR2YUUdjWVCYUajnMnhi6Oy_V-r3g6kSosiqucZj57km2TeX2UcKoYcnwR1BsUbZ_bnsvbiv-nzopwvVTxCYrHbvjAcVXOfjAxb1uPSrC2ezmFPoEfxVtuwRXxmGliwE0mtViL1cw6yRRB6EELcRTDCMpX3VcK4SpMgcIah0HE3k3VU0zQ0qXWef04AcbGVbel0LhSCzg9NKQeJEIcxPs_AyABmwMuLWC-PKmaAMGyv17B8fP1uLr2BKMjP8hDB8gz1y0)
+![Entities Model Diagram](http://www.plantuml.com/plantuml/png/ZLJHRze-47xFNt5B7qeaMh9rrNv229LHkY6rwuJONjOAcVWW7ewTsKufclQ_xsm2oQHE-_5Y--wxxpj_vt1b7JEkAcHq2fNAT56WSk1o12aKmXAbte9OmKvNfmQXiaAjWM1bvT30LhWS61XqGZ7WmfQIxOZ9ReGgcM45y5B0HPf6hpYkFE6SBILs52kmoz5c2MIIMGi-0Cn2x8Cn30RGcNTFRcv6z4jWE2JEhLUdZhJaiD86IYCAPdQmGQ-uDeYA6fFQX6obn8yAAS4KfmD7OpDjCEIKTWjLINbiggPQ45NdEO71SlWyw2s7XtnD5b91eH_KF2WS6-21EK0h3wXywvhyDE3OsW9xOa9w3_eK7uZXe2S8GP8is_J7zxVti-61jGjRAiFwKe9gwsqmYzRS5R8EPPhxotQ2PUDnucU0s2U8A_kz7er5-I6Vq-HwmN6qvxxyv4uRZ7B14GfqkUPsVx2EbBNRbMWZuaBbX1D-lvzVPT5q8Vv2ouFg-0M42g_6xgYqIE84VaPjMwVN2Km_pISV9hFew9BH4by8rtPZGLOb2NmTpSOVHxDlRoyV6qp9hDrgmvlqnPjMUYMCTTwdlvHBzb9wZVwX71iAjzuT4U_InoZJbNAcYP7chuCfTOvy6UztPCsji0xq2lOHWVP_EYEiJjeYljVZ-R-qfLeQ_HqpHwgVzxkMQXtvXoZBd7X2U3-Tj_Jvmi-u0MK6cHDQBJXp2DUZ-MG-lPiq1N-QUPcslFQVj16bhsuGhzEKC5AeJRk8hkMVcq4Pn6mkIXlvHk3i30xUzo4UGGZwRy9QiLR87vJJe1KUK75K6-Ch0xWfwuI_BV_uOEslHI6NCmLfyg0oMhCG36pQGA4DGarcu-WA5QyA-Hi0)

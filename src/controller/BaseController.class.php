@@ -17,6 +17,10 @@
       $this->view = $view;
     }
 
+    function setContent($content) {
+      $this->content = $content;
+    }
+
     function setContentView($content) {
       $this->view = "index";
       $this->content = $content;

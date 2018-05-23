@@ -13,6 +13,7 @@
         header("Location: /");
       } else {
         $this->setView("login");
+        $this->setContent("signin");
         $this->error = true;
         $this->email = $_POST["email"];
         $this->render();
@@ -65,17 +66,17 @@
 
       // Validation
       if (($isAdmin) && ($role != 0) && ($role != 1) && ($role != 2)) {
-        $this->error .= "<li>El rol especificado no es correto.</li>";
+        $this->error .= "<li>Specified role is not valid.</li>";
       }
 
       if (($isAdmin) && ($role != 2) && ($userId == $GLOBALS["USER_SESSION"]->getId())) {
-        $this->error .= "<li>No puedes re-asignarte un rol a ti mismo.</li>";
+        $this->error .= "<li>You cannot re-assign a role to yourself.</li>";
       }
 
       $this->validateProfile($firstname, $lastname, $gender, $entity, $country);
 
       if (!empty($this->error)) {
-        $this->error = "El nuevo perfil contiene errores: <br /><ul>".$this->error."</ul>";
+        $this->error = "<span class='glyphicon glyphicon-remove-sign'></span> The new profile has errors: <br /><ul>".$this->error."</ul>";
       } else {
         $user = getUserById($userId);
 
@@ -96,7 +97,10 @@
           $GLOBALS["USER_SESSION"] = getUserById($userId);
         }
 
-        $this->success = "¡Los datos han sido actualizados correctamente!";
+        if ($isAdmin)
+          $this->success = "<span class='glyphicon glyphicon-info-sign'></span> ".$user->getFirstName()."'s profile has been updated successfully!";
+        else
+          $this->success = "<span class='glyphicon glyphicon-info-sign'></span> Your profile has been updated successfully!";
       }
 
       $this->tab = 0;
@@ -209,17 +213,21 @@
       $country = $_POST["country"];
 
       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $this->error .= "<li>Invalid email format.</li>";
+        $this->error .= "<li>Invalid e-mail format.</li>";
+      }
+
+      if (userEmailExists($email)) {
+        $this->error .= "<li>Specified e-mail already exists in our database.</li>";
       }
 
       if (($isAdmin) && ($role != 0) && ($role != 1) && ($role != 2)) {
-        $this->error .= "<li>El rol especificado no es correto.</li>";
+        $this->error .= "<li>Specified role is not valid.</li>";
       }
 
       $this->validateProfile($firstname, $lastname, $gender, $entity, $country);
 
       if (!empty($this->error)) {
-        $this->error = "El nuevo perfil contiene errores: <br /><ul>".$this->error."</ul>";
+        $this->error = "<span class='glyphicon glyphicon-remove-sign'></span> The new profile has errors: <br /><ul>".$this->error."</ul>";
 
         $this->setContentView("account/profile");
         $this->new = true;

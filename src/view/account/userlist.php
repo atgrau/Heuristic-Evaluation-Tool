@@ -1,23 +1,23 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Usuarios del Sistema</h1>
+        <h1 class="page-header">List of Users</h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
 <div class="row margin-lg-b">
-  <a href="/admin/new-user" title="Añadir nuevo Usuario" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Añadir nuevo Usuario</a>
+  <a href="/admin/new-user" title="Add new User" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add new user</a>
 </div>
 <?php if ($this->addMessage): ?>
   <div class="row alert alert-info" role="alert">
-   User <strong><?= $this->recentUser; ?></strong> has beed added successfully!
+   <span class="glyphicon glyphicon-info-sign"></span> User <strong><?= $this->recentUser; ?></strong> has beed added successfully!
   </div>
 <?php endif; ?>
 <div class="row margin-lg-b">
   <div id="custom-search-input">
     <form action="/admin/users" method="GET">
       <div class="input-group col-md-12">
-          <input name="q" type="text" class="form-control input" placeholder="Buscar por nombre, apellido o email..." value="<?= $this->query; ?>" />
+          <input name="q" type="text" class="form-control input" placeholder="Search by first name, last name, email..." value="<?= $this->query; ?>" />
           <span class="input-group-btn">
               <button class="btn btn-primary btn" type="submit">
                   <i class="glyphicon glyphicon-search"></i>
@@ -32,9 +32,9 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Email</th>
-        <th scope="col">Rol</th>
+        <th scope="col">Name</th>
+        <th scope="col">E-mail</th>
+        <th scope="col">Role</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -61,9 +61,9 @@
   </table>
   <?php
     if (empty($this->userList)) {
-      echo "No se han encontrado usuarios... <br /><br />";
+      echo "No users found...<br /><br />";
     } else {
-      echo "<strong>Total de Usuarios:</strong> ".sizeof($this->userList);
+      echo "<strong>Total Users:</strong> ".sizeof($this->userList);
     }
   ?>
 </div>

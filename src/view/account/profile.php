@@ -3,7 +3,7 @@
       <?php if ($this->new): ?>
         <h1 class="page-header">New User</h1>
       <?php else: ?>
-        <h1 class="page-header">Perfil de <?= $this->user->getName(); ?></h1>
+        <h1 class="page-header"><?= $this->user->getName(); ?>'s profile</h1>
       <?php endif; ?>
     </div>
     <!-- /.col-lg-12 -->
@@ -15,7 +15,7 @@
         <!-- /.panel-heading -->
         <div class="panel-body">
           <?php if($this->admin): ?>
-            <a href="/admin/users" title="Listado de Usuarios" class="btn btn-primary">Volver al listado de Usuarios</a><br /><br />
+            <a href="/admin/users" title="Listado de Usuarios" class="btn btn-primary"><span class="glyphicon glyphicon-menu-left"></span> Back to user list</a><br /><br />
           <?php endif; ?>
           <?php if (isset($this->success)) { ?>
             <div class="alert alert-info" role="alert">
@@ -52,7 +52,7 @@
                   <form class="margin margin-lg-t" method="POST" action="<?= $this->action; ?>">
                     <input type="hidden" name="UserId" value="<?php if(!$this->new) echo $this->user->getId(); ?>" />
                     <div class="form-group">
-                      <label for="email">Correo Electrónico:</label>
+                      <label for="email">E-mail:</label>
                       <input autofocus name="email" type="email" class="form-control" id="email" <?php if(!$this->new) echo "readonly" ; ?> placeholder="E-mail" value="
                       <?php
                         if (!$this->new)
@@ -68,15 +68,15 @@
                       <div class="form-group">
                         <label for="country">Rol:</label>
                         <select name="role" class="form-control">
-                          <option value="0" <?php if ((!$this->new) && ($this->user->getRole() == 0)) echo "selected"; ?>>Evaluador</option>
-                          <option value="1" <?php if ((!$this->new) && ($this->user->getRole() == 1)) echo "selected"; ?>>Responsable de Proyecto</option>
-                          <option value="2" <?php if ((!$this->new) && ($this->user->getRole() == 2)) echo "selected"; ?>>Administrador</option>
+                          <option value="0" <?php if ((!$this->new) && ($this->user->getRole() == 0)) echo "selected"; ?>>Evaluator</option>
+                          <option value="1" <?php if ((!$this->new) && ($this->user->getRole() == 1)) echo "selected"; ?>>Project Manager</option>
+                          <option value="2" <?php if ((!$this->new) && ($this->user->getRole() == 2)) echo "selected"; ?>>Administrator</option>
                         </select>
                        </div>
                     <?php endif; ?>
                     <div class="form-group">
-                      <label for="firstname">Nombre:</label>
-                      <input name="firstname" type="text" class="form-control" id="firstname" placeholder="Nombre" value="<?php
+                      <label for="firstname">First name:</label>
+                      <input name="firstname" type="text" class="form-control" id="firstname" placeholder="First name" value="<?php
                         if (!$this->new)
                           echoDef($_POST["firstname"], $this->user->getFirstName());
                         else
@@ -84,15 +84,15 @@
                       ?>">
                     </div>
                     <div class="form-group">
-                      <label for="lastname">Apellidos:</label>
-                      <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Apellidos" value="<?php
+                      <label for="lastname">Last name:</label>
+                      <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Last name" value="<?php
                         if (!$this->new)
                           echoDef($_POST["lastname"], $this->user->getLastName());
                         else
                           echo $_POST["lastname"];
                       ?>">
                     </div>
-                    <label>Sexo:</label>
+                    <label>Gender:</label>
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="gender" id="cbMale" value="0" <?php
                       if ($_POST["gender"] == "0") echo "checked";
@@ -112,7 +112,7 @@
                     </div>
                     <br />
                     <div class="form-group">
-                      <label for="entity">Organización:</label>
+                      <label for="entity">Entity:</label>
                       <input name="entity" type="text" class="form-control" id="entity" placeholder="Organización" value="<?php
                         if (!$this->new)
                           echoDef($_POST["entity"], $this->user->getEntity());
@@ -121,7 +121,7 @@
                       ?>">
                     </div>
                     <div class="form-group">
-                      <label for="country">País:</label><?=$_POST["country"];?>
+                      <label for="country">Country:</label><?=$_POST["country"];?>
                       <select name="country" class="form-control">
                         <?php
                           foreach (getCountries() as $country) {
@@ -138,25 +138,25 @@
                      </select>
                     </div>
                     <br />
-                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
                   </form>
                 </div>
                 <div class="tab-pane fade in <?php echo $change1; ?>" id="password">
                   <form class="margin margin-lg-t" method="POST" action="/account/update-password">
                     <div class="form-group">
-                      <label for="password">Contraseña Actual:</label>
+                      <label for="password">Actual Password:</label>
                       <input name="password" type="password" class="form-control" id="password" placeholder="Introduzca un contraseña">
                     </div>
                     <div class="form-group">
-                      <label for="newpassword">Nueva Contraseña:</label>
+                      <label for="newpassword">New Password:</label>
                       <input name="newpassword" type="password" class="form-control" id="newpassword" placeholder="Introduzca un contraseña">
                     </div>
                     <div class="form-group">
-                      <label for="newpassword2">Repite la Nueva Contraseña:</label>
+                      <label for="newpassword2">Repeat new Password:</label>
                       <input name="newpassword2" type="password" class="form-control" id="newpassword2" placeholder="Introduzca un contraseña">
                     </div>
                     <br />
-                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
                   </form>
                 </div>
             </div>
