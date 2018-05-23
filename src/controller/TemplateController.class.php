@@ -9,6 +9,7 @@
 
     function showTemplate() {
       $this->setContentView("template/template");
+      $this->tab = 0;
       $this->render();
     }
   }

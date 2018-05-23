@@ -22,134 +22,68 @@
             <!-- Nav tabs -->
             <?php
               if ($this->tab == 0) {
-                $change0 = "active";
-                $change1 = "";
+                $active0 = "active";
+                $active1 = "";
+                $active2 = "";
+              } else if ($this->tab == 1){
+                $active0 = "";
+                $active1 = "active";
+                $active2 = "";
               } else {
-                $change0 = "";
-                $change1 = "active";
+                $active0 = "";
+                $active1 = "";
+                $active2 = "active";
               }
             ?>
             <ul class="nav nav-tabs">
-                <li class="<?php echo $change0; ?>">
-                  <a href="#profile" data-toggle="tab">Personal Data</a>
+                <li class="<?php echo $active0; ?>">
+                  <a href="#categories" data-toggle="tab">Categories</a>
                 </li>
-                <?php if(!$this->admin): ?>
-                <li class="<?php echo $change1; ?>">
-                  <a href="#password" data-toggle="tab">Password</a>
+                <li class="<?php echo $active1; ?>">
+                  <a href="#questions" data-toggle="tab">Questions</a>
                 </li>
-              <?php endif; ?>
+                <li class="<?php echo $active2; ?>">
+                  <a href="#answers" data-toggle="tab">Answers</a>
+                </li>
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
-                <div class="tab-pane fade in <?php echo $change0; ?>" id="profile">
-                  <form class="margin margin-lg-t" method="POST" action="<?= $this->action; ?>">
-                    <input type="hidden" name="UserId" value="<?php if(!$this->new) echo $this->user->getId(); ?>" />
+                <div class="tab-pane fade in <?php echo $active0; ?>" id="categories">
+                  <form class="margin margin-lg-t" method="POST" action="">
                     <div class="form-group">
-                      <label for="email">Correo Electrónico:</label>
-                      <input autofocus name="email" type="email" class="form-control" id="email" <?php if(!$this->new) echo "readonly" ; ?> placeholder="E-mail" value="
-                      <?php
-                        if (!$this->new)
-                          echo $this->user->getEmail();
-                        else
-                          echo $_POST["email"];
-                      ?>">
-                      <?php if(!$this->new): ?>
-                        <small id="emailHelp" class="form-text text-muted">La dirección de correo electrónico no se puede modificar.</small>
-                      <?php endif; ?>
-                    </div>
-                    <?php if ($this->admin): ?>
-                      <div class="form-group">
-                        <label for="country">Rol:</label>
-                        <select name="role" class="form-control">
-                          <option value="0" <?php if ((!$this->new) && ($this->user->getRole() == 0)) echo "selected"; ?>>Evaluador</option>
-                          <option value="1" <?php if ((!$this->new) && ($this->user->getRole() == 1)) echo "selected"; ?>>Responsable de Proyecto</option>
-                          <option value="2" <?php if ((!$this->new) && ($this->user->getRole() == 2)) echo "selected"; ?>>Administrador</option>
-                        </select>
-                       </div>
-                    <?php endif; ?>
-                    <div class="form-group">
-                      <label for="firstname">Nombre:</label>
-                      <input name="firstname" type="text" class="form-control" id="firstname" placeholder="Nombre" value="<?php
-                        if (!$this->new)
-                          echoDef($_POST["firstname"], $this->user->getFirstName());
-                        else
-                          echo $_POST["firstname"];
-                      ?>">
-                    </div>
-                    <div class="form-group">
-                      <label for="lastname">Apellidos:</label>
-                      <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Apellidos" value="<?php
-                        if (!$this->new)
-                          echoDef($_POST["lastname"], $this->user->getLastName());
-                        else
-                          echo $_POST["lastname"];
-                      ?>">
-                    </div>
-                    <label>Sexo:</label>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gender" id="cbMale" value="0" <?php
-                      if ($_POST["gender"] == "0") echo "checked";
-                      else if ((!$this->new) && ($this->user->getGender() == 0)) { echo "checked"; }
-                      else echo "checked"; ?>>
-                      <label class="form-check-label" for="cbMale">
-                        Masculino
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gender" id="cbFemale" value="1" <?php
-                      if ($_POST["gender"] == "1") echo "checked";
-                        else if ((!$this->new) && ($this->user->getGender() == 1)) { echo "checked"; }?>>
-                      <label class="form-check-label" for="cbFemale">
-                        Femenino
-                      </label>
+                      <label for="category">Category Name:</label>
+                      <input name="category" type="text" class="form-control" id="category" placeholder="Category name" value="">
                     </div>
                     <br />
-                    <div class="form-group">
-                      <label for="entity">Organización:</label>
-                      <input name="entity" type="text" class="form-control" id="entity" placeholder="Organización" value="<?php
-                        if (!$this->new)
-                          echoDef($_POST["entity"], $this->user->getEntity());
-                        else
-                          echo $_POST["entity"];
-                      ?>">
-                    </div>
-                    <div class="form-group">
-                      <label for="country">País:</label><?=$_POST["country"];?>
-                      <select name="country" class="form-control">
-                        <?php
-                          foreach (getCountries() as $country) {
-                              if (($_POST["country"] == $country->getIso())) {
-                                $selected = "selected";
-                              } else if ((!$this->new) && ($this->user->getCountry()->getIso() == $country->getIso() && $selected != "selected")) {
-                                $selected = "selected";
-                              } else {
-                                $selected = "";
-                              }
-                              echo "<option value='".$country->getIso()."' ".$selected.">".$country->getName()."</option>";
-                          }
-                        ?>
-                     </select>
-                    </div>
-                    <br />
-                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
                   </form>
                 </div>
-                <div class="tab-pane fade in <?php echo $change1; ?>" id="password">
-                  <form class="margin margin-lg-t" method="POST" action="/account/update-password">
+
+                <div class="tab-pane fade in <?php echo $active1; ?>" id="questions">
+                  <form class="margin margin-lg-t" method="POST" action="">
                     <div class="form-group">
-                      <label for="password">Contraseña Actual:</label>
-                      <input name="password" type="password" class="form-control" id="password" placeholder="Introduzca un contraseña">
+                      <label for="category">Category:</label>
+                      <select id="category" name="category" class="form-control">
+                        <option value="0">Category 1</option>
+                      </select>
                     </div>
                     <div class="form-group">
-                      <label for="newpassword">Nueva Contraseña:</label>
-                      <input name="newpassword" type="password" class="form-control" id="newpassword" placeholder="Introduzca un contraseña">
-                    </div>
-                    <div class="form-group">
-                      <label for="newpassword2">Repite la Nueva Contraseña:</label>
-                      <input name="newpassword2" type="password" class="form-control" id="newpassword2" placeholder="Introduzca un contraseña">
+                      <label for="question">Question:</label>
+                      <input name="question" type="text" class="form-control" id="question" placeholder="Question" value="">
                     </div>
                     <br />
-                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
+                  </form>
+                </div>
+
+                <div class="tab-pane fade in <?php echo $active2; ?>" id="answers">
+                  <form class="margin margin-lg-t" method="POST" action="">
+                    <div class="form-group">
+                      <label for="entity">Answer:</label>
+                      <input name="entity" type="text" class="form-control" id="entity" placeholder="Organización" value="">
+                    </div>
+                    <br />
+                    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
                   </form>
                 </div>
             </div>

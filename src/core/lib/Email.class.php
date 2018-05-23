@@ -19,6 +19,8 @@
       $this->to = $to;
       $this->subject = $subject;
       $this->body = $body;
+      $this->body .= "Regards, <br />";
+      $this->body .= APP_TITLE." team";
     }
 
     function send() {

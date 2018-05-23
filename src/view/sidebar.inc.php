@@ -8,7 +8,7 @@
               <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Projects<span class="fa arrow"></span></a>
               <ul class="nav nav-second-level">
                 <li>
-                    <a href="flot.html">Assigned Projects</a>
+                    <a href="/projects">Assigned Projects</a>
                 </li>
                 <li>
                     <a href="/my-projects">My Projects</a>

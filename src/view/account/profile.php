@@ -67,7 +67,7 @@
                     <?php if ($this->admin): ?>
                       <div class="form-group">
                         <label for="country">Rol:</label>
-                        <select name="role" class="form-control">
+                        <select id="country" name="role" class="form-control">
                           <option value="0" <?php if ((!$this->new) && ($this->user->getRole() == 0)) echo "selected"; ?>>Evaluator</option>
                           <option value="1" <?php if ((!$this->new) && ($this->user->getRole() == 1)) echo "selected"; ?>>Project Manager</option>
                           <option value="2" <?php if ((!$this->new) && ($this->user->getRole() == 2)) echo "selected"; ?>>Administrator</option>
@@ -121,7 +121,7 @@
                       ?>">
                     </div>
                     <div class="form-group">
-                      <label for="country">Country:</label><?=$_POST["country"];?>
+                      <label for="country">Country:</label>
                       <select name="country" class="form-control">
                         <?php
                           foreach (getCountries() as $country) {

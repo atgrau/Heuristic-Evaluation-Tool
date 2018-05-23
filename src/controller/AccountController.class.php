@@ -48,8 +48,6 @@
         $body .= "You can proceed by doing click below:<br />";
         $body .= "<a href='".URL."/forgot/reset?token=".$token."' target='_blank'>".URL."/forgot/reset/?token=".$token."</a><br /><br />";
         $body .= "If you have not request a password reset, please remove this e-mail.<br /><br />";
-        $body .= "Regards, <br />";
-        $body .= APP_TITLE." team";
 
         $email = new Email($_POST["email"], $subject, $body);
         $email->send();
@@ -62,7 +60,7 @@
     }
 
     function reset() {
-      echo "Not implemented yet...";
+      echo "<b>Received Token:</b> ".$_GET["token"];
     }
 
     function showProfile($adminView) {
@@ -299,8 +297,6 @@
         $body .= "<b>Email:</b> ".$email."<br />";
         $body .= "<b>Password:</b> ".$password."<br /><br />";
         $body .= "<a href='".URL."' target='_blank'>Click here to Sign In</a><br /><br />";
-        $body .= "Regards, <br />";
-        $body .= APP_TITLE." team";
 
         $email = new Email($email, $subject, $body);
         $email->send();
