@@ -1,6 +1,8 @@
 # Heuristic Evaluation Tool
 Heuristic Evaluation Tool is a *Final Degree Project* built with *PHP & MySQL*
 
+[![Build Status](https://travis-ci.com/atgrau/heuristic_evaluation.svg?branch=master)](https://travis-ci.com/atgrau/heuristic_evaluation/branches) 
+
 ## Vision
 A web application that allows to perform an heuristic evaluation of the interface of an interactive system.
 
