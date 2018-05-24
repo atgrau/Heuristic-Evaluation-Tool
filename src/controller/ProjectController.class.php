@@ -4,15 +4,17 @@
   {
     function __construct() { }
 
-    function showProjectList($onlyMine) {
+    function showProjectList($admin) {
+      $this->admin = $admin;
       $this->setContentView("project/projectlist");
       $this->new = false;
       $this->edit = false;
       $this->query = $_GET["q"];
-      if ($onlyMine) {
-        $this->projectList = getProjects($GLOBALS["USER_SESSION"]->getId(), $this->query);
+      $this->userId = $_GET["user"];
+      if (!$admin) {
+        $this->projectList = getMyProjects($GLOBALS["USER_SESSION"]->getId(), $this->query);
       } else {
-        $this->projectList = getProjects(null, $this->query);
+        $this->projectList = getProjects($this->query, $this->userId);
       }
       $this->render();
     }
@@ -32,7 +34,7 @@
 
       $this->addMessage = true;
       $this->recentProject = $_POST["name"];
-      $this->showProjectList();
+      $this->showProjectList(false);
     }
   }
 

@@ -87,7 +87,7 @@
         $controller->updatePassword();
       } else if ($this->uri == "/my-projects") {
         $controller = new ProjectController();
-        $controller->showProjectList(true);
+        $controller->showProjectList(false);
       } else if ($this->uri == "/projects/new") {
         $controller = new ProjectController();
         $controller->addNewProjectView();
@@ -96,7 +96,7 @@
         $controller->addNewProject();
       } else if ($this->uri == "/admin/projects") {
         $controller = new ProjectController();
-        $controller->showProjectList(false);
+        $controller->showProjectList(true);
       } else if ($this->uri == "/admin/update-profile") {
         $controller = new AccountController();
         $controller->updateProfile(true);

@@ -139,8 +139,7 @@
     }
   }
 
-  function getUserById($userId) {
-    $account = DB::queryFirstRow("SELECT users.*, countries.iso, countries.name FROM users LEFT JOIN countries on users.country = countries.iso WHERE users.ID=%i", $userId);
+  function buildUser($account) {
     if ($account) {
       return new UserModel($account["ID"], $account["role"], $account["email"], $account["password"], $account["firstname"], $account["lastname"], $account["gender"], $account["entity"], new Country($account["iso"], $account["name"]));
     } else {
@@ -148,13 +147,27 @@
     }
   }
 
-  function getUserByEmail($email) {
-    $account = DB::queryFirstRow("SELECT users.*, countries.iso, countries.name FROM users LEFT JOIN countries on users.country = countries.iso WHERE users.email=%s", $email);
-    if ($account) {
-      return new UserModel($account["ID"], $account["role"], $account["email"], $account["password"], $account["firstname"], $account["lastname"], $account["gender"], $account["entity"], new Country($account["iso"], $account["name"]));
+  function getUsersByRoleGreaterThan($role) {
+    $userlist = array();
+    $users = DB::query("SELECT users.*, countries.iso, countries.name FROM users LEFT JOIN countries on users.country = countries.iso WHERE users.role>%i", $role);
+    if ($users) {
+      foreach ($users as $row) {
+        array_push($userlist, buildUser($row));
+      }
+      return $userlist;
     } else {
       return null;
     }
+  }
+
+  function getUserById($userId) {
+    $account = DB::queryFirstRow("SELECT users.*, countries.iso, countries.name FROM users LEFT JOIN countries on users.country = countries.iso WHERE users.ID=%i", $userId);
+    return buildUser($account);
+  }
+
+  function getUserByEmail($email) {
+    $account = DB::queryFirstRow("SELECT users.*, countries.iso, countries.name FROM users LEFT JOIN countries on users.country = countries.iso WHERE users.email=%s", $email);
+    return buildUser($account);
   }
 
   function getUsers($filter) {
@@ -171,7 +184,7 @@
 
     if ($users) {
       foreach ($users as $row) {
-        array_push($userlist, new UserModel($row["ID"], $row["role"], $row["email"], $row["password"], $row["firstname"], $row["lastname"], $row["gender"], $row["entity"], new Country($row["iso"], $row["name"])));
+        array_push($userlist, buildUser($row));
       }
       return $userlist;
     } else {
