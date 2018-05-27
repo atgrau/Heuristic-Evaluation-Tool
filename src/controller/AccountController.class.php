@@ -307,5 +307,23 @@
         $this->showUserList();
       }
     }
+
+    function removeUser() {
+      // Getting POST paramters
+      $user = getUserById($_GET["param"]);
+      if (!$user) {
+        $this->showUserList();
+        exit;
+      }
+
+      // Check user dependencies
+
+      // Delete Users
+
+      //Render View
+      $this->removeMessage = true;
+      $this->recentUser = $user->getName();
+      $this->showUserList();
+    }
   }
 ?>
