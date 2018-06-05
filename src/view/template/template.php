@@ -75,7 +75,6 @@
                     <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
                   </form>
                 </div>
-
                 <div class="tab-pane fade in <?php echo $active2; ?>" id="answers">
                   <form class="margin margin-lg-t" method="POST" action="">
                     <div class="form-group">

@@ -17,7 +17,7 @@
         <!-- /.dropdown -->
         <span class="label label-primary margin-lg-r"><?= getRoleName($GLOBALS["USER_SESSION"]->getRole()); ?></span>
         <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Projects">
                 <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-tasks">
@@ -70,8 +70,8 @@
               </li>
               <li class="divider"></li>
               <li>
-                  <a class="text-center" href="#">
-                      <strong>Ver todos los Proyectos</strong>
+                  <a class="text-center" href="#" title="See all projects">
+                      <strong>See all projects</strong>
                       <i class="fa fa-angle-right"></i>
                   </a>
               </li>
@@ -79,7 +79,7 @@
             <!-- /.dropdown-tasks -->
         </li>
         <!-- /.dropdown -->
-        <li class="dropdown">
+        <li class="dropdown hide">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
@@ -113,7 +113,7 @@
         </li>
         <!-- /.dropdown -->
         <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Account">
                 <?= $GLOBALS["USER_SESSION"]->getName(); ?> <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
