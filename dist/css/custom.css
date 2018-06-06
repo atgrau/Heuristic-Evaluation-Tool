@@ -1,3 +1,8 @@
+.logo {
+  background:url('/dist/images/logo.png') no-repeat center;
+  width:200px;
+  height:50px;
+}
 .margin {
   margin: 10px;
 }

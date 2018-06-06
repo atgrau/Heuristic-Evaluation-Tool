@@ -7,9 +7,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">
-          <?= APP_TITLE; ?>
-        </a>
+        <a href="/">
+        <div class="logo"></div>
+      </a>
     </div>
     <!-- /.navbar-header -->
 

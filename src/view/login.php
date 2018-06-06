@@ -1,11 +1,11 @@
 <?php include("head.inc.php"); ?>
 
 <body>
-
+    <div class="margin-lg-t"></div>
+    <div class="logo" style="margin: 0 auto 0 auto;"></div>
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
-              <h1 class="text-center" style="margin-bottom:-50px;margin-top:50px;"><?php echo APP_TITLE; ?></h1>
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title text-center font-weight-bold">Sign In</h3>
@@ -63,7 +63,7 @@
         </div>
     </div>
 
-  <?php include("botJQuery.inc.php"); ?>
+  <?php include("JQuery.inc.php"); ?>
 
 </body>
 

@@ -84,8 +84,9 @@
             <td><?= $project->getShortDescription(); ?></td>
             <td><?= $project->getLink(); ?> <a href="<?= $project->getLink(); ?>" target="_blank" title="Link a <?= $project->getName(); ?>"><span class="glyphicon glyphicon-link"></span></a></td>
             <td>
-              <a href="/projects/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil padding-l"></span></a>
-              <a href="#" title="Remove Proyecto" class="text-danger"><span class="glyphicon glyphicon-remove padding-l"></span></a>
+              <a href="/projects/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil"></span></a>
+              <span class="margin-l"></span>
+              <a href="#" title="Remove Proyecto" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
             </td>
           </tr>
       <?php
