@@ -1,8 +1,15 @@
 .logo {
   background:url('/dist/images/logo.png') no-repeat center;
-  width:200px;
+  width:230px;
   height:50px;
 }
+
+.logo-lg {
+  background:url('/dist/images/logo-lg.png') no-repeat center;
+  width:500px;
+  height:200px;
+}
+
 .margin {
   margin: 10px;
 }

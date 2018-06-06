@@ -1,8 +1,7 @@
 <?php include("head.inc.php"); ?>
 
 <body>
-    <div class="margin-lg-t"></div>
-    <div class="logo" style="margin: 0 auto 0 auto;"></div>
+    <div class="logo-lg" style="margin: 0 auto 0 auto;margin-bottom:-80px;"></div>
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
