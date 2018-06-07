@@ -1,10 +1,11 @@
 <?php include("head.inc.php"); ?>
 
 <body>
-    <div class="logo-lg" style="margin: 0 auto 0 auto;margin-bottom:-80px;"></div>
+
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
+              <div class="logo-lg" style="margin: 0 auto 0 auto;margin-bottom:-80px;"></div>
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title text-center font-weight-bold">Sign In</h3>

@@ -1,6 +1,6 @@
 .logo {
   background:url('/dist/images/logo.png') no-repeat center;
-  width:230px;
+  width:240px;
   height:50px;
 }
 
@@ -8,6 +8,10 @@
   background:url('/dist/images/logo-lg.png') no-repeat center;
   width:500px;
   height:200px;
+}
+
+#sidebar a {
+  color: black;
 }
 
 .margin {
