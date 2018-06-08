@@ -49,14 +49,20 @@
             <!-- Tab panes -->
             <div class="tab-content">
                 <div class="tab-pane fade in <?php echo $active0; ?>" id="categories">
-                  <form class="margin margin-lg-t" method="POST" action="">
-                    <div class="form-group">
-                      <label for="category">Category Name:</label>
-                      <input name="category" type="text" class="form-control" id="category" placeholder="Category name" value="">
-                    </div>
-                    <br />
-                    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
-                  </form>
+                  <?php
+                  if (!empty($this->categoriesList)):
+                  foreach ($this->categoriesList as $category) { ?>
+                    <form class="margin margin-lg-t" method="POST" action="">
+                      <div class="form-group">
+                        <label for="category">Category Name:</label>
+                        <input name="category" type="text" class="form-control" id="category" placeholder="Category name" value="<?= $category->getName(); ?>">
+                      </div>
+                      <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                    </form>
+                  <?php } ?>
+                <?php endif; ?>
+                <br />
+                <a href="#" title="Add new Category" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add new category</a>
                 </div>
 
                 <div class="tab-pane fade in <?php echo $active1; ?>" id="questions">

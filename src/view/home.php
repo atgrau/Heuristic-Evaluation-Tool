@@ -1,20 +1,4 @@
 <div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">Heuristic Evaluation Tool</h1>
-    </div>
-</div>
-<div class="row">
-  <div class="col-lg-12">
-    <h2>Logos</h2>
-    <h3>Large</h3>
-    <div class="logo-lg"></div>
-    <h3>Small</h3>
-    <div class="logo"></div>
-  </div>
-</div>
-
-
-<div class="row">
   <div class="col-lg-12">
     <h2>Vision</h2>
     A web application that allows to perform an heuristic evaluation of the interface of an interactive system.

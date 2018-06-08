@@ -21,7 +21,6 @@
   require_once(BASE_URI."model/UserModel.class.php");
   require_once(BASE_URI."model/CountryModel.class.php");
   require_once(BASE_URI."model/TemplateModel.class.php");
-  require_once(BASE_URI."model/TemplateModel.class.php");
 
   // Controllers
   require_once(BASE_URI."controller/BaseController.class.php");
