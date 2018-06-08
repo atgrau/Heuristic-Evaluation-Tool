@@ -1,5 +1,5 @@
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+<nav id="top-nav" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom:0;">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -13,9 +13,9 @@
     </div>
     <!-- /.navbar-header -->
 
-    <ul class="nav navbar-top-links navbar-right">
+    <ul class="nav navbar-top-links navbar-right navbar-collapse">
         <!-- /.dropdown -->
-        <span class="label label-primary margin-lg-r"><?= getRoleName($GLOBALS["USER_SESSION"]->getRole()); ?></span>
+        <span class="label label-<?php if ($GLOBALS["USER_SESSION"]->getRole() == 2) {echo "danger";} else {echo "primary";} ?>  margin-lg-r"><?= getRoleName($GLOBALS["USER_SESSION"]->getRole()); ?></span>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Projects">
                 <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>

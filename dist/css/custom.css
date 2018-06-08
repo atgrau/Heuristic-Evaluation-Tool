@@ -10,8 +10,12 @@
   height:200px;
 }
 
-#sidebar a {
+#sidebar, #top-nav a {
   color: black;
+}
+
+.center {
+  margin: 0 auto 0 auto;
 }
 
 .margin {
