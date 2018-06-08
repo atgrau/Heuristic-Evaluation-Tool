@@ -36,6 +36,24 @@
       $this->recentProject = $_POST["name"];
       $this->showProjectList(false);
     }
+
+    function removeProject() {
+      // Getting POST paramters
+      $user = getProjectById($_GET["param"]);
+      if (!$user) {
+        $this->showProjectList();
+        exit;
+      }
+
+      // Check user dependencies
+
+      // Delete Users
+
+      //Render View
+      $this->removeMessage = true;
+      $this->recentProject = $user->getName();
+      $this->showUserList();
+    }
   }
 
 ?>

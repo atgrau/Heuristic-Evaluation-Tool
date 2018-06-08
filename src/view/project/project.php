@@ -32,7 +32,7 @@
                 <label for="link">Link:</label>
                 <input name="link" type="text" class="form-control" id="name" placeholder="http://website.domain" value="">
               </div>
-              <button type="submit" class="btn btn-success margin-r">Create Project</button>
+              <button type="submit" class="btn btn-success margin-r"><span class="glyphicon glyphicon-floppy-disk"></span> Create Project</button>
               <a href="/my-projects" class="btn btn-danger">Cancel</a>
             </form>
         </div>
