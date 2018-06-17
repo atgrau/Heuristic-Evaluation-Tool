@@ -23,6 +23,18 @@
     function setName($value) {
       $this->name = $value;
     }
+
+    function store() {
+      if ($this->id == 0) {
+        DB::insert('template_categories', array(
+          "name" => $this->name,
+        ));
+      } else {
+        DB::update("template_categories", array(
+          "name" => $this->name,
+        ), "ID=%i", $this->id);
+      }
+    }
   }
 
   function getCategories() {

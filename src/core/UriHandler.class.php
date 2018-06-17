@@ -27,7 +27,8 @@
       "/admin/new-user" => 2,
       "/admin/add-user" => 2,
       "/admin/remove-user" => 2,
-      "/admin/template" => 2
+      "/admin/template" => 2,
+      "/admin/set-category" => 2
     );
 
     private $uri;
@@ -118,7 +119,10 @@
         $controller->removeUser();
       } else if ($this->uri == "/admin/template") {
         $controller = new TemplateController();
-        $controller->showTemplate();
+        $controller->showTemplate(0);
+      } else if ($this->uri == "/admin/set-category") {
+        $controller = new TemplateController();
+        $controller->setCategory();
       } else {
         include(BASE_URI."view/index.php");
       }

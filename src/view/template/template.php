@@ -1,3 +1,29 @@
+
+<div class="modal fade" id="newCategoryModal" tabindex="-1" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <strong>New  Category</strong>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form class="margin margin-lg-t" method="POST" action="/admin/set-category">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="category">Category Name:</label>
+            <input name="category" type="text" class="form-control" id="category" placeholder="Category name" value="">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Evaluation Template</h1>
@@ -49,20 +75,22 @@
             <!-- Tab panes -->
             <div class="tab-content">
                 <div class="tab-pane fade in <?php echo $active0; ?>" id="categories">
+                    <div class="form-group margin-l margin-lg-t">
+                      <a data-toggle="modal" data-target="#newCategoryModal" href="#" title="Add new Category" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add new category</a>
+                    </div>
                   <?php
                   if (!empty($this->categoriesList)):
                   foreach ($this->categoriesList as $category) { ?>
-                    <form class="margin margin-lg-t" method="POST" action="">
+                    <form class="margin margin-lg-t" method="POST" action="/admin/set-category">
                       <div class="form-group">
                         <label for="category">Category Name:</label>
+                        <input name="categoryId" type="hidden" class="form-control" value="<?= $category->getId(); ?>">
                         <input name="category" type="text" class="form-control" id="category" placeholder="Category name" value="<?= $category->getName(); ?>">
                       </div>
                       <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
                     </form>
                   <?php } ?>
                 <?php endif; ?>
-                <br />
-                <a href="#" title="Add new Category" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add new category</a>
                 </div>
 
                 <div class="tab-pane fade in <?php echo $active1; ?>" id="questions">
