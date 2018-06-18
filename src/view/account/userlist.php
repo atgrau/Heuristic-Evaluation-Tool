@@ -23,6 +23,29 @@ return '<!-- Modal -->
 }
 ?>
 
+<div class="modal fade" id="importcsv_modal" tabindex="-1" role="dialog" aria-labelledby="importingModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <strong class="text-danger">Import csv file</strong>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+      </div>
+
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>'
+
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">List of Users</h1>
@@ -32,7 +55,11 @@ return '<!-- Modal -->
 <!-- /.row -->
 <div class="row margin-lg-b">
   <a href="/admin/new-user" title="Add new User" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add new user</a>
+  <a href="#"  title="Import csv file" class="btn btn-primary" data-toggle="modal" data-target="#importcsv_modal"><span id="importcsv_modal" class="glyphicon glyphicon-plus"></span> Import csv file</a>
+
 </div>
+
+
 <?php if ($this->addMessage): ?>
   <div class="row alert alert-info" role="alert">
    <span class="glyphicon glyphicon-info-sign"></span> User <strong><?= $this->recentUser; ?></strong> has beed added successfully!

@@ -28,7 +28,8 @@
       "/admin/add-user" => 2,
       "/admin/remove-user" => 2,
       "/admin/template" => 2,
-      "/admin/set-category" => 2
+      "/admin/set-category" => 2,
+      "/admin/importcsv" => 2
     );
 
     private $uri;
@@ -123,6 +124,9 @@
       } else if ($this->uri == "/admin/set-category") {
         $controller = new TemplateController();
         $controller->setCategory();
+      } else if ($this->uri == "/admin/importcsv") {
+        $controller = new ImportCSVController();
+        $controller->newImport();
       } else {
         include(BASE_URI."view/index.php");
       }
