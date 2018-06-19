@@ -1,25 +1,25 @@
 <?php
-function generateModal($projectId) {
-return '<!-- Modal -->
-<div class="modal fade" id="deletingModal_'.$projectId.'" tabindex="-1" role="dialog" aria-labelledby="deletingModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <strong class="text-danger">Project Deletion</strong>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <h4>Project <strong>#'.$projectId.'</strong> and all related evaluations <span class="bg-danger">will be removed too</span>.<br /><br />Are you sure?</h4>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <a name="" href="/admin/remove-project/'.$projectId.'" type="button" class="btn btn-danger">Delete Project</a>
+function generateModal($projectId, $admin) {
+  return '<!-- Modal -->
+  <div class="modal fade" id="deletingModal_'.$projectId.'" tabindex="-1" role="dialog" aria-labelledby="deletingModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <strong class="text-danger">Project Deletion</strong>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h4>Project <strong>#'.$projectId.'</strong> and all related evaluations <span class="bg-danger">will be removed too</span>.<br /><br />Are you sure?</h4>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a name="" href="/admin/remove-project/'.$projectId.'/'.$admin.'" type="button" class="btn btn-danger">Delete Project</a>
+        </div>
       </div>
     </div>
-  </div>
-</div>';
+  </div>';
 }
 ?>
 
@@ -111,7 +111,13 @@ return '<!-- Modal -->
       if (!empty($this->projectList)):
       foreach ($this->projectList as $project) { ?>
           <tr>
-            <?= generateModal($project->getId()); ?>
+            <?php
+              $userId = $project->getId();
+              if ($this->admin) {
+                $admin = "?admin=1";
+              }
+              echo generateModal($userId, $admin);
+            ?>
             <th scope="row"><?= $project->getId(); ?></th>
             <?php if ($this->admin): ?>
               <td><?= $project->getUser()->getName(); ?> <a href="/admin/profile/<?= $project->getUser()->getId(); ?>" title="<?= $project->getUser()->getName(); ?>'s profile"><span class="fa fa-external-link"></span></a></td>

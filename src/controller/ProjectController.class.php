@@ -7,8 +7,6 @@
     function showProjectList($admin) {
       $this->admin = $admin;
       $this->setContentView("project/projectlist");
-      $this->new = false;
-      $this->edit = false;
       $this->query = $_GET["q"];
       $this->userId = $_GET["user"];
       if (!$admin) {
@@ -29,7 +27,7 @@
         header("Location: /my-projects");
       }
 
-      $project = new ProjectModel(0, $GLOBALS["USER_SESSION"]->getId(), null, $_POST["name"], $_POST["description"], $_POST["link"]);
+      $project = new ProjectModel(0, $GLOBALS["USER_SESSION"]->getId(), null, $_POST["name"], $_POST["description"], $_POST["link"], false);
       $project->insert();
 
       $this->addMessage = true;
@@ -58,7 +56,13 @@
       if ((!$project) || ((!$GLOBALS["USER_SESSION"]->isAdmin()) && ($GLOBALS["USER_SESSION"]->getId() != $project->getUser()->getId()))){
         header("Location: /");
       } else {
-        $project = new ProjectModel($_POST["id"], $GLOBALS["USER_SESSION"]->getId(), null, $_POST["name"], $_POST["description"], $_POST["link"]);
+        $project->setName($_POST["name"]);
+        $project->setDescription($_POST["description"]);
+        $project->setLink($_POST["link"]);
+
+        if ($adminView) {
+          $project->setActive($_POST["active"]);
+        }
         $project->update();
 
         $this->editMessage = true;
@@ -67,22 +71,24 @@
       }
     }
 
-    function removeProject() {
+    function removeProject($adminView) {
       // Getting POST paramters
-      $user = getProjectById($_GET["param"]);
-      if (!$user) {
-        $this->showProjectList();
-        exit;
+      $project = getProjectById($_GET["param"]);
+      if (!$project) {
+        $this->showProjectList($adminView);
       }
 
       // Check user dependencies
 
       // Delete Users
 
+      // Delete Project
+      $project->delete();
+
       //Render View
       $this->removeMessage = true;
-      $this->recentProject = $user->getName();
-      $this->showUserList();
+      $this->recentProject = $project->getName();
+      $this->showProjectList($adminView);
     }
   }
 
