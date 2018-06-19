@@ -53,7 +53,7 @@
                     <input type="hidden" name="UserId" value="<?php if(!$this->new) echo $this->user->getId(); ?>" />
                     <div class="form-group">
                       <label for="email">E-mail:</label>
-                      <input autofocus name="email" type="email" class="form-control" id="email" <?php if(!$this->new) echo "readonly" ; ?> placeholder="E-mail" value="
+                      <input autofocus name="email" type="email" class="form-control disabled" id="email" <?php if(!$this->new) echo "disabled" ; ?> placeholder="E-mail" value="
                       <?php
                         if (!$this->new)
                           echo $this->user->getEmail();
@@ -61,7 +61,7 @@
                           echo $_POST["email"];
                       ?>">
                       <?php if(!$this->new): ?>
-                        <small id="emailHelp" class="form-text text-muted">La dirección de correo electrónico no se puede modificar.</small>
+                        <small id="emailHelp" class="form-text text-muted">E-mail cannot be modified.</small>
                       <?php endif; ?>
                     </div>
                     <?php if ($this->admin): ?>
@@ -99,7 +99,7 @@
                       else if ((!$this->new) && ($this->user->getGender() == 0)) { echo "checked"; }
                       else echo "checked"; ?>>
                       <label class="form-check-label" for="cbMale">
-                        Masculino
+                        Male
                       </label>
                     </div>
                     <div class="form-check">
@@ -107,7 +107,7 @@
                       if ($_POST["gender"] == "1") echo "checked";
                         else if ((!$this->new) && ($this->user->getGender() == 1)) { echo "checked"; }?>>
                       <label class="form-check-label" for="cbFemale">
-                        Femenino
+                        Female
                       </label>
                     </div>
                     <br />
@@ -145,15 +145,15 @@
                   <form class="margin margin-lg-t" method="POST" action="/account/update-password">
                     <div class="form-group">
                       <label for="password">Actual Password:</label>
-                      <input name="password" type="password" class="form-control" id="password" placeholder="Introduzca un contraseña">
+                      <input name="password" type="password" class="form-control" id="password" placeholder="Enter a Password">
                     </div>
                     <div class="form-group">
                       <label for="newpassword">New Password:</label>
-                      <input name="newpassword" type="password" class="form-control" id="newpassword" placeholder="Introduzca un contraseña">
+                      <input name="newpassword" type="password" class="form-control" id="newpassword" placeholder="Enter a Password">
                     </div>
                     <div class="form-group">
                       <label for="newpassword2">Repeat new Password:</label>
-                      <input name="newpassword2" type="password" class="form-control" id="newpassword2" placeholder="Introduzca un contraseña">
+                      <input name="newpassword2" type="password" class="form-control" id="newpassword2" placeholder="Enter a Password">
                     </div>
                     <br />
                     <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>

@@ -4,6 +4,11 @@
             <li>
                 <a href="/"><i class="glyphicon glyphicon-home"></i> Home</a>
             </li>
+            <?php if ($GLOBALS["USER_SESSION"]->GetRole() >= 1) { ?>
+              <li>
+                  <a href="/projects/new"><i class="fa fa-edit fa-fw"></i> Create a new Project</a>
+              </li>
+            <?php } ?>
             <li>
               <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Projects<span class="fa arrow"></span></a>
               <ul class="nav nav-second-level">
@@ -15,11 +20,6 @@
                 </li>
               </ul>
             </li>
-            <?php if ($GLOBALS["USER_SESSION"]->GetRole() >= 1) { ?>
-              <li>
-                  <a href="/projects/new"><i class="fa fa-edit fa-fw"></i> Create a new Project</a>
-              </li>
-            <?php } ?>
             <?php if ($GLOBALS["USER_SESSION"]->GetRole() >= 2) { ?>
               <li>
                   <a href="#"><i class="fa fa-wrench fa-fw"></i> Administration<span class="fa arrow"></span></a>
@@ -31,7 +31,7 @@
                         <a href="/admin/projects">Projects</a>
                     </li>
                     <li>
-                        <a href="/admin/template">Evaluation Template</a>
+                        <a href="/admin/templates">Evaluation Template</a>
                     </li>
                   </ul>
                   <!-- /.nav-second-level -->

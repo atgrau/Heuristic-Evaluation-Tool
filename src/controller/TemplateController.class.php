@@ -7,23 +7,31 @@
   {
     function __construct() { }
 
-    function showTemplate($tab) {
-      $this->setContentView("template/template");
-      $this->tab = $tab;
-
-      // Categories
-      $this->categoriesList = getCategories();
+    function showTemplateList($admin) {
+      $this->admin = $admin;
+      $this->setContentView("template/templatelist");
+      $this->new = false;
+      $this->edit = false;
+      $this->templateList = getTemplates();
       $this->render();
     }
 
-    function setCategory() {
-      $categoryId = $_POST["categoryId"];
-      $categoryName = $_POST["category"];
-      $category = new Category($categoryId, $categoryName);
-      $category->store();
+    function updateTemplateView($adminView, $templateId) {
+      $template = getTemplateById($templateId);
 
-      $this->showTemplate(0);
+      if ((!$template) || ((!$GLOBALS["USER_SESSION"]->isAdmin()) && ($GLOBALS["USER_SESSION"]->getId() != $template->getUser()->getId()))){
+          $this->showTemplateList($adminView);
+      } else {
+        $this->setContentView("template/template");
+        $this->template = $template;
+        $this->answerList = getAnswerbyEvaluation($template->getId());
+        $this->categoriesList = getCategoriesbyEvaluation($template->getId());
+        $this->adminView = $adminView;
+        $this->render();
+      }
+
     }
+
   }
 
 ?>

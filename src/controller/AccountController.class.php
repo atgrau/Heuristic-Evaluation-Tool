@@ -151,32 +151,32 @@
     function validateProfile($firstname, $lastname, $gender, $entity, $country) {
 
       if (empty($firstname)) {
-        $this->error .= "<li>El nombre es obligatorio.</li>";
+        $this->error .= "<li>First name is required.</li>";
       }
 
       if (strlen($firstname) > 45) {
-        $this->error .= "<li>El nombre no puede contener más de 45 carácteres.</li>";
+        $this->error .= "<li>First name cannot contain more than 45 characters.</li>";
       }
 
       if (empty($lastname)) {
-        $this->error .= "<li>Los apellidos son obligatorios.</li>";
+        $this->error .= "<li>Last name is required.</li>";
       }
 
       if (strlen($lastname) > 45) {
-        $this->error .= "<li>Los apellidos no pueden contener más de 45 carácteres.</li>";
+        $this->error .= "<li>Last name cannot contain more than 45 characters</li>";
       }
 
       $gender = (int) $gender;
       if (($gender != 0) && ($gender != 1)) {
-        $this->error .= "<li>El género indicado no es correcto.</li>";
+        $this->error .= "<li>Gender is not valid.</li>";
       }
 
       if (strlen($entity) > 70) {
-        $this->error .= "<li>El nombre de la organización no puede sobrepasar los 70 carácteres.</li>";
+        $this->error .= "<li>Entity name cannot contain more than 70 characters.</li>";
       }
 
       if (!CountryExists($country)) {
-        $this->error .= "<li>El país indicado no existe.</li>";
+        $this->error .= "<li>Country doesn't exist.</li>";
       }
     }
 

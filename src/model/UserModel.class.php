@@ -41,6 +41,10 @@
       return $this->role;
     }
 
+    function isAdmin() {
+      return ($this->role == 2);
+    }
+
     function setRole($value) {
       $this->role = $value;
     }
@@ -175,10 +179,10 @@
     $qry = "SELECT users.*, countries.iso, countries.name FROM users LEFT JOIN countries on users.country = countries.iso";
     if (!empty($filter)) {
       $condition = " WHERE users.email like %ss OR users.firstname like %ss OR users.lastname like %ss";
-      $qry .= $condition." ORDER BY users.ID";
+      $qry .= $condition." ORDER BY users.lastname";
       $users = DB::query($qry, $filter, $filter, $filter);
     } else {
-      $qry .= " ORDER BY users.ID";
+      $qry .= " ORDER BY users.lastname";
       $users = DB::query($qry);
     }
 
