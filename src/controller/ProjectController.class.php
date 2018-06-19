@@ -61,8 +61,9 @@
         $project->setLink($_POST["link"]);
 
         if ($adminView) {
-          $project->setActive($_POST["active"]);
+          $project->setActive($_POST["active"]=="1");
         }
+
         $project->update();
 
         $this->editMessage = true;

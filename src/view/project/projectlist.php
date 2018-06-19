@@ -110,7 +110,8 @@ function generateModal($projectId, $admin) {
       <?php
       if (!empty($this->projectList)):
       foreach ($this->projectList as $project) { ?>
-          <tr>
+          <?php if (!$project->isActive()) $active = 'style="background-color:#EFEFEF"'; ?>
+          <tr <?=$active;?>>
             <?php
               $userId = $project->getId();
               if ($this->admin) {

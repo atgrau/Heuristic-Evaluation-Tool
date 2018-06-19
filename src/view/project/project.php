@@ -46,7 +46,7 @@
               </div>
               <?php if ($this->adminView): ?>
                 <div class="form-group">
-                  <input name="active" type="checkbox" class="form-check-input" id="active" <?php if ($this->project->isActive()) echo 'checked="checked"'; ?>>
+                  <input value="1" name="active" type="checkbox" class="form-check-input" id="active" <?php if ($this->project->isActive()) echo 'checked="checked"'; ?>>
                   <label class="form-check-label" for="active">Active</label>
                 </div>
               <?php endif; ?>
