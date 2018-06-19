@@ -26,11 +26,20 @@
         $this->template = $template;
         $this->answerList = getAnswerbyEvaluation($template->getId());
         $this->categoriesList = getCategoriesbyEvaluation($template->getId());
+        $this->questionList = getQuestionsbyEvaluation($template->getId());
         $this->adminView = $adminView;
         $this->render();
       }
+    }
+
+    function addNewTemplateView(){
+      $template = new TemplateModel(0, $_POST["name"],0,0);
+      $template->insertTemplate();
+      $this->addMessage = true;
+      $this->recentTemplate = $_POST["name"];
 
     }
+
 
   }
 

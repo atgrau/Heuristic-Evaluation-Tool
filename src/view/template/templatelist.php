@@ -23,6 +23,26 @@ return '<!-- Modal -->
 }
 ?>
 
+<div class="modal fade" id="template_modal" tabindex="-1" role="dialog" aria-labelledby="templateModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <strong class="text-danger">Create new template</strong>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <input name="name" type="text" class="form-control input" placeholder="Insert name ..." value="" />
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success margin-r"><span data-dismiss="modal"></span> Submit</a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>'
+
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Templates</h1>
@@ -32,7 +52,7 @@ return '<!-- Modal -->
 <!-- /.row -->
 <?php if ($this->admin): ?>
 <div class="row margin-lg-b">
-  <a href="/projects/new" title="Add new Project" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add new Template</a>
+  <a href="#"  title="Create new template" class="btn btn-primary" data-toggle="modal" data-target="#template_modal"><span id="template_modal" class="glyphicon glyphicon-plus"></span> Add new Template</a>
 </div>
 <?php endif; ?>
 <?php if ($this->addMessage): ?>
@@ -82,11 +102,11 @@ return '<!-- Modal -->
               <a href="/admin/templates/<?= $template->getId(); ?>" title="See template"><span class="glyphicon glyphicon-eye-open"></span></a>
               <span class="margin-l"></span>
               <?php
-              if ($template->getStateModified()== 0):?>
+              if ($template->getStateModified()== 0 && $template->getId() != 1):?>
                 <a href="/templates/edit/<?= $template->getId(); ?>" title="Edit template"><span class="glyphicon glyphicon-pencil"></span></a>
                 <span class="margin-l"></span>
+                <a data-toggle="modal" data-target="#deletingModal_<?= $template->getId(); ?>" href="#" title="Remove template" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
               <?php endif; ?>
-              <a data-toggle="modal" data-target="#deletingModal_<?= $template->getId(); ?>" href="#" title="Remove template" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
             </td>
           </tr>
       <?php
