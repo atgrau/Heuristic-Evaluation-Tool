@@ -9,3 +9,6 @@
 
 <!-- Custom Theme JavaScript -->
 <script src="/dist/js/sb-admin-2.js"></script>
+
+<!-- Select -->
+<script src="/dist/js/bootstrap-select.min.js"></script>

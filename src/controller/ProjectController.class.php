@@ -65,6 +65,8 @@
         }
 
         $project->update();
+        foreach ($_POST['users'] as $selectedOption)
+            echo $selectedOption."\n";
 
         $this->editMessage = true;
         $this->recentProject = $_POST["name"];
