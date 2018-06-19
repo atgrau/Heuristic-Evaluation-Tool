@@ -19,24 +19,36 @@
     function updateTemplateView($adminView, $templateId) {
       $template = getTemplateById($templateId);
 
-      if ((!$template) || ((!$GLOBALS["USER_SESSION"]->isAdmin()) && ($GLOBALS["USER_SESSION"]->getId() != $template->getUser()->getId()))){
-          $this->showTemplateList($adminView);
-      } else {
-        $this->setContentView("template/template");
-        $this->template = $template;
-        $this->answerList = getAnswerbyEvaluation($template->getId());
-        $this->categoriesList = getCategoriesbyEvaluation($template->getId());
-        $this->questionList = getQuestionsbyEvaluation($template->getId());
-        $this->adminView = $adminView;
-        $this->render();
-      }
+        if ((!$template) || ((!$GLOBALS["USER_SESSION"]->isAdmin()) && ($GLOBALS["USER_SESSION"]->getId() != $template->getUser()->getId()))){
+            $this->showTemplateList($adminView);
+        } else {
+          $this->setContentView("template/template");
+          $this->template = $template;
+          $this->answerList = getAnswerbyEvaluation($template->getId());
+          $this->categoriesList = getCategoriesbyEvaluation($template->getId());
+          $this->questionList = getQuestionsbyEvaluation($template->getId());
+          $this->adminView = $adminView;
+          $this->render();
+        }
     }
 
     function addNewTemplateView(){
       $template = new TemplateModel(0, $_POST["name"],0,0);
       $template->insertTemplate();
       $this->addMessage = true;
-      $this->recentTemplate = $_POST["name"];
+      $this->insertDefaultAnswers($template->getId());
+      $this->insertDefaultCategories($template->getId());
+
+        if($template)
+        {
+          $this->setContentView("template/template");
+          $this->template = $template;
+          $this->answerList = getAnswerbyEvaluation($template->getId());
+          $this->categoriesList = getCategoriesbyEvaluation($template->getId());
+          $this->questionList = getQuestionsbyEvaluation($template->getId());
+          $this->adminView = $adminView;
+          $this->render();
+        }
 
     }
 

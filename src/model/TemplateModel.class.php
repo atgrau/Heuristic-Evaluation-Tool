@@ -56,17 +56,6 @@ class CategoryModel
       return $this->name;
     }
 
-    function store() {
-      if ($this->id == 0) {
-        DB::insert('template_categories', array(
-          "name" => $this->name,
-        ));
-      } else {
-        DB::update("template_categories", array(
-          "name" => $this->name,
-        ), "ID=%i", $this->id);
-      }
-    }
 }
 
   /**
@@ -104,14 +93,6 @@ class QuestionModel
 
   function setQuestion($value) {
     $this->question = $value;
-  }
-
-  function getQuestions() {
-
-  }
-
-  function getQuestionById($id) {
-
   }
 
 }
@@ -250,10 +231,38 @@ class AnswerModel
   }
 
   function insertTemplate() {
-    DB::insert('templates', array(
+    DB::insert('template_evaluation', array(
       "name" => $this->name,
       "active" => false,
       "modified" => false,
     ));
   }
+
+  function insertDefaultAnswers($templateId) {
+    $qry = "SELECT * FROM template_answers WHERE original=1";
+    $answers = DB::query($qry);
+    if ($answers) {
+        foreach ($answers as $row) {
+          DB::insert('answersbyevaluation', array(
+            "idEvaluation" => $templateId,
+            "idAnswer" => $row,
+          ));
+        }
+      }
+  }
+
+  function insertDefaultCategories($templateId) {
+    $qry = "SELECT * FROM template_categories WHERE original=1";
+    $categories = DB::query($qry);
+    if ($categories) {
+        foreach ($categories as $row) {
+          DB::insert('categoriesbyevaluation', array(
+            "idEvaluation" => $templateId,
+            "idCategory" => $row,
+          ));
+        }
+      }
+  }
+
+
 ?>
