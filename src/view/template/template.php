@@ -1,3 +1,27 @@
+<?php
+function generateModal($categoryId) {
+return '<!-- Modal -->
+<div class="modal fade" id="deletingModal_'.$categoryId.'" tabindex="-1" role="dialog" aria-labelledby="deletingModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <strong class="text-danger">Category Deletion</strong>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4>Category #'.$categoryId.' and all it related questions <span class="bg-danger">will be removed too</span>.<br /><br />Are you sure?</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a name="" href="/admin/remove-category/'.$categoryId.'" type="button" class="btn btn-danger">Delete User</a>
+      </div>
+    </div>
+  </div>
+</div>';
+}
+?>
 
 <div class="modal fade" id="newCategoryModal" tabindex="-1" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -80,14 +104,21 @@
                     </div>
                   <?php
                   if (!empty($this->categoriesList)):
-                  foreach ($this->categoriesList as $category) { ?>
+                    $i = 0;
+                    foreach ($this->categoriesList as $category) {
+                      $i++;
+                      echo generateModal($category->getId());
+                  ?>
                     <form class="margin margin-lg-t" method="POST" action="/admin/set-category">
                       <div class="form-group">
-                        <label for="category">Category Name:</label>
+                        <label for="category">#<?=$i;?> Category Name:</label>
                         <input name="categoryId" type="hidden" class="form-control" value="<?= $category->getId(); ?>">
                         <input name="category" type="text" class="form-control" id="category" placeholder="Category name" value="<?= $category->getName(); ?>">
                       </div>
                       <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                      <a data-toggle="modal" data-target="#deletingModal_<?=$category->getId();?>" href="#" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Remove</a>
+                      <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-up"></span></a>
+                      <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-down"></span></a>
                     </form>
                   <?php } ?>
                 <?php endif; ?>
