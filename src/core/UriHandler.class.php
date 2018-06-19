@@ -30,6 +30,7 @@
       "/admin/new-user" => 2,
       "/admin/add-user" => 2,
       "/admin/remove-user" => 2,
+      "/admin/remove-project" => 2,
       "/admin/template" => 2,
       "/admin/set-category" => 2,
       "/admin/importcsv" => 2
@@ -116,6 +117,10 @@
       } else if ($this->uri == "/admin/update-project") {
         $controller = new ProjectController();
         $controller->updateProject(true);
+      } else if ($this->uri == "/admin/remove-project") {
+        $controller = new ProjectController();
+        $view = ($_GET["admin"] == 1);
+        $controller->removeProject($view);
       } else if ($this->uri == "/admin/update-profile") {
         $controller = new AccountController();
         $controller->updateProfile(true);

@@ -44,6 +44,12 @@
                 <label for="link">Link:</label>
                 <input name="link" type="text" class="form-control" id="name" placeholder="http://website.domain" value="<?php if($this->project) echo $this->project->getLink();?>">
               </div>
+              <?php if ($this->adminView): ?>
+                <div class="form-group">
+                  <input name="active" type="checkbox" class="form-check-input" id="active" <?php if ($this->project->isActive()) echo 'checked="checked"'; ?>>
+                  <label class="form-check-label" for="active">Active</label>
+                </div>
+              <?php endif; ?>
               <button type="submit" class="btn btn-success margin-r"><span class="glyphicon glyphicon-floppy-disk"></span> Save Project</button>
               <?php if ($this->adminView): ?>
                 <a href="/admin/projects" class="btn btn-danger">Cancel</a>
