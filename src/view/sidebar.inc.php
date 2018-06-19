@@ -31,7 +31,7 @@
                         <a href="/admin/projects">Projects</a>
                     </li>
                     <li>
-                        <a href="/admin/template">Evaluation Template</a>
+                        <a href="/admin/templates">Evaluation Template</a>
                     </li>
                   </ul>
                   <!-- /.nav-second-level -->

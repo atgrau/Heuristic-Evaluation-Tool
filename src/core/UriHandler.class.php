@@ -22,6 +22,7 @@
       "/projects/edit" => 1,
       "/projects/add" => 1,
       "/projects/update" => 1,
+      "/templates/edit" => 1,
       "/admin/projects" => 2,
       "/admin/update-project" => 1,
       "/admin/update-profile" => 2,
@@ -30,7 +31,7 @@
       "/admin/new-user" => 2,
       "/admin/add-user" => 2,
       "/admin/remove-user" => 2,
-      "/admin/template" => 2,
+      "/admin/templates" => 2,
       "/admin/set-category" => 2,
       "/admin/importcsv" => 2
     );
@@ -134,12 +135,16 @@
       } else if ($this->uri == "/admin/remove-user") {
         $controller = new AccountController();
         $controller->removeUser();
-      } else if ($this->uri == "/admin/template") {
+      } else if ($this->uri == "/admin/templates") {
         $controller = new TemplateController();
-        $controller->showTemplate(0);
-      } else if ($this->uri == "/admin/set-category") {
+        if (empty($_GET["param"])) {
+          $controller->showTemplateList(true);
+        } else {
+          $controller->updateTemplateView(true, $_GET["param"]);
+        }
+      } else if ($this->uri == "/templates/edit") {
         $controller = new TemplateController();
-        $controller->setCategory();
+        $controller->updateTemplateView(false, $_GET["param"]);
       } else if ($this->uri == "/admin/importcsv") {
         $controller = new ImportCSVController();
         $controller->newImport();

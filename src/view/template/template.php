@@ -1,4 +1,15 @@
 
+<div class="row">
+    <div class="col-lg-12">
+      <?php if (!$this->template): ?>
+        <h1 class="page-header">New template</h1>
+      <?php else: ?>
+        <h1 class="page-header"><?php echo $this->template->getName();?></h1>
+      <?php endif; ?>
+    </div>
+</div>
+
+<?php if (!$this->template->getStateModified()): ?>
 <div class="modal fade" id="newCategoryModal" tabindex="-1" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -23,14 +34,8 @@
     </div>
   </div>
 </div>
+<?php endif; ?>
 
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">Evaluation Template</h1>
-    </div>
-    <!-- /.col-lg-12 -->
-</div>
-<!-- /.row -->
 <!-- /.row -->
 <div class="row">
     <div class="col-lg">
@@ -73,11 +78,14 @@
                 </li>
             </ul>
             <!-- Tab panes -->
+
             <div class="tab-content">
                 <div class="tab-pane fade in <?php echo $active0; ?>" id="categories">
+                  <?php if (!$this->template->getStateModified()): ?>
                     <div class="form-group margin-l margin-lg-t">
                       <a data-toggle="modal" data-target="#newCategoryModal" href="#" title="Add new Category" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add new category</a>
                     </div>
+                  <?php endif; ?>
                   <?php
                   if (!empty($this->categoriesList)):
                   foreach ($this->categoriesList as $category) { ?>
@@ -109,14 +117,20 @@
                     <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
                   </form>
                 </div>
-                <div class="tab-pane fade in <?php echo $active2; ?>" id="answers">
+                <div class="tab-pane fade in <?php echo $active2 ; ?>" id="answers">
                   <form class="margin margin-lg-t" method="POST" action="">
                     <div class="form-group">
-                      <label for="entity">Answer:</label>
-                      <input name="entity" type="text" class="form-control" id="entity" placeholder="Organización" value="">
+                    <?php if (!empty($this->answerList)):
+                        foreach ($this->answerList as $answer) { ?>
+                          <label for="entity"><?php echo $answer->getAnswer(); ?></label>
+                          <input name="entity" type="text" class="form-control" id="entity" placeholder="Organización" value="<?php echo $answer->getValue();?>" readonly>
+                        <?php } ?>
+                    <?php endif; ?>
                     </div>
                     <br />
-                    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
+                      <?php if ($this->template->getStateModified() == 0): ?>
+                        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
+                      <?php endif ?>
                   </form>
                 </div>
             </div>
