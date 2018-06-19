@@ -46,19 +46,24 @@
               </div>
               <?php if ($this->adminView): ?>
                 <div class="form-group">
-                  <input name="active" type="checkbox" class="form-check-input" id="active" <?php if ($this->project->isActive()) echo 'checked="checked"'; ?>>
+                  <input value="1" name="active" type="checkbox" class="form-check-input" id="active" <?php if ($this->project->isActive()) echo 'checked="checked"'; ?>>
                   <label class="form-check-label" for="active">Active</label>
                 </div>
               <?php endif; ?>
               <h3>Asign Evaluators</h3>
+              <div class="form-group">
+              <select name="users[]" id="users" class="form-control selectpicker" data-live-search="true" multiple>
                 <?php
                   $users = getUsers("");
                   foreach ($users as $user) { ?>
-                  <div class="form-group">
-                    <input name="user_<?=$user->getId();?>" type="checkbox" class="form-check-input" id="user_<?=$user->getId();?>" <?php if (1) echo 'checked="checked"'; ?>>
-                    <label class="form-check-label" for="user_<?=$user->getId();?>"><?=$user->getName();?></label>
-                  </div>
+                    <option
+                    <?php
+                      if (in_array($user, $this->project->getUsers())) echo " selected ";
+                    ?>
+                    value="user_<?=$user->getId();?>"><?=$user->getName();?></option>
                 <?php } ?>
+                </select>
+              </div>
               <button type="submit" class="btn btn-success margin-r"><span class="glyphicon glyphicon-floppy-disk"></span> Save Project</button>
               <?php if ($this->adminView): ?>
                 <a href="/admin/projects" class="btn btn-danger">Cancel</a>

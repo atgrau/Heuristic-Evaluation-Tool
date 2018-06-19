@@ -12,6 +12,7 @@
     private $description;
     private $link;
     private $active;
+    private $users;
 
     function __construct($id, $userId, $creationDate, $name, $description, $link, $active) {
       $this->id = $id;
@@ -21,6 +22,7 @@
       $this->description = $description;
       $this->link = $link;
       $this->active = $active;
+      $this->users = array();
     }
 
     function getId() {
@@ -79,6 +81,14 @@
       $this->active = $value;
     }
 
+    function getUsers() {
+      return $this->users;
+    }
+
+    function setUsers($value) {
+      $this->users = $value;
+    }
+
     function insert() {
       DB::insert('projects', array(
         "id_user" => $this->user->getId(),
@@ -107,7 +117,17 @@
   function getProjectById($projectId) {
     $project = DB::queryFirstRow("SELECT * FROM projects WHERE ID=%i", $projectId);
     if ($project) {
-      return new ProjectModel($project["ID"], $project["id_user"], $project["creation_date"], $project["name"], $project["description"], $project["link"], $project["active"]);
+      $project = new ProjectModel($project["ID"], $project["id_user"], $project["creation_date"], $project["name"], $project["description"], $project["link"], $project["active"]);
+
+      $projectUsers = DB::query("SELECT * FROM projects_user WHERE id_project=%i", $projectId);
+      $projectUsersList = array();
+      if ($projectUsers) {
+        foreach ($projectUsers as $row) {
+          array_push($projectUsersList, getUserById($row["id_user"]));
+        }
+      }
+      $project->setUsers($projectUsersList);
+      return $project;
     } else {
       return null;
     }
@@ -165,7 +185,8 @@
     $projectList = array();
     if ($projects) {
       foreach ($projects as $row) {
-        array_push($projectList, new ProjectModel($row["ID"], $row["id_user"], $row["creation_date"], $row["name"], $row["description"], $row["link"], $row["active"]));
+        $project = new ProjectModel($row["ID"], $row["id_user"], $row["creation_date"], $row["name"], $row["description"], $row["link"], $row["active"]);
+        array_push($projectList, $project);
       }
       return $projectList;
     } else {
