@@ -61,9 +61,12 @@
         $project->setLink($_POST["link"]);
 
         if ($adminView) {
-          $project->setActive($_POST["active"]);
+          $project->setActive($_POST["active"]=="1");
         }
+
         $project->update();
+        foreach ($_POST['users'] as $selectedOption)
+            echo $selectedOption."\n";
 
         $this->editMessage = true;
         $this->recentProject = $_POST["name"];

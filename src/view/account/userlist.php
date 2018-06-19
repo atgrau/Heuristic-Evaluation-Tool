@@ -33,7 +33,7 @@ return '<!-- Modal -->
         </button>
       </div>
       <div class="modal-body">
-        
+
       </div>
 
       <div class="modal-body">
@@ -44,7 +44,7 @@ return '<!-- Modal -->
       </div>
     </div>
   </div>
-</div>'
+</div>
 
 <div class="row">
     <div class="col-lg-12">

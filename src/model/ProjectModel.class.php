@@ -116,7 +116,7 @@
   function getMyProjects($userId,$filter) {
     $qry = "SELECT * FROM projects ";
 
-    $condition = "WHERE active = 1 AND projects.id_user = %i";
+    $condition = "WHERE projects.id_user = %i";
     if (!empty($filter))
       $condition .= " AND (projects.name like %ss OR projects.description like %ss)";
 

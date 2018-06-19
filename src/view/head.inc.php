@@ -17,6 +17,9 @@
     <!-- MetisMenu CSS -->
     <link href="/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
+    <!-- Select CSS -->
+    <link rel="stylesheet" href="/dist/css/bootstrap-select.min.css">
+
     <!-- Custom CSS -->
     <link href="/dist/css/sb-admin-2.css" rel="stylesheet">
     <link href="/dist/css/custom.css" rel="stylesheet">
