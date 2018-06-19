@@ -98,6 +98,18 @@
         "link" => $this->link,
         "active" => false
       ));
+
+      // Getting recent project
+      $project = DB::queryFirstRow("SELECT max(ID) as ID FROM projects");
+      $projectId = $project["ID"];
+      
+      // Add Users to the project
+      foreach ($this->users as $user) {
+        DB::insert('projects_user', array(
+          "id_project" => $projectId,
+          "id_user" => $user->getId(),
+        ));
+      }
     }
 
     function update() {
@@ -107,6 +119,17 @@
         "link" => $this->link,
         "active" => $this->active
       ), "ID=%i", $this->id);
+
+      // Clear users
+      DB::delete('projects_user', "id_project=%i", $this->id);
+
+      // Add Users to the project
+      foreach ($this->users as $user) {
+        DB::insert('projects_user', array(
+          "id_project" => $this->id,
+          "id_user" => $user->getId(),
+        ));
+      }
     }
 
     function delete() {
@@ -193,6 +216,5 @@
       return null;
     }
   }
-
 
 ?>

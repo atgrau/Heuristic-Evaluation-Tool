@@ -58,9 +58,11 @@
                   foreach ($users as $user) { ?>
                     <option
                     <?php
+                    if ($this->project):
                       if (in_array($user, $this->project->getUsers())) echo " selected ";
+                    endif;
                     ?>
-                    value="user_<?=$user->getId();?>"><?=$user->getName();?></option>
+                    value="<?=$user->getId();?>"><?=$user->getName();?></option>
                 <?php } ?>
                 </select>
               </div>

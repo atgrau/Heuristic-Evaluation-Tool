@@ -28,6 +28,11 @@
       }
 
       $project = new ProjectModel(0, $GLOBALS["USER_SESSION"]->getId(), null, $_POST["name"], $_POST["description"], $_POST["link"], false);
+      $users = array();
+      foreach ($_POST["users"] as $user) {
+        array_push($users, getUserById($user));
+      }
+      $project->setUsers($users);
       $project->insert();
 
       $this->addMessage = true;
@@ -64,9 +69,14 @@
           $project->setActive($_POST["active"]=="1");
         }
 
+        $users = array();
+        foreach ($_POST["users"] as $user) {
+          array_push($users, getUserById($user));
+        }
+        $project->setUsers($users);
+
+        // Update Project
         $project->update();
-        foreach ($_POST['users'] as $selectedOption)
-            echo $selectedOption."\n";
 
         $this->editMessage = true;
         $this->recentProject = $_POST["name"];
