@@ -6,13 +6,13 @@
   {
     private $id;
     private $name;
-    private $activated;
+    private $active;
     private $modified;
 
-    function __construct($id, $name, $activated, $modified) {
+    function __construct($id, $name, $active, $modified) {
       $this->id = $id;
       $this->name = $name;
-      $this->activated = $activated;
+      $this->active = $active;
       $this->modified = $modified;
     }
 
@@ -29,7 +29,7 @@
     }
 
     function getStateActive() {
-      return $this->activated;
+      return $this->active;
     }
 
     function getStateModified() {
@@ -76,13 +76,13 @@ class QuestionModel
 {
 
   private $id;
-  private $order;
+  private $category;
   private $question;
 
-  function __construct($id, $order, $question)
+  function __construct($id, $category, $question)
   {
     $this->id = $id;
-    $this->order = $order;
+    $this->category = $category;
     $this->question = $question;
   }
 
@@ -90,8 +90,8 @@ class QuestionModel
     return $this->id;
   }
 
-  function getOrder() {
-    return $this->order;
+  function getCategory() {
+    return $this->category;
   }
 
   function setOrder($value) {
@@ -99,7 +99,7 @@ class QuestionModel
   }
 
   function getQuestion() {
-    return $this->questions;
+    return $this->question;
   }
 
   function setQuestion($value) {
@@ -191,6 +191,7 @@ class AnswerModel
   function getAnswerbyEvaluation($templateId)
   {
     $qry = "SELECT * FROM answersbyevaluation WHERE idEvaluation=%i";
+    $qry .= " ORDER BY answersbyevaluation.idAnswer";
     $answers = DB::query($qry,$templateId);
     $answerList = array();
 
@@ -211,6 +212,7 @@ class AnswerModel
   function getCategoriesbyEvaluation($templateId)
   {
     $qry = "SELECT * FROM categoriesbyevaluation WHERE idEvaluation=%i";
+    $qry .= " ORDER BY categoriesbyevaluation.idCategory";
     $categories = DB::query($qry,$templateId);
     $categoryList = array();
 
@@ -227,4 +229,31 @@ class AnswerModel
     }
   }
 
+  function getQuestionsbyEvaluation($templateId)
+  {
+    $qry = "SELECT * FROM questionsbyevaluation WHERE idEvaluation=%i";
+    $qry .= " ORDER BY questionsbyevaluation.idQuestion";
+    $questions = DB::query($qry,$templateId);
+    $questionList = array();
+
+    if ($questions) {
+      foreach ($questions as $row) {
+        $qryQuestion = DB::queryFirstRow("SELECT * FROM template_questions WHERE ID=%i", $row["idQuestion"]);
+
+        if($qryQuestion)
+          array_push($questionList, new QuestionModel($qryQuestion["ID"],$qryQuestion["id_category"] ,$qryQuestion["question"]));
+      }
+      return $questionList;
+    } else {
+      return null;
+    }
+  }
+
+  function insertTemplate() {
+    DB::insert('templates', array(
+      "name" => $this->name,
+      "active" => false,
+      "modified" => false,
+    ));
+  }
 ?>

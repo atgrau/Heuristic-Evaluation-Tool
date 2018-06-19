@@ -70,9 +70,9 @@
                 <li class="<?php echo $active0; ?>">
                   <a href="#categories" data-toggle="tab">Categories</a>
                 </li>
-                <li class="<?php echo $active1; ?>">
+                <!--<li class="<?php echo $active1; ?>">
                   <a href="#questions" data-toggle="tab">Questions</a>
-                </li>
+                </li>-->
                 <li class="<?php echo $active2; ?>">
                   <a href="#answers" data-toggle="tab">Answers</a>
                 </li>
@@ -85,22 +85,32 @@
                     <div class="form-group margin-l margin-lg-t">
                       <a data-toggle="modal" data-target="#newCategoryModal" href="#" title="Add new Category" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add new category</a>
                     </div>
-                  <?php endif; ?>
-                  <?php
-                  if (!empty($this->categoriesList)):
-                  foreach ($this->categoriesList as $category) { ?>
-                    <form class="margin margin-lg-t" method="POST" action="/admin/set-category">
-                      <div class="form-group">
-                        <label for="category">Category Name:</label>
-                        <input name="categoryId" type="hidden" class="form-control" value="<?= $category->getId(); ?>">
-                        <input name="category" type="text" class="form-control" id="category" placeholder="Category name" value="<?= $category->getName(); ?>">
-                      </div>
-                      <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
-                    </form>
-                  <?php } ?>
-                <?php endif; ?>
+                    <?php endif; ?>
+
+                    <?php if (!empty($this->categoriesList)):
+                          foreach ($this->categoriesList as $category) { ?>
+                            <form class="margin margin-lg-t" method="POST" action="/admin/set-category">
+                              <div class="form-group">
+                                <label for="category"><?php echo $category->getName(); ?></label>
+                                <?php if (!empty($this->questionList)):
+                                      foreach ($this->questionList as $question) {
+                                        if($question->getCategory() == $category->getId()): ?>
+                                            <input name="category" type="text" class="form-control" id="category" placeholder="Category name" value="<?php echo $question->getQuestion(); ?>">
+                                        <?php endif;
+                                    }
+                                  endif; ?>
+
+                              </div>
+                              <?php if (!$this->template->getStateModified()): ?>
+                                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                              <?php endif; ?>
+                            </form>
+                            <?php } ?>
+
+                    <?php endif; ?>
                 </div>
 
+<!--
                 <div class="tab-pane fade in <?php echo $active1; ?>" id="questions">
                   <form class="margin margin-lg-t" method="POST" action="">
                     <div class="form-group">
@@ -116,7 +126,7 @@
                     <br />
                     <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
                   </form>
-                </div>
+                </div>-->
                 <div class="tab-pane fade in <?php echo $active2 ; ?>" id="answers">
                   <form class="margin margin-lg-t" method="POST" action="">
                     <div class="form-group">

@@ -23,6 +23,7 @@
       "/projects/add" => 1,
       "/projects/update" => 1,
       "/templates/edit" => 1,
+      "/templates/new" => 1,
       "/admin/projects" => 2,
       "/admin/update-project" => 1,
       "/admin/update-profile" => 2,
@@ -147,7 +148,11 @@
         } else {
           $controller->updateTemplateView(true, $_GET["param"]);
         }
-      } else if ($this->uri == "/templates/edit") {
+      } else if ($this->uri == "/templates/new") {
+        $controller = new TemplateController();
+        $controller->addNewTemplateView($_GET["name"]);
+      }
+       else if ($this->uri == "/templates/edit") {
         $controller = new TemplateController();
         $controller->updateTemplateView(false, $_GET["param"]);
       } else if ($this->uri == "/admin/importcsv") {
