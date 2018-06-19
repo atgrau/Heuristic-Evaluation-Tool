@@ -19,8 +19,11 @@
       "/account/update-password" => 0,
       "/my-projects" => 1,
       "/projects/new" => 1,
+      "/projects/edit" => 1,
       "/projects/add" => 1,
+      "/projects/update" => 1,
       "/admin/projects" => 2,
+      "/admin/update-project" => 1,
       "/admin/update-profile" => 2,
       "/admin/users" => 2,
       "/admin/profile" => 2,
@@ -94,12 +97,25 @@
       } else if ($this->uri == "/projects/new") {
         $controller = new ProjectController();
         $controller->addNewProjectView();
+      } else if ($this->uri == "/projects/edit") {
+        $controller = new ProjectController();
+        $controller->updateProjectView(false, $_GET["param"]);
+      } else if ($this->uri == "/projects/update") {
+        $controller = new ProjectController();
+        $controller->updateProject(false);
       } else if ($this->uri == "/projects/add") {
         $controller = new ProjectController();
         $controller->addNewProject();
       } else if ($this->uri == "/admin/projects") {
         $controller = new ProjectController();
-        $controller->showProjectList(true);
+        if (empty($_GET["param"])) {
+          $controller->showProjectList(true);
+        } else {
+          $controller->updateProjectView(true, $_GET["param"]);
+        }
+      } else if ($this->uri == "/admin/update-project") {
+        $controller = new ProjectController();
+        $controller->updateProject(true);
       } else if ($this->uri == "/admin/update-profile") {
         $controller = new AccountController();
         $controller->updateProfile(true);

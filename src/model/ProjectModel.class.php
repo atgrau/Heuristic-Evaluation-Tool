@@ -66,6 +66,14 @@
         "link" => $this->link
       ));
     }
+
+    function update() {
+      DB::update('projects', array(
+        "name" => $this->name,
+        "description" => $this->description,
+        "link" => $this->link
+      ), "ID=%i", $this->id);
+    }
   }
 
   function getProjectById($projectId) {

@@ -44,6 +44,11 @@ return '<!-- Modal -->
    <span class="glyphicon glyphicon-info-sign"></span> Project <strong><?= $this->recentProject; ?></strong> has beed added successfully!
   </div>
 <?php endif; ?>
+<?php if ($this->editMessage): ?>
+  <div class="row alert alert-info" role="alert">
+   <span class="glyphicon glyphicon-info-sign"></span> Project <strong><?= $this->recentProject; ?></strong> has beed updated successfully!
+  </div>
+<?php endif; ?>
 <?php if ($this->removeMessage): ?>
   <div class="row alert alert-info" role="alert">
    <span class="glyphicon glyphicon-info-sign"></span> Project <strong><?= $this->recentProject; ?></strong> has beed removed successfully!
@@ -115,7 +120,11 @@ return '<!-- Modal -->
             <td><?= $project->getShortDescription(); ?></td>
             <td><?= $project->getLink(); ?> <a href="<?= $project->getLink(); ?>" target="_blank" title="Link a <?= $project->getName(); ?>"><span class="glyphicon glyphicon-link"></span></a></td>
             <td>
-              <a href="/projects/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil"></span></a>
+              <?php if ($this->admin): ?>
+                <a href="/admin/projects/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil"></span></a>
+              <?php else: ?>
+                <a href="/projects/edit/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil"></span></a>
+              <?php endif; ?>
               <span class="margin-l"></span>
               <a data-toggle="modal" data-target="#deletingModal_<?= $project->getId(); ?>" href="#" title="Remove Proyecto" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
             </td>

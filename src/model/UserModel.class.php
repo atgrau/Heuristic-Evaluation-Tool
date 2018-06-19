@@ -41,6 +41,10 @@
       return $this->role;
     }
 
+    function isAdmin() {
+      return ($this->role == 2);
+    }
+
     function setRole($value) {
       $this->role = $value;
     }

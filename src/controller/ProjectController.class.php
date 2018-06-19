@@ -37,6 +37,36 @@
       $this->showProjectList(false);
     }
 
+    function updateProjectView($adminView, $projectId) {
+      $project = getProjectById($projectId);
+      if ((!$project) || ((!$GLOBALS["USER_SESSION"]->isAdmin()) && ($GLOBALS["USER_SESSION"]->getId() != $project->getUser()->getId()))){
+          $this->showProjectList($adminView);
+      } else {
+        $this->setContentView("project/project");
+        $this->project = $project;
+        $this->adminView = $adminView;
+        $this->render();
+      }
+    }
+
+    function updateProject($adminView) {
+      if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        header("Location: /");
+      }
+
+      $project = getProjectById($_POST["id"]);
+      if ((!$project) || ((!$GLOBALS["USER_SESSION"]->isAdmin()) && ($GLOBALS["USER_SESSION"]->getId() != $project->getUser()->getId()))){
+        header("Location: /");
+      } else {
+        $project = new ProjectModel($_POST["id"], $GLOBALS["USER_SESSION"]->getId(), null, $_POST["name"], $_POST["description"], $_POST["link"]);
+        $project->update();
+
+        $this->editMessage = true;
+        $this->recentProject = $_POST["name"];
+        $this->showProjectList($adminView);
+      }
+    }
+
     function removeProject() {
       // Getting POST paramters
       $user = getProjectById($_GET["param"]);
