@@ -41,20 +41,22 @@
 
       $project->insert();
 
-      foreach ($project->getUsers() as $user) {
-        // Send Email to the users
-        $subject = "You have been assigned to a new project";
-        $body = "Hello <b>".$user->getName()."</b>, <br /><br />";
-        $body .= "You have been assigned to a new project:<br />";
-        $body .= "<ul>";
-        $body .= "<li><strong>Name:</strong> ".$project->getName()."</li>";
-        $body .= "<li><strong>Description:</strong> ".$project->getDescription()."</li>";
-        $body .= "<li><strong>Link:</strong> ".$project->getLink()."</li>";
-        $body .= "</ul>";
-        $body .= "<br />Now, you can evaluate it by using ".APP_TITLE."<br /><br />";
+      if ($_POST["email"] == "1") {
+        foreach ($project->getUsers() as $user) {
+          // Send Email to the users
+          $subject = "You have been assigned to a new project";
+          $body = "Hello <b>".$user->getName()."</b>, <br /><br />";
+          $body .= "You have been assigned to a new project:<br />";
+          $body .= "<ul>";
+          $body .= "<li><strong>Name:</strong> ".$project->getName()."</li>";
+          $body .= "<li><strong>Description:</strong> ".$project->getDescription()."</li>";
+          $body .= "<li><strong>Link:</strong> ".$project->getLink()."</li>";
+          $body .= "</ul>";
+          $body .= "<br />Now, you can evaluate it by using ".APP_TITLE."<br /><br />";
 
-        $email = new Email($user->getEmail(), $subject, $body);
-        $email->send();
+          $email = new Email($user->getEmail(), $subject, $body);
+          $email->send();
+        }
       }
 
       $this->addMessage = true;
@@ -105,20 +107,22 @@
         // Update Project
         $project->update();
 
-        foreach ($project->getUsers() as $user) {
-          // Send Email to the users
-          $subject = "A project that you have been assigned in was modified";
-          $body = "Hello <b>".$user->getName()."</b>, <br /><br />";
-          $body .= "You are assigned in a project which has been modified, check the newer information:<br />";
-          $body .= "<ul>";
-          $body .= "<li><strong>Name:</strong> ".$project->getName()."</li>";
-          $body .= "<li><strong>Description:</strong> ".$project->getDescription()."</li>";
-          $body .= "<li><strong>Link:</strong> ".$project->getLink()."</li>";
-          $body .= "</ul>";
-          $body .= "<br />Now, you can evaluate it by using ".APP_TITLE."<br /><br />";
+        if ($_POST["email"] == "1") {
+          foreach ($project->getUsers() as $user) {
+            // Send Email to the users
+            $subject = "A project that you have been assigned in was modified";
+            $body = "Hello <b>".$user->getName()."</b>, <br /><br />";
+            $body .= "You are assigned in a project which has been modified, check the newer information:<br />";
+            $body .= "<ul>";
+            $body .= "<li><strong>Name:</strong> ".$project->getName()."</li>";
+            $body .= "<li><strong>Description:</strong> ".$project->getDescription()."</li>";
+            $body .= "<li><strong>Link:</strong> ".$project->getLink()."</li>";
+            $body .= "</ul>";
+            $body .= "<br />Now, you can evaluate it by using ".APP_TITLE."<br /><br />";
 
-          $email = new Email($user->getEmail(), $subject, $body);
-          $email->send();
+            $email = new Email($user->getEmail(), $subject, $body);
+            $email->send();
+          }
         }
 
         $this->editMessage = true;
