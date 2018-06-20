@@ -100,8 +100,7 @@
       ));
 
       // Getting recent project
-      $project = DB::queryFirstRow("SELECT max(ID) as ID FROM projects");
-      $projectId = $project["ID"];
+      $projectId = DB::insertId();
 
       // Add Users to the project
       foreach ($this->users as $user) {
