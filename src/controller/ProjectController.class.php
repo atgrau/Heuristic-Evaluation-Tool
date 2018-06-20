@@ -29,11 +29,33 @@
 
       $project = new ProjectModel(0, $GLOBALS["USER_SESSION"]->getId(), null, $_POST["name"], $_POST["description"], $_POST["link"], false);
       $users = array();
-      foreach ($_POST["users"] as $user) {
-        array_push($users, getUserById($user));
-      }
-      $project->setUsers($users);
+      if ($_POST["users"]):
+        foreach ($_POST["users"] as $user) {
+          array_push($users, getUserById($user));
+        }
+        $project->setUsers($users);
+      endif;
+
+      // Validate Project
+      $this->validateProject($project);
+
       $project->insert();
+
+      foreach ($project->getUsers() as $user) {
+        // Send Email to the users
+        $subject = "You have been assigned to a new project";
+        $body = "Hello <b>".$user->getName()."</b>, <br /><br />";
+        $body .= "You have been assigned to a new project:<br />";
+        $body .= "<ul>";
+        $body .= "<li><strong>Name:</strong> ".$project->getName()."</li>";
+        $body .= "<li><strong>Description:</strong> ".$project->getDescription()."</li>";
+        $body .= "<li><strong>Link:</strong> ".$project->getLink()."</li>";
+        $body .= "</ul>";
+        $body .= "<br />Now, you can evaluate it by using ".APP_TITLE."<br /><br />";
+
+        $email = new Email($user->getEmail(), $subject, $body);
+        $email->send();
+      }
 
       $this->addMessage = true;
       $this->recentProject = $_POST["name"];
@@ -70,17 +92,75 @@
         }
 
         $users = array();
-        foreach ($_POST["users"] as $user) {
-          array_push($users, getUserById($user));
-        }
-        $project->setUsers($users);
+        if ($_POST["users"]):
+          foreach ($_POST["users"] as $user) {
+            array_push($users, getUserById($user));
+          }
+          $project->setUsers($users);
+        endif;
+
+        // Validate Project
+        $this->validateProject($project);
 
         // Update Project
         $project->update();
 
+        foreach ($project->getUsers() as $user) {
+          // Send Email to the users
+          $subject = "A project that you have been assigned in was modified";
+          $body = "Hello <b>".$user->getName()."</b>, <br /><br />";
+          $body .= "You are assigned in a project which has been modified, check the newer information:<br />";
+          $body .= "<ul>";
+          $body .= "<li><strong>Name:</strong> ".$project->getName()."</li>";
+          $body .= "<li><strong>Description:</strong> ".$project->getDescription()."</li>";
+          $body .= "<li><strong>Link:</strong> ".$project->getLink()."</li>";
+          $body .= "</ul>";
+          $body .= "<br />Now, you can evaluate it by using ".APP_TITLE."<br /><br />";
+
+          $email = new Email($user->getEmail(), $subject, $body);
+          $email->send();
+        }
+
         $this->editMessage = true;
         $this->recentProject = $_POST["name"];
         $this->showProjectList($adminView);
+      }
+    }
+
+    function validateProject($project) {
+      $validate = "";
+      if (strlen($project->getName()) > 50) {
+        $validate .= "<li>Project's name cannot contain more than 50 characters.</li>";
+      }
+
+      if (strlen($project->getName()) == 0) {
+        $validate .= "<li>Project's name cannot be empty.</li>";
+      }
+
+      if (strlen($project->getDescription()) > 1000) {
+        $validate .= "<li>Project's description cannot contain more than 1000 characters.</li>";
+      }
+
+      if (strlen($project->getDescription()) == 0) {
+        $validate .= "<li>Project's description cannot be empty.</li>";
+      }
+
+      if (strlen($project->getLink()) > 50) {
+        $validate .= "<li>Project's link cannot contain more than 50 characters.</li>";
+      }
+
+      if (strlen($project->getLink()) == 0) {
+        $validate .= "<li>Project's link cannot be empty.</li>";
+      }
+
+      if ($validate) {
+          $this->error = $validate;
+          if ($project->getId() == 0) {
+            $this->addNewProjectView();
+          } else {
+            $this->updateProjectView($this->adminView, $project->getId());
+          }
+
       }
     }
 
@@ -93,7 +173,6 @@
 
       // Check user dependencies
 
-      // Delete Users
 
       // Delete Project
       $project->delete();

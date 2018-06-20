@@ -102,7 +102,7 @@
       // Getting recent project
       $project = DB::queryFirstRow("SELECT max(ID) as ID FROM projects");
       $projectId = $project["ID"];
-      
+
       // Add Users to the project
       foreach ($this->users as $user) {
         DB::insert('projects_user', array(
@@ -133,7 +133,10 @@
     }
 
     function delete() {
+      // Delete Project
       DB::delete('projects', "ID=%i", $this->id);
+      // Delete Users associated with the project
+      DB::delete('projects_user', "id_project=%i", $this->id);
     }
   }
 

@@ -41,7 +41,7 @@
         $user = getUserByEmail($_POST["email"]);
         $user->setNewToken($token);
 
-        // Send and Email
+        // Send an Email
         $subject = APP_TITLE." - Reset Password";
         $body = "Hello <b>".$user->getName()."</b>, <br /><br />";
         $body .= "You have requested to reset your password.<br /><br />";

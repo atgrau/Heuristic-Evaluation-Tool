@@ -1,3 +1,31 @@
+<?php
+  if ($_POST["name"]) {
+    $name = $_POST["name"];
+  } elseif ($this->project) {
+    $name = $this->project->getName();
+  }
+
+  if ($_POST["description"]) {
+    $desription = $_POST["description"];
+  } elseif ($this->project) {
+    $desription = $this->project->getDescription();
+  }
+
+  if ($_POST["link"]) {
+    $link = $_POST["link"];
+  } elseif ($this->project) {
+    $link = $this->project->getLink();
+  }
+
+  if ($_POST["users"]) {
+    $usersProject = array();
+    foreach ($_POST["users"] as $user) {
+      array_push($usersProject, getUserById($user));
+    }
+  } elseif (($this->project) && ($this->project->getUsers())) {
+    $usersProject = $this->project->getUsers();
+  }
+?>
 <div class="row">
     <div class="col-lg-12">
       <?php if (!$this->project): ?>
@@ -14,13 +42,9 @@
     <div class="col-lg">
         <!-- /.panel-heading -->
         <div class="panel-body">
-          <?php if (isset($this->success)) { ?>
-            <div class="alert alert-info" role="alert">
-             <?php echo $this->success; ?>
-            </div>
-          <?php } else if (isset($this->error)) { ?>
+          <?php if (isset($this->error)) { ?>
             <div class="alert alert-danger" role="alert">
-             <?php echo $this->error; ?>
+             <span class='glyphicon glyphicon-remove-sign'></span> The new profile has errors: <br /><ul><?=$this->error; ?></ul>
             </div>
           <?php } ?>
           <?php if (($this->project) && ($this->adminView)): ?>
@@ -34,15 +58,15 @@
           <?php endif; ?>
               <div class="form-group">
                 <label for="name">Project's Name:</label>
-                <input name="name" type="text" class="form-control" id="name" placeholder="Name of project" value="<?php if($this->project) echo $this->project->getName();?>">
+                <input name="name" type="text" class="form-control" id="name" placeholder="Name of project" value="<?=$name?>">
               </div>
               <div class="form-group">
                 <label for="description">Description:</label>
-                <textarea id="description" name="description" class="form-control" placeholder="Description of project"><?php if($this->project) echo $this->project->getDescription();?></textarea>
+                <textarea id="description" name="description" class="form-control" placeholder="Description of project"><?=$desription?></textarea>
               </div>
               <div class="form-group">
                 <label for="link">Link:</label>
-                <input name="link" type="text" class="form-control" id="name" placeholder="http://website.domain" value="<?php if($this->project) echo $this->project->getLink();?>">
+                <input name="link" type="text" class="form-control" id="name" placeholder="http://website.domain" value="<?=$link?>">
               </div>
               <?php if ($this->adminView): ?>
                 <div class="form-group">
@@ -58,8 +82,8 @@
                   foreach ($users as $user) { ?>
                     <option
                     <?php
-                    if ($this->project):
-                      if (in_array($user, $this->project->getUsers())) echo " selected ";
+                    if ($usersProject):
+                      if (in_array($user, $usersProject)) echo " selected ";
                     endif;
                     ?>
                     value="<?=$user->getId();?>"><?=$user->getName();?></option>
