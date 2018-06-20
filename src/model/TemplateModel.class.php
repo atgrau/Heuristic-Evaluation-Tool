@@ -35,7 +35,50 @@
     function getStateModified() {
       return $this->modified;
     }
+
+    function insert() {
+      $template = DB::insert('template_evaluation', array(
+        "name" => $this->name,
+        "active" => false,
+        "modified" => false,
+      ));
+
+      $templateid = DB::insertId();
+
+      if($templateid){
+        //Insert default answers
+        $qryAnswer = "SELECT * FROM template_answers WHERE original=1";
+        $answers = DB::query($qryAnswer);
+        if ($answers) {
+            foreach ($answers as $row) {
+              DB::insert('answersbyevaluation', array(
+                "idEvaluation" => $templateid,
+                "idAnswer" => $row["ID"],
+              ));
+            }
+          }
+
+        //Insert default categories
+        $qryCategories = "SELECT * FROM template_categories WHERE original=1";
+        $categories = DB::query($qryCategories);
+        if ($categories) {
+            foreach ($categories as $row) {
+              DB::insert('categoriesbyevaluation', array(
+                "idEvaluation" => $templateid,
+                "idCategory" => $row["ID"],
+              ));
+            }
+        }
+
+      }
+
+    }
+
   }
+
+/**
+ * Category Model
+ */
 
 class CategoryModel
   {
@@ -58,9 +101,9 @@ class CategoryModel
 
 }
 
-  /**
-   * Questions Model
-   */
+/**
+ * Questions Model
+ */
 class QuestionModel
 {
 
@@ -123,6 +166,22 @@ class AnswerModel
 
 }
 
+class AnswersbyEvaluation
+  {
+
+    private $idEvaluation;
+    private $idAnswer;
+    function __construct($idEvaluation, $idAnswer)
+    {
+      $this->idEvaluation = $idEvaluation;
+      $this->idAnswer = $idAnswer;
+    }
+
+
+
+
+}
+
   function getTemplates() {
     $qry = "SELECT * FROM template_evaluation";
 
@@ -134,7 +193,7 @@ class AnswerModel
     $templateList = array();
     if ($templates) {
       foreach ($templates as $row) {
-        array_push($templateList, new TemplateModel($row["ID"], $row["name"], $row["activated"], $row["modified"]));
+        array_push($templateList, new TemplateModel($row["ID"], $row["name"], $row["active"], $row["modified"]));
       }
       return $templateList;
     } else {
@@ -145,7 +204,7 @@ class AnswerModel
   function getTemplateById($templateId) {
     $template = DB::queryFirstRow("SELECT * FROM template_evaluation WHERE ID=%i", $templateId);
     if ($template) {
-      return new TemplateModel($template["ID"], $template["name"], $template["activated"], $template["modified"]);
+      return new TemplateModel($template["ID"], $template["name"], $template["active"], $template["modified"]);
     } else {
       return null;
     }
@@ -230,39 +289,6 @@ class AnswerModel
     }
   }
 
-  function insertTemplate() {
-    DB::insert('template_evaluation', array(
-      "name" => $this->name,
-      "active" => false,
-      "modified" => false,
-    ));
-  }
-
-  function insertDefaultAnswers($templateId) {
-    $qry = "SELECT * FROM template_answers WHERE original=1";
-    $answers = DB::query($qry);
-    if ($answers) {
-        foreach ($answers as $row) {
-          DB::insert('answersbyevaluation', array(
-            "idEvaluation" => $templateId,
-            "idAnswer" => $row,
-          ));
-        }
-      }
-  }
-
-  function insertDefaultCategories($templateId) {
-    $qry = "SELECT * FROM template_categories WHERE original=1";
-    $categories = DB::query($qry);
-    if ($categories) {
-        foreach ($categories as $row) {
-          DB::insert('categoriesbyevaluation', array(
-            "idEvaluation" => $templateId,
-            "idCategory" => $row,
-          ));
-        }
-      }
-  }
 
 
 ?>

@@ -32,13 +32,16 @@ return '<!-- Modal -->
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-            <input name="name" type="text" class="form-control input" placeholder="Insert name ..." value="" />
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-success margin-r"><span data-dismiss="modal"></span> Submit</a>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-      </div>
+
+      <form action="/templates/new/<?php $_POST["name"]?>" method="POST">
+        <div class="modal-body">
+              <input name="name" type="text" class="form-control input" placeholder="Insert name ..." value="" />
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success margin-r"><span data-dismiss="modal"></span>Accept</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>'
@@ -85,7 +88,7 @@ return '<!-- Modal -->
       <tr>
         <th scope="col">#</th>
         <th scope="col">Template's Name</th>
-        <th scope="col">Activated</th>
+        <th scope="col">Active</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -97,7 +100,7 @@ return '<!-- Modal -->
             <?= generateModal($template->getId()); ?>
             <th scope="row"><?= $template->getId(); ?></th>
             <td><?= $template->getName(); ?></td>
-            <td><input type="checkbox" value=<?=$template->getStateActive()?>><?=$template->getStateActive()?></td>
+            <td><input type="checkbox" value=<?=$template->getStateActive()?>><?php echo $template->getStateActive()?></td>
             <td>
               <a href="/admin/templates/<?= $template->getId(); ?>" title="See template"><span class="glyphicon glyphicon-eye-open"></span></a>
               <span class="margin-l"></span>

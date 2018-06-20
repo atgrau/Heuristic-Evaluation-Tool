@@ -150,7 +150,7 @@
         }
       } else if ($this->uri == "/templates/new") {
         $controller = new TemplateController();
-        $controller->addNewTemplateView($_GET["name"]);
+        $controller->addNewTemplateView();
       }
        else if ($this->uri == "/templates/edit") {
         $controller = new TemplateController();

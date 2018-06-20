@@ -33,11 +33,11 @@
     }
 
     function addNewTemplateView(){
+
       $template = new TemplateModel(0, $_POST["name"],0,0);
-      $template->insertTemplate();
+      $template->insert();
       $this->addMessage = true;
-      $this->insertDefaultAnswers($template->getId());
-      $this->insertDefaultCategories($template->getId());
+    
 
         if($template)
         {
