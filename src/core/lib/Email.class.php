@@ -20,8 +20,9 @@
       $this->subject = $subject;
       $this->body = $body;
       $this->body .= "Regards, <br />";
-      $this->body .= APP_TITLE." team";
-      $this->body .= "<br /><img src='".URL."/dist/images/logo.png' />";      
+      $this->body .= APP_TITLE." team<br />";
+      $this->body .= "<a href='".URL."' target='_blank'>".URL."</a><br />";
+      $this->body .= "<br /><img src='".URL."/dist/images/logo.png' />";
     }
 
     function send() {

@@ -34,6 +34,7 @@
   if (isset($_SESSION["UserId"])) {
     require_once(BASE_URI."model/UserModel.class.php");
     $userSession = getUserById($_SESSION["UserId"]);
+    $userSession->resetToken();
     $GLOBALS["USER_SESSION"] = $userSession;
   }
 

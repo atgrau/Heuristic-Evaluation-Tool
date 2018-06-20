@@ -41,8 +41,8 @@
         $user = getUserByEmail($_POST["email"]);
         $user->setNewToken($token);
 
-        // Send and Email
-        $subject = APP_TITLE." - Reset Password";
+        // Send an Email
+        $subject = "Reset Password";
         $body = "Hello <b>".$user->getName()."</b>, <br /><br />";
         $body .= "You have requested to reset your password.<br /><br />";
         $body .= "You can proceed by doing click below:<br />";
@@ -60,7 +60,45 @@
     }
 
     function reset() {
-      echo "<b>Received Token:</b> ".$_GET["token"];
+      $this->token = $_GET["token"];
+      $this->setView("login");
+      $this->setContent("reset");
+      $this->render();
+    }
+
+    function generateNewPassword() {
+      $user = getUserByToken($_POST["token"]);
+
+      if (!$user) {
+        $this->setView("login");
+        $this->setContent("signin");
+        $this->render();
+      } else {
+        $password = randomPassword();
+        $md5Password = md5($password);
+
+        $user->setPassword($md5Password);
+
+        // Insert new user to database
+        $user->update();
+        $user->resetToken();
+
+        // Send and Email with Password
+        $subject = "Recovered Account";
+        $body = "Hello <b>".$user->getName()."</b>, <br /><br />";
+        $body .= "Your account has been recovered successfully!<br /><br />";
+        $body .= "You can access using the following credentials:<br />";
+        $body .= "<b>Email:</b> ".$user->getEmail()."<br />";
+        $body .= "<b>Password:</b> ".$password."<br /><br />";
+        $body .= "<a href='".URL."' target='_blank'>Click here to Sign In</a><br /><br />";
+
+        $email = new Email($user->getEmail(), $subject, $body);
+        $email->send();
+      }
+
+      $this->setView("login");
+      $this->setContent("generated");
+      $this->render();
     }
 
     function showProfile($adminView) {

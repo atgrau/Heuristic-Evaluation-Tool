@@ -115,6 +115,12 @@
       ), "ID=%i", $this->id);
     }
 
+    function resetToken() {
+      DB::update("users", array(
+        "token" => ""
+        ), "ID=%i", $this->id);
+    }
+
     function update() {
       if (!empty($this->id)) {
         DB::update("users", array(
@@ -171,6 +177,11 @@
 
   function getUserByEmail($email) {
     $account = DB::queryFirstRow("SELECT users.*, countries.iso, countries.name FROM users LEFT JOIN countries on users.country = countries.iso WHERE users.email=%s", $email);
+    return buildUser($account);
+  }
+
+  function getUserByToken($token) {
+    $account = DB::queryFirstRow("SELECT * FROM users WHERE token=%s", $token);
     return buildUser($account);
   }
 

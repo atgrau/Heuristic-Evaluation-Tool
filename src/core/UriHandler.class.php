@@ -12,6 +12,7 @@
       "/forgot" => -1,
       "/forgot/send" => -1,
       "/forgot/reset" => -1,
+      "/forgot/generate" => -1,
       "/account/login" => -1,
       "/account/logout" => 0,
       "/account/profile" => 0,
@@ -79,6 +80,9 @@
       } else if ($this->uri == "/forgot/reset") {
         $controller = new AccountController();
         $controller->reset();
+      } else if ($this->uri == "/forgot/generate") {
+        $controller = new AccountController();
+        $controller->generateNewPassword();
       } else if ($this->uri == "/account/login") {
         $controller = new AccountController();
         $controller->login();

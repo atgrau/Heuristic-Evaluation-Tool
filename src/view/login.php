@@ -7,7 +7,11 @@
             <div class="col-sm-6 col-sm-offset-3">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
+                      <?php if ($this->content == "signin"): ?>
                         <h3 class="panel-title text-center font-weight-bold">Sign In</h3>
+                      <?php else: ?>
+                        <h3 class="panel-title text-center font-weight-bold">Recover Account</h3>
+                      <?php endif; ?>
                     </div>
                     <div class="panel-body">
                       <?php if ($this->content == "signin"): ?>
@@ -35,7 +39,7 @@
                                 <input type="submit" value="Sign In" class="btn btn-lg btn-success btn-block" />
                             </fieldset>
                         </form>
-                      <?php else: ?>
+                      <?php elseif ($this->content == "forgot"): ?>
                         <form role="form" method="POST" action="/forgot/send">
                             <fieldset>
                               <?php if($this->recovered) { ?>
@@ -55,6 +59,24 @@
                                 <a class="btn btn-danger btn-block" href="/">Cancel</a>
                             </fieldset>
                         </form>
+                      <?php elseif ($this->content == "reset"): ?>
+                        <form role="form" method="POST" action="/forgot/generate">
+                          <?php
+                            $user = getUserByToken($this->token);
+                            if ($user) {
+                              echo "Hello <strong>".$user->getName()."</strong>, you have been requested a password reset.<br />";
+                              echo "We can send to your email a new password using the following button. <br /><br />";
+                              echo "<form action='/forgot/send' method='POST'>";
+                              echo "<input name='token' type='hidden' value='".$this->token."' />";
+                              echo "<input type='submit' class='btn btn-primary' title='Send me a new password' value='Send me a new password' />";
+                              echo "</form>";
+                            } else {
+                              header("Location: /");
+                            }
+                          ?>
+                        </form>
+                      <?php else: ?>
+                        <?="We have <strong>send a new password</strong> to your <strong>email</strong>. <br /><br />Click <a href='/' title='Sign in'>here</a> to sign in.";?>
                       <?php endif; ?>
                     </div>
                 </div>

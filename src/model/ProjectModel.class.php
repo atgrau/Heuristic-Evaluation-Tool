@@ -98,6 +98,17 @@
         "link" => $this->link,
         "active" => false
       ));
+
+      // Getting recent project
+      $projectId = DB::insertId();
+
+      // Add Users to the project
+      foreach ($this->users as $user) {
+        DB::insert('projects_user', array(
+          "id_project" => $projectId,
+          "id_user" => $user->getId(),
+        ));
+      }
     }
 
     function update() {
@@ -107,10 +118,24 @@
         "link" => $this->link,
         "active" => $this->active
       ), "ID=%i", $this->id);
+
+      // Clear users
+      DB::delete('projects_user', "id_project=%i", $this->id);
+
+      // Add Users to the project
+      foreach ($this->users as $user) {
+        DB::insert('projects_user', array(
+          "id_project" => $this->id,
+          "id_user" => $user->getId(),
+        ));
+      }
     }
 
     function delete() {
+      // Delete Project
       DB::delete('projects', "ID=%i", $this->id);
+      // Delete Users associated with the project
+      DB::delete('projects_user', "id_project=%i", $this->id);
     }
   }
 
@@ -193,6 +218,5 @@
       return null;
     }
   }
-
 
 ?>
