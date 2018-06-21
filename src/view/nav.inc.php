@@ -21,11 +21,16 @@
                 <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-tasks">
+              <?php
+                $assignedProjects = $this->getMyAssignedProjects();
+                if ($assignedProjects):
+                foreach ($assignedProjects as $evaluation) {
+              ?>
               <li>
-                  <a href="#">
+                  <a href="/projects/evaluation/<?=$evaluation->getId();?>" title="View project">
                       <div>
                           <p>
-                              <strong>Proyecto 1</strong>
+                              <strong><?=substr($evaluation->getName(), 0, 22)."..."; ?></strong>
                               <span class="pull-right text-muted">40% Completado</span>
                           </p>
                           <div class="progress progress-striped active">
@@ -37,44 +42,20 @@
                   </a>
               </li>
               <li class="divider"></li>
+            <?php } ?>
               <li>
-                  <a href="#">
-                      <div>
-                          <p>
-                              <strong>Proyecto 2</strong>
-                              <span class="pull-right text-muted">100% Completado</span>
-                          </p>
-                          <div class="progress progress-striped active">
-                              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                  <span class="sr-only">100% Completado</span>
-                              </div>
-                          </div>
-                      </div>
-                  </a>
-              </li>
-              <li class="divider"></li>
-              <li>
-                  <a href="#">
-                      <div>
-                          <p>
-                              <strong>Proyecto 3</strong>
-                              <span class="pull-right text-muted">10% Completado</span>
-                          </p>
-                          <div class="progress progress-striped active">
-                              <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
-                                  <span class="sr-only">10% Completado</span>
-                              </div>
-                          </div>
-                      </div>
-                  </a>
-              </li>
-              <li class="divider"></li>
-              <li>
-                  <a class="text-center" href="#" title="See all projects">
-                      <strong>See all projects</strong>
+                  <a class="text-center" href="/projects" title="View all projects">
+                      <strong>View all projects</strong>
                       <i class="fa fa-angle-right"></i>
                   </a>
               </li>
+            <?php else: ?>
+              <li>
+                  <a class="#" href="/projects" title="You have no assigned projects">
+                      <strong>You have no assigned projects...</strong>
+                  </a>
+              </li>
+            <?php endif; ?>
             </ul>
             <!-- /.dropdown-tasks -->
         </li>

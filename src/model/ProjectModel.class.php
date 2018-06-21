@@ -142,7 +142,7 @@
   function getProjectById($projectId) {
     $project = DB::queryFirstRow("SELECT * FROM projects WHERE ID=%i", $projectId);
     if ($project) {
-      $project = new ProjectModel($project["ID"], $project["id_user"], $project["creation_date"], $project["name"], $project["description"], $project["link"], $project["active"]);
+      $project = new ProjectModel($project["ID"], $project["id_user"], $project["creation_date"], $project["name"], $project["description"], $project["link"], boolval($project["active"]));
 
       $projectUsers = DB::query("SELECT * FROM projects_user WHERE id_project=%i", $projectId);
       $projectUsersList = array();
@@ -174,7 +174,7 @@
   function getAssignedProjects($userId,$filter) {
     $qry = "SELECT * FROM projects ";
 
-    $condition = "WHERE ID IN (SELECT id_project FROM projects_user WHERE id_user = %i)";
+    $condition = "WHERE active=1 AND ID IN (SELECT id_project FROM projects_user WHERE id_user = %i)";
     if (!empty($filter))
       $condition .= " AND (projects.name like %ss OR projects.description like %ss)";
 
@@ -223,7 +223,7 @@
     $projectList = array();
     if ($projects) {
       foreach ($projects as $row) {
-        $project = new ProjectModel($row["ID"], $row["id_user"], $row["creation_date"], $row["name"], $row["description"], $row["link"], $row["active"]);
+        $project = new ProjectModel($row["ID"], $row["id_user"], $row["creation_date"], $row["name"], $row["description"], $row["link"], boolval($row["active"]));
         array_push($projectList, $project);
       }
       return $projectList;

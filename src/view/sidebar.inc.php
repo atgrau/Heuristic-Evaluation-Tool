@@ -4,34 +4,34 @@
             <li>
                 <a href="/"><i class="glyphicon glyphicon-home"></i> Home</a>
             </li>
+            <li>
+                <a href="/projects"><i class="glyphicon glyphicon-tasks"></i> Project Evaluations</a>
+            </li>
             <?php if ($GLOBALS["USER_SESSION"]->GetRole() >= 1) { ?>
               <li>
-                  <a href="/projects/new"><i class="fa fa-edit fa-fw"></i> Create a new Project</a>
+                <a href="#"><i class="glyphicon glyphicon-folder-close"></i> Manage Projects<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                  <li>
+                      <a href="/projects/new"><i class="glyphicon glyphicon-plus"></i> New Project</a>
+                  </li>
+                  <li>
+                      <a href="/my-projects"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; My Projects</a>
+                  </li>
+                </ul>
               </li>
             <?php } ?>
-            <li>
-              <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Projects<span class="fa arrow"></span></a>
-              <ul class="nav nav-second-level">
-                <li>
-                    <a href="/projects">Assigned Projects</a>
-                </li>
-                <li>
-                    <a href="/my-projects">My Projects</a>
-                </li>
-              </ul>
-            </li>
             <?php if ($GLOBALS["USER_SESSION"]->GetRole() >= 2) { ?>
               <li>
-                  <a href="#"><i class="fa fa-wrench fa-fw"></i> Administration<span class="fa arrow"></span></a>
+                  <a href="#"><i class="glyphicon glyphicon-wrench"></i> Administration<span class="fa arrow"></span></a>
                   <ul class="nav nav-second-level">
                     <li>
-                        <a href="/admin/users">Users</a>
+                        <a href="/admin/users"><i class="fa fa-user fa-fw"></i> Users</a>
                     </li>
                     <li>
-                        <a href="/admin/projects">Projects</a>
+                        <a href="/admin/projects"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Projects</a>
                     </li>
                     <li>
-                        <a href="/admin/templates">Evaluation Template</a>
+                        <a href="/admin/templates"><i class="glyphicon glyphicon-th-list"></i> Evaluation Template</a>
                     </li>
                   </ul>
                   <!-- /.nav-second-level -->

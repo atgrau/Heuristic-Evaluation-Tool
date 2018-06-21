@@ -30,17 +30,12 @@ function generateModal($projectId, $admin) {
       <?php elseif ($this->edit): ?>
         <h1 class="page-header">My Projects</h1>
       <?php else: ?>
-        <h1 class="page-header">Assigned Projects</h1>
+        <h1 class="page-header">Project Evaluations</h1>
       <?php endif; ?>
     </div>
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-<?php if ((!$this->admin) && ($this->edit)): ?>
-<div class="row margin-lg-b">
-  <a href="/projects/new" title="Add new Project" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add new Project</a>
-</div>
-<?php endif; ?>
 <?php if ($this->addMessage): ?>
   <div class="row alert alert-info" role="alert">
    <span class="glyphicon glyphicon-info-sign"></span> Project <strong><?= $this->recentProject; ?></strong> has beed added successfully!

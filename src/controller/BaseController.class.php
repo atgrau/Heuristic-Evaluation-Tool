@@ -30,6 +30,13 @@
       include(BASE_URI."view/".$this->view.".php");
       exit;
     }
+
+    /*
+    * For Navigation Menu
+    */
+    function getMyAssignedProjects() {
+      return getAssignedProjects($GLOBALS["USER_SESSION"]->getId(), "");
+    }
   }
 
 ?>

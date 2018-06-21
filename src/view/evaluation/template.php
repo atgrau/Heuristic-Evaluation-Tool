@@ -11,8 +11,8 @@
         <!-- /.panel-heading -->
         <div class="panel-body">
           <div class="right">
-            <a class="btn btn-default" id="hideButton" href="#"><span class="glyphicon glyphicon-eye-close"></span> Hide Main Menu</a>
-            <a style="display:none" class="btn btn-default" id="showButton" href="#"><span class="glyphicon glyphicon-eye-open"></span> Show Main Menu</a>
+            <a class="btn btn-default" id="hideButton" href="#"><span class="glyphicon glyphicon-eye-close"></span> Hide Sidebar</a>
+            <a style="display:none" class="btn btn-default" id="showButton" href="#"><span class="glyphicon glyphicon-eye-open"></span> Show Sidebar</a>
             <a href="/projects" class="btn btn-primary"><span class="glyphicon glyphicon-menu-left"></span> Project List</a>
             <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
           </div>
@@ -31,7 +31,7 @@
             </div>
 
             <div class="tab-pane fade in margin-lg-t" id="project" >
-              <iframe width="100%" style="min-height:94vh" src="//www.udl.cat" frameborder="0" allowfullscreen></iframe>
+              <iframe name="iframe" width="100%" style="min-height:94vh" src="//www.eps.udl.cat/ca/" frameborder="0" allowfullscreen></iframe>
             </div>
           </div>
         </div>
