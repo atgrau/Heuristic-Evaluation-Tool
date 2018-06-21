@@ -49,7 +49,7 @@
       // Validate Project
       $this->validateProject($project);
 
-      $project->insert();
+      $projectId = $project->insert();
 
       if ($_POST["email"] == "1") {
         foreach ($project->getUsers() as $user) {
@@ -62,7 +62,7 @@
           $body .= "<li><strong>Description:</strong> ".$project->getDescription()."</li>";
           $body .= "<li><strong>Link:</strong> ".$project->getLink()."</li>";
           $body .= "</ul>";
-          $body .= "<br />Now, you can evaluate it by using ".APP_TITLE."<br /><br />";
+          $body .= "<br />You can evaluate the project here <a href='".APP_URL."/projects/evaluation/".$project->getId()."'>".$project->getName()."</a><br /><br />";
 
           $email = new Email($user->getEmail(), $subject, $body);
           $email->send();

@@ -109,6 +109,8 @@
           "id_user" => $user->getId(),
         ));
       }
+      
+      return $projectId;
     }
 
     function update() {
