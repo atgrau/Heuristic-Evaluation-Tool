@@ -171,6 +171,19 @@
     return buildRs($projects);
   }
 
+  function getAssignedProjects($userId,$filter) {
+    $qry = "SELECT * FROM projects ";
+
+    $condition = "WHERE ID IN (SELECT id_project FROM projects_user WHERE id_user = %i)";
+    if (!empty($filter))
+      $condition .= " AND (projects.name like %ss OR projects.description like %ss)";
+
+    $qry = $qry." ".$condition." ORDER BY projects.name";
+    $projects = DB::query($qry, $userId, $filter, $filter);
+
+    return buildRs($projects);
+  }
+
   function getProjects($filter,$userId) {
     $qry = "SELECT * FROM projects WHERE 1=1";
 

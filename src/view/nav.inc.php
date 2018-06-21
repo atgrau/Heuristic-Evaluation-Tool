@@ -130,6 +130,5 @@
         <!-- /.dropdown -->
     </ul>
     <!-- /.navbar-top-links -->
-
     <?php include("sidebar.inc.php"); ?>
 </nav>

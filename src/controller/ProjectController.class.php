@@ -9,11 +9,21 @@
       $this->setContentView("project/projectlist");
       $this->query = $_GET["q"];
       $this->userId = $_GET["user"];
+      $this->edit = true;
       if (!$admin) {
         $this->projectList = getMyProjects($GLOBALS["USER_SESSION"]->getId(), $this->query);
       } else {
         $this->projectList = getProjects($this->query, $this->userId);
       }
+      $this->render();
+    }
+
+    function showAssignedProjectList() {
+      $this->setContentView("project/projectlist");
+      $this->query = $_GET["q"];
+      $this->userId = $_GET["user"];
+      $this->projectList = getAssignedProjects($GLOBALS["USER_SESSION"]->getId(), $this->query);
+      $this->edit = false;
       $this->render();
     }
 

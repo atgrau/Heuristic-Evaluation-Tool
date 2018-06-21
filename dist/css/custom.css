@@ -18,6 +18,10 @@
   color: #006699;
 }
 
+.right {
+  float: right;
+}
+
 .center {
   margin: 0 auto 0 auto;
 }

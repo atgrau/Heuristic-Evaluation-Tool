@@ -27,14 +27,16 @@ function generateModal($projectId, $admin) {
     <div class="col-lg-12">
       <?php if ($this->admin): ?>
         <h1 class="page-header">Projects</h1>
-      <?php else: ?>
+      <?php elseif ($this->edit): ?>
         <h1 class="page-header">My Projects</h1>
+      <?php else: ?>
+        <h1 class="page-header">Assigned Projects</h1>
       <?php endif; ?>
     </div>
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-<?php if (!$this->admin): ?>
+<?php if ((!$this->admin) && ($this->edit)): ?>
 <div class="row margin-lg-b">
   <a href="/projects/new" title="Add new Project" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add new Project</a>
 </div>
@@ -103,14 +105,20 @@ function generateModal($projectId, $admin) {
         <th scope="col">Project's Name</th>
         <th scope="col">Description</th>
         <th scope="col">Link</th>
-        <th scope="col"></th>
+        <?php if ($this->edit): ?>
+          <th scope="col"></th>
+        <?php endif; ?>
       </tr>
     </thead>
     <tbody>
       <?php
       if (!empty($this->projectList)):
-      foreach ($this->projectList as $project) { ?>
-          <tr <?php if(!$project->isActive()) echo " style='background:#EFEFEF;'"; ?>>
+      foreach ($this->projectList as $project) {
+        if (!$this->edit) {
+          $link = "style='cursor:pointer' class='clickable-row' data-href='/projects/evaluation/".$project->getId()."'";
+        }
+        ?>
+          <tr <?=$link;?> <?php if(!$project->isActive()) echo " style='background:#EFEFEF;'"; ?>>
             <?php
               $userId = $project->getId();
               if ($this->admin) {
@@ -125,15 +133,17 @@ function generateModal($projectId, $admin) {
             <td><?= $project->getName(); ?></td>
             <td><?= $project->getShortDescription(); ?></td>
             <td><?= $project->getLink(); ?> <a href="<?= $project->getLink(); ?>" target="_blank" title="Link a <?= $project->getName(); ?>"><span class="glyphicon glyphicon-link"></span></a></td>
-            <td>
-              <?php if ($this->admin): ?>
-                <a href="/admin/projects/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil"></span></a>
-              <?php else: ?>
-                <a href="/projects/edit/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil"></span></a>
-              <?php endif; ?>
-              <span class="margin-l"></span>
-              <a data-toggle="modal" data-target="#deletingModal_<?= $project->getId(); ?>" href="#" title="Remove Proyecto" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
-            </td>
+            <?php if ($this->edit): ?>
+              <td>
+                <?php if ($this->admin): ?>
+                  <a href="/admin/projects/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil"></span></a>
+                <?php else: ?>
+                  <a href="/projects/edit/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil"></span></a>
+                <?php endif; ?>
+                <span class="margin-l"></span>
+                <a data-toggle="modal" data-target="#deletingModal_<?= $project->getId(); ?>" href="#" title="Remove Proyecto" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
+              </td>
+            <?php endif; ?>
           </tr>
       <?php
       }
@@ -150,3 +160,10 @@ function generateModal($projectId, $admin) {
   ?>
 </div>
 <!-- /.row -->
+<script>
+jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+});
+</script>

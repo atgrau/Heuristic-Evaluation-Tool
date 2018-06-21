@@ -92,7 +92,7 @@
               </div>
               <div class="form-group">
                 <input value="1" name="email" type="checkbox" class="form-check-input" id="email">
-                <?php infoModal("infoModal", "Send and e-mail notification", "Checking this option, it will send an e-mail reminder with the newer information to the all project assigned users."); ?>
+                <?php infoModal("infoModal", "Send and e-mail notification", "Checking this option, it will be send an e-mail reminder with the newer project information to the all assigned users."); ?>
                 <label class="form-check-label" for="email">Send an e-mail reminder</label> <a href="#" title="Send a notification to all users with project's information." class="text-blue" data-toggle="modal" data-target="#infoModal"><span class="glyphicon glyphicon-info-sign"></span></a>
               </div>
               <button type="submit" class="btn btn-success margin-r"><span class="glyphicon glyphicon-floppy-disk"></span> Save Project</button>

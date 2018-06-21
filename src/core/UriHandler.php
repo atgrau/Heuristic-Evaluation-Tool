@@ -27,6 +27,7 @@
   require_once(BASE_URI."controller/AccountController.class.php");
   require_once(BASE_URI."controller/ProjectController.class.php");
   require_once(BASE_URI."controller/TemplateController.class.php");
+  require_once(BASE_URI."controller/EvaluationController.class.php");
   require_once(BASE_URI."controller/ImportCSVController.class.php");
 
   // Initialize a Session Handler
