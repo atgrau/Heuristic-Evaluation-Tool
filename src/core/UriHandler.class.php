@@ -18,6 +18,8 @@
       "/account/profile" => 0,
       "/account/update-profile" => 0,
       "/account/update-password" => 0,
+      "/projects" => 0,
+      "/projects/evaluation" => 0,
       "/my-projects" => 1,
       "/projects/new" => 1,
       "/projects/edit" => 1,
@@ -98,6 +100,12 @@
       } else if ($this->uri == "/account/update-password") {
         $controller = new AccountController();
         $controller->updatePassword();
+      } else if ($this->uri == "/projects") {
+        $controller = new ProjectController();
+        $controller->showAssignedProjectList();
+      } else if ($this->uri == "/projects/evaluation") {
+        $controller = new EvaluationController();
+        $controller->showEvaluationTemplate($_GET["param"]);
       } else if ($this->uri == "/my-projects") {
         $controller = new ProjectController();
         $controller->showProjectList(false);
