@@ -28,11 +28,17 @@ return '<!-- Modal -->
       <?php if (!$this->template): ?>
         <h1 class="page-header">New template</h1>
       <?php else: ?>
-        <h1 class="page-header"><?php echo $this->template->getName();?></h1>
+        <h1 class="page-header"><?php  echo $this->template->getName();
+            echo $GLOBALS["MASTER_TEMPLATE"]->getId(); $GLOBALS["MASTER_TEMPLATE"]->getName();
+        ?></h1>
       <?php endif; ?>
     </div>
 </div>
-
+<?php if ($this->addMessage): ?>
+  <div class="row alert alert-info" role="alert">
+   <span class="glyphicon glyphicon-info-sign"></span> Template <strong><?= $this->recentProject; ?></strong> has beed added successfully!
+  </div>
+<?php endif; ?>
 <?php if (!$this->template->getStateModified()): ?>
 <div class="modal fade" id="newCategoryModal" tabindex="-1" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

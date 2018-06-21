@@ -58,11 +58,7 @@ return '<!-- Modal -->
   <a href="#"  title="Create new template" class="btn btn-primary" data-toggle="modal" data-target="#template_modal"><span id="template_modal" class="glyphicon glyphicon-plus"></span> Add new Template</a>
 </div>
 <?php endif; ?>
-<?php if ($this->addMessage): ?>
-  <div class="row alert alert-info" role="alert">
-   <span class="glyphicon glyphicon-info-sign"></span> Template <strong><?= $this->recentProject; ?></strong> has beed added successfully!
-  </div>
-<?php endif; ?>
+
 <?php if ($this->removeMessage): ?>
   <div class="row alert alert-info" role="alert">
    <span class="glyphicon glyphicon-info-sign"></span> Template <strong><?= $this->recentProject; ?></strong> has beed removed successfully!
@@ -100,7 +96,10 @@ return '<!-- Modal -->
             <?= generateModal($template->getId()); ?>
             <th scope="row"><?= $template->getId(); ?></th>
             <td><?= $template->getName(); ?></td>
-            <td><input type="checkbox" value=<?=$template->getStateActive()?>><?php echo $template->getStateActive()?></td>
+            <td><input type="checkbox" value=<?=$template->getStateActive()?>
+                  <?php if($template->getStateActive()== 1): ?>
+                    checked
+                  <?php endif;?>></td>
             <td>
               <a href="/admin/templates/<?= $template->getId(); ?>" title="See template"><span class="glyphicon glyphicon-eye-open"></span></a>
               <span class="margin-l"></span>

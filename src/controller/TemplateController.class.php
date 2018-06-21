@@ -28,6 +28,7 @@
           $this->categoriesList = getCategoriesbyEvaluation($template->getId());
           $this->questionList = getQuestionsbyEvaluation($template->getId());
           $this->adminView = $adminView;
+          $this->editTemplate = false;
           $this->render();
         }
     }
@@ -37,7 +38,7 @@
       $template = new TemplateModel(0, $_POST["name"],0,0);
       $template->insert();
       $this->addMessage = true;
-    
+
 
         if($template)
         {
@@ -47,6 +48,7 @@
           $this->categoriesList = getCategoriesbyEvaluation($template->getId());
           $this->questionList = getQuestionsbyEvaluation($template->getId());
           $this->adminView = $adminView;
+          $this->editTemplate = true;
           $this->render();
         }
 
