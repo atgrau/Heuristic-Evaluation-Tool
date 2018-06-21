@@ -70,6 +70,18 @@
             }
         }
 
+        //Insert default questions
+        $qryQuestions = "SELECT * FROM template_questions WHERE original=1";
+        $questions = DB::query($qryQuestions);
+        if ($questions) {
+            foreach ($questions as $row) {
+              DB::insert('questionsbyevaluation', array(
+                "idEvaluation" => $templateid,
+                "idQuestion" => $row["ID"],
+              ));
+            }
+        }
+
       }
 
     }
@@ -289,6 +301,16 @@ class AnswersbyEvaluation
     }
   }
 
+  function getTemplateActive()
+  {
+    $qry = DB::queryFirstRow("SELECT * FROM template_evaluation WHERE active=1");
+    if ($qry) {
+      return new TemplateModel($template["ID"], $template["name"], $template["active"], $template["modified"]);
+    }
+    else {
+      return null;
+    }
+  }
 
 
 ?>

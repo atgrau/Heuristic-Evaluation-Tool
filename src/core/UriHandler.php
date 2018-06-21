@@ -37,6 +37,10 @@
     $userSession = getUserById($_SESSION["UserId"]);
     $userSession->resetToken();
     $GLOBALS["USER_SESSION"] = $userSession;
+    require_once(BASE_URI."model/TemplateModel.class.php");
+    $template = getTemplateActive();
+    echo $template->getName();
+    $GLOBALS["MASTER_TEMPLATE"] = $template;
   }
 
   // Parse URI
