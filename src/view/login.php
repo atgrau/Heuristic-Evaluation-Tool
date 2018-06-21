@@ -1,7 +1,6 @@
 <?php include("head.inc.php"); ?>
 
 <body>
-
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
@@ -35,29 +34,29 @@
                                 <div class="form-group">
                                     <a href="/forgot">Forgot your password?</a>
                                 </div>
-                                <!-- Change this to a button or input when using this as a form -->
+                                <input type="hidden" name="uri" value="<?=$this->uri;?>" />
                                 <input type="submit" value="Sign In" class="btn btn-lg btn-success btn-block" />
                             </fieldset>
                         </form>
                       <?php elseif ($this->content == "forgot"): ?>
                         <form role="form" method="POST" action="/forgot/send">
-                            <fieldset>
-                              <?php if($this->recovered) { ?>
-                                <div class="alert alert-info" role="alert">
-                                  <?= $this->recovered; ?>
-                                </div>
-                              <?php } else if ($this->error) { ?>
-                                <div class="alert alert-danger" role="alert">
-                                  <?= $this->error; ?>
-                                </div>
-                              <?php } ?>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Introduce your e-mail in order to recover your account" name="email" type="email" autofocus value="<?php echo $this->email; ?>">
-                                </div>
-                                <!-- Change this to a button or input when using this as a form -->
-                                <input type="submit" value="Recover Account" class="btn btn-lg btn-success btn-block" />
-                                <a class="btn btn-danger btn-block" href="/">Cancel</a>
-                            </fieldset>
+                          <fieldset>
+                            <?php if($this->recovered) { ?>
+                              <div class="alert alert-info" role="alert">
+                                <?= $this->recovered; ?>
+                              </div>
+                            <?php } else if ($this->error) { ?>
+                              <div class="alert alert-danger" role="alert">
+                                <?= $this->error; ?>
+                              </div>
+                            <?php } ?>
+                              <div class="form-group">
+                                  <input class="form-control" placeholder="Introduce your e-mail in order to recover your account" name="email" type="email" autofocus value="<?php echo $this->email; ?>">
+                              </div>
+                              <!-- Change this to a button or input when using this as a form -->
+                              <input type="submit" value="Recover Account" class="btn btn-lg btn-success btn-block" />
+                              <a class="btn btn-danger btn-block" href="/">Cancel</a>
+                          </fieldset>
                         </form>
                       <?php elseif ($this->content == "reset"): ?>
                         <form role="form" method="POST" action="/forgot/generate">

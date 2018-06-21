@@ -3,7 +3,7 @@
   /**
    * Project Model
    */
-  class ProjectModel
+  class Project
   {
     private $id;
     private $user;
@@ -23,6 +23,10 @@
       $this->link = $link;
       $this->active = $active;
       $this->users = array();
+    }
+
+    function setId($value) {
+      return $this->$value;
     }
 
     function getId() {
@@ -109,7 +113,7 @@
           "id_user" => $user->getId(),
         ));
       }
-      
+
       return $projectId;
     }
 
@@ -144,7 +148,7 @@
   function getProjectById($projectId) {
     $project = DB::queryFirstRow("SELECT * FROM projects WHERE ID=%i", $projectId);
     if ($project) {
-      $project = new ProjectModel($project["ID"], $project["id_user"], $project["creation_date"], $project["name"], $project["description"], $project["link"], boolval($project["active"]));
+      $project = new Project($project["ID"], $project["id_user"], $project["creation_date"], $project["name"], $project["description"], $project["link"], boolval($project["active"]));
 
       $projectUsers = DB::query("SELECT * FROM projects_user WHERE id_project=%i", $projectId);
       $projectUsersList = array();
@@ -225,7 +229,7 @@
     $projectList = array();
     if ($projects) {
       foreach ($projects as $row) {
-        $project = new ProjectModel($row["ID"], $row["id_user"], $row["creation_date"], $row["name"], $row["description"], $row["link"], boolval($row["active"]));
+        $project = new Project($row["ID"], $row["id_user"], $row["creation_date"], $row["name"], $row["description"], $row["link"], boolval($row["active"]));
         array_push($projectList, $project);
       }
       return $projectList;

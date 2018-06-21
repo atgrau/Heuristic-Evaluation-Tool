@@ -63,6 +63,7 @@
         // Can't access or Uri doesn't exist!!
         $view = new BaseController("login","signin");
         $view->required = true;
+        $view->uri = $this->uri."/".$_GET["param"];
         $view->render();
       }
 

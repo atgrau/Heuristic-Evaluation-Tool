@@ -37,7 +37,7 @@
         header("Location: /my-projects");
       }
 
-      $project = new ProjectModel(0, $GLOBALS["USER_SESSION"]->getId(), null, $_POST["name"], $_POST["description"], $_POST["link"], false);
+      $project = new Project(0, $GLOBALS["USER_SESSION"]->getId(), null, $_POST["name"], $_POST["description"], $_POST["link"], false);
       $users = array();
       if ($_POST["users"]):
         foreach ($_POST["users"] as $user) {
@@ -49,7 +49,7 @@
       // Validate Project
       $this->validateProject($project);
 
-      $projectId = $project->insert();
+      $project->setId($project->insert());
 
       if ($_POST["email"] == "1") {
         foreach ($project->getUsers() as $user) {
@@ -62,7 +62,7 @@
           $body .= "<li><strong>Description:</strong> ".$project->getDescription()."</li>";
           $body .= "<li><strong>Link:</strong> ".$project->getLink()."</li>";
           $body .= "</ul>";
-          $body .= "<br />You can evaluate the project here <a href='".APP_URL."/projects/evaluation/".$project->getId()."'>".$project->getName()."</a><br /><br />";
+          $body .= "<br />You can evaluate the project here:<br /><a href='".URL."projects/evaluation/".$project->getId()."'>".URL."projects/evaluation/".$project->getId()."</a><br /><br />";
 
           $email = new Email($user->getEmail(), $subject, $body);
           $email->send();
@@ -128,7 +128,7 @@
             $body .= "<li><strong>Description:</strong> ".$project->getDescription()."</li>";
             $body .= "<li><strong>Link:</strong> ".$project->getLink()."</li>";
             $body .= "</ul>";
-            $body .= "<br />Now, you can evaluate it by using ".APP_TITLE."<br /><br />";
+            $body .= "<br />You can evaluate the project here:<br /><a href='".URL."projects/evaluation/".$project->getId()."'>".URL."projects/evaluation/".$project->getId()."</a><br /><br />";
 
             $email = new Email($user->getEmail(), $subject, $body);
             $email->send();

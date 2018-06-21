@@ -10,12 +10,17 @@
 
     function login() {
       if (doLogin($_POST["email"], md5($_POST["password"]))) {
-        header("Location: /");
+        if (!empty($_POST["uri"])) {
+          header("Location: ".$_POST["uri"]);
+        } else {
+          header("Location: /");
+        }
       } else {
         $this->setView("login");
         $this->setContent("signin");
         $this->error = true;
         $this->email = $_POST["email"];
+        $this->uri = $_POST["uri"];
         $this->render();
       }
     }

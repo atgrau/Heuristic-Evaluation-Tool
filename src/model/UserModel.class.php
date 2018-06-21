@@ -3,7 +3,7 @@
   /**
    * Users
    */
-  class UserModel
+  class User
   {
     private $id;
     private $role;
@@ -151,7 +151,7 @@
 
   function buildUser($account) {
     if ($account) {
-      return new UserModel($account["ID"], $account["role"], $account["email"], $account["password"], $account["firstname"], $account["lastname"], $account["gender"], $account["entity"], new Country($account["iso"], $account["name"]));
+      return new User($account["ID"], $account["role"], $account["email"], $account["password"], $account["firstname"], $account["lastname"], $account["gender"], $account["entity"], new Country($account["iso"], $account["name"]));
     } else {
       return null;
     }

@@ -2,7 +2,7 @@
   /**
   * Categories Model
   */
-  class TemplateModel
+  class Template
   {
     private $id;
     private $name;
@@ -205,7 +205,7 @@ class AnswersbyEvaluation
     $templateList = array();
     if ($templates) {
       foreach ($templates as $row) {
-        array_push($templateList, new TemplateModel($row["ID"], $row["name"], $row["active"], $row["modified"]));
+        array_push($templateList, new Template($row["ID"], $row["name"], $row["active"], $row["modified"]));
       }
       return $templateList;
     } else {
@@ -216,7 +216,7 @@ class AnswersbyEvaluation
   function getTemplateById($templateId) {
     $template = DB::queryFirstRow("SELECT * FROM template_evaluation WHERE ID=%i", $templateId);
     if ($template) {
-      return new TemplateModel($template["ID"], $template["name"], $template["active"], $template["modified"]);
+      return new Template($template["ID"], $template["name"], $template["active"], $template["modified"]);
     } else {
       return null;
     }
@@ -305,7 +305,7 @@ class AnswersbyEvaluation
   {
     $qry = DB::queryFirstRow("SELECT * FROM template_evaluation WHERE active=1");
     if ($qry) {
-      return new TemplateModel($template["ID"], $template["name"], $template["active"], $template["modified"]);
+      return new Template($template["ID"], $template["name"], $template["active"], $template["modified"]);
     }
     else {
       return null;

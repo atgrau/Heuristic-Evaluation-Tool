@@ -35,7 +35,7 @@
 
     function addNewTemplateView(){
 
-      $template = new TemplateModel(0, $_POST["name"],0,0);
+      $template = new Template(0, $_POST["name"],0,0);
       $template->insert();
       $this->addMessage = true;
 
