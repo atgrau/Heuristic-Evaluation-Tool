@@ -1,7 +1,7 @@
 <?php
 
   /**
-   *
+   * Evaluation Class
    */
   class Evaluation
   {
