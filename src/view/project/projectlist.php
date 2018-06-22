@@ -1,7 +1,7 @@
 <?php
-function generateModal($projectId, $admin) {
+function generateModal($project, $admin) {
   return '<!-- Modal -->
-  <div class="modal fade" id="deletingModal_'.$projectId.'" tabindex="-1" role="dialog" aria-labelledby="deletingModalLabel" aria-hidden="true">
+  <div class="modal fade" id="deletingModal_'.$project->getId().'" tabindex="-1" role="dialog" aria-labelledby="deletingModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -11,11 +11,11 @@ function generateModal($projectId, $admin) {
           </button>
         </div>
         <div class="modal-body">
-          <h4>Project <strong>#'.$projectId.'</strong> and all related evaluations <span class="bg-danger">will be removed too</span>.<br /><br />Are you sure?</h4>
+          <h5>Project <strong>'.$project->getName().'</strong> and all related evaluations <span class="bg-danger">will be removed too</span>.<br /><br />Are you sure?</h5>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <a name="" href="/admin/remove-project/'.$projectId.'/'.$admin.'" type="button" class="btn btn-danger">Delete Project</a>
+          <a name="" href="/admin/remove-project/'.$project->getId().'/'.$admin.'" type="button" class="btn btn-danger">Delete Project</a>
         </div>
       </div>
     </div>
@@ -110,7 +110,7 @@ function generateModal($projectId, $admin) {
       if (!empty($this->projectList)):
       foreach ($this->projectList as $project) {
         if (!$this->edit) {
-          $link = "style='cursor:pointer' class='clickable-row' data-href='/projects/evaluation/".$project->getId()."'";
+          $link = "style='cursor:pointer' class='clickable-row' data-href='/evaluations/id/".$project->getId()."'";
         }
         ?>
           <tr <?=$link;?> <?php if(!$project->isActive()) echo " style='background:#EFEFEF;'"; ?>>
@@ -119,7 +119,7 @@ function generateModal($projectId, $admin) {
               if ($this->admin) {
                 $admin = "?admin=1";
               }
-              echo generateModal($userId, $admin);
+              echo generateModal($project, $admin);
             ?>
             <th scope="row"><?= $project->getId(); ?></th>
             <?php if ($this->admin): ?>

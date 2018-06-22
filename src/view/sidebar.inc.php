@@ -2,20 +2,20 @@
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
             <li>
-                <a href="/"><i class="glyphicon glyphicon-home"></i> Home</a>
+                <a href="/" rel="/"><i class="glyphicon glyphicon-home"></i> Home</a>
             </li>
             <li>
-                <a href="/projects"><i class="glyphicon glyphicon-tasks"></i> Project Evaluations</a>
+                <a href="/evaluations" rel="/evaluations"><i class="glyphicon glyphicon-tasks"></i> Project Evaluations</a>
             </li>
             <?php if ($GLOBALS["USER_SESSION"]->GetRole() >= 1) { ?>
               <li>
                 <a href="#"><i class="glyphicon glyphicon-folder-close"></i> Manage Projects<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                   <li>
-                      <a href="/projects/new"><i class="glyphicon glyphicon-plus"></i> New Project</a>
+                      <a href="/projects/new" rel="/projects/new"><i class="glyphicon glyphicon-plus"></i> New Project</a>
                   </li>
                   <li>
-                      <a href="/my-projects"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; My Projects</a>
+                      <a href="/my-projects" rel="/my-projects"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; My Projects</a>
                   </li>
                 </ul>
               </li>
@@ -24,14 +24,14 @@
               <li>
                   <a href="#"><i class="glyphicon glyphicon-wrench"></i> Administration<span class="fa arrow"></span></a>
                   <ul class="nav nav-second-level">
-                    <li>
-                        <a href="/admin/users"><i class="fa fa-user fa-fw"></i> Users</a>
+                    <li class="in">
+                        <a href="/admin/users" rel="/admin/users"><i class="fa fa-user fa-fw"></i> Users</a>
                     </li>
                     <li>
-                        <a href="/admin/projects"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Projects</a>
+                        <a href="/admin/projects" rel="/admin/projects"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Projects</a>
                     </li>
                     <li>
-                        <a href="/admin/templates"><i class="glyphicon glyphicon-th-list"></i> Evaluation Template</a>
+                        <a href="/admin/templates" rel="/templates"><i class="glyphicon glyphicon-th-list"></i> Evaluation Template</a>
                     </li>
                   </ul>
                   <!-- /.nav-second-level -->

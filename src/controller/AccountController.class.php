@@ -121,7 +121,12 @@
         $this->user = getUserById($GLOBALS["USER_SESSION"]->GetId());
         $this->action = "/account/update-profile";
       }
-      $this->render();
+
+      if (!$this->user) {
+        $this->showUserList($adminView);
+      } else {
+        $this->render();
+      }
     }
 
     function updateProfile($isAdmin) {
@@ -184,7 +189,9 @@
 
       $this->tab = 0;
 
-      if ($isAdmin) {
+      if (($isAdmin) && (empty($this->error))) {
+        $this->showUserList();
+      } elseif ($isAdmin) {
         $this->showProfile(true);
       } else {
         $this->showProfile(false);

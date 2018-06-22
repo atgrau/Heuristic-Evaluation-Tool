@@ -1,7 +1,7 @@
 <?php
-function generateModal($userId) {
+function generateModal($user) {
 return '<!-- Modal -->
-<div class="modal fade" id="deletingModal_'.$userId.'" tabindex="-1" role="dialog" aria-labelledby="deletingModalLabel" aria-hidden="true">
+<div class="modal fade" id="deletingModal_'.$user->getId().'" tabindex="-1" role="dialog" aria-labelledby="deletingModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -11,11 +11,11 @@ return '<!-- Modal -->
         </button>
       </div>
       <div class="modal-body">
-        <h4>User <strong>#'.$userId.'</strong> and all his projects and evaluations <span class="bg-danger">will be removed too</span>.<br /><br />Are you sure?</h4>
+        <h5>User <strong>'.$user->getName().'</strong> and all his projects and evaluations <span class="bg-danger">will be removed too</span>.<br /><br />Are you sure?</h5>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <a name="" href="/admin/remove-user/'.$userId.'" type="button" class="btn btn-danger">Delete User</a>
+        <a name="" href="/admin/remove-user/'.$user->getId().'" type="button" class="btn btn-danger">Delete User</a>
       </div>
     </div>
   </div>
@@ -64,6 +64,10 @@ return '<!-- Modal -->
   <div class="row alert alert-info" role="alert">
    <span class="glyphicon glyphicon-info-sign"></span> User <strong><?= $this->recentUser; ?></strong> has beed added successfully!
   </div>
+<?php elseif (isset($this->success)): ?>
+    <div class="alert alert-info" role="alert">
+     <?php echo $this->success; ?>
+    </div>
 <?php endif; ?>
 <?php if ($this->removeMessage): ?>
   <div class="row alert alert-info" role="alert">
@@ -106,8 +110,8 @@ return '<!-- Modal -->
           <td><?= $user->getEmail(); ?></td>
           <td><?= getRoleName($user->getRole()); ?></td>
           <td>
-            <?= generateModal($user->getId()); ?>
-            <a href="/admin/profile/<?= $user->getId(); ?>" title="Editar Usuario"><span class="glyphicon glyphicon-pencil padding-l"></span></a>
+            <?= generateModal($user); ?>
+            <a href="/admin/users/<?= $user->getId(); ?>" title="Editar Usuario"><span class="glyphicon glyphicon-pencil padding-l"></span></a>
             <span class="margin-l"></span>
             <a href="#" data-toggle="modal" data-target="#deletingModal_<?= $user->getId(); ?>" title="Eliminar Usuario" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
           </td>

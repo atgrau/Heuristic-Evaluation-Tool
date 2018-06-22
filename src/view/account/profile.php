@@ -14,9 +14,6 @@
     <div class="col-lg">
         <!-- /.panel-heading -->
         <div class="panel-body">
-          <?php if($this->admin): ?>
-            <a href="/admin/users" title="Listado de Usuarios" class="btn btn-primary"><span class="glyphicon glyphicon-menu-left"></span> Back to user list</a><br /><br />
-          <?php endif; ?>
           <?php if (isset($this->success)) { ?>
             <div class="alert alert-info" role="alert">
              <?php echo $this->success; ?>
@@ -139,6 +136,9 @@
                     </div>
                     <br />
                     <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                    <?php if($this->admin): ?>
+                      <a href="/admin/users" title="User list" class="btn btn-danger">Cancel</a><br /><br />
+                    <?php endif; ?>
                   </form>
                 </div>
                 <div class="tab-pane fade in <?php echo $change1; ?>" id="password">

@@ -18,8 +18,8 @@
       "/account/profile" => 0,
       "/account/update-profile" => 0,
       "/account/update-password" => 0,
-      "/projects" => 0,
-      "/projects/evaluation" => 0,
+      "/evaluations" => 0,
+      "/evaluations/id" => 0,
       "/my-projects" => 1,
       "/projects/new" => 1,
       "/projects/edit" => 1,
@@ -31,7 +31,6 @@
       "/admin/update-project" => 1,
       "/admin/update-profile" => 2,
       "/admin/users" => 2,
-      "/admin/profile" => 2,
       "/admin/new-user" => 2,
       "/admin/add-user" => 2,
       "/admin/remove-user" => 2,
@@ -101,10 +100,10 @@
       } else if ($this->uri == "/account/update-password") {
         $controller = new AccountController();
         $controller->updatePassword();
-      } else if ($this->uri == "/projects") {
+      } else if ($this->uri == "/evaluations") {
         $controller = new ProjectController();
         $controller->showAssignedProjectList();
-      } else if ($this->uri == "/projects/evaluation") {
+      } else if ($this->uri == "/evaluations/id") {
         $controller = new EvaluationController();
         $controller->showEvaluationTemplate($_GET["param"]);
       } else if ($this->uri == "/my-projects") {
@@ -141,10 +140,11 @@
         $controller->updateProfile(true);
       } else if ($this->uri == "/admin/users") {
         $controller = new AccountController();
-        $controller->showUserList();
-      } else if ($this->uri == "/admin/profile") {
-        $controller = new AccountController();
-        $controller->showProfile(true);
+        if (!empty($_GET["param"])) {
+          $controller->showProfile(true);
+        } else {
+          $controller->showUserList();
+        }
       } else if ($this->uri == "/admin/new-user") {
         $controller = new AccountController();
         $controller->addNewUserView();
