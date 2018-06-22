@@ -160,7 +160,7 @@
       $this->validateProfile($firstname, $lastname, $gender, $entity, $country);
 
       if (!empty($this->error)) {
-        $this->error = "<span class='glyphicon glyphicon-remove-sign'></span> The new profile has errors: <br /><ul>".$this->error."</ul>";
+        $this->error = "<strong>The new profile has errors:</strong> <br /><ul>".$this->error."</ul>";
       } else {
         $user = getUserById($userId);
 
@@ -245,25 +245,25 @@
       $user = getUserById($userId);
 
       if ($user->getPassword() != $password) {
-        $this->error .= "<li>La contraseña actual no correcta.</li>";
+        $this->error .= "<li>Your password doesn't match.</li>";
       }
 
       if (strlen($clearpassword) < 6) {
-        $this->error .= "<li>La contraseña tiene que tener como mínimo 6 carácteres.</li>";
+        $this->error .= "<li>Password must have at least 6 characters.</li>";
       }
 
       if ($newpassword != $newpassword2) {
-        $this->error .= "<li>Las contraseñas no coinciden.</li>";
+        $this->error .= "<li>Passwords doesn't match.</li>";
       }
 
       $this->tab = 1;
 
       if (!empty($this->error)) {
-        $this->error = "Tu solicitud de cambio de contraseña contiene errores: <br /><ul>".$this->error."</ul>";
+        $this->error = "<strong>There are a security warns:</strong> <br /><ul>".$this->error."</ul>";
       } else {
         $user->setPassword($newpassword);
         $user->update();
-        $this->success = "¡Tu contraseña ha sido actualizada correctamente!";
+        $this->success = "¡Your password has been updated!";
       }
       $this->showProfile(false, $GLOBALS["USER_SESSION"]->getId());
     }
@@ -313,7 +313,7 @@
       $this->validateProfile($firstname, $lastname, $gender, $entity, $country);
 
       if (!empty($this->error)) {
-        $this->error = "<span class='glyphicon glyphicon-remove-sign'></span> The new profile has errors: <br /><ul>".$this->error."</ul>";
+        $this->error = "<strong>The new profile has errors:</strong> <br /><ul>".$this->error."</ul>";
 
         $this->setContentView("account/profile");
         $this->new = true;

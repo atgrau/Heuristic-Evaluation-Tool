@@ -1,17 +1,16 @@
 <?php include("head.inc.php"); ?>
-
 <body>
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
                 <div class="login-panel panel panel-default">
+                  <?php if ($this->content != "signin"): ?>
                     <div class="panel-heading">
-                      <?php if ($this->content == "signin"): ?>
-                        <h3 class="panel-title text-center font-weight-bold">Sign In</h3>
-                      <?php else: ?>
-                        <h3 class="panel-title text-center font-weight-bold">Recover Account</h3>
-                      <?php endif; ?>
+                      <h3 class="panel-title text-center font-weight-bold">Recover Account</h3>
                     </div>
+                  <?php else: ?>
+                    <center><img class="margin-t" src="/dist/images/logo-lg.png" title="Heuristic Evaluation Tool" /></center>
+                  <?php endif; ?>
                     <div class="panel-body">
                       <?php if ($this->content == "signin"): ?>
                         <form role="form" method="POST" action="/account/login">
@@ -41,6 +40,7 @@
                       <?php elseif ($this->content == "forgot"): ?>
                         <form role="form" method="POST" action="/forgot/send">
                           <fieldset>
+
                             <?php if($this->recovered) { ?>
                               <div class="alert alert-info" role="alert">
                                 <?= $this->recovered; ?>
@@ -51,11 +51,11 @@
                               </div>
                             <?php } ?>
                               <div class="form-group">
-                                  <input class="form-control" placeholder="Introduce your e-mail in order to recover your account" name="email" type="email" autofocus value="<?php echo $this->email; ?>">
+                                Introduce your e-mail in order to recover your account:
+                                <input class="form-control margin-t" placeholder="E-mail" name="email" type="email" autofocus value="<?php echo $this->email; ?>">
                               </div>
-                              <!-- Change this to a button or input when using this as a form -->
-                              <input type="submit" value="Recover Account" class="btn btn-lg btn-success btn-block" />
-                              <a class="btn btn-danger btn-block" href="/">Cancel</a>
+                              <input type="submit" value="Recover Account" class="btn btn-success" />
+                              <a class="btn btn-danger" href="/">Cancel</a>
                           </fieldset>
                         </form>
                       <?php elseif ($this->content == "reset"): ?>
@@ -67,7 +67,7 @@
                               echo "We can send to your email a new password using the following button. <br /><br />";
                               echo "<form action='/forgot/send' method='POST'>";
                               echo "<input name='token' type='hidden' value='".$this->token."' />";
-                              echo "<input type='submit' class='btn btn-primary' title='Send me a new password' value='Send me a new password' />";
+                              echo "<input type='submit' class='btn btn-primary' title='Send me a new password' value='Yes, send me a new password' />";
                               echo "</form>";
                             } else {
                               header("Location: /");

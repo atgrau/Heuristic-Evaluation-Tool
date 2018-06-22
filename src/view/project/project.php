@@ -44,7 +44,7 @@
         <div class="panel-body">
           <?php if (isset($this->error)) { ?>
             <div class="alert alert-danger" role="alert">
-             <span class='glyphicon glyphicon-remove-sign'></span> Project has errors: <br /><ul><?=$this->error; ?></ul>
+             <strong>Project has errors:</strong><br /><ul><?=$this->error; ?></ul>
             </div>
           <?php } ?>
           <?php if (($this->project) && ($this->adminView)): ?>
