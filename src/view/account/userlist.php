@@ -15,7 +15,7 @@ return '<!-- Modal -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <a name="" href="/admin/remove-user/'.$user->getId().'" type="button" class="btn btn-danger">Delete User</a>
+        <a name="" href="/admin/user-remove/'.$user->getId().'" type="button" class="btn btn-danger">Delete User</a>
       </div>
     </div>
   </div>
@@ -90,7 +90,7 @@ return '<!-- Modal -->
 </div>
 <div class="row">
   <table class="table table-hover">
-    <thead>
+    <thead class="thead-light">
       <tr>
         <th scope="col">#</th>
         <th scope="col">Name</th>

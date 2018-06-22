@@ -48,13 +48,13 @@
             </div>
           <?php } ?>
           <?php if (($this->project) && ($this->adminView)): ?>
-            <form action="/admin/update-project" method="POST">
+            <form action="/admin/project-update" method="POST">
             <input type="hidden" name="id" value="<?=$this->project->getId(); ?>" />
           <?php elseif (($this->project) && (!$this->adminView)): ?>
-            <form action="/projects/update" method="POST">
+            <form action="/my-projects/update" method="POST">
             <input type="hidden" name="id" value="<?=$this->project->getId(); ?>" />
           <?php else: ?>
-            <form action="/projects/add" method="POST">
+            <form action="/my-projects/add" method="POST">
           <?php endif; ?>
               <div class="form-group">
                 <label for="name">Project's Name:</label>

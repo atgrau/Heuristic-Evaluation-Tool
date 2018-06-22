@@ -27,7 +27,55 @@
           <div class="tab-content">
 
             <div class="tab-pane fade in active margin-lg-t" id="template">
-              Pendent de mostrar preguntes...
+
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th colspan="2">Categoría 1</th>
+                    <th>Answer</th>
+                    <th>Comments</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row" width="20px">#1</th>
+                    <td width="50%">Pregunta nº 1</td>
+                    <td width="20%">
+                      <div class="form-group">
+                        <select name="role" class="form-control">
+                          <option value="0">Evaluator</option>
+                          <option value="1">Project Manager</option>
+                          <option value="2">Administrator</option>
+                        </select>
+                       </div>
+                    </td>
+                    <td width="30%">
+                      <div class="form-group">
+                        <textarea class="form-control"></textarea>
+                       </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" width="20px">#1</th>
+                    <td width="50%">Pregunta nº 1</td>
+                    <td width="20%">
+                      <div class="form-group">
+                        <select name="role" class="form-control">
+                          <option value="0">Evaluator</option>
+                          <option value="1">Project Manager</option>
+                          <option value="2">Administrator</option>
+                        </select>
+                       </div>
+                    </td>
+                    <td width="30%">
+                      <div class="form-group">
+                        <textarea class="form-control"></textarea>
+                       </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
             </div>
 
             <div class="tab-pane fade in margin-lg-t" id="project" >

@@ -80,7 +80,7 @@ return '<!-- Modal -->
 </form>
 <div class="row">
   <table class="table table-hover">
-    <thead>
+    <thead class="thead-light">
       <tr>
         <th scope="col">#</th>
         <th scope="col">Template's Name</th>

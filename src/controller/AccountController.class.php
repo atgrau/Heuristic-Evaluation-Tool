@@ -113,10 +113,10 @@
 
       if (($this->admin) && (!empty($_POST["UserId"]))){
         $this->user = getUserById($_POST["UserId"]);
-        $this->action = "/admin/update-profile";
+        $this->action = "/admin/user-update";
       } else if (($this->admin) && (!empty($_GET["param"]))){
         $this->user = getUserById($_GET["param"]);
-        $this->action = "/admin/update-profile";
+        $this->action = "/admin/user-update";
       } else {
         $this->user = getUserById($GLOBALS["USER_SESSION"]->GetId());
         $this->action = "/account/update-profile";

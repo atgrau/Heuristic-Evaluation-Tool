@@ -62,8 +62,8 @@
     }
 
     function getShortDescription() {
-      if (strlen($this->description) > 30) {
-        return substr($this->description, 0, 30)."...";
+      if (strlen($this->description) > 40) {
+        return substr($this->description, 0, 40)."...";
       } else {
         return $this->description;
       }

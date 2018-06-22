@@ -12,7 +12,7 @@
                 <a href="#"><i class="glyphicon glyphicon-folder-close"></i> Manage Projects<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                   <li>
-                      <a href="/projects/new" rel="/projects/new"><i class="glyphicon glyphicon-plus"></i> New Project</a>
+                      <a href="/my-projects/new" rel="/projects/new"><i class="glyphicon glyphicon-plus"></i> New Project</a>
                   </li>
                   <li>
                       <a href="/my-projects" rel="/my-projects"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; My Projects</a>
@@ -25,10 +25,10 @@
                   <a href="#"><i class="glyphicon glyphicon-wrench"></i> Administration<span class="fa arrow"></span></a>
                   <ul class="nav nav-second-level">
                     <li class="in">
-                        <a href="/admin/users" rel="/admin/users"><i class="fa fa-user fa-fw"></i> Users</a>
+                        <a href="/admin/users" rel="/admin/user"><i class="fa fa-user fa-fw"></i> Users</a>
                     </li>
                     <li>
-                        <a href="/admin/projects" rel="/admin/projects"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Projects</a>
+                        <a href="/admin/projects" rel="/admin/project"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Projects</a>
                     </li>
                     <li>
                         <a href="/admin/templates" rel="/templates"><i class="glyphicon glyphicon-th-list"></i> Evaluation Template</a>

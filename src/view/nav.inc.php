@@ -103,7 +103,7 @@
                 <li><a href="#"><i class="fa fa-gear fa-fw"></i> Options</a>
                 </li>
                 <li class="divider"></li>
-                <li><a href="/account/logout"><i class="fa fa-sign-out fa-fw"></i> Sign Out</a>
+                <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Sign Out</a>
                 </li>
             </ul>
             <!-- /.dropdown-user -->

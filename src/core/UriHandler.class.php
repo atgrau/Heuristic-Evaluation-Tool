@@ -14,27 +14,28 @@
       "/forgot/reset" => -1,
       "/forgot/generate" => -1,
       "/account/login" => -1,
-      "/account/logout" => 0,
+      "/logout" => 0,
       "/account/profile" => 0,
       "/account/update-profile" => 0,
       "/account/update-password" => 0,
       "/evaluations" => 0,
       "/evaluations/id" => 0,
       "/my-projects" => 1,
-      "/projects/new" => 1,
-      "/projects/edit" => 1,
-      "/projects/add" => 1,
-      "/projects/update" => 1,
+      "/my-projects/new" => 1,
+      "/my-projects/edit" => 1,
+      "/my-projects/add" => 1,
+      "/my-projects/update" => 1,
+      "/my-projects/remove" => 1,
       "/templates/edit" => 1,
       "/templates/new" => 1,
       "/admin/projects" => 2,
-      "/admin/update-project" => 1,
-      "/admin/update-profile" => 2,
+      "/admin/project-update" => 1,
+      "/admin/user-update" => 2,
       "/admin/users" => 2,
       "/admin/new-user" => 2,
       "/admin/add-user" => 2,
-      "/admin/remove-user" => 2,
-      "/admin/remove-project" => 2,
+      "/admin/user-remove" => 2,
+      "/admin/project-remove" => 2,
       "/admin/templates" => 2,
       "/admin/set-category" => 2,
       "/admin/importcsv" => 2
@@ -88,7 +89,7 @@
       } else if ($this->uri == "/account/login") {
         $controller = new AccountController();
         $controller->login();
-      } else if ($this->uri == "/account/logout") {
+      } else if ($this->uri == "/logout") {
         $controller = new AccountController();
         $controller->logout();
       } else if ($this->uri == "/account/profile") {
@@ -109,16 +110,19 @@
       } else if ($this->uri == "/my-projects") {
         $controller = new ProjectController();
         $controller->showProjectList(false);
-      } else if ($this->uri == "/projects/new") {
+      } else if ($this->uri == "/my-projects/new") {
         $controller = new ProjectController();
         $controller->addNewProjectView();
-      } else if ($this->uri == "/projects/edit") {
+      } else if ($this->uri == "/my-projects/edit") {
         $controller = new ProjectController();
         $controller->updateProjectView(false, $_GET["param"]);
-      } else if ($this->uri == "/projects/update") {
+      } else if ($this->uri == "/my-projects/update") {
         $controller = new ProjectController();
         $controller->updateProject(false);
-      } else if ($this->uri == "/projects/add") {
+      } else if ($this->uri == "/my-projects/remove") {
+        $controller = new ProjectController();
+        $controller->removeProject(false);
+      } else if ($this->uri == "/my-projects/add") {
         $controller = new ProjectController();
         $controller->addNewProject();
       } else if ($this->uri == "/admin/projects") {
@@ -128,14 +132,13 @@
         } else {
           $controller->updateProjectView(true, $_GET["param"]);
         }
-      } else if ($this->uri == "/admin/update-project") {
+      } else if ($this->uri == "/admin/project-update") {
         $controller = new ProjectController();
         $controller->updateProject(true);
-      } else if ($this->uri == "/admin/remove-project") {
+      } else if ($this->uri == "/admin/project-remove") {
         $controller = new ProjectController();
-        $view = ($_GET["admin"] == 1);
-        $controller->removeProject($view);
-      } else if ($this->uri == "/admin/update-profile") {
+        $controller->removeProject(true);
+      } else if ($this->uri == "/admin/user-update") {
         $controller = new AccountController();
         $controller->updateProfile(true);
       } else if ($this->uri == "/admin/users") {
@@ -151,7 +154,7 @@
       } else if ($this->uri == "/admin/add-user") {
         $controller = new AccountController();
         $controller->addNewUser();
-      } else if ($this->uri == "/admin/remove-user") {
+      } else if ($this->uri == "/admin/user-remove") {
         $controller = new AccountController();
         $controller->removeUser();
       } else if ($this->uri == "/admin/templates") {

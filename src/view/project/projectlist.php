@@ -1,5 +1,10 @@
 <?php
 function generateModal($project, $admin) {
+  if ($admin) {
+    $linkRemove = "<a href='/admin/project-remove/".$project->getId()."' type='button' class='btn btn-danger'>Delete Project</a>";
+  } else {
+    $linkRemove = "<a href='/my-projects/remove/".$project->getId()."' type='button' class='btn btn-danger'>Delete Project</a>";
+  }
   return '<!-- Modal -->
   <div class="modal fade" id="deletingModal_'.$project->getId().'" tabindex="-1" role="dialog" aria-labelledby="deletingModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -15,7 +20,7 @@ function generateModal($project, $admin) {
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <a name="" href="/admin/remove-project/'.$project->getId().'/'.$admin.'" type="button" class="btn btn-danger">Delete Project</a>
+          '.$linkRemove.'
         </div>
       </div>
     </div>
@@ -91,7 +96,7 @@ function generateModal($project, $admin) {
 </form>
 <div class="row">
   <table class="table table-hover">
-    <thead>
+    <thead class="thead-light">
       <tr>
         <th scope="col">#</th>
         <?php if ($this->admin): ?>
@@ -133,10 +138,10 @@ function generateModal($project, $admin) {
                 <?php if ($this->admin): ?>
                   <a href="/admin/projects/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil"></span></a>
                 <?php else: ?>
-                  <a href="/projects/edit/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil"></span></a>
+                  <a href="/my-projects/edit/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil"></span></a>
                 <?php endif; ?>
                 <span class="margin-l"></span>
-                <a data-toggle="modal" data-target="#deletingModal_<?= $project->getId(); ?>" href="#" title="Remove Proyecto" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
+                <a data-toggle="modal" data-target="#deletingModal_<?= $project->getId(); ?>" href="#" title="Remove Project" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
               </td>
             <?php endif; ?>
           </tr>
