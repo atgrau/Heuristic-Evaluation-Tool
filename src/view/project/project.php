@@ -17,6 +17,12 @@
     $link = $this->project->getLink();
   }
 
+  if ($_POST["template"]) {
+    $templateId = $_POST["template"];
+  } elseif ($this->project) {
+    $templateId = $this->project->getTemplate()->getId();
+  }
+
   if ($_POST["users"]) {
     $usersProject = array();
     foreach ($_POST["users"] as $user) {
@@ -67,6 +73,15 @@
               <div class="form-group">
                 <label for="link">Link:</label>
                 <input name="link" type="text" class="form-control" id="name" placeholder="http://website.domain" value="<?=$link?>">
+              </div>
+              <div class="form-group">
+                <label for="template">Template:</label>
+                <select name="template" id="template" class="form-control">
+                  <?php
+                    foreach ($this->templateList as $template) { ?>
+                    <option name="<?= $template->getId();?>" <?php if($templateId == $template->getId()) echo "selected"; ?>><?=$template->getName();?></option>
+                  <?php } ?>
+                </select>
               </div>
               <?php if ($this->adminView): ?>
                 <div class="form-group">

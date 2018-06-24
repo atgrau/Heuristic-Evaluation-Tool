@@ -13,8 +13,9 @@
     private $link;
     private $active;
     private $users;
+    private $template;
 
-    function __construct($id, $userId, $creationDate, $name, $description, $link, $active) {
+    function __construct($id, $userId, $creationDate, $name, $description, $link, $active, $template) {
       $this->id = $id;
       $this->user = getUserById($userId);
       $this->creationDate = $creationDate;
@@ -23,6 +24,7 @@
       $this->link = $link;
       $this->active = $active;
       $this->users = array();
+      $this->template = $template;
     }
 
     function setId($value) {
@@ -93,6 +95,14 @@
       $this->users = $value;
     }
 
+    function getTemplate() {
+      return $this->template;
+    }
+
+    function setTemplate($value) {
+      $this->template = $value;
+    }
+
     function insert() {
       DB::insert('projects', array(
         "id_user" => $this->user->getId(),
@@ -100,7 +110,8 @@
         "name" => $this->name,
         "description" => $this->description,
         "link" => $this->link,
-        "active" => false
+        "active" => false,
+        "id_template" => $this->template->getId()
       ));
 
       // Getting recent project
@@ -122,7 +133,8 @@
         "name" => $this->name,
         "description" => $this->description,
         "link" => $this->link,
-        "active" => $this->active
+        "active" => $this->active,
+        "id_template" => $this->template->getId()
       ), "ID=%i", $this->id);
 
       // Clear users
@@ -148,8 +160,8 @@
   function getProjectById($projectId) {
     $project = DB::queryFirstRow("SELECT * FROM projects WHERE ID=%i", $projectId);
     if ($project) {
-      $project = new Project($project["ID"], $project["id_user"], $project["creation_date"], $project["name"], $project["description"], $project["link"], boolval($project["active"]));
-
+      $template = getTemplateById($project["id_template"]);
+      $project = new Project($project["ID"], $project["id_user"], $project["creation_date"], $project["name"], $project["description"], $project["link"], boolval($project["active"]), $template);
       $projectUsers = DB::query("SELECT * FROM projects_user WHERE id_project=%i", $projectId);
       $projectUsersList = array();
       if ($projectUsers) {
@@ -229,7 +241,8 @@
     $projectList = array();
     if ($projects) {
       foreach ($projects as $row) {
-        $project = new Project($row["ID"], $row["id_user"], $row["creation_date"], $row["name"], $row["description"], $row["link"], boolval($row["active"]));
+        $template = getTemplateById($row["id_template"]);
+        $project = new Project($row["ID"], $row["id_user"], $row["creation_date"], $row["name"], $row["description"], $row["link"], boolval($row["active"]), $template);
         array_push($projectList, $project);
       }
       return $projectList;
