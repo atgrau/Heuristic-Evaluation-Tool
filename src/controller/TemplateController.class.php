@@ -50,7 +50,6 @@
       $template->insert();
       $this->addMessage = true;
 
-
         if($template)
         {
           $this->setContentView("template/template");
