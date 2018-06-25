@@ -120,7 +120,7 @@
       ));
 
       // Getting recent project
-      $projectId = DB::insertId();
+      $this->id = DB::insertId();
 
       // Add Users to the project
       foreach ($this->users as $user) {

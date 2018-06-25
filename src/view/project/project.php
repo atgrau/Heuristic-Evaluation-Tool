@@ -64,15 +64,15 @@
           <?php endif; ?>
               <div class="form-group">
                 <label for="name">Project's Name:</label>
-                <input name="name" type="text" class="form-control" id="name" placeholder="Name of project" value="<?=$name?>">
+                <input name="name" type="text" maxlength="50" class="form-control" id="name" placeholder="Name of project" value="<?=$name?>">
               </div>
               <div class="form-group">
                 <label for="description">Description:</label>
-                <textarea id="description" name="description" class="form-control" placeholder="Description of project"><?=$desription?></textarea>
+                <textarea id="description" name="description" maxlength="1000" class="form-control" placeholder="Description of project"><?=$desription?></textarea>
               </div>
               <div class="form-group">
                 <label for="link">Link:</label>
-                <input name="link" type="text" class="form-control" id="name" placeholder="http://website.domain" value="<?=$link?>">
+                <input name="link" type="text" maxlength="100" class="form-control" id="name" placeholder="http://website.domain" value="<?=$link?>">
               </div>
               <div class="form-group">
                 <label for="template">Template:</label>

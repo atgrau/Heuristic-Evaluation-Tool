@@ -102,6 +102,7 @@ function generateModal($project, $admin) {
         <?php if ($this->admin): ?>
           <th scope="col">Owner</th>
         <?php endif; ?>
+        <th scope="col">Created On</th>
         <th scope="col">Project's Name</th>
         <th scope="col">Description</th>
         <th scope="col">Link</th>
@@ -128,11 +129,12 @@ function generateModal($project, $admin) {
             ?>
             <th scope="row"><?= $project->getId(); ?></th>
             <?php if ($this->admin): ?>
-              <td><?= $project->getUser()->getName(); ?> <a href="/admin/profile/<?= $project->getUser()->getId(); ?>" title="<?= $project->getUser()->getName(); ?>'s profile"><span class="fa fa-external-link"></span></a></td>
+              <td><a href="/admin/users/<?= $project->getUser()->getId(); ?>" title="<?= $project->getUser()->getName(); ?>'s profile"><?= $project->getUser()->getFirstName(); ?></a></td>
             <?php endif; ?>
+            <td><?= $project->getCreationDate(); ?></td>
             <td><?= $project->getName(); ?></td>
             <td><?= $project->getShortDescription(); ?></td>
-            <td><?= $project->getLink(); ?> <a href="<?= $project->getLink(); ?>" target="_blank" title="Link a <?= $project->getName(); ?>"><span class="glyphicon glyphicon-link"></span></a></td>
+            <td><?= $project->getLink(); ?> <a href="<?= $project->getLink(); ?>" target="_blank" title="Link to <?= $project->getName(); ?>"><span class="glyphicon glyphicon-link"></span></a></td>
             <?php if ($this->edit): ?>
               <td>
                 <?php if ($this->admin): ?>

@@ -27,7 +27,7 @@
                 foreach ($assignedProjects as $evaluation) {
               ?>
               <li>
-                  <a href="/projects/evaluation/<?=$evaluation->getId();?>" title="View project">
+                  <a href="/evaluations/id/<?=$evaluation->getId();?>" title="View project">
                       <div>
                           <p>
                               <strong><?=substr($evaluation->getName(), 0, 22)."..."; ?></strong>
@@ -44,7 +44,7 @@
               <li class="divider"></li>
             <?php } ?>
               <li>
-                  <a class="text-center" href="/projects" title="View all projects">
+                  <a class="text-center" href="/evaluations" title="View all projects">
                       <strong>View all projects</strong>
                       <i class="fa fa-angle-right"></i>
                   </a>

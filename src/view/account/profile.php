@@ -73,7 +73,7 @@
                     <?php endif; ?>
                     <div class="form-group">
                       <label for="firstname">First name:</label>
-                      <input name="firstname" type="text" class="form-control" id="firstname" placeholder="First name" value="<?php
+                      <input name="firstname" maxlength="50" type="text" class="form-control" id="firstname" placeholder="First name" value="<?php
                         if (!$this->new)
                           echoDef($_POST["firstname"], $this->user->getFirstName());
                         else
@@ -82,7 +82,7 @@
                     </div>
                     <div class="form-group">
                       <label for="lastname">Last name:</label>
-                      <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Last name" value="<?php
+                      <input name="lastname" maxlength="50" type="text" class="form-control" id="lastname" placeholder="Last name" value="<?php
                         if (!$this->new)
                           echoDef($_POST["lastname"], $this->user->getLastName());
                         else
@@ -110,7 +110,7 @@
                     <br />
                     <div class="form-group">
                       <label for="entity">Entity:</label>
-                      <input name="entity" type="text" class="form-control" id="entity" placeholder="Organización" value="<?php
+                      <input name="entity" type="text" maxlength="50" class="form-control" id="entity" placeholder="Organización" value="<?php
                         if (!$this->new)
                           echoDef($_POST["entity"], $this->user->getEntity());
                         else

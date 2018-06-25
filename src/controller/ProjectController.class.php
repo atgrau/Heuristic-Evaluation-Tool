@@ -50,7 +50,8 @@
       // Validate Project
       $this->validateProject($project, 0, false);
 
-      $project->setId($project->insert());
+      // Insert into database
+      $project->insert();
 
       if ($_POST["email"] == "1") {
         foreach ($project->getUsers() as $user) {
@@ -163,8 +164,8 @@
         $validate .= "<li>Project's description cannot be empty.</li>";
       }
 
-      if (strlen($project->getLink()) > 50) {
-        $validate .= "<li>Project's link cannot contain more than 50 characters.</li>";
+      if (strlen($project->getLink()) > 100) {
+        $validate .= "<li>Project's link cannot contain more than 100 characters.</li>";
       }
 
       if (strlen($project->getLink()) == 0) {

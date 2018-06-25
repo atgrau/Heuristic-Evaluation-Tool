@@ -1,3 +1,4 @@
+
 <div class="row">
     <div class="col-lg-12">
       <h1 class="page-header">Evaluation</h1>
@@ -7,14 +8,16 @@
 <!-- /.row -->
 <!-- /.row -->
 <div class="row">
+  <form>
+    <input name="id_evaluation" type="text" value="<?=$this->evaluation->getId();?>">
     <div class="col-lg">
         <!-- /.panel-heading -->
         <div class="panel-body">
           <div class="right">
             <a class="btn btn-default" id="hideButton" href="#"><span class="glyphicon glyphicon-eye-close"></span> Hide Sidebar</a>
             <a style="display:none" class="btn btn-default" id="showButton" href="#"><span class="glyphicon glyphicon-eye-open"></span> Show Sidebar</a>
-            <a href="/projects" class="btn btn-primary"><span class="glyphicon glyphicon-menu-left"></span> Project List</a>
-            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+            <a href="/evaluations" class="btn btn-primary"><span class="glyphicon glyphicon-menu-left"></span> Project List</a>
+            <button id="save" type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
           </div>
           <ul class="nav nav-tabs">
               <li class="active">
@@ -69,7 +72,7 @@
                     </td>
                     <td width="30%">
                       <div class="form-group">
-                        <textarea class="form-control"></textarea>
+                        <textarea class="form-control" maxlength="50"></textarea>
                        </div>
                     </td>
                   </tr>
@@ -85,6 +88,7 @@
         </div>
         <!-- /.panel-body -->
     </div>
+  </form>
 </div>
 <!-- /.row -->
 
@@ -101,5 +105,11 @@
     $("#showButton").hide("fast");
     $("#hideButton").show("fast");
     $('#page-wrapper').css('margin-left', '250px');
+  });
+
+  $("#save").click(function(){
+      $.post("/evaluation/update", function(data, status){
+          alert(data);
+      });
   });
 </script>
