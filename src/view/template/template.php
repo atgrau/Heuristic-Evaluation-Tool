@@ -35,11 +35,7 @@ return '<!-- Modal -->
         <?php endif; ?>
       </div>
   </div>
-<?php if ($this->addMessage): ?>
-  <div class="row alert alert-info" role="alert">
-   <span class="glyphicon glyphicon-info-sign"></span> Template <strong><?= $this->recentProject; ?></strong> has beed added successfully!
-  </div>
-<?php endif; ?>
+
 <?php if ($this->editTemplate): ?>
 <div class="modal fade" id="newCategoryModal" tabindex="-1" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -50,7 +46,6 @@ return '<!-- Modal -->
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-
         <div class="modal-body">
           <div class="form-group">
             <label for="category">Category Name:</label>
@@ -61,7 +56,6 @@ return '<!-- Modal -->
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
         </div>
-
     </div>
   </div>
 </div>
@@ -113,52 +107,48 @@ return '<!-- Modal -->
 
             <div class="tab-content">
                 <div class="tab-pane fade in <?php echo $active0; ?>" id="categories">
-                  <?php if ($this->editTemplate): ?>
-                    <div class="form-group margin-l margin-lg-t">
-                      <a data-toggle="modal" data-target="#newCategoryModal" href="#" title="Add new Category" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add new category</a>
-                    </div>
-                    <?php endif; ?>
 
-                    <?php if (!empty($this->categoriesList)):
-                          foreach ($this->categoriesList as $category) { ?>
-                            <form class="margin margin-lg-t" method="POST" action="/admin/set-category">
-                              <div class="form-group">
-                                <label for="category"><?php echo $category->getName(); ?></label>
-                                <?php if (!empty($this->questionList)):
-                                      foreach ($this->questionList as $question) {
-                                        if($question->getCategory() == $category->getId()): ?>
-                                            <input name="category" type="text" class="form-control" id="category" placeholder="Category name" value="<?php echo $question->getQuestion(); ?>">
-                                        <?php endif;
-                                    }
-                                  endif; ?>
+                        <?php if ($this->editTemplate): ?>
+                          <div class="form-group margin-r margin-rg-t">
+                            <a data-toggle="modal" data-target="#newCategoryModal" href="#" title="Add new Category" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add new category</a>
+                          </div>
+                        <?php endif; ?>
 
-                              </div>
-                              <?php if ($this->editTemplate): ?>
-                                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
-                              <?php endif; ?>
-                            </form>
-                            <?php } ?>
-
-                    <?php endif; ?>
+                          <?php if (!empty($this->categoriesList)):
+                                foreach ($this->categoriesList as $category) { ?>
+                                  <?php if (!empty($this->questionList)):?>
+                                    <table class="table">
+                                      <tbody>
+                                        <tr>
+                                          <td width="70%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"><h4> <?= $category->getName(); ?></h4></td>
+                                          <?php if ($this->editTemplate):?>
+                                            <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd">
+                                                <button type="submit" class="btn btn-danger"> Remove category </button>
+                                            </td>
+                                          <?php endif; ?>
+                                        </tr>
+                                        <?php  foreach ($this->questionList as $question) {
+                                          if($question->getCategory() == $category->getId()): ?>
+                                              <tr>
+                                                <td width="70%"><?= $question->getQuestion(); ?></td>
+                                                <?php if ($this->editTemplate):?>
+                                                <td width="10%">
+                                                    <span class="glyphicon glyphicon-remove"></span></a><br>
+                                                </td>
+                                                <?php endif; ?>
+                                              </tr>
+                                          <?php endif; }; ?>
+                                      </tbody>
+                                    </table>
+                                  <?php endif; ?>
+                                    <?php if ($this->editTemplate): ?>
+                                      <input name="question" type="text" class="form-control" id="question" placeholder="Insert question..." value="" >
+                                    <!--  <a data-toggle="modal" data-target="#newCategoryModal" href="#" title="Add new question" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add new question</a>-->
+                                    <?php endif; ?>
+                          <?php } endif; ?>
                 </div>
 
-<!--
-                <div class="tab-pane fade in <?php echo $active1; ?>" id="questions">
-                  <form class="margin margin-lg-t" method="POST" action="">
-                    <div class="form-group">
-                      <label for="category">Category:</label>
-                      <select id="category" name="category" class="form-control">
-                        <option value="0">Category 1</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="question">Question:</label>
-                      <input name="question" type="text" class="form-control" id="question" placeholder="Question" value="">
-                    </div>
-                    <br />
-                    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
-                  </form>
-                </div>-->
+
                 <div class="tab-pane fade in <?php echo $active2 ; ?>" id="answers">
                   <form class="margin margin-lg-t" method="POST" action="">
                     <div class="form-group">
