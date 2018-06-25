@@ -8,6 +8,7 @@
     private $id;
     private $project;
     private $user;
+    private $results;
 
     function __construct($id, $project, $user)
     {
@@ -20,12 +21,19 @@
       return $this->id;
     }
 
-    function getIdProject() {
-      return $this->idProject;
+    function getProject() {
+      return $this->project;
     }
 
-    function getIdUser() {
-      return $this->idUser;
+    function getUser() {
+      return $this->user;
+    }
+
+    function insert() {
+      DB::insert('evaluations', array(
+        "id_project" => $this->project->getId(),
+        "id_user" => $this->user->getId()
+      ));
     }
   }
 
