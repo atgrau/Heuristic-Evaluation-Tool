@@ -6,14 +6,14 @@
   class Evaluation
   {
     private $id;
-    private $idProject;
-    private $idUser;
+    private $project;
+    private $user;
 
-    function __construct($id, $idProject, $idUser)
+    function __construct($id, $project, $user)
     {
       $this->id = $id;
-      $this->idProject = $idProject;
-      $this->idUser = $idUser;
+      $this->project = $project;
+      $this->user = $user;
     }
 
     function getId() {
@@ -30,12 +30,27 @@
   }
 
 
-  function getEvaluationByProjectAndUser($idProject, $idUser) {
-
+  function getEvaluationById($evaluationId) {
+    $evaluation = DB::queryFirstRow("SELECT * FROM evaluations WHERE ID=%i", $evaluationId);
+    if ($evaluation) {
+      $project = getProjectById($evaluation["id_project"]);
+      $user = getUserById($evaluation["id_user"]);
+      return new Evaluation($evaluation["ID"], $project, $user);
+    } else {
+      return null;
+    }
   }
 
-  function getTemplateByProject($idProject) {
+  function getEvaluationByProjectAndUser($projectId, $userId) {
+    $evaluation = DB::queryFirstRow("SELECT * FROM evaluations WHERE id_project=%i AND id_user=%i", $projectId, $userId);
+    if ($evaluation) {
 
+      $project = getProjectById($evaluation["id_project"]);
+      $user = getUserById($evaluation["id_user"]);
+      return new Evaluation($evaluation["ID"], $project, $user);
+    } else {
+      return null;
+    }
   }
 
 ?>
