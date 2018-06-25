@@ -79,7 +79,7 @@
                 <select name="template" id="template" class="form-control">
                   <?php
                     foreach ($this->templateList as $template) { ?>
-                    <option name="<?= $template->getId();?>" <?php if($templateId == $template->getId()) echo "selected"; ?>><?=$template->getName();?></option>
+                    <option value="<?=$template->getId();?>" <?php if($templateId == $template->getId()) echo "selected"; ?>><?=$template->getName();?></option>
                   <?php } ?>
                 </select>
               </div>

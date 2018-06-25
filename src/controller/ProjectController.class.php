@@ -28,6 +28,7 @@
     }
 
     function addNewProjectView() {
+      $this->templateList = getTemplates();
       $this->setContentView("project/project");
       $this->render();
     }
@@ -37,7 +38,7 @@
         header("Location: /my-projects");
       }
 
-      $project = new Project(0, $GLOBALS["USER_SESSION"]->getId(), null, $_POST["name"], $_POST["description"], $_POST["link"], false);
+      $project = new Project(0, $GLOBALS["USER_SESSION"]->getId(), null, $_POST["name"], $_POST["description"], $_POST["link"], false, getTemplateById($_POST["template"]));
       $users = array();
       if ($_POST["users"]):
         foreach ($_POST["users"] as $user) {
@@ -47,7 +48,7 @@
       endif;
 
       // Validate Project
-      $this->validateProject($project);
+      $this->validateProject($project, 0, false);
 
       $project->setId($project->insert());
 
@@ -99,6 +100,8 @@
         $project->setName($_POST["name"]);
         $project->setDescription($_POST["description"]);
         $project->setLink($_POST["link"]);
+        $originalTemplateId = $project->getTemplate()->getId();
+        $project->setTemplate(getTemplateById($_POST["template"]));
 
         if ($adminView) {
           $project->setActive($_POST["active"]=="1");
@@ -113,7 +116,7 @@
         endif;
 
         // Validate Project
-        $this->validateProject($project);
+        $this->validateProject($project, $originalTemplateId, $adminView);
 
         // Update Project
         $project->update();
@@ -142,7 +145,7 @@
       }
     }
 
-    function validateProject($project) {
+    function validateProject($project, $originalTemplateId, $adminView) {
       $validate = "";
       if (strlen($project->getName()) > 50) {
         $validate .= "<li>Project's name cannot contain more than 50 characters.</li>";
@@ -168,12 +171,20 @@
         $validate .= "<li>Project's link cannot be empty.</li>";
       }
 
+      if (!$project->getTemplate()) {
+        $validate .= "<li>Selected template is not valid.</li>";
+      }
+
+      if (($originalTemplateId != 0) && ($originalTemplateId != $project->getTemplate()->getId()) && (!$project->canReassignTemplate())) {
+        $validate .= "<li>Template cannot be reassigned, due to one or more evaluations are already open.</li>";
+      }
+
       if ($validate) {
           $this->error = $validate;
           if ($project->getId() == 0) {
             $this->addNewProjectView();
           } else {
-            $this->updateProjectView($this->adminView, $project->getId());
+            $this->updateProjectView($adminView, $project->getId());
           }
 
       }

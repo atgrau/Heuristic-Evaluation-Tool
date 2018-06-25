@@ -103,6 +103,11 @@
       $this->template = $value;
     }
 
+    function canReassignTemplate() {
+      DB::query("SELECT id_project FROM evaluations WHERE id_project=%i", $this->id);
+      return (DB::count() == 0);
+    }
+
     function insert() {
       DB::insert('projects', array(
         "id_user" => $this->user->getId(),
