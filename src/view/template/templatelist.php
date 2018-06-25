@@ -44,7 +44,7 @@ return '<!-- Modal -->
       </form>
     </div>
   </div>
-</div>'
+</div>
 
 <div class="row">
     <div class="col-lg-12">
@@ -101,11 +101,11 @@ return '<!-- Modal -->
                     checked
                   <?php endif;?>></td>
             <td>
-              <a href="/admin/templates/<?= $template->getId(); ?>" title="See template"><span class="glyphicon glyphicon-eye-open"></span></a>
+              <a href="/admin/templates/<?= $template->getId(); ?>?edit=0" title="See template"><span class="glyphicon glyphicon-eye-open"></span></a>
               <span class="margin-l"></span>
               <?php
               if ($template->getStateModified()== 0 && $template->getId() != 1):?>
-                <a href="/templates/edit/<?= $template->getId(); ?>" title="Edit template"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a href="/admin/templates/<?= $template->getId(); ?>?edit=1" title="Edit template"><span class="glyphicon glyphicon-pencil"></span></a>
                 <span class="margin-l"></span>
                 <a data-toggle="modal" data-target="#deletingModal_<?= $template->getId(); ?>" href="#" title="Remove template" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
               <?php endif; ?>

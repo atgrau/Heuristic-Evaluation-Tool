@@ -16,7 +16,7 @@
       $this->render();
     }
 
-    function updateTemplateView($adminView, $templateId) {
+    function showTemplateView($adminView, $templateId, $edit) {
       $template = getTemplateById($templateId);
 
         if ((!$template) || ((!$GLOBALS["USER_SESSION"]->isAdmin()) && ($GLOBALS["USER_SESSION"]->getId() != $template->getUser()->getId()))){
@@ -28,7 +28,18 @@
           $this->categoriesList = getCategoriesbyEvaluation($template->getId());
           $this->questionList = getQuestionsbyEvaluation($template->getId());
           $this->adminView = $adminView;
-          $this->editTemplate = false;
+          $this->editTemplate = (($edit == 1) && ($template->getId()!= 1));
+          $this->render();
+        }
+    }
+
+    function updateTemplateView($adminView, $templateId, $edit) {
+      $template = getTemplateById($templateId);
+
+        if ((!$template) || ((!$GLOBALS["USER_SESSION"]->isAdmin()) && ($GLOBALS["USER_SESSION"]->getId() != $template->getUser()->getId()))){
+            $this->showTemplateList($adminView);
+        } else {
+
           $this->render();
         }
     }

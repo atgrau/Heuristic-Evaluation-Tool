@@ -22,34 +22,35 @@ return '<!-- Modal -->
 </div>';
 }
 ?>
-
 <div class="row">
-    <div class="col-lg-12">
-      <?php if (!$this->template): ?>
-        <h1 class="page-header">New template</h1>
-      <?php else: ?>
-        <h1 class="page-header"><?php  echo $this->template->getName();
-            echo $GLOBALS["MASTER_TEMPLATE"]->getId(); $GLOBALS["MASTER_TEMPLATE"]->getName();
-        ?></h1>
-      <?php endif; ?>
-    </div>
-</div>
+<form class="margin margin-lg-t" method="POST" action="/templates/edit">
+  <div class="row">
+      <div class="col-lg-12">
+        <?php if (!$this->editTemplate): ?>
+          <h1 class="page-header"><?= $this->template->getName();?></h1>
+        <?php else: ?>
+          <div class="form-group">
+            <input name="template" type="text" class="form-control input-lg" placeholder="Template name" value="<?= $this->template->getName();?>" >
+          </div>
+        <?php endif; ?>
+      </div>
+  </div>
 <?php if ($this->addMessage): ?>
   <div class="row alert alert-info" role="alert">
    <span class="glyphicon glyphicon-info-sign"></span> Template <strong><?= $this->recentProject; ?></strong> has beed added successfully!
   </div>
 <?php endif; ?>
-<?php if (!$this->template->getStateModified()): ?>
+<?php if ($this->editTemplate): ?>
 <div class="modal fade" id="newCategoryModal" tabindex="-1" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <strong>New  Category</strong>
+        <strong>New  Category </strong>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form class="margin margin-lg-t" method="POST" action="/admin/set-category">
+
         <div class="modal-body">
           <div class="form-group">
             <label for="category">Category Name:</label>
@@ -60,12 +61,13 @@ return '<!-- Modal -->
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
         </div>
-      </form>
+
     </div>
   </div>
 </div>
 <?php endif; ?>
-
+</form>
+</div>
 <!-- /.row -->
 <div class="row">
     <div class="col-lg">
@@ -111,7 +113,7 @@ return '<!-- Modal -->
 
             <div class="tab-content">
                 <div class="tab-pane fade in <?php echo $active0; ?>" id="categories">
-                  <?php if (!$this->template->getStateModified()): ?>
+                  <?php if ($this->editTemplate): ?>
                     <div class="form-group margin-l margin-lg-t">
                       <a data-toggle="modal" data-target="#newCategoryModal" href="#" title="Add new Category" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add new category</a>
                     </div>
@@ -131,7 +133,7 @@ return '<!-- Modal -->
                                   endif; ?>
 
                               </div>
-                              <?php if (!$this->template->getStateModified()): ?>
+                              <?php if ($this->editTemplate): ?>
                                 <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
                               <?php endif; ?>
                             </form>
@@ -168,8 +170,8 @@ return '<!-- Modal -->
                     <?php endif; ?>
                     </div>
                     <br />
-                      <?php if ($this->template->getStateModified() == 0): ?>
-                        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
+                      <?php if ($this->editTemplate): ?>
+                        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
                       <?php endif ?>
                   </form>
                 </div>

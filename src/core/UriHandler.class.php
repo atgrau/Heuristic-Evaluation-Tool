@@ -162,7 +162,7 @@
         if (empty($_GET["param"])) {
           $controller->showTemplateList(true);
         } else {
-          $controller->updateTemplateView(true, $_GET["param"]);
+          $controller->showTemplateView(true, $_GET["param"], $_GET["edit"]);
         }
       } else if ($this->uri == "/templates/new") {
         $controller = new TemplateController();
