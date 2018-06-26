@@ -28,7 +28,7 @@
     }
 
     function addNewProjectView() {
-      $this->templateList = getTemplates();
+      $this->templateList = getActiveTemplates();
       $this->setContentView("project/project");
       $this->render();
     }

@@ -59,35 +59,39 @@
             <div class="tab-pane fade in active margin-lg-t" id="template">
               <form id="evaluation_form">
                 <input name="id_evaluation" type="hidden" value="<?=$this->evaluation->getId();?>">
-                <table class="table">
-                  <thead class="thead-light">
-                    <tr>
-                      <th colspan="2">Categoría 1</th>
-                      <th>Answer</th>
-                      <th>Comments</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row" width="20px">#1</th>
-                      <td width="50%">Pregunta nº 1</td>
-                      <td width="20%">
-                        <div class="form-group">
-                          <select name="role" class="form-control">
-                            <option value="0">Evaluator</option>
-                            <option value="1">Project Manager</option>
-                            <option value="2">Administrator</option>
-                          </select>
-                         </div>
-                      </td>
-                      <td width="30%">
-                        <div class="form-group">
-                          <textarea class="form-control"></textarea>
-                         </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <?php foreach ($this->evaluation->getProject()->getTemplate()->getCategories() as $category) { ?>
+                  <table class="table">
+                    <thead class="thead-light">
+                      <tr>
+                        <th colspan="2"><?=$category->getName(); ?></th>
+                        <th>Answer</th>
+                        <th>Comments</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($category->getQuestions() as $question) { ?>
+                        <tr>
+                          <th scope="row" width="20px">#1</th>
+                          <td width="50%"><?=$question->getName(); ?></td>
+                          <td width="20%">
+                            <div class="form-group">
+                              <select name="role" class="form-control">
+                                <?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $answer) { ?>
+                                <option value="<?=$answer->getValue();?>"><?=$answer->getName();?></option>
+                              <?php } ?>
+                              </select>
+                             </div>
+                          </td>
+                          <td width="30%">
+                            <div class="form-group">
+                              <textarea class="form-control"></textarea>
+                             </div>
+                          </td>
+                        </tr>
+                      <?php } ?>
+                    </tbody>
+                  </table>
+                <?php } ?>
               </form>
             </div>
 
