@@ -12,3 +12,6 @@
 
 <!-- Select -->
 <script src="/dist/js/bootstrap-select.min.js"></script>
+
+<!-- Flot -->
+<script src="/vendor/flot/Chart.bundle.min.js"></script>

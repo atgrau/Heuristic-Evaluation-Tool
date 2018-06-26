@@ -64,7 +64,7 @@
           <?php endif; ?>
               <div class="form-group">
                 <label for="name">Project's Name:</label>
-                <input name="name" type="text" maxlength="50" class="form-control" id="name" placeholder="Name of project" value="<?=$name?>">
+                <input name="name" type="text" maxlength="50" class="form-control" id="name" placeholder="Name of project" value="<?=$name?>" />
               </div>
               <div class="form-group">
                 <label for="description">Description:</label>
@@ -72,7 +72,16 @@
               </div>
               <div class="form-group">
                 <label for="link">Link:</label>
-                <input name="link" type="text" maxlength="100" class="form-control" id="name" placeholder="http://website.domain" value="<?=$link?>">
+                <input name="link" type="text" maxlength="100" class="form-control" id="name" placeholder="website.domain" value="<?=$link?>" />
+              </div>
+              <div class="form-group">
+                <label for="name">Evaluation ending date:</label>
+                <div class="input-group date" id="finishDate">
+                    <input id="finishDate" name="finish_date" type="text" class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
               </div>
               <div class="form-group">
                 <label for="template">Template:</label>
@@ -89,7 +98,7 @@
                   <label class="form-check-label" for="active">Active</label>
                 </div>
               <?php endif; ?>
-              <h3>Asign Evaluators</h3>
+              <h4>Assign Evaluators</h4>
               <div class="form-group">
               <select name="users[]" id="users" class="form-control selectpicker" data-live-search="true" multiple>
                 <?php
@@ -122,3 +131,8 @@
     </div>
 </div>
 <!-- /.row -->
+<script>
+    $(function () {
+        $("#finishDate").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+    });
+</script>

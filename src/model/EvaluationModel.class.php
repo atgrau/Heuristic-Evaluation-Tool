@@ -92,7 +92,7 @@
   }
 
   function getNumberOfEvaluationsByUser($userId) {
-    DB::query("SELECT ID FROM evaluations WHERE id_user=%i", $userId);
+    DB::query("SELECT projects_user.ID FROM projects_user JOIN projects ON projects_user.id_project = projects.ID WHERE projects.active = 1 AND projects_user.id_user=%i", $userId);
     return DB::count();
   }
 
