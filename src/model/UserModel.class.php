@@ -45,6 +45,10 @@
       return ($this->role == 2);
     }
 
+    function isProjectManager() {
+      return ($this->role == 1);
+    }
+
     function setRole($value) {
       $this->role = $value;
     }

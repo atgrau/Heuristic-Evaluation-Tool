@@ -117,9 +117,8 @@ return '<!-- Modal -->
                           </div>
                         <?php endif; ?>
 
-                          <?php if (!empty($this->categoriesList)):
-                                foreach ($this->categoriesList as $category) { ?>
-                                  <?php if (!empty($this->questionList)):?>
+                          <?php
+                                foreach ($this->template->getCategories() as $category) { ?>
                                     <table class="table">
                                       <tbody>
                                         <tr>
@@ -130,37 +129,35 @@ return '<!-- Modal -->
                                             </td>
                                           <?php endif; ?>
                                         </tr>
-                                        <?php  foreach ($this->questionList as $question) {
-                                          if($question->getCategory() == $category->getId()): ?>
+                                        <?php foreach ($category->getQuestions() as $question) { ?>
                                               <tr>
-                                                <td width="70%"><?= $question->getQuestion(); ?></td>
+                                                <td width="70%"><?= $question->getName(); ?></td>
                                                 <?php if ($this->editTemplate):?>
                                                 <td width="10%">
                                                     <span class="glyphicon glyphicon-remove"></span></a><br>
                                                 </td>
                                                 <?php endif; ?>
                                               </tr>
-                                          <?php endif; }; ?>
+                                          <?php } ?>
                                       </tbody>
                                     </table>
-                                  <?php endif; ?>
+
                                     <?php if ($this->editTemplate): ?>
                                       <input name="question" type="text" class="form-control" id="question" placeholder="Insert question..." value="" >
                                     <!--  <a data-toggle="modal" data-target="#newCategoryModal" href="#" title="Add new question" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add new question</a>-->
                                     <?php endif; ?>
-                          <?php } endif; ?>
+                          <?php }  ?>
                 </div>
 
 
                 <div class="tab-pane fade in <?php echo $active1 ; ?>" id="answers">
                   <form class="margin margin-lg-t" method="POST" action="">
                     <div class="form-group">
-                    <?php if (!empty($this->answerList)):
-                        foreach ($this->answerList as $answer) { ?>
-                          <label for="entity"><?php echo $answer->getAnswer(); ?></label>
+                    <?php foreach ($this->template->getAnswers() as $answer) { ?>
+                          <label for="entity"><?php echo $answer->getName(); ?></label>
                           <input name="entity" type="text" class="form-control" id="entity" placeholder="Organización" value="<?php echo $answer->getValue();?>" readonly>
                         <?php } ?>
-                    <?php endif; ?>
+
                     </div>
                     <br />
                       <?php if ($this->editTemplate): ?>

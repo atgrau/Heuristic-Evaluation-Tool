@@ -96,8 +96,8 @@ return '<!-- Modal -->
             <?= generateModal($template->getId()); ?>
             <th scope="row"><?= $template->getId(); ?></th>
             <td><?= $template->getName(); ?></td>
-            <td><input type="checkbox" value=<?=$template->getStateActive()?>
-                  <?php if($template->getStateActive()== 1): ?>
+            <td><input type="checkbox" value=<?=$template->isActive()?>
+                  <?php if($template->isActive()== 1): ?>
                     checked
                   <?php endif;?>></td>
             <td>
