@@ -37,6 +37,10 @@
     function getMyAssignedProjects() {
       return getAssignedProjects($GLOBALS["USER_SESSION"]->getId(), "");
     }
+
+    function numberOfEvaluations() {
+      return getNumberOfEvaluationsByUser($GLOBALS["USER_SESSION"]->getId());
+    }
   }
 
 ?>

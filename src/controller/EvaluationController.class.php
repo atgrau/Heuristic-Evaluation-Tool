@@ -25,12 +25,24 @@
       // Check if exists the relationship
       $evaluation = getEvaluationById($_POST["id_evaluation"]);
       if ((!$evaluation) || ($GLOBALS["USER_SESSION"] != $evaluation->getUser())) {
-        header("Location: /evaluations");
+        echo
+        '<div id="result" class="alert alert-danger fade in" role="alert">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          Error...
+        </div>';
+        exit;
       }
 
-      echo "update";
-      exit;
+      // Get all POST results
+      $result = $_POST["id_evaluation"];
 
+
+      echo
+      '<div id="result" class="alert alert-info fade in" role="alert">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <span class="glyphicon glyphicon-ok"></span> Your changes have been saved correctly!
+      </div>';
+      exit;
     }
 
   }

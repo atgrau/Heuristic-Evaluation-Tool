@@ -1,4 +1,4 @@
-
+<button id="topButton" title="Go to top"><span class="glyphicon glyphicon-menu-up"></span></button>
 <div class="row">
     <div class="col-lg-12">
       <h1 class="page-header">Evaluation</h1>
@@ -8,8 +8,9 @@
 <!-- /.row -->
 <!-- /.row -->
 <div class="row">
-  <form>
-    <input name="id_evaluation" type="text" value="<?=$this->evaluation->getId();?>">
+  <form id="evaluation_form">
+    <div id="result" style="display:none"></div>
+    <input name="id_evaluation" type="hidden" value="<?=$this->evaluation->getId();?>">
     <div class="col-lg">
         <!-- /.panel-heading -->
         <div class="panel-body">
@@ -76,6 +77,132 @@
                        </div>
                     </td>
                   </tr>
+                  <tr>
+                    <th scope="row" width="20px">#1</th>
+                    <td width="50%">Pregunta nº 1</td>
+                    <td width="20%">
+                      <div class="form-group">
+                        <select name="role" class="form-control">
+                          <option value="0">Evaluator</option>
+                          <option value="1">Project Manager</option>
+                          <option value="2">Administrator</option>
+                        </select>
+                       </div>
+                    </td>
+                    <td width="30%">
+                      <div class="form-group">
+                        <textarea class="form-control" maxlength="50"></textarea>
+                       </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" width="20px">#1</th>
+                    <td width="50%">Pregunta nº 1</td>
+                    <td width="20%">
+                      <div class="form-group">
+                        <select name="role" class="form-control">
+                          <option value="0">Evaluator</option>
+                          <option value="1">Project Manager</option>
+                          <option value="2">Administrator</option>
+                        </select>
+                       </div>
+                    </td>
+                    <td width="30%">
+                      <div class="form-group">
+                        <textarea class="form-control" maxlength="50"></textarea>
+                       </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" width="20px">#1</th>
+                    <td width="50%">Pregunta nº 1</td>
+                    <td width="20%">
+                      <div class="form-group">
+                        <select name="role" class="form-control">
+                          <option value="0">Evaluator</option>
+                          <option value="1">Project Manager</option>
+                          <option value="2">Administrator</option>
+                        </select>
+                       </div>
+                    </td>
+                    <td width="30%">
+                      <div class="form-group">
+                        <textarea class="form-control" maxlength="50"></textarea>
+                       </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" width="20px">#1</th>
+                    <td width="50%">Pregunta nº 1</td>
+                    <td width="20%">
+                      <div class="form-group">
+                        <select name="role" class="form-control">
+                          <option value="0">Evaluator</option>
+                          <option value="1">Project Manager</option>
+                          <option value="2">Administrator</option>
+                        </select>
+                       </div>
+                    </td>
+                    <td width="30%">
+                      <div class="form-group">
+                        <textarea class="form-control" maxlength="50"></textarea>
+                       </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" width="20px">#1</th>
+                    <td width="50%">Pregunta nº 1</td>
+                    <td width="20%">
+                      <div class="form-group">
+                        <select name="role" class="form-control">
+                          <option value="0">Evaluator</option>
+                          <option value="1">Project Manager</option>
+                          <option value="2">Administrator</option>
+                        </select>
+                       </div>
+                    </td>
+                    <td width="30%">
+                      <div class="form-group">
+                        <textarea class="form-control" maxlength="50"></textarea>
+                       </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" width="20px">#1</th>
+                    <td width="50%">Pregunta nº 1</td>
+                    <td width="20%">
+                      <div class="form-group">
+                        <select name="role" class="form-control">
+                          <option value="0">Evaluator</option>
+                          <option value="1">Project Manager</option>
+                          <option value="2">Administrator</option>
+                        </select>
+                       </div>
+                    </td>
+                    <td width="30%">
+                      <div class="form-group">
+                        <textarea class="form-control" maxlength="50"></textarea>
+                       </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row" width="20px">#1</th>
+                    <td width="50%">Pregunta nº 1</td>
+                    <td width="20%">
+                      <div class="form-group">
+                        <select name="role" class="form-control">
+                          <option value="0">Evaluator</option>
+                          <option value="1">Project Manager</option>
+                          <option value="2">Administrator</option>
+                        </select>
+                       </div>
+                    </td>
+                    <td width="30%">
+                      <div class="form-group">
+                        <textarea class="form-control" maxlength="50"></textarea>
+                       </div>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
 
@@ -93,6 +220,7 @@
 <!-- /.row -->
 
 <script>
+  // Hide SidebarButton
   $("#hideButton").click(function() {
     $("#sidebar").hide("fast");
     $("#hideButton").hide("fast");
@@ -100,6 +228,7 @@
     $('#page-wrapper').css('margin-left', '0');
   });
 
+  // Show SidebarButton
   $("#showButton").click(function() {
     $("#sidebar").show( "fast");
     $("#showButton").hide("fast");
@@ -107,9 +236,30 @@
     $('#page-wrapper').css('margin-left', '250px');
   });
 
+  // Save Button
   $("#save").click(function(){
-      $.post("/evaluation/update", function(data, status){
-          alert(data);
-      });
+    $.ajax({
+        type:'POST',
+        url:'/evaluation/update',
+        data:$('#evaluation_form').serialize(),
+        success:function(msg){
+          $("#result").fadeIn("slow");
+          $("#result").html(msg);
+          $("#result").delay(2000).fadeOut("slow");
+        }
+    });
+  });
+
+  // Top Button
+  window.onscroll = function() {scrollFunction()};
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      $("#topButton").fadeIn( "slow");
+    } else {
+      $("#topButton").fadeOut( "slow");
+    }
+  }
+  $("#topButton").click(function(){
+    $("html, body").animate({ scrollTop: 0 }, "slow");
   });
 </script>

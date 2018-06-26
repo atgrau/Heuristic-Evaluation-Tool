@@ -5,7 +5,7 @@
                 <a href="/" rel="/"><i class="glyphicon glyphicon-home"></i> Home</a>
             </li>
             <li>
-                <a href="/evaluations" rel="/evaluations"><i class="glyphicon glyphicon-tasks"></i> Project Evaluations</a>
+                <a href="/evaluations" rel="/evaluations"><i class="glyphicon glyphicon-tasks"></i> Project Evaluations (<?=$this->numberOfEvaluations();?>)</a>
             </li>
             <?php if ($GLOBALS["USER_SESSION"]->GetRole() >= 1) { ?>
               <li>

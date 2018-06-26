@@ -91,6 +91,11 @@
     return buildEvaluation($evaluation);
   }
 
+  function getNumberOfEvaluationsByUser($userId) {
+    DB::query("SELECT ID FROM evaluations WHERE id_user=%i", $userId);
+    return DB::count();
+  }
+
   function buildEvaluation($evaluation) {
     if ($evaluation) {
       $project = getProjectById($evaluation["id_project"]);
