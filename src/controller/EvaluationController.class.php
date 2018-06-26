@@ -40,7 +40,7 @@
       echo
       '<div id="result" class="alert alert-info fade in" role="alert">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <span class="glyphicon glyphicon-ok"></span> Your changes have been saved correctly!
+        <span class="glyphicon glyphicon-ok"></span> Your changes have been saved successfully!
       </div>';
       exit;
     }

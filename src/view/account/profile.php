@@ -56,7 +56,7 @@
                           echo $this->user->getEmail();
                         else
                           echo $_POST["email"];
-                      ?>">
+                      ?>" />
                       <?php if(!$this->new): ?>
                         <small id="emailHelp" class="form-text text-muted">E-mail cannot be modified.</small>
                       <?php endif; ?>
@@ -78,7 +78,7 @@
                           echoDef($_POST["firstname"], $this->user->getFirstName());
                         else
                           echo $_POST["firstname"];
-                      ?>">
+                      ?>" />
                     </div>
                     <div class="form-group">
                       <label for="lastname">Last name:</label>
@@ -87,7 +87,7 @@
                           echoDef($_POST["lastname"], $this->user->getLastName());
                         else
                           echo $_POST["lastname"];
-                      ?>">
+                      ?>" />
                     </div>
                     <label>Gender:</label>
                     <div class="form-check">
@@ -115,7 +115,7 @@
                           echoDef($_POST["entity"], $this->user->getEntity());
                         else
                           echo $_POST["entity"];
-                      ?>">
+                      ?>" />
                     </div>
                     <div class="form-group">
                       <label for="country">Country:</label>

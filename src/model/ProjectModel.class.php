@@ -8,6 +8,7 @@
     private $id;
     private $user;
     private $creationDate;
+    private $finishDate;
     private $name;
     private $description;
     private $link;
@@ -15,10 +16,11 @@
     private $users;
     private $template;
 
-    function __construct($id, $userId, $creationDate, $name, $description, $link, $active, $template) {
+    function __construct($id, $userId, $creationDate, $finishDate, $name, $description, $link, $active, $template) {
       $this->id = $id;
       $this->user = getUserById($userId);
       $this->creationDate = $creationDate;
+      $this->finishDate = $finishDate;
       $this->name = $name;
       $this->description = $description;
       $this->link = $link;
@@ -45,6 +47,14 @@
 
     function getCreationDate() {
       return $this->creationDate;
+    }
+
+    function getFinishDate() {
+      return $this->finishDate;
+    }
+
+    function setFinishDate($value) {
+      $this->finishDate = $value;
     }
 
     function getName() {
@@ -112,6 +122,7 @@
       DB::insert('projects', array(
         "id_user" => $this->user->getId(),
         "creation_date" => date('Y-m-d H:i:s', time()),
+        "finish_date" => date('Y-m-d H:i:s', $this->finishDate),
         "name" => $this->name,
         "description" => $this->description,
         "link" => $this->link,
@@ -125,16 +136,15 @@
       // Add Users to the project
       foreach ($this->users as $user) {
         DB::insert('projects_user', array(
-          "id_project" => $projectId,
+          "id_project" => $this->id,
           "id_user" => $user->getId(),
         ));
       }
-
-      return $projectId;
     }
 
     function update() {
       DB::update('projects', array(
+        "finish_date" => date('Y-m-d H:i:s', $this->finishDate),
         "name" => $this->name,
         "description" => $this->description,
         "link" => $this->link,
@@ -166,7 +176,7 @@
     $project = DB::queryFirstRow("SELECT * FROM projects WHERE ID=%i", $projectId);
     if ($project) {
       $template = getTemplateById($project["id_template"]);
-      $project = new Project($project["ID"], $project["id_user"], $project["creation_date"], $project["name"], $project["description"], $project["link"], boolval($project["active"]), $template);
+      $project = new Project($project["ID"], $project["id_user"], $project["creation_date"], $project["finish_date"], $project["name"], $project["description"], $project["link"], boolval($project["active"]), $template);
       $projectUsers = DB::query("SELECT * FROM projects_user WHERE id_project=%i", $projectId);
       $projectUsersList = array();
       if ($projectUsers) {
@@ -247,7 +257,7 @@
     if ($projects) {
       foreach ($projects as $row) {
         $template = getTemplateById($row["id_template"]);
-        $project = new Project($row["ID"], $row["id_user"], $row["creation_date"], $row["name"], $row["description"], $row["link"], boolval($row["active"]), $template);
+        $project = new Project($row["ID"], $row["id_user"], $row["creation_date"], $row["finish_date"], $row["name"], $row["description"], $row["link"], boolval($row["active"]), $template);
         array_push($projectList, $project);
       }
       return $projectList;
