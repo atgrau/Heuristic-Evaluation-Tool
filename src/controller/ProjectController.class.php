@@ -38,7 +38,7 @@
         header("Location: /my-projects");
       }
 
-      $project = new Project(0, $GLOBALS["USER_SESSION"]->getId(), null, $_POST["name"], $_POST["description"], $_POST["link"], false, getTemplateById($_POST["template"]));
+      $project = new Project(0, $GLOBALS["USER_SESSION"]->getId(), null, null, $_POST["name"], $_POST["description"], $_POST["link"], false, getTemplateById($_POST["template"]));
       $users = array();
       if ($_POST["users"]):
         foreach ($_POST["users"] as $user) {

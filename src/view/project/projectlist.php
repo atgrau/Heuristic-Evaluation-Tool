@@ -155,7 +155,9 @@ function generateModal($project, $admin) {
   </table>
   <?php
     if (empty($this->projectList)) {
-      echo "No projects found... <br /><br />";
+      echo "<div class='alert alert-info' role='alert'>
+              <span class='glyphicon glyphicon-info-sign'></span> No projects found...
+            </div>";
     } else {
       echo "<strong>Total projects:</strong> ".sizeof($this->projectList);
     }

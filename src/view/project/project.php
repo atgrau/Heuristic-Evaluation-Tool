@@ -72,7 +72,7 @@
               </div>
               <div class="form-group">
                 <label for="link">Link:</label>
-                <input name="link" type="text" maxlength="100" class="form-control" id="name" placeholder="website.domain" value="<?=$link?>" />
+                <input name="link" type="text" maxlength="100" class="form-control" id="name" placeholder="http://website.domain" value="<?=$link?>" />
               </div>
               <div class="form-group">
                 <label for="name">Evaluation ending date:</label>

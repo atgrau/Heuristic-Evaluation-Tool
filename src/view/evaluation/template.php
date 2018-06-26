@@ -1,7 +1,7 @@
 <button id="topButton" title="Go to top"><span class="glyphicon glyphicon-menu-up"></span></button>
   <div class="row">
       <div class="col-lg-12">
-        <h1 class="page-header">Evaluation of: <small><?=$this->evaluation->getProject()->getName();?></small></h1>
+        <h1 class="page-header">Evaluation</h1>
       </div>
       <!-- /.col-lg-12 -->
   </div>
@@ -103,7 +103,7 @@
                   <th colspan="3" class="thead-light text-center">My own results</th>
                   <tr>
                     <th width="20%">Total Questions:</th>
-                    <td width="20%">80</td>
+                    <td>80</td>
                   </tr>
                   <tr>
                     <th>Total answered Questions:</th>
@@ -156,14 +156,10 @@
                     <th colspan="3" class="thead-light text-center">Global results</th>
                     <tr>
                       <th width="20%">Total Questions:</th>
-                      <td width="20%">80</td>
+                      <td>80</td>
                     </tr>
                     <tr>
-                      <th>Total answered Questions:</th>
-                      <td>75</td>
-                    </tr>
-                    <tr>
-                      <th>Score</th>
+                      <th>Average Score</th>
                       <td>65</td>
                     </tr>
                     <tr>

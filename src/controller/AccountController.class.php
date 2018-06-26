@@ -263,7 +263,7 @@
       } else {
         $user->setPassword($newpassword);
         $user->update();
-        $this->success = "¡Your password has been updated!";
+        $this->success = "<span class='glyphicon glyphicon-info-sign'></span> Your password has been updated!";
       }
       $this->showProfile(false, $GLOBALS["USER_SESSION"]->getId());
     }
@@ -321,7 +321,7 @@
         $this->action = "/admin/add-user";
         $this->render();
       } else {
-        $user = UserModel::create();
+        $user = User::create();
 
         // Generate new Password
         $password = randomPassword();
