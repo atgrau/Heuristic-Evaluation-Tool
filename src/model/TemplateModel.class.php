@@ -49,7 +49,7 @@
         "active" => false,
       ));
 
-      $templateId = DB::insertId();
+      $this->id = DB::insertId();
 
       if($templateId){
         //Insert default answers
@@ -58,7 +58,7 @@
         if ($answers) {
             foreach ($answers as $row) {
               DB::insert('answersbytemplate', array(
-                "idTemplate" => $templateId,
+                "idTemplate" => $this->id,
                 "idAnswer" => $row["ID"],
               ));
             }
@@ -70,7 +70,7 @@
         if ($categories) {
             foreach ($categories as $row) {
               DB::insert('categoriesbytemplate', array(
-                "idTemplate" => $templateId,
+                "idTemplate" => $this->id,
                 "idCategory" => $row["ID"],
               ));
             }
@@ -82,7 +82,7 @@
         if ($questions) {
             foreach ($questions as $row) {
               DB::insert('questionsbytemplate', array(
-                "idTemplate" => $templateId,
+                "idTemplate" => $this->id,
                 "idQuestion" => $row["ID"],
               ));
             }

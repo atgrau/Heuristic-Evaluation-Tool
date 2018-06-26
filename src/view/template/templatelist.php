@@ -59,9 +59,9 @@ return '<!-- Modal -->
 </div>
 <?php endif; ?>
 
-<?php if ($this->removeMessage): ?>
+<?php if ($this->error): ?>
   <div class="row alert alert-info" role="alert">
-   <span class="glyphicon glyphicon-info-sign"></span> Template <strong><?= $this->recentProject; ?></strong> has beed removed successfully!
+   <span class="glyphicon glyphicon-info-sign"></span> <?=$this->error; ?>
   </div>
 <?php endif; ?>
 <form action="" method="GET">
