@@ -52,6 +52,12 @@ return '<!-- Modal -->
             <input name="category" type="text" class="form-control" id="category" placeholder="Category name" value="">
           </div>
         </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="question">Questions :</label>
+            <input name="question" type="text" class="form-control" id="question" placeholder="Insert question....." value="">
+          </div>
+        </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
@@ -65,8 +71,15 @@ return '<!-- Modal -->
 <!-- /.row -->
 <div class="row">
     <div class="col-lg">
+      <div class="right">
+        <a href="/admin/templates" class="btn btn-primary"><span class="glyphicon glyphicon-menu-left"></span> Template List</a>
+        <?php if($this->editTemplate): ?>
+          <button id="save" type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+        <?php endif; ?>
+      </div>
         <!-- /.panel-heading -->
         <div class="panel-body">
+
           <?php if (isset($this->success)) { ?>
             <div class="alert alert-info" role="alert">
              <?php echo $this->success; ?>
@@ -81,25 +94,16 @@ return '<!-- Modal -->
               if ($this->tab == 0) {
                 $active0 = "active";
                 $active1 = "";
-                $active2 = "";
-              } else if ($this->tab == 1){
-                $active0 = "";
-                $active1 = "active";
-                $active2 = "";
               } else {
                 $active0 = "";
-                $active1 = "";
-                $active2 = "active";
+                $active1 = "active";
               }
             ?>
             <ul class="nav nav-tabs">
                 <li class="<?php echo $active0; ?>">
                   <a href="#categories" data-toggle="tab">Categories</a>
                 </li>
-                <!--<li class="<?php echo $active1; ?>">
-                  <a href="#questions" data-toggle="tab">Questions</a>
-                </li>-->
-                <li class="<?php echo $active2; ?>">
+                <li class="<?php echo $active1; ?>">
                   <a href="#answers" data-toggle="tab">Answers</a>
                 </li>
             </ul>
@@ -107,7 +111,6 @@ return '<!-- Modal -->
 
             <div class="tab-content">
                 <div class="tab-pane fade in <?php echo $active0; ?>" id="categories">
-
                         <?php if ($this->editTemplate): ?>
                           <div class="form-group margin-r margin-rg-t">
                             <a data-toggle="modal" data-target="#newCategoryModal" href="#" title="Add new Category" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add new category</a>
@@ -149,7 +152,7 @@ return '<!-- Modal -->
                 </div>
 
 
-                <div class="tab-pane fade in <?php echo $active2 ; ?>" id="answers">
+                <div class="tab-pane fade in <?php echo $active1 ; ?>" id="answers">
                   <form class="margin margin-lg-t" method="POST" action="">
                     <div class="form-group">
                     <?php if (!empty($this->answerList)):
@@ -171,3 +174,19 @@ return '<!-- Modal -->
     </div>
 </div>
 <!-- /.row -->
+
+<script>
+// Save Button
+$("#save").click(function(){
+  $.ajax({
+      type:'POST',
+      url:'/template/update',
+      data:$('#evaluation_form').serialize(),
+      success:function(msg){
+        $("#result").fadeIn("slow");
+        $("#result").html(msg);
+        $("#result").delay(2000).fadeOut("slow");
+      }
+  });
+});
+</script>

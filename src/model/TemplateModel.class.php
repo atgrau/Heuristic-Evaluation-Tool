@@ -9,11 +9,10 @@
     private $active;
     private $modified;
 
-    function __construct($id, $name, $active, $modified) {
+    function __construct($id, $name, $active) {
       $this->id = $id;
       $this->name = $name;
       $this->active = $active;
-      $this->modified = $modified;
     }
 
     function getId() {
@@ -32,27 +31,22 @@
       return $this->active;
     }
 
-    function getStateModified() {
-      return $this->modified;
-    }
-
     function insert() {
-      $template = DB::insert('template_evaluation', array(
+      $template = DB::insert('templates', array(
         "name" => $this->name,
         "active" => false,
-        "modified" => false,
       ));
 
-      $templateid = DB::insertId();
+      $templateId = DB::insertId();
 
-      if($templateid){
+      if($templateId){
         //Insert default answers
         $qryAnswer = "SELECT * FROM template_answers WHERE original=1";
         $answers = DB::query($qryAnswer);
         if ($answers) {
             foreach ($answers as $row) {
-              DB::insert('answersbyevaluation', array(
-                "idEvaluation" => $templateid,
+              DB::insert('answersbytemplate', array(
+                "idTemplate" => $templateId,
                 "idAnswer" => $row["ID"],
               ));
             }
@@ -63,8 +57,8 @@
         $categories = DB::query($qryCategories);
         if ($categories) {
             foreach ($categories as $row) {
-              DB::insert('categoriesbyevaluation', array(
-                "idEvaluation" => $templateid,
+              DB::insert('categoriesbytemplate', array(
+                "idTemplate" => $templateId,
                 "idCategory" => $row["ID"],
               ));
             }
@@ -75,8 +69,8 @@
         $questions = DB::query($qryQuestions);
         if ($questions) {
             foreach ($questions as $row) {
-              DB::insert('questionsbyevaluation', array(
-                "idEvaluation" => $templateid,
+              DB::insert('questionsbytemplate', array(
+                "idTemplate" => $templateId,
                 "idQuestion" => $row["ID"],
               ));
             }
@@ -86,13 +80,66 @@
 
     }
 
+    function getCategories() {
+
+      $qry = "SELECT * FROM categoriesbytemplate WHERE idTemplate = %i";
+      $qry .= " ORDER BY categoriesbytemplate.idCategory";
+      $categories = DB::query($qry, $this->id);
+
+      $categoriesList = array();
+
+      if ($categories) {
+        foreach ($categories as $row) {
+          array_push($categoriesList, new Category($row["ID"], $row["name"]));
+        }
+        return $categoriesList;
+      } else {
+        return null;
+      }
+
+    }
+
+    function getAnswers() {
+      $qry = "SELECT * FROM answersbytemplate WHERE idTemplate=%i";
+      $qry .= " ORDER BY answersbytemplate.idAnswer";
+      $answers = DB::query($qry, $this->id);
+      $answerList = array();
+
+      if ($answers) {
+        foreach ($answers as $row) {
+            array_push($answerList, new Answer($row["ID"], $row["answer"], $row["value"]));
+        }
+        return $answerList;
+      } else {
+        return null;
+      }
+
+    }
+
+    function getQuestions() {
+
+      $qry = "SELECT * FROM questionsbytemplate WHERE idTemplate=%i";
+      $qry .= " ORDER BY questionsbytemplate.idQuestion";
+      $questions = DB::query($qry, $this->id);
+      $questionList = array();
+
+      if ($questions) {
+        foreach ($questions as $row) {
+            array_push($questionList, new Question($row["ID"], $row["category"], $row["question"]));
+        }
+        return $questionList;
+      } else {
+        return null;
+      }
+    }
+
   }
 
 /**
  * Category Model
  */
 
-class CategoryModel
+class Category
   {
 
     private $id;
@@ -116,7 +163,7 @@ class CategoryModel
 /**
  * Questions Model
  */
-class QuestionModel
+class Question
 {
 
   private $id;
@@ -138,10 +185,6 @@ class QuestionModel
     return $this->category;
   }
 
-  function setOrder($value) {
-    $this->order = $value;
-  }
-
   function getQuestion() {
     return $this->question;
   }
@@ -152,7 +195,7 @@ class QuestionModel
 
 }
 
-class AnswerModel
+class Answer
   {
 
     private $id;
@@ -178,34 +221,20 @@ class AnswerModel
 
 }
 
-class AnswersbyEvaluation
-  {
-
-    private $idEvaluation;
-    private $idAnswer;
-    function __construct($idEvaluation, $idAnswer)
-    {
-      $this->idEvaluation = $idEvaluation;
-      $this->idAnswer = $idAnswer;
-    }
-
-
-
-
-}
 
   function getTemplates() {
-    $qry = "SELECT * FROM template_evaluation";
+    $qry = "SELECT * FROM templates";
 
     $templates = DB::query($qry);
     return buildTmp($templates);
   }
 
+
   function buildTmp($templates) {
     $templateList = array();
     if ($templates) {
       foreach ($templates as $row) {
-        array_push($templateList, new Template($row["ID"], $row["name"], $row["active"], $row["modified"]));
+        array_push($templateList, new Template($row["ID"], $row["name"], $row["active"]));
       }
       return $templateList;
     } else {
@@ -214,36 +243,19 @@ class AnswersbyEvaluation
   }
 
   function getTemplateById($templateId) {
-    $template = DB::queryFirstRow("SELECT * FROM template_evaluation WHERE ID=%i", $templateId);
+    $template = DB::queryFirstRow("SELECT * FROM templates WHERE ID=%i", $templateId);
     if ($template) {
-      return new Template($template["ID"], $template["name"], $template["active"], $template["modified"]);
+      return new Template($template["ID"], $template["name"], $template["active"]);
     } else {
       return null;
     }
   }
 
 
-  function getCategories() {
-    $qry = "SELECT * FROM template_categories";
-    $categories = DB::query($qry);
-
-    $categoriesList = array();
-
-    if ($categories) {
-      foreach ($categories as $row) {
-        array_push($categoriesList, new Category($row["ID"], $row["name"]));
-      }
-      return $categoriesList;
-    } else {
-      return null;
-    }
-  }
-
-
-  function getAnswerbyEvaluation($templateId)
+  function getAnswerbyTemplate($templateId)
   {
-    $qry = "SELECT * FROM answersbyevaluation WHERE idEvaluation=%i";
-    $qry .= " ORDER BY answersbyevaluation.idAnswer";
+    $qry = "SELECT * FROM answersbytemplate WHERE idTemplate=%i";
+    $qry .= " ORDER BY answersbytemplate.idAnswer";
     $answers = DB::query($qry,$templateId);
     $answerList = array();
 
@@ -252,7 +264,7 @@ class AnswersbyEvaluation
         $qryAnswer = DB::queryFirstRow("SELECT * FROM template_answers WHERE ID=%i", $row["idAnswer"]);
 
         if($qryAnswer)
-          array_push($answerList, new AnswerModel($qryAnswer["ID"], $qryAnswer["answer"], $qryAnswer["value"]));
+          array_push($answerList, new Answer($qryAnswer["ID"], $qryAnswer["answer"], $qryAnswer["value"]));
       }
       return $answerList;
     } else {
@@ -261,10 +273,10 @@ class AnswersbyEvaluation
 
   }
 
-  function getCategoriesbyEvaluation($templateId)
+  function getCategoriesbyTemplate($templateId)
   {
-    $qry = "SELECT * FROM categoriesbyevaluation WHERE idEvaluation=%i";
-    $qry .= " ORDER BY categoriesbyevaluation.idCategory";
+    $qry = "SELECT * FROM categoriesbytemplate WHERE idTemplate=%i";
+    $qry .= " ORDER BY categoriesbytemplate.idCategory";
     $categories = DB::query($qry,$templateId);
     $categoryList = array();
 
@@ -273,7 +285,7 @@ class AnswersbyEvaluation
         $qryCategory = DB::queryFirstRow("SELECT * FROM template_categories WHERE ID=%i", $row["idCategory"]);
 
         if($qryCategory)
-          array_push($categoryList, new CategoryModel($qryCategory["ID"], $qryCategory["name"]));
+          array_push($categoryList, new Category($qryCategory["ID"], $qryCategory["name"]));
       }
       return $categoryList;
     } else {
@@ -281,10 +293,10 @@ class AnswersbyEvaluation
     }
   }
 
-  function getQuestionsbyEvaluation($templateId)
+  function getQuestionsbyTemplate($templateId)
   {
-    $qry = "SELECT * FROM questionsbyevaluation WHERE idEvaluation=%i";
-    $qry .= " ORDER BY questionsbyevaluation.idQuestion";
+    $qry = "SELECT * FROM questionsbytemplate WHERE idTemplate=%i";
+    $qry .= " ORDER BY questionsbytemplate.idQuestion";
     $questions = DB::query($qry,$templateId);
     $questionList = array();
 
@@ -293,7 +305,7 @@ class AnswersbyEvaluation
         $qryQuestion = DB::queryFirstRow("SELECT * FROM template_questions WHERE ID=%i", $row["idQuestion"]);
 
         if($qryQuestion)
-          array_push($questionList, new QuestionModel($qryQuestion["ID"],$qryQuestion["id_category"] ,$qryQuestion["question"]));
+          array_push($questionList, new Question($qryQuestion["ID"],$qryQuestion["id_category"] ,$qryQuestion["question"]));
       }
       return $questionList;
     } else {
@@ -301,13 +313,18 @@ class AnswersbyEvaluation
     }
   }
 
-  function getTemplateActive()
+  function getTemplateActives()
   {
-    $qry = DB::queryFirstRow("SELECT * FROM template_evaluation WHERE active=1");
-    if ($qry) {
-      return new Template($template["ID"], $template["name"], $template["active"], $template["modified"]);
-    }
-    else {
+    $qry = "SELECT * FROM templates WHERE active=1";
+    $templateActive = DB::query($qry);
+    $templateList = array();
+
+    if ($templateActive) {
+      foreach ($templateActive as $row) {
+        array_push($templateList, new Template($template["ID"], $template["name"], $template["active"]));
+      }
+      return $templateList;
+    } else {
       return null;
     }
   }

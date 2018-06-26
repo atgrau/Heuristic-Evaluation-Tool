@@ -24,9 +24,9 @@
         } else {
           $this->setContentView("template/template");
           $this->template = $template;
-          $this->answerList = getAnswerbyEvaluation($template->getId());
-          $this->categoriesList = getCategoriesbyEvaluation($template->getId());
-          $this->questionList = getQuestionsbyEvaluation($template->getId());
+          $this->answerList = getAnswerbyTemplate($template->getId());
+          $this->categoriesList = getCategoriesbyTemplate($template->getId());
+          $this->questionList = getQuestionsbyTemplate($template->getId());
           $this->adminView = $adminView;
           $this->editTemplate = (($edit == 1) && ($template->getId()!= 1));
           $this->render();
@@ -46,21 +46,21 @@
 
     function addNewTemplateView(){
 
-      $template = new Template(0, $_POST["name"],0,0);
+      $template = new Template(0, $_POST["name"],0);
       $template->insert();
       $this->addMessage = true;
 
-        if($template)
-        {
-          $this->setContentView("template/template");
-          $this->template = $template;
-          $this->answerList = getAnswerbyEvaluation($template->getId());
-          $this->categoriesList = getCategoriesbyEvaluation($template->getId());
-          $this->questionList = getQuestionsbyEvaluation($template->getId());
-          $this->adminView = $adminView;
-          $this->editTemplate = true;
-          $this->render();
-        }
+      if($template)
+      {
+        $this->setContentView("template/template");
+        $this->template = $template;
+        $this->answerList = getAnswerbyTemplate($template->getId());
+        $this->categoriesList = getCategoriesbyTemplate($template->getId());
+        $this->questionList = getQuestionsbyTemplate($template->getId());
+        $this->adminView = $adminView;
+        $this->editTemplate = true;
+        $this->render();
+      }
 
     }
 
