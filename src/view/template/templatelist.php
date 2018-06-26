@@ -27,7 +27,7 @@ return '<!-- Modal -->
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <strong class="text-danger">Create new template</strong>
+        <strong>New Template</strong>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -35,10 +35,10 @@ return '<!-- Modal -->
 
       <form action="/templates/new/<?php $_POST["name"]?>" method="POST">
         <div class="modal-body">
-              <input name="name" type="text" class="form-control input" placeholder="Insert name ..." value="" />
+              <input name="name" type="text" class="form-control input" placeholder="Template Name" value="" />
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-success margin-r"><span data-dismiss="modal"></span>Accept</button>
+          <button type="submit" class="btn btn-success"><span data-dismiss="modal"></span>Accept</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         </div>
       </form>

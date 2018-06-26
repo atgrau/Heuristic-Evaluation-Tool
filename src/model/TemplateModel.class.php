@@ -8,6 +8,7 @@
     private $name;
     private $active;
     private $modified;
+    private $categories = array();
 
     function __construct($id, $name, $active) {
       $this->id = $id;
@@ -144,6 +145,7 @@ class Category
 
     private $id;
     private $name;
+    private $questions = array();
 
     function __construct($id, $name) {
       $this->id = $id;
