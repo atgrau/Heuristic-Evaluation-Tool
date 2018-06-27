@@ -55,8 +55,21 @@
       // Store results to DB
       $evaluation->update();
 
+      // Percentage
+      $percentage = $evaluation->getPercentageDone();
+      if ($percentage < 10) $style = "danger";
+      elseif (($percentage >= 10) && ($percentage < 100)) $style = "warning";
+      else $style = "success";
       echo
-      '<div id="result" class="alert alert-info fade in" role="alert">
+      '<div id="percentageResult" class="progress progress-striped active">
+          <div class="progress-bar progress-bar-'.$style.'" role="progressbar" aria-valuenow="<?=$percentage;?>" aria-valuemin="0" aria-valuemax="100" style="width:'.$percentage.'%">
+              <span style="color:#333">'.$percentage.'%</span>
+          </div>
+      </div>';
+
+      // Feedback
+      echo
+      '<div id="resultMessage" class="alert alert-info fade in" role="alert">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <span class="glyphicon glyphicon-ok"></span> Your changes have been saved successfully!
       </div>';

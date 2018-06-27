@@ -25,10 +25,10 @@
                                 </div>
                               <?php } ?>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus value="<?php echo $this->email; ?>">
+                                    <input class="form-control" placeholder="E-mail" name="email" type="email" <?php if (!$this->email) echo "autofocus"; ?> value="<?php echo $this->email; ?>">
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                    <input class="form-control" placeholder="Password" name="password" type="password" value="" <?php if ($this->email) echo "autofocus"; ?>>
                                 </div>
                                 <div class="form-group">
                                     <a href="/forgot">Forgot your password?</a>

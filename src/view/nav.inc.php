@@ -17,25 +17,34 @@
         <!-- /.dropdown -->
         <span class="label label-<?php if ($GLOBALS["USER_SESSION"]->getRole() == 2) {echo "danger";} else {echo "primary";} ?>  margin-lg-r"><?= getRoleName($GLOBALS["USER_SESSION"]->getRole()); ?></span>
         <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Projects">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Evaluations">
                 <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-tasks">
               <?php
                 $assignedProjects = $this->getMyAssignedProjects();
                 if ($assignedProjects):
-                foreach ($assignedProjects as $evaluation) {
+                foreach ($assignedProjects as $project) {
+                  $evaluation = getEvaluationByProjectAndUser($project->getId(), $GLOBALS["USER_SESSION"]->getId());
+                  if ($evaluation) {
+                    $percentage = $evaluation->getPercentageDone();
+                  } else {
+                    $percentage = 0;
+                  }
+                  if ($percentage < 10) $style = "danger";
+                  elseif (($percentage >= 10) && ($percentage < 100)) $style = "warning";
+                  else $style = "success";
               ?>
               <li>
-                  <a href="/evaluations/id/<?=$evaluation->getId();?>" title="View project">
+                  <a href="/evaluations/id/<?=$project->getId();?>" title="View evaluations">
                       <div>
                           <p>
-                              <strong><?=substr($evaluation->getName(), 0, 22)."..."; ?></strong>
-                              <span class="pull-right text-muted">40% Completado</span>
+                              <strong><?php if (strlen($project->getName()) > 22) { echo substr($project->getName(), 0, 22)."..."; } else { echo $project->getName(); } ?></strong>
+                              <span class="pull-right text-muted"><?=$percentage;?>% completed</span>
                           </p>
                           <div class="progress progress-striped active">
-                              <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                  <span class="sr-only">40% Completado</span>
+                              <div class="progress-bar progress-bar-<?=$style;?>" role="progressbar" aria-valuenow="<?=$percentage;?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$percentage;?>%">
+                                  <span class="sr-only"><?=$percentage;?>% Completado</span>
                               </div>
                           </div>
                       </div>
@@ -45,7 +54,7 @@
             <?php } ?>
               <li>
                   <a class="text-center" href="/evaluations" title="View all projects">
-                      <strong>View all projects</strong>
+                      <strong>View all active evaluations</strong>
                       <i class="fa fa-angle-right"></i>
                   </a>
               </li>

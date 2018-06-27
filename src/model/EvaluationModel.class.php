@@ -38,6 +38,23 @@
       $this->results = $value;
     }
 
+    function getQuestionsCount() {
+      foreach ($this->project->getTemplate()->getCategories() as $category) {
+        foreach ($category->getQuestions() as $question) {
+          $totalQuestions++;
+        }
+      }
+      return $totalQuestions;
+    }
+
+    function getAnsweredQuestionsCount() {
+      return count($this->results);
+    }
+
+    function getPercentageDone() {
+      return round($this->getAnsweredQuestionsCount()*100/$this->getQuestionsCount());
+    }
+
     function getEvaluationResultByQuestionId($questionId) {
       $results = DB::queryFirstRow("SELECT id_question, id_answer, comment FROM evaluation_results WHERE id_evaluation=%i AND id_question=%i", $this->id, $questionId);
       if ($results) {

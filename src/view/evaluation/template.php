@@ -36,8 +36,6 @@
       </tbody>
     </table>
 
-    <div id="result" style="display:none"></div>
-
     <div class="col-lg">
         <!-- /.panel-heading -->
         <div class="panel-body">
@@ -59,9 +57,21 @@
                 <a href="#results" data-toggle="tab">View Results</a>
               </li>
           </ul>
+          <div class="margin-lg-t"></div>
           <div class="tab-content">
-
             <div class="tab-pane fade in active margin-lg-t" id="template">
+              <div id="percentage" class="progress progress-striped active ">
+                <?php
+                  $percentage = $this->evaluation->getPercentageDone();
+                  if ($percentage < 10) $style = "danger";
+                  elseif (($percentage >= 10) && ($percentage < 100)) $style = "warning";
+                  else $style = "success";
+                ?>
+                  <div class="progress-bar progress-bar-<?=$style;?>" role="progressbar" aria-valuenow="<?=$percentage;?>" aria-valuemin="0" aria-valuemax="100" style="width:<?=$percentage;?>%">
+                      <span style="color:#333"><?=$percentage;?>%</span>
+                  </div>
+              </div>
+              <div id="result"></div>
               <form id="evaluation_form">
                 <input name="id_evaluation" type="hidden" value="<?=$this->evaluation->getId();?>">
                 <?php foreach ($this->evaluation->getProject()->getTemplate()->getCategories() as $category) { ?>
@@ -83,7 +93,7 @@
                           <td width="50%"><?=$question->getName(); ?></td>
                           <td width="20%">
                             <div class="form-group">
-                              <select name="answer_<?=$question->getId();?>" class="form-control">
+                              <select name="answer_<?=$question->getId();?>" class="form-control" onChange="$('#save').click()">
                                 <option value="">Select...</option>
                                 <?php
                                   foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $answer) {
@@ -100,7 +110,7 @@
                           </td>
                           <td width="30%">
                             <div class="form-group">
-                              <textarea name="comment_<?=$question->getId();?>" class="form-control"><?php
+                              <textarea onfocusout="$('#save').click()" name="comment_<?=$question->getId();?>" class="form-control"><?php
                                   if ($result) {
                                     echo $result->getComment();
                                   }
@@ -249,14 +259,16 @@
 
   // Save Button
   $("#save").click(function(){
+
     $.ajax({
         type:'POST',
         url:'/evaluation/update',
         data:$('#evaluation_form').serialize(),
         success:function(msg){
-          $("#result").fadeIn("slow");
+          $("#result").show();
           $("#result").html(msg);
-          $("#result").delay(3000).fadeOut("slow");
+          $("#percentage").hide("fast");
+          $("#resultMessage").delay(3000).hide("blind");
         }
     });
   });

@@ -102,10 +102,10 @@ function generateModal($project, $admin) {
         <?php if ($this->admin): ?>
           <th scope="col">Owner</th>
         <?php endif; ?>
-        <th scope="col">Created On</th>
         <th scope="col">Project's Name</th>
         <th scope="col">Description</th>
         <th scope="col">Link</th>
+        <th scope="col">Created On</th>
         <?php if ($this->edit): ?>
           <th scope="col"></th>
         <?php endif; ?>
@@ -131,10 +131,10 @@ function generateModal($project, $admin) {
             <?php if ($this->admin): ?>
               <td><a href="/admin/users/<?= $project->getUser()->getId(); ?>" title="<?= $project->getUser()->getName(); ?>'s profile"><?= $project->getUser()->getFirstName(); ?></a></td>
             <?php endif; ?>
-            <td><?= $project->getCreationDate(); ?></td>
             <td><?= $project->getName(); ?></td>
             <td><?= $project->getShortDescription(); ?></td>
             <td><?= $project->getLink(); ?> <a href="<?= $project->getLink(); ?>" target="_blank" title="Link to <?= $project->getName(); ?>"><span class="glyphicon glyphicon-link"></span></a></td>
+            <td><?= $project->getCreationDate(); ?></td>
             <?php if ($this->edit): ?>
               <td>
                 <?php if ($this->admin): ?>
