@@ -24,6 +24,7 @@
     function update() {
       // Check if exists the relationship
       $evaluation = getEvaluationById($_POST["id_evaluation"]);
+
       if ((!$evaluation) || ($GLOBALS["USER_SESSION"] != $evaluation->getUser())) {
         echo
         '<div id="result" class="alert alert-danger fade in" role="alert">
@@ -36,6 +37,23 @@
       // Get all POST results
       $result = $_POST["id_evaluation"];
 
+      // Get categories of template
+      $results = array();
+      foreach ($evaluation->getProject()->getTemplate()->getCategories() as $category) {
+        foreach ($category->getQuestions() as $question) {
+          $questionId = $question->getId();
+          $postAnswer = $_POST["answer_".$question->getId()];
+          $postComment = $_POST["comment_".$question->getId()];
+          if ($postAnswer) {
+            $evaluationResult = new EvaluationResult($question->getId(), $postAnswer, $postComment);
+            array_push($results, $evaluationResult);
+          }
+        }
+      }
+      $evaluation->setResults($results);
+
+      // Store results to DB
+      $evaluation->update();
 
       echo
       '<div id="result" class="alert alert-info fade in" role="alert">

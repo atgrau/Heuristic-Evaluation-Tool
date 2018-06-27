@@ -34,9 +34,17 @@
       return $this->results;
     }
 
-    function setResult($question, $answer) {
-      $result = new EvaluationResult($question, $answer);
-      array_push($this->results, $result);
+    function setResults($value) {
+      $this->results = $value;
+    }
+
+    function getEvaluationResultByQuestionId($questionId) {
+      $results = DB::queryFirstRow("SELECT id_question, id_answer, comment FROM evaluation_results WHERE id_evaluation=%i AND id_question=%i", $this->id, $questionId);
+      if ($results) {
+        return new EvaluationResult($questionId, $results["id_answer"], $results["comment"]);
+      } else {
+        return null;
+      }
     }
 
     function insert() {
@@ -49,6 +57,16 @@
 
     function update() {
       // Update results... (EvaluationResult)
+      DB::delete('evaluation_results', "id_evaluation=%i", $this->id);
+
+      foreach ($this->results as $result) {
+        DB::insert('evaluation_results', array(
+          "id_evaluation" => $this->id,
+          "id_question" => $result->getQuestionId(),
+          "id_answer" => $result->getAnswerId(),
+          "comment" => $result->getComment()
+        ));
+      }
     }
   }
 
@@ -57,23 +75,23 @@
    */
   class EvaluationResult
   {
-    private $question;
-    private $answer;
+    private $questionId;
+    private $answerId;
     private $comment;
 
-    function __construct($question, $answer, $comment)
+    function __construct($questionId, $answerId, $comment)
     {
-      $this->question = $question;
-      $this->answer = $answer;
+      $this->questionId = $questionId;
+      $this->answerId = $answerId;
       $this->comment = $comment;
     }
 
-    function getQuestion() {
-      return $this->question;
+    function getQuestionId() {
+      return $this->questionId;
     }
 
-    function getAnswer() {
-      return $this->answer;
+    function getAnswerId() {
+      return $this->answerId;
     }
 
     function getComment() {
@@ -107,11 +125,11 @@
       if ($results) {
         foreach ($results as $result) {
           // Create question, answer and comment
-          $question = getQuestionById(0);
-          $answer = getAnswerById(0);
+          $questionId = $result["id_question"];
+          $answerId = $result["id_answer"];
           $comment = $result["comment"];
 
-          $evaluationResult = new EvaluationResult($question, $answer, $comment);
+          $evaluationResult = new EvaluationResult($questionId, $answerId, $comment);
           array_push($arrResults, $evaluationResult);
         }
       }
