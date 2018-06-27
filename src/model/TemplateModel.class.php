@@ -169,6 +169,10 @@ class Answer
       $this->value = $value;
     }
 
+    function getId() {
+      return $this->id;
+    }
+
     function getName()
     {
       return $this->answer;

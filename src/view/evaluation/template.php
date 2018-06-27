@@ -29,10 +29,15 @@
           <th>Ending Date:</th>
           <td><?=$this->evaluation->getProject()->getFinishDate();?></td>
         </tr>
+        <tr>
+          <th>Status:</th>
+          <td><span class="text-success">Open</span></td>
+        </tr>
       </tbody>
     </table>
 
     <div id="result" style="display:none"></div>
+
     <div class="col-lg">
         <!-- /.panel-heading -->
         <div class="panel-body">
@@ -69,22 +74,37 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <?php foreach ($category->getQuestions() as $question) { ?>
+                        <?php
+                          foreach ($category->getQuestions() as $question) {
+                            $result = $this->evaluation->getEvaluationResultByQuestionId($question->getId());
+                        ?>
                         <tr>
-                          <th scope="row" width="20px">#1</th>
+                          <th scope="row" width="20px">#<?=++$i;?></th>
                           <td width="50%"><?=$question->getName(); ?></td>
                           <td width="20%">
                             <div class="form-group">
-                              <select name="role" class="form-control">
-                                <?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $answer) { ?>
-                                <option value="<?=$answer->getValue();?>"><?=$answer->getName();?></option>
+                              <select name="answer_<?=$question->getId();?>" class="form-control">
+                                <option value="">Select...</option>
+                                <?php
+                                  foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $answer) {
+                                    if (($result) && ($result->getAnswerId() == $answer->getId())) {
+                                      $selected = "selected";
+                                    } else {
+                                      $selected = "";
+                                    }
+                                ?>
+                                <option <?=$selected;?> value="<?=$answer->getId();?>"><?=$answer->getName();?></option>
                               <?php } ?>
                               </select>
                              </div>
                           </td>
                           <td width="30%">
                             <div class="form-group">
-                              <textarea class="form-control"></textarea>
+                              <textarea name="comment_<?=$question->getId();?>" class="form-control"><?php
+                                  if ($result) {
+                                    echo $result->getComment();
+                                  }
+                                ?></textarea>
                              </div>
                           </td>
                         </tr>
