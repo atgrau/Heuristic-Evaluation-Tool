@@ -55,6 +55,16 @@
       return round($this->getAnsweredQuestionsCount()*100/$this->getQuestionsCount());
     }
 
+    function getScore() {
+      return 40;
+      foreach ($this->results->getCategories() as $category) {
+        foreach ($category->getQuestions() as $question) {
+          $totalQuestions++;
+        }
+      }
+      return $totalQuestions;
+    }
+
     function getEvaluationResultByQuestionId($questionId) {
       $results = DB::queryFirstRow("SELECT id_question, id_answer, comment FROM evaluation_results WHERE id_evaluation=%i AND id_question=%i", $this->id, $questionId);
       if ($results) {

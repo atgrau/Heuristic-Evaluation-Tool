@@ -137,15 +137,15 @@
                   <th colspan="3" class="thead-light text-center">My own results</th>
                   <tr>
                     <th width="20%">Total Questions:</th>
-                    <td>80</td>
+                    <td><?=$this->evaluation->getQuestionsCount();?></td>
                   </tr>
                   <tr>
                     <th>Total answered Questions:</th>
-                    <td>75</td>
+                    <td><?=$this->evaluation->getAnsweredQuestionsCount();?></td>
                   </tr>
                   <tr>
                     <th>Score</th>
-                    <td>65</td>
+                    <td><?=$this->evaluation->getScore();?></td>
                   </tr>
                   <tr>
                     <th>Finished at:</th>
