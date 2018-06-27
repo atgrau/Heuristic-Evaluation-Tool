@@ -41,6 +41,11 @@
         }
     }
 
+    function setCategory(){
+
+    }
+
+
     function addNewTemplateView(){
 
       if ((empty($_POST["name"])) || (existTemplatebyName($_POST["name"]))) {

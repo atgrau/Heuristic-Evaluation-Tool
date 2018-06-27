@@ -211,8 +211,11 @@ class Answer
   }
 
   function getTemplateById($templateId) {
+
     $template = DB::queryFirstRow("SELECT * FROM templates WHERE ID=%i", $templateId);
+
     if ($template) {
+
       $categories = getCategoriesbyTemplate($template["ID"]);
       $answers = getAnswersbyTemplate($template["ID"]);
       return new Template($template["ID"], $template["name"], $template["active"], $categories, $answers);
@@ -246,6 +249,7 @@ class Answer
     $categoryList = array();
 
     if ($categories) {
+
       foreach ($categories as $row) {
         $questions = DB::query("SELECT ID, question FROM template_questions WHERE id_category=%i", $row["ID"]);
         $questionList = array();
@@ -289,7 +293,7 @@ class Answer
   {
     $qry = "SELECT * FROM templates WHERE active=1";
     $templateActive = DB::query($qry);
-    return buildTmp($templates);
+    return buildTmp($templateActive);
   }
 
   function existTemplatebyName($name)

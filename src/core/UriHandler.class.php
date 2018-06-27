@@ -21,6 +21,7 @@
       "/evaluations" => 0,
       "/evaluations/id" => 0,
       "/evaluation/update" => 0,
+      "/template/setCategory" => 0,
       "/my-projects" => 1,
       "/my-projects/new" => 1,
       "/my-projects/edit" => 1,
@@ -41,6 +42,7 @@
       "/admin/set-category" => 2,
       "/admin/importcsv" => 2,
       "/admin/template-remove" => 2,
+
     );
 
     private $uri;
@@ -179,6 +181,9 @@
       } else if ($this->uri == "/admin/template-remove") {
         $controller = new TemplateController();
         $controller->removeTemplate(true);
+      } else if ($this->uri == "/template/setCategory") {
+        $controller = new TemplateController();
+        $controller->setCategory();
       } else if ($this->uri == "/admin/importcsv") {
         $controller = new ImportCSVController();
         $controller->newImport();

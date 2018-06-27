@@ -116,7 +116,7 @@ return '<!-- Modal -->
                             <a data-toggle="modal" data-target="#newCategoryModal" href="#" title="Add new Category" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add new category</a>
                           </div>
                         <?php endif; ?>
-
+                        <form id="category_form">
                           <?php
                                 foreach ($this->template->getCategories() as $category) { ?>
                                     <table class="table">
@@ -125,7 +125,7 @@ return '<!-- Modal -->
                                           <td width="70%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"><h4> <?= $category->getName(); ?></h4></td>
                                           <?php if ($this->editTemplate):?>
                                             <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd">
-                                                <button type="submit" class="btn btn-danger"> Remove category </button>
+                                                <button id="remove-category" type="button" class="btn btn-danger"> Remove category</button>
                                             </td>
                                           <?php endif; ?>
                                         </tr>
@@ -147,6 +147,7 @@ return '<!-- Modal -->
                                     <!--  <a data-toggle="modal" data-target="#newCategoryModal" href="#" title="Add new question" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add new question</a>-->
                                     <?php endif; ?>
                           <?php }  ?>
+                        </form>
                 </div>
 
 
@@ -183,6 +184,19 @@ return '<!-- Modal -->
 <!-- /.row -->
 
 <script>
+//Delete category
+$("#remove-category").click(function(){
+  $.ajax({
+      type:'POST',
+      url:'/template/setCategory',
+      data:$('#category_form').serialize(),
+      success:function(msg){
+        $("#result").fadeIn("slow");
+        $("#result").html(msg);
+        $("#result").delay(2000).fadeOut("slow");
+      }
+  });
+});
 // Save Button
 $("#save").click(function(){
   $.ajax({
