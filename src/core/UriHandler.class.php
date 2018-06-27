@@ -39,7 +39,8 @@
       "/admin/project-remove" => 2,
       "/admin/templates" => 2,
       "/admin/set-category" => 2,
-      "/admin/importcsv" => 2
+      "/admin/importcsv" => 2,
+      "/admin/template-remove" => 2,
     );
 
     private $uri;
@@ -175,6 +176,9 @@
        else if ($this->uri == "/templates/edit") {
         $controller = new TemplateController();
         $controller->updateTemplateView(false, $_GET["param"]);
+      } else if ($this->uri == "/admin/template-remove") {
+        $controller = new TemplateController();
+        $controller->removeTemplate(true);
       } else if ($this->uri == "/admin/importcsv") {
         $controller = new ImportCSVController();
         $controller->newImport();

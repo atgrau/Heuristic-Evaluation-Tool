@@ -5,17 +5,17 @@ return '<!-- Modal -->
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <strong class="text-danger">Project Deletion</strong>
+        <strong class="text-danger">Template Deletion</strong>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <h4>Project <strong>#'.$templateId.'</strong> and all related evaluations <span class="bg-danger">will be removed too</span>.<br /><br />Are you sure?</h4>
+        <h4>Project <strong>#'.$templateId.'</strong> and all related relations <span class="bg-danger">will be removed too</span>.<br /><br />Are you sure?</h4>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <a name="" href="/admin/remove-project/'.$templateId.'" type="button" class="btn btn-danger">Delete Project</a>
+        <a href="/admin/template-remove/'.$templateId.'" type="button" class="btn btn-danger">Delete Project</a>
       </div>
     </div>
   </div>

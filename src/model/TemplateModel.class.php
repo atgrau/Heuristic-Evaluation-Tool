@@ -51,7 +51,7 @@
 
       $this->id = DB::insertId();
 
-      if($templateId){
+      if($template){
         //Insert default answers
         $qryAnswer = "SELECT * FROM template_answers WHERE original=1";
         $answers = DB::query($qryAnswer);
@@ -92,7 +92,13 @@
 
     }
 
+    function delete() {
 
+      DB::delete('answersbytemplate', "idTemplate=%i", $this->id);
+      DB::delete('categoriesbytemplate', "idTemplate=%i", $this->id);
+      DB::delete('questionsbytemplate', "idTemplate=%i", $this->id);
+      DB::delete('templates', "ID=%i", $this->id);
+    }
 
   }
 
@@ -246,7 +252,7 @@ class Answer
               array_push($questionList, new Question($question["ID"], $question["question"]));
           }
         }
-        array_push($categoryList, new Category($row["ID"], $row["name"],$questionList));
+        array_push($categoryList, new Category($row["ID"], $row["name"], $questionList));
       }
 
       return $categoryList;
@@ -282,5 +288,17 @@ class Answer
     return buildTmp($templates);
   }
 
+  function existTemplatebyName($name)
+  {
+      $qry = DB::queryFirstRow("SELECT * FROM templates WHERE name=%i", $name);
+
+      if($qry){
+        return false;
+      } else {
+        return false;
+      }
+
+
+  }
 
 ?>

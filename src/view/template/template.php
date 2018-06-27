@@ -154,10 +154,20 @@ return '<!-- Modal -->
                   <form class="margin margin-lg-t" method="POST" action="">
                     <div class="form-group">
                     <?php foreach ($this->template->getAnswers() as $answer) { ?>
-                          <label for="entity"><?php echo $answer->getName(); ?></label>
-                          <input name="entity" type="text" class="form-control" id="entity" placeholder="Organización" value="<?php echo $answer->getValue();?>" readonly>
+                          <table class="table">
+                            <tbody>
+                              <tr>
+                                <td width="70%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"> <?= $answer->getName();?></td>
+                                <td width="20%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"> <?= $answer->getValue();?></td>
+                                <?php if ($this->editTemplate):?>
+                                <td width="10%">
+                                    <span class="glyphicon glyphicon-remove"></span></a><br>
+                                </td>
+                                <?php endif; ?>
+                              </tr>
+                            </tbody>
+                          </table>
                         <?php } ?>
-
                     </div>
                     <br />
                       <?php if ($this->editTemplate): ?>

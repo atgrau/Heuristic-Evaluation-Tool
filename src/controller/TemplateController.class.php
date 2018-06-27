@@ -45,22 +45,29 @@
 
       if ((empty($_POST["name"])) || (existTemplatebyName($_POST["name"]))) {
           $this->error = "error";
-          $this->showTemplateList(true); 
+          $this->showTemplateList(true);
       } else {
-          $template = new Template(0, $_POST["name"],0,null);
+          $template = new Template(0, $_POST["name"],0,null,null);
           $template->insert();
 
           if($template)
           {
-            $this->setContentView("template/template");
-            $this->template = getTemplateById($template->getId());
-            $this->adminView = $adminView;
-            $this->editTemplate = true;
-            $this->render();
+            $this->showTemplateView(true,$template->getId(),1);
           }
       }
     }
 
+    function removeTemplate($adminView) {
+
+      $template = getTemplateById($_GET["param"]);
+      if (!$template) {
+        $this->showTemplateList($adminView);
+      }
+
+      $template->delete();
+      $this->removeMessage = true;
+      $this->showTemplateList($adminView);
+    }
 
   }
 
