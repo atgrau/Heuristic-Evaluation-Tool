@@ -65,11 +65,15 @@
 
     function getAllAnswerValues() {
       $values = array();
-      foreach ($this->project->getTemplate()->getAnswers() as $answer) {
-        if (in_array($answer->getValue(), $values)){
-          echo $answer->getValue();
-          array_push($values, $answer->getValue());
+      $answers = $this->project->getTemplate()->getAnswers();
+      foreach ($answers as $answer) {
+        $total = 0;
+        foreach ($this->results as $result) {
+          if ($answer->getId() == $result->getAnswer()->getId()) {
+            $total++;
+          }
         }
+        array_push($values, $total);
       }
       return $values;
     }

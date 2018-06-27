@@ -1,5 +1,4 @@
 <?php
-
   class EvaluationController extends BaseController
   {
     function __construct() { }
@@ -60,7 +59,7 @@
       echo
       '<div id="percentageResult" class="progress progress-striped active">
           <div class="progress-bar progress-bar-'.$style.'" role="progressbar" aria-valuenow="<?=$percentage;?>" aria-valuemin="0" aria-valuemax="100" style="width:'.$percentage.'%">
-              <span style="color:#333">'.$percentage.'%</span>
+              <strong><small><span style="color:#333">'.$percentage.'%</span></small></strong>
           </div>
       </div>';
 
@@ -74,5 +73,4 @@
     }
 
   }
-
 ?>

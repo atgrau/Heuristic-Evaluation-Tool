@@ -68,7 +68,7 @@
                   else $style = "success";
                 ?>
                   <div class="progress-bar progress-bar-<?=$style;?>" role="progressbar" aria-valuenow="<?=$percentage;?>" aria-valuemin="0" aria-valuemax="100" style="width:<?=$percentage;?>%">
-                      <span style="color:#333"><?=$percentage;?>%</span>
+                      <strong><small><span style="color:#333"><?=$percentage;?>%</span></small></strong>
                   </div>
               </div>
               <div id="result"></div>
@@ -162,7 +162,7 @@
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                       <canvas id="chartjs-1" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
-                      <script>new Chart(document.getElementById("chartjs-1"),{"type":"doughnut","data":{"labels":["Red","Blue","Yellow"],"datasets":[{"label":"My First Dataset","data":[300,50,100],"backgroundColor":["rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(255, 205, 86)"]}]}});</script>
+                      <script>new Chart(document.getElementById("chartjs-1"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->evaluation->getAllAnswerValues() as $value) { echo "'".$value."',"; } ?>],"backgroundColor":["rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(255, 205, 86)"]}]}});</script>
                     </div>
                     <!-- /.panel-body -->
                 </div>
@@ -171,12 +171,12 @@
               <div class="col-lg-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Answer Chart <?=print_r($this->evaluation->getAllAnswerValues()); ?>
+                            Other Chart
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                           <canvas id="chartjs-2" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
-                          <script>new Chart(document.getElementById("chartjs-2"),{"type":"doughnut","data":{"labels":["Red","Blue","Yellow"],"datasets":[{"label":"My First Dataset","data":[300,50,100],"backgroundColor":["rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(255, 205, 86)"]}]}});</script>
+                          <script>new Chart(document.getElementById("chartjs-2"),{"type":"radar","data":{"labels":["Eating","Drinking","Sleeping","Designing","Coding","Cycling","Running"],"datasets":[{"label":"My First Dataset","data":[65,59,90,81,56,55,40],"fill":true,"backgroundColor":"rgba(255, 99, 132, 0.2)","borderColor":"rgb(255, 99, 132)","pointBackgroundColor":"rgb(255, 99, 132)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(255, 99, 132)"},{"label":"My Second Dataset","data":[28,48,40,19,96,27,100],"fill":true,"backgroundColor":"rgba(54, 162, 235, 0.2)","borderColor":"rgb(54, 162, 235)","pointBackgroundColor":"rgb(54, 162, 235)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(54, 162, 235)"}]},"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}});</script>
                         </div>
                         <!-- /.panel-body -->
                     </div>
