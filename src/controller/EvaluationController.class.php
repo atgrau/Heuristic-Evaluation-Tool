@@ -34,18 +34,15 @@
         exit;
       }
 
-      // Get all POST results
-      $result = $_POST["id_evaluation"];
-
       // Get categories of template
       $results = array();
       foreach ($evaluation->getProject()->getTemplate()->getCategories() as $category) {
         foreach ($category->getQuestions() as $question) {
-          $questionId = $question->getId();
-          $postAnswer = $_POST["answer_".$question->getId()];
-          $postComment = $_POST["comment_".$question->getId()];
-          if ($postAnswer) {
-            $evaluationResult = new EvaluationResult($question->getId(), $postAnswer, $postComment);
+          $question = getQuestionbyId($question->getId());
+          $answer = getAnswerbyId($_POST["answer_".$question->getId()]);
+          $comment = $_POST["comment_".$question->getId()];
+          if ($answer) {
+            $evaluationResult = new EvaluationResult($question, $answer, $comment);
             array_push($results, $evaluationResult);
           }
         }

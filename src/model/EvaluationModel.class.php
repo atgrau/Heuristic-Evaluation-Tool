@@ -56,22 +56,31 @@
     }
 
     function getScore() {
-      return 40;
-      foreach ($this->results->getCategories() as $category) {
-        foreach ($category->getQuestions() as $question) {
-          $totalQuestions++;
+      $score = 0;
+      foreach ($this->results as $result) {
+        $score = $score + $result->getAnswer()->getValue();
+      }
+      return $score;
+    }
+
+    function getAllAnswerValues() {
+      $values = array();
+      foreach ($this->project->getTemplate()->getAnswers() as $answer) {
+        if (in_array($answer->getValue(), $values)){
+          echo $answer->getValue();
+          array_push($values, $answer->getValue());
         }
       }
-      return $totalQuestions;
+      return $values;
     }
 
     function getEvaluationResultByQuestionId($questionId) {
-      $results = DB::queryFirstRow("SELECT id_question, id_answer, comment FROM evaluation_results WHERE id_evaluation=%i AND id_question=%i", $this->id, $questionId);
-      if ($results) {
-        return new EvaluationResult($questionId, $results["id_answer"], $results["comment"]);
-      } else {
-        return null;
+      foreach ($this->results as $result) {
+        if ($result->getQuestion()->getId() == $questionId) {
+          return $result;
+        }
       }
+      return null;
     }
 
     function insert() {
@@ -89,8 +98,8 @@
       foreach ($this->results as $result) {
         DB::insert('evaluation_results', array(
           "id_evaluation" => $this->id,
-          "id_question" => $result->getQuestionId(),
-          "id_answer" => $result->getAnswerId(),
+          "id_question" => $result->getQuestion()->getId(),
+          "id_answer" => $result->getAnswer()->getId(),
           "comment" => $result->getComment()
         ));
       }
@@ -102,23 +111,23 @@
    */
   class EvaluationResult
   {
-    private $questionId;
-    private $answerId;
+    private $question;
+    private $answer;
     private $comment;
 
-    function __construct($questionId, $answerId, $comment)
+    function __construct($question, $answer, $comment)
     {
-      $this->questionId = $questionId;
-      $this->answerId = $answerId;
+      $this->question = $question;
+      $this->answer = $answer;
       $this->comment = $comment;
     }
 
-    function getQuestionId() {
-      return $this->questionId;
+    function getQuestion() {
+      return $this->question;
     }
 
-    function getAnswerId() {
-      return $this->answerId;
+    function getAnswer() {
+      return $this->answer;
     }
 
     function getComment() {
@@ -152,11 +161,11 @@
       if ($results) {
         foreach ($results as $result) {
           // Create question, answer and comment
-          $questionId = $result["id_question"];
-          $answerId = $result["id_answer"];
+          $question = getQuestionbyId($result["id_question"]);
+          $answer = getAnswerbyId($result["id_answer"]);
           $comment = $result["comment"];
 
-          $evaluationResult = new EvaluationResult($questionId, $answerId, $comment);
+          $evaluationResult = new EvaluationResult($question, $answer, $comment);
           array_push($arrResults, $evaluationResult);
         }
       }

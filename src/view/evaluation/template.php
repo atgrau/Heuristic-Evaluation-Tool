@@ -97,7 +97,7 @@
                                 <option value="">Select...</option>
                                 <?php
                                   foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $answer) {
-                                    if (($result) && ($result->getAnswerId() == $answer->getId())) {
+                                    if (($result) && ($result->getAnswer()->getId() == $answer->getId())) {
                                       $selected = "selected";
                                     } else {
                                       $selected = "";
@@ -171,7 +171,7 @@
               <div class="col-lg-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Answer Chart
+                            Answer Chart <?=print_r($this->evaluation->getAllAnswerValues()); ?>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">

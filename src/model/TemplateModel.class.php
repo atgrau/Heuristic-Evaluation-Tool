@@ -233,13 +233,23 @@ class Answer
 
     if ($answers) {
       foreach ($answers as $row) {
-          array_push($answerList, new Answer($row["ID"], $row["answer"], $row["value"]));
+        array_push($answerList, new Answer($row["ID"], $row["answer"], $row["value"]));
       }
       return $answerList;
     } else {
       return null;
     }
+  }
 
+  function getAnswerbyId($answerId)
+  {
+    $qry = "SELECT ID, answer, value  FROM template_answers WHERE ID=%i";
+    $answer = DB::queryFirstRow($qry,$answerId);
+    if ($answer) {
+      return new Answer($answer["ID"], $answer["answer"], $answer["value"]);
+    } else {
+      return null;
+    }
   }
 
   function getCategoriesbyTemplate($templateId)
@@ -257,7 +267,7 @@ class Answer
         if($questions)
         {
           foreach ($questions as $question) {
-              array_push($questionList, new Question($question["ID"], $question["question"]));
+            array_push($questionList, new Question($question["ID"], $question["question"]));
           }
         }
         array_push($categoryList, new Category($row["ID"], $row["name"], $questionList));
@@ -284,6 +294,17 @@ class Answer
           array_push($questionList, new Question($qryQuestion["ID"],$qryQuestion["id_category"] ,$qryQuestion["question"]));
       }
       return $questionList;
+    } else {
+      return null;
+    }
+  }
+
+  function getQuestionbyId($questionId)
+  {
+    $qry = "SELECT ID, id_category, question  FROM template_questions WHERE ID=%i";
+    $question = DB::queryFirstRow($qry,$questionId);
+    if($question) {
+      return new Question($question["ID"],$question["id_category"] ,$question["question"]);
     } else {
       return null;
     }
