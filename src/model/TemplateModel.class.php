@@ -112,11 +112,14 @@ class Category
     private $id;
     private $name;
     private $questions = array();
+    private $original;
+    private $templateId;
 
-    function __construct($id, $name, $questions) {
+    function __construct($id, $name, $questions, $original) {
       $this->id = $id;
       $this->name = $name;
       $this->questions = $questions;
+      $this->original = $original;
     }
 
     function getId() {
@@ -127,8 +130,38 @@ class Category
       return $this->name;
     }
 
+    function setTemplateId($value) {
+      $this->templateId = $value;
+    }
+
+    function getTemplateId() {
+      return $this->templateId;
+    }
+
     function getQuestions() {
       return $this->questions;
+    }
+
+    function isOriginal()
+    {
+      return $this->original;
+    }
+
+    function remove()
+    {
+      DB::delete('categoriesbytemplate', "idTemplate=%i", "idCategory=%i", $this->getTemplateId(), $this->id);
+
+      foreach ($this->getQuestions() as $question) {
+        DB::delete('questionsbytemplate', "idTemplate=%i","idQuestion=%i", $this->getTemplateId(), $question->getId());
+
+        if(!$question->isOriginal()){
+            DB::delete('template_questions', "ID=%i", $question->getId());
+          }
+      }
+
+      if(!$this->isOriginal()){
+        DB::delete('template_categories', "ID=%i", $this->id);
+      }
     }
 }
 
@@ -140,11 +173,13 @@ class Question
 
   private $id;
   private $question;
+  private $original;
 
-  function __construct($id, $question)
+  function __construct($id, $question, $original)
   {
     $this->id = $id;
     $this->question = $question;
+    $this->original = $original;
   }
 
   function getId() {
@@ -157,6 +192,11 @@ class Question
 
   function setQuestion($value) {
     $this->question = $value;
+  }
+
+  function isOriginal()
+  {
+    return $this->original;
   }
 
 }
@@ -251,6 +291,38 @@ class Answer
       return null;
     }
   }
+
+  function getCategorybyId($categoryId, $templateId)
+  {
+    $qry =  "SELECT tc.ID, tc.name  FROM categoriesbytemplate a JOIN template_categories tc ON a.idCategory = tc.ID WHERE a.idCategory=%i AND a.idTemplate=%i";
+    $category = DB::query($qry,$categoryId,$templateId);
+    $template = getTemplateById($templateId);
+
+    if($template){
+        $category->setTemplate($template["ID"]);
+    }
+
+    $categoryList = array();
+
+    if ($category) {
+        $questions = DB::query("SELECT ID, question FROM template_questions WHERE id_category=%i", $category["ID"]);
+        $questionList = array();
+
+        if($questions)
+        {
+          foreach ($questions as $question) {
+            array_push($questionList, new Question($question["ID"], $question["question"]));
+          }
+        }
+
+        array_push($categoryList, new Category($row["ID"], $row["name"], $questionList));
+
+      return $categoryList;
+    } else {
+      return null;
+    }
+  }
+
 
   function getCategoriesbyTemplate($templateId)
   {
