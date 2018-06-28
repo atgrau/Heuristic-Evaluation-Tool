@@ -125,10 +125,10 @@ return '<!-- Modal -->
                                           <td width="70%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"><h4> <?= $category->getName(); ?></h4></td>
                                           <?php if ($this->editTemplate):?>
                                             <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd">
-                                              <form action="/template/category-remove">
-                                                <input name="idTemplate" type="hidden" class="form-control"  value="<?php $this->template->getId()?>"/>
-                                                <input name="idCategories" type="hidden" class="form-control"  value="<?php $category->getId()?>"/>
-                                                <button id="remove-category" type="button" class="btn btn-danger"> Remove category</button>
+                                              <form action="/template/category-remove/" method="POST">
+                                                <input name="idTemplate" type="hidden" class="form-control"  value="<?= $this->template->getId()?>"/>
+                                                <input name="idCategory" type="hidden" class="form-control"  value="<?= $category->getId()?>"/>
+                                                <button type="submit" class="btn btn-danger"> Remove category</button>
                                               </form>
                                             </td>
                                           <?php endif; ?>

@@ -42,7 +42,8 @@
     }
 
     function removeCategory(){
-      $category-> getCategorybyId($_POST["idCategory"] , $_POST["idTemplate"]);
+
+      $category = getCategorybyId($_POST["idTemplate"], $_POST["idCategory"]);
       if($category->remove())
       {
         $this->succesRemoveCategory = true;
