@@ -13,7 +13,7 @@
       $this->evaluation = getEvaluationByProjectAndUser($projectId, $GLOBALS["USER_SESSION"]->getId());
       // If evaluation is not created yet, lets create it.
       if (!$this->evaluation) {
-        $this->evaluation = new Evaluation(0, getProjectById($projectId), $GLOBALS["USER_SESSION"], null);
+        $this->evaluation = new Evaluation(0, getProjectById($projectId), $GLOBALS["USER_SESSION"], false, null);
         $this->evaluation->insert();
       }
       $this->tab = $_GET["tab"];
@@ -25,11 +25,11 @@
       // Check if exists the relationship
       $evaluation = getEvaluationById($_POST["id_evaluation"]);
 
-      if ((!$evaluation) || ($GLOBALS["USER_SESSION"] != $evaluation->getUser())) {
+      if ((!$evaluation) || ($evaluation->isFinishedOrClosed()) || ($GLOBALS["USER_SESSION"] != $evaluation->getUser())) {
         echo
         '<div id="result" class="alert alert-danger fade in" role="alert">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          Error...
+          <span class="glyphicon glyphicon-remove"></span> This evaluation is already closed, it cannot be modified.
         </div>';
         exit;
       }

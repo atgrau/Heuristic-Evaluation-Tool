@@ -113,6 +113,17 @@
       $this->template = $value;
     }
 
+    function isClosed() {
+      return ($this->getDaysLeft() < 0);
+    }
+
+    function getDaysLeft() {
+      $now = new DateTime();
+      $finish = new DateTime($this->finishDate);
+      $days = intval($now->diff($finish)->format('%R%a'));
+      return $days;
+    }
+
     function getGlobalAnswerValue() {
       $totals = array();
       $qry = "SELECT evaluation_results.id_answer, count(1) AS value FROM ";
