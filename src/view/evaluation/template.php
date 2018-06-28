@@ -126,86 +126,91 @@
             </div>
 
             <div class="tab-pane fade in margin-lg-t" id="project" >
-              <iframe name="iframe" width="100%" style="min-height:94vh" src="//<?=str_replace("http://", "", $this->evaluation->getProject()->getLink());?>" frameborder="0" allowfullscreen></iframe>
+              <iframe name="iframe" width="100%" style="min-height:100vh" src="//<?=str_replace("http://", "", $this->evaluation->getProject()->getLink());?>" frameborder="0" allowfullscreen></iframe>
             </div>
 
             <div class="tab-pane fade in <?php if ($this->tab == "results") echo "active"; ?> margin-lg-t" id="results">
-              <table class="table">
-                <thead>
-                </thead>
-                <tbody>
-                  <th colspan="3" class="thead-light text-center">My own results</th>
-                  <tr>
-                    <th width="20%">Total Questions:</th>
-                    <td><?=$this->evaluation->getQuestionsCount();?></td>
-                  </tr>
-                  <tr>
-                    <th>Answered Questions:</th>
-                    <td><?=$this->evaluation->getAnsweredQuestionsCount();?> <big>(<?=round($this->evaluation->getAnsweredQuestionsCount()/$this->evaluation->getQuestionsCount()*100, 1);?>%)</big></td>
-                  </tr>
-                  <tr>
-                    <th>Not answered Questions:</th>
-                    <td><?=$this->evaluation->getQuestionsCount()-$this->evaluation->getAnsweredQuestionsCount();?></td>
-                  </tr>
-                  <tr>
-                    <th>Score</th>
-                    <td><?=$this->evaluation->getScore();?></td>
-                  </tr>
-                  <tr>
-                    <th>Usability Percentage</th>
-                    <td><big><span class="label label-danger"><?=round($this->evaluation->getScore()*100/($this->evaluation->getProject()->getTemplate()->getMaxAnswerValue()*$this->evaluation->getQuestionsCount()), 1); ?>%</span></big></td>
-                  </tr>
-                  <tr>
-                    <th>Finished at:</th>
-                    <td><?=$this->evaluation->getProject()->getFinishDate();?></td>
-                  </tr>
-                </tbody>
-              </table>
+
+              <div class="col-lg-6">
+                <table class="table">
+                  <tbody>
+                    <th colspan="2" class="thead-light text-center">My own results</th>
+                    <tr>
+                      <th>Total Questions</th>
+                      <td><?=$this->evaluation->getQuestionsCount();?></td>
+                    </tr>
+                    <tr>
+                      <th>Answered Questions</th>
+                      <td><?=$this->evaluation->getAnsweredQuestionsCount();?> <big>(<?=round($this->evaluation->getAnsweredQuestionsCount()/$this->evaluation->getQuestionsCount()*100, 1);?>%)</big></td>
+                    </tr>
+                    <tr>
+                      <th>Unanswered Questions</th>
+                      <td><?=$this->evaluation->getQuestionsCount()-$this->evaluation->getAnsweredQuestionsCount();?></td>
+                    </tr>
+                    <tr>
+                      <th>Score</th>
+                      <td><?=$this->evaluation->getScore();?></td>
+                    </tr>
+                    <tr>
+                      <th>Usability Percentage</th>
+                      <td><big><span class="label label-danger"><?=$this->evaluation->getUsabilityPercentage();?>%</span></big></td>
+                    </tr>
+                    <tr>
+                      <th>Finished at</th>
+                      <td><?=$this->evaluation->getProject()->getFinishDate();?></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
               <div class="col-lg-6">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Answer Chart
+                    <div class="panel-heading text-center text-bold">
+                        Answers
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                      <canvas id="chartjs-1" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
+                      <canvas id="chartjs-1" class="chartjs" width="770" height="300" style="display: block; width: 770px; height: 385px;"></canvas>
                       <script>new Chart(document.getElementById("chartjs-1"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->evaluation->getAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":["rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(255, 205, 86)"]}]}});</script>
                     </div>
                     <!-- /.panel-body -->
                 </div>
                 <!-- /.panel -->
               </div>
-              <div class="col-lg-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Other Chart
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                          <canvas id="chartjs-2" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
-                          <script>new Chart(document.getElementById("chartjs-2"),{"type":"radar","data":{"labels":["Eating","Drinking","Sleeping","Designing","Coding","Cycling","Running"],"datasets":[{"label":"My First Dataset","data":[65,59,90,81,56,55,40],"fill":true,"backgroundColor":"rgba(255, 99, 132, 0.2)","borderColor":"rgb(255, 99, 132)","pointBackgroundColor":"rgb(255, 99, 132)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(255, 99, 132)"},{"label":"My Second Dataset","data":[28,48,40,19,96,27,100],"fill":true,"backgroundColor":"rgba(54, 162, 235, 0.2)","borderColor":"rgb(54, 162, 235)","pointBackgroundColor":"rgb(54, 162, 235)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(54, 162, 235)"}]},"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}});</script>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
 
                 <table class="table">
-                  <thead>
-                  </thead>
+                  <tbody>
+                    <th colspan="2" class="thead-light text-center">Score per Category</th>
+                    <?php foreach ($this->evaluation->getProject()->getTemplate()->getCategories() as $category) { ?>
+                      <tr>
+                        <th width="80%"><?=$category->getName(); ?></th>
+                        <td><?=$this->evaluation->getScoreByCategory($category->getId());?></td>
+                      </tr>
+                  <?php } ?>
+                  <tr>
+                    <th></th>
+                    <td><strong><?=$this->evaluation->getScore();?></strong></td>
+                  </tr>
+                  </tbody>
+                </table>
+
+                <table class="table">
                   <tbody>
                     <th colspan="2" class="thead-light text-center">Global results</th>
                     <tr>
+                      <th width="22%">Evaluations</th>
+                      <td><?=count($this->evaluation->getProject()->getEvaluations());?></td>
+                    </tr>
+                    <tr>
                       <th width="22%">Average Score</th>
-                      <td><?=$this->evaluation->getProject()->getScore();?></td>
+                      <td><?=round($this->evaluation->getProject()->getScore(), 1);?></td>
                     </tr>
                     <tr>
                       <th>Average Usability Percentage</th>
                       <td><big><span class="label label-danger"><?=$this->evaluation->getProject()->getUsabilityPercentage(); ?>%</span></big></td>
                     </tr>
                     <tr>
-                      <th>Finished at:</th>
+                      <th>Finished at</th>
                       <td><?=$this->evaluation->getProject()->getFinishDate();?></td>
                     </tr>
                   </tbody>
@@ -213,31 +218,33 @@
 
                 <div class="col-lg-6">
                   <div class="panel panel-default">
-                      <div class="panel-heading">
-                          Answer Chart
+                      <div class="panel-heading text-center text-bold">
+                          Global Answers
                       </div>
                       <!-- /.panel-heading -->
                       <div class="panel-body">
-                        <canvas id="chartjs-3" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
-                        <script>new Chart(document.getElementById("chartjs-3"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->evaluation->getProject()->getGlobalAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":["rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(255, 205, 86)"]}]}});</script>
+                        <canvas id="chartjs-2" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
+                        <script>new Chart(document.getElementById("chartjs-2"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->evaluation->getProject()->getGlobalAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":["rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(255, 205, 86)"]}]}});</script>
                       </div>
                       <!-- /.panel-body -->
                   </div>
                   <!-- /.panel -->
                 </div>
                 <div class="col-lg-6">
-                      <div class="panel panel-default">
-                          <div class="panel-heading">
-                              Other Chart
-                          </div>
-                          <!-- /.panel-heading -->
-                          <div class="panel-body">
-                            <canvas id="chartjs-4" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
-                            <script>new Chart(document.getElementById("chartjs-4"),{"type":"radar","data":{"labels":["Eating","Drinking","Sleeping","Designing","Coding","Cycling","Running"],"datasets":[{"label":"My First Dataset","data":[65,59,90,81,56,55,40],"fill":true,"backgroundColor":"rgba(255, 99, 132, 0.2)","borderColor":"rgb(255, 99, 132)","pointBackgroundColor":"rgb(255, 99, 132)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(255, 99, 132)"},{"label":"My Second Dataset","data":[28,48,40,19,96,27,100],"fill":true,"backgroundColor":"rgba(54, 162, 235, 0.2)","borderColor":"rgb(54, 162, 235)","pointBackgroundColor":"rgb(54, 162, 235)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(54, 162, 235)"}]},"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}});</script>
-                          </div>
-                          <!-- /.panel-body -->
+                  <div class="panel panel-default">
+                      <div class="panel-heading text-center text-bold">
+                          Global Usability Percentage
                       </div>
-                      <!-- /.panel -->
+                      <!-- /.panel-heading -->
+                      <div class="panel-body">
+                        <canvas id="chartjs-3" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
+                        <script>new Chart(document.getElementById("chartjs-3"),{"type":"radar","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getEvaluations() as $value) { echo "'".$value->getUser()->getName()."',"; } ?>],"datasets":[
+                          {"label":"<?=$this->evaluation->getProject()->getName();?>","data":[<?php foreach ($this->evaluation->getProject()->getEvaluations() as $value) { echo $value->getUsabilityPercentage().","; } ?>],"fill":true,"backgroundColor":"rgba(255, 99, 132, 0.2)","borderColor":"rgb(255, 99, 132)","pointBackgroundColor":"rgb(255, 99, 132)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(255, 99, 132)"}
+                        ]},"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}});</script>
+                      </div>
+                      <!-- /.panel-body -->
+                  </div>
+                  <!-- /.panel -->
                   </div>
             </div>
           </div>

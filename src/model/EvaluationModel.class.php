@@ -63,6 +63,30 @@
       return $score;
     }
 
+    function getUsabilityPercentage() {
+      return round($this->getScore()*100/($this->getProject()->getTemplate()->getMaxAnswerValue()*$this->getQuestionsCount()), 1);
+    }
+
+    function getScoreByCategory($categoryId) {
+      $score = 0;
+      $questions = array();
+      foreach ($this->project->getTemplate()->getCategories() as $category) {
+        if ($category->getId() == $categoryId) {
+          foreach ($category->getQuestions() as $question) {
+            array_push($questions, $question->getId());
+          }
+        }
+      }
+
+      foreach ($this->results as $result) {
+        if (in_array($result->getQuestion()->getId(), $questions)) {
+          $score += $result->getAnswer()->getValue();
+        }
+      }
+
+      return $score;
+    }
+
     function getAnswerValue() {
       $totals = array();
       $qry = "SELECT evaluation_results.id_answer, count(1) AS value FROM ";
