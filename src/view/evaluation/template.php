@@ -31,7 +31,7 @@
         </tr>
         <tr>
           <th>Status:</th>
-          <td><span class="text-success">Open</span></td>
+          <td><span class="label label-success">Open</span> <span class="label label-warning">Finished</span> or <span class="label label-danger">Closed</span></td>
         </tr>
       </tbody>
     </table>
