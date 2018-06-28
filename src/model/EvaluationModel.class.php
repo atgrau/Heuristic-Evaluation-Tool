@@ -52,7 +52,7 @@
     }
 
     function getPercentageDone() {
-      return round($this->getAnsweredQuestionsCount()*100/$this->getQuestionsCount());
+      return round($this->getAnsweredQuestionsCount()*100/$this->getQuestionsCount(), 1);
     }
 
     function getScore() {
@@ -63,25 +63,24 @@
       return $score;
     }
 
-    function getAllAnswerValues() {
-      $values = array();
-      $answers = $this->project->getTemplate()->getAnswers();
-      foreach ($answers as $answer) {
-        $total = 0;
-        foreach ($this->results as $result) {
-          if ($answer->getId() == $result->getAnswer()->getId()) {
-            $total++;
-          }
-        }
-        array_push($values, $total);
+    function getAnswerValue() {
+      $totals = array();
+      $qry = "SELECT evaluation_results.id_answer, count(1) AS value FROM ";
+      $qry .= "evaluations JOIN evaluation_results ON evaluations.ID = evaluation_results.id_evaluation ";
+      $qry .= " WHERE evaluations.ID=%i GROUP BY evaluation_results.id_answer";
+      $qry = DB::query($qry, $this->id);
+      foreach ($qry as $row) {
+        array_push($totals, $row["value"]);
       }
-      return $values;
+      return $totals;
     }
 
     function getEvaluationResultByQuestionId($questionId) {
-      foreach ($this->results as $result) {
-        if ($result->getQuestion()->getId() == $questionId) {
-          return $result;
+      if ($this->results) {
+        foreach ($this->results as $questionResult) {
+          if ($questionResult->getQuestion()->getId() == $questionId) {
+            return $questionResult;
+          }
         }
       }
       return null;

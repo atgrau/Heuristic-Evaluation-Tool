@@ -47,19 +47,19 @@
             <button id="finish" type="button" class="btn btn-warning disabled"><span class="glyphicon glyphicon-ok"></span> Finish</button>
           </div>
           <ul class="nav nav-tabs">
-              <li class="active">
+              <li <?php if ($this->tab != "results") echo "class='active'"; ?>>
                 <a href="#template" data-toggle="tab">Evaluation</a>
               </li>
               <li>
                 <a href="#project" data-toggle="tab">View Project</a>
               </li>
-              <li>
-                <a href="#results" data-toggle="tab">View Results</a>
+              <li <?php if ($this->tab == "results") echo "class='active'"; ?>>
+                <a href="/evaluations/id/<?=$this->evaluation->getProject()->getId();?>?tab=results">View Results</a>
               </li>
           </ul>
           <div class="margin-lg-t"></div>
           <div class="tab-content">
-            <div class="tab-pane fade in active margin-lg-t" id="template">
+            <div class="tab-pane fade in <?php if ($this->tab != "results") echo "active"; ?> margin-lg-t" id="template">
               <div id="percentage" class="progress progress-striped active ">
                 <?php
                   $percentage = $this->evaluation->getPercentageDone();
@@ -129,7 +129,7 @@
               <iframe name="iframe" width="100%" style="min-height:94vh" src="//<?=str_replace("http://", "", $this->evaluation->getProject()->getLink());?>" frameborder="0" allowfullscreen></iframe>
             </div>
 
-            <div class="tab-pane fade in margin-lg-t" id="results" >
+            <div class="tab-pane fade in <?php if ($this->tab == "results") echo "active"; ?> margin-lg-t" id="results">
               <table class="table">
                 <thead>
                 </thead>
@@ -140,12 +140,20 @@
                     <td><?=$this->evaluation->getQuestionsCount();?></td>
                   </tr>
                   <tr>
-                    <th>Total answered Questions:</th>
-                    <td><?=$this->evaluation->getAnsweredQuestionsCount();?></td>
+                    <th>Answered Questions:</th>
+                    <td><?=$this->evaluation->getAnsweredQuestionsCount();?> <big>(<?=round($this->evaluation->getAnsweredQuestionsCount()/$this->evaluation->getQuestionsCount()*100, 1);?>%)</big></td>
+                  </tr>
+                  <tr>
+                    <th>Not answered Questions:</th>
+                    <td><?=$this->evaluation->getQuestionsCount()-$this->evaluation->getAnsweredQuestionsCount();?></td>
                   </tr>
                   <tr>
                     <th>Score</th>
                     <td><?=$this->evaluation->getScore();?></td>
+                  </tr>
+                  <tr>
+                    <th>Usability Percentage</th>
+                    <td><big><span class="label label-danger"><?=round($this->evaluation->getScore()*100/($this->evaluation->getProject()->getTemplate()->getMaxAnswerValue()*$this->evaluation->getQuestionsCount()), 1); ?>%</span></big></td>
                   </tr>
                   <tr>
                     <th>Finished at:</th>
@@ -162,7 +170,7 @@
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                       <canvas id="chartjs-1" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
-                      <script>new Chart(document.getElementById("chartjs-1"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->evaluation->getAllAnswerValues() as $value) { echo "'".$value."',"; } ?>],"backgroundColor":["rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(255, 205, 86)"]}]}});</script>
+                      <script>new Chart(document.getElementById("chartjs-1"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->evaluation->getAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":["rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(255, 205, 86)"]}]}});</script>
                     </div>
                     <!-- /.panel-body -->
                 </div>
@@ -187,14 +195,14 @@
                   <thead>
                   </thead>
                   <tbody>
-                    <th colspan="3" class="thead-light text-center">Global results</th>
+                    <th colspan="2" class="thead-light text-center">Global results</th>
                     <tr>
-                      <th width="20%">Total Questions:</th>
-                      <td>80</td>
+                      <th width="22%">Average Score</th>
+                      <td><?=$this->evaluation->getProject()->getScore();?></td>
                     </tr>
                     <tr>
-                      <th>Average Score</th>
-                      <td>65</td>
+                      <th>Average Usability Percentage</th>
+                      <td><big><span class="label label-danger"><?=$this->evaluation->getProject()->getUsabilityPercentage(); ?>%</span></big></td>
                     </tr>
                     <tr>
                       <th>Finished at:</th>
@@ -211,7 +219,7 @@
                       <!-- /.panel-heading -->
                       <div class="panel-body">
                         <canvas id="chartjs-3" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
-                        <script>new Chart(document.getElementById("chartjs-3"),{"type":"doughnut","data":{"labels":["Red","Blue","Yellow"],"datasets":[{"label":"My First Dataset","data":[300,50,100],"backgroundColor":["rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(255, 205, 86)"]}]}});</script>
+                        <script>new Chart(document.getElementById("chartjs-3"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->evaluation->getProject()->getGlobalAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":["rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(255, 205, 86)"]}]}});</script>
                       </div>
                       <!-- /.panel-body -->
                   </div>
@@ -220,12 +228,12 @@
                 <div class="col-lg-6">
                       <div class="panel panel-default">
                           <div class="panel-heading">
-                              Answer Chart
+                              Other Chart
                           </div>
                           <!-- /.panel-heading -->
                           <div class="panel-body">
                             <canvas id="chartjs-4" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
-                            <script>new Chart(document.getElementById("chartjs-4"),{"type":"doughnut","data":{"labels":["Red","Blue","Yellow"],"datasets":[{"label":"My First Dataset","data":[300,50,100],"backgroundColor":["rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(255, 205, 86)"]}]}});</script>
+                            <script>new Chart(document.getElementById("chartjs-4"),{"type":"radar","data":{"labels":["Eating","Drinking","Sleeping","Designing","Coding","Cycling","Running"],"datasets":[{"label":"My First Dataset","data":[65,59,90,81,56,55,40],"fill":true,"backgroundColor":"rgba(255, 99, 132, 0.2)","borderColor":"rgb(255, 99, 132)","pointBackgroundColor":"rgb(255, 99, 132)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(255, 99, 132)"},{"label":"My Second Dataset","data":[28,48,40,19,96,27,100],"fill":true,"backgroundColor":"rgba(54, 162, 235, 0.2)","borderColor":"rgb(54, 162, 235)","pointBackgroundColor":"rgb(54, 162, 235)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(54, 162, 235)"}]},"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}});</script>
                           </div>
                           <!-- /.panel-body -->
                       </div>
@@ -284,5 +292,12 @@
   }
   $("#topButton").click(function(){
     $("html, body").animate({ scrollTop: 0 }, "slow");
+  });
+
+  // AutoScroll
+  $(document).ready(function(){
+    $('html, body').animate({
+        scrollTop: $("#results").offset().top
+    }, 500);
   });
 </script>

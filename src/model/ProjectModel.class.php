@@ -113,6 +113,45 @@
       $this->template = $value;
     }
 
+    function getGlobalAnswerValue() {
+      $totals = array();
+      $qry = "SELECT evaluation_results.id_answer, count(1) AS value FROM ";
+      $qry .= "evaluations JOIN evaluation_results ON evaluations.ID = evaluation_results.id_evaluation ";
+      $qry .= " WHERE evaluations.id_project=%i GROUP BY evaluation_results.id_answer";
+      $qry = DB::query($qry, $this->id);
+      foreach ($qry as $row) {
+        array_push($totals, $row["value"]);
+      }
+      return $totals;
+    }
+
+    function getScore() {
+      $totalScore = 0;
+      foreach ($this->getEvaluations() as $evaluation) {
+        $totalScore = $totalScore + $evaluation->getScore();
+        $i++;
+      }
+      return ($totalScore/$i);
+    }
+
+    function getUsabilityPercentage() {
+      $total = 0;
+      foreach ($this->getEvaluations() as $evaluation) {
+        $total += $evaluation->getScore()*100/($this->template->getMaxAnswerValue()*$evaluation->getQuestionsCount());
+        $i++;
+      }
+      return round($total/$i, 1);
+    }
+
+    function getEvaluations() {
+      $evaluations = array();
+      $qry = DB::query("SELECT ID FROM evaluations WHERE id_project=%i", $this->id);
+      foreach ($qry as $row) {
+        array_push($evaluations, getEvaluationById($row["ID"]));
+      }
+      return $evaluations;
+    }
+
     function canReassignTemplate() {
       DB::query("SELECT id_project FROM evaluations WHERE id_project=%i", $this->id);
       return (DB::count() == 0);
