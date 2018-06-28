@@ -16,6 +16,7 @@
         $this->evaluation = new Evaluation(0, getProjectById($projectId), $GLOBALS["USER_SESSION"], null);
         $this->evaluation->insert();
       }
+      $this->tab = $_GET["tab"];
       $this->setContentView("evaluation/template");
       $this->render();
     }

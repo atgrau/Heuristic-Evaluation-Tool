@@ -43,6 +43,19 @@
       return $this->answers;
     }
 
+    function getMaxAnswerValue() {
+      if ($this->answers) {
+        foreach ($this->answers as $answer) {
+          if ($answer->getValue() > $max) {
+            $max = $answer->getValue();
+          }
+        }
+      } else {
+        return 1;
+      }
+      return $max;
+    }
+
     function insert() {
       $template = DB::insert('templates', array(
         "name" => $this->name,

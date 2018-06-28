@@ -50,6 +50,10 @@ thead {
   color: #2e6da4;
 }
 
+.text-bold {
+  font-weight: bold;
+}
+
 .right {
   float: right;
 }
