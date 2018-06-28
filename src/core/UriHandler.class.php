@@ -21,6 +21,7 @@
       "/evaluations" => 0,
       "/evaluations/id" => 0,
       "/evaluation/update" => 0,
+      "/evaluation/finish" => 0,
       "/template/setCategory" => 0,
       "/my-projects" => 1,
       "/my-projects/new" => 1,
@@ -114,6 +115,9 @@
       } else if ($this->uri == "/evaluation/update") {
         $controller = new EvaluationController();
         $controller->update();
+      } else if ($this->uri == "/evaluation/finish") {
+        $controller = new EvaluationController();
+        $controller->finish();
       } else if ($this->uri == "/my-projects") {
         $controller = new ProjectController();
         $controller->showProjectList(false);

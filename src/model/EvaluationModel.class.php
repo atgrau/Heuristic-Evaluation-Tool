@@ -134,6 +134,11 @@
 
     function update() {
       // Update results... (EvaluationResult)
+
+      DB::update('evaluations', array(
+        "finished" => $this->finished
+      ), "ID=%i", $this->id);
+
       DB::delete('evaluation_results', "id_evaluation=%i", $this->id);
 
       foreach ($this->results as $result) {
