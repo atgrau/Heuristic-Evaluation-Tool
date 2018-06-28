@@ -41,8 +41,12 @@
         }
     }
 
-    function setCategory(){
-
+    function removeCategory(){
+      $category-> getCategorybyId($_POST["idCategory"] , $_POST["idTemplate"]);
+      if($category->remove())
+      {
+        $this->succesRemoveCategory = true;
+      }
     }
 
 

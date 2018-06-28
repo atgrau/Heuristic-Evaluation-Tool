@@ -39,7 +39,7 @@
       "/admin/user-remove" => 2,
       "/admin/project-remove" => 2,
       "/admin/templates" => 2,
-      "/admin/set-category" => 2,
+      "/template/category-remove" => 2,
       "/admin/importcsv" => 2,
       "/admin/template-remove" => 2,
 
@@ -181,9 +181,9 @@
       } else if ($this->uri == "/admin/template-remove") {
         $controller = new TemplateController();
         $controller->removeTemplate(true);
-      } else if ($this->uri == "/template/setCategory") {
+      } else if ($this->uri == "/template/category-remove") {
         $controller = new TemplateController();
-        $controller->setCategory();
+        $controller->removeCategory();
       } else if ($this->uri == "/admin/importcsv") {
         $controller = new ImportCSVController();
         $controller->newImport();
