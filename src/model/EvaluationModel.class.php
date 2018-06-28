@@ -8,13 +8,15 @@
     private $id;
     private $project;
     private $user;
+    private $finished;
     private $results = array();
 
-    function __construct($id, $project, $user, $results)
+    function __construct($id, $project, $user, $finished, $results)
     {
       $this->id = $id;
       $this->project = $project;
       $this->user = $user;
+      $this->finished = $finished;
       $this->results = $results;
     }
 
@@ -28,6 +30,18 @@
 
     function getUser() {
       return $this->user;
+    }
+
+    function isFinished() {
+      return $this->finished;
+    }
+
+    function setFinished($value) {
+      $this->finished = $value;
+    }
+
+    function isFinishedOrClosed() {
+      return (($this->finished) || ($this->project->isClosed()));
     }
 
     function getResults() {
@@ -196,7 +210,7 @@
           array_push($arrResults, $evaluationResult);
         }
       }
-      return new Evaluation($evaluation["ID"], $project, $user, $arrResults);
+      return new Evaluation($evaluation["ID"], $project, $user, boolval($evaluation["finished"]), $arrResults);
     } else {
       return null;
     }

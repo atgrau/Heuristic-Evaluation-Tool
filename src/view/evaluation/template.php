@@ -26,12 +26,23 @@
           <td><a href="<?=$this->evaluation->getProject()->getLink();?>" target="_blank" title="Link to <?=$this->evaluation->getProject()->getLink();?>"><?=$this->evaluation->getProject()->getLink();?></a></td>
         </tr>
         <tr>
-          <th>Ending Date:</th>
-          <td><?=$this->evaluation->getProject()->getFinishDate();?></td>
+          <th>Ending at:</th>
+          <?php
+            if (($daysLeft = $this->evaluation->getProject()->getDaysLeft()) == 0) $daysLeft = "some hours"; elseif ($daysLeft < 0) $daysLeft = "0 days"; else $daysLeft = $daysLeft." days";
+          ?>
+          <td><?=$this->evaluation->getProject()->getFinishDate();?> (<?=$daysLeft;?> left)</td>
         </tr>
         <tr>
           <th>Status:</th>
-          <td><span class="label label-success">Open</span> <span class="label label-warning">Finished</span> or <span class="label label-danger">Closed</span></td>
+          <td>
+            <?php if ((!$this->evaluation->getProject()->isClosed()) && ($this->evaluation->isFinished())): ?>
+              <span class="label label-warning">Finished</span>
+            <?php elseif (!$this->evaluation->getProject()->isClosed()): ?>
+              <span class="label label-success">Open</span>
+            <?php else: ?>
+              <span class="label label-danger">Closed</span>
+            <?php endif; ?>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -42,9 +53,8 @@
           <div class="right">
             <a class="btn btn-default" id="hideButton" href="#"><span class="glyphicon glyphicon-eye-close"></span> Hide Sidebar</a>
             <a style="display:none" class="btn btn-default" id="showButton" href="#"><span class="glyphicon glyphicon-eye-open"></span> Show Sidebar</a>
-            <button id="save" type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
-            <a href="/evaluations" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Cancel</a>
-            <button id="finish" type="button" class="btn btn-warning disabled"><span class="glyphicon glyphicon-ok"></span> Finish</button>
+            <button <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?> id="save" type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+            <button id="finish" type="button" class="btn btn-warning" <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?>><span class="glyphicon glyphicon-ok"></span> Finish</button>
           </div>
           <ul class="nav nav-tabs">
               <li <?php if ($this->tab != "results") echo "class='active'"; ?>>
@@ -93,7 +103,7 @@
                           <td width="50%"><?=$question->getName(); ?></td>
                           <td width="20%">
                             <div class="form-group">
-                              <select name="answer_<?=$question->getId();?>" class="form-control" onChange="$('#save').click()">
+                              <select <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?> name="answer_<?=$question->getId();?>" class="form-control" onChange="$('#save').click()">
                                 <option value="">Select...</option>
                                 <?php
                                   foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $answer) {
@@ -110,7 +120,7 @@
                           </td>
                           <td width="30%">
                             <div class="form-group">
-                              <textarea onfocusout="$('#save').click()" name="comment_<?=$question->getId();?>" class="form-control"><?php
+                              <textarea <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?> onfocusout="$('#save').click()" name="comment_<?=$question->getId();?>" class="form-control"><?php
                                   if ($result) {
                                     echo $result->getComment();
                                   }
