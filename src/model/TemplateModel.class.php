@@ -97,6 +97,7 @@
               DB::insert('questionsbytemplate', array(
                 "idTemplate" => $this->id,
                 "idQuestion" => $row["ID"],
+                "idCategory" => $row["id_category"],
               ));
             }
         }
