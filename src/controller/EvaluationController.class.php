@@ -54,13 +54,23 @@
 
       // Percentage
       $percentage = $evaluation->getPercentageDone();
-      if ($percentage < 10) $style = "danger";
-      elseif (($percentage >= 10) && ($percentage < 100)) $style = "warning";
-      else $style = "success";
+      if ($percentage < 10) {
+        $style = "danger";
+        $active = "active";
+        $state = $percentage.'%';
+      } elseif (($percentage >= 10) && ($percentage < 100)) {
+        $style = "warning";
+        $active = "active";
+        $state = $percentage.'%';
+      } else {
+        $style = "success";
+        $active = "";
+        $state = 'Evaluation Completed';
+      }
       echo
-      '<div id="percentageResult" class="progress progress-striped active">
-          <div class="progress-bar progress-bar-'.$style.'" role="progressbar" aria-valuenow="<?=$percentage;?>" aria-valuemin="0" aria-valuemax="100" style="width:'.$percentage.'%">
-              <strong><small><span style="color:#333">'.$percentage.'%</span></small></strong>
+      '<div id="percentageResult" class="progress progress-striped '.$active.'">
+          <div class="progress-bar progress-bar-'.$style.'" role="progressbar" aria-valuenow="'.$percentage.'" aria-valuemin="0" aria-valuemax="100" style="width:'.$percentage.'%">
+              <strong><small><span style="color:#333">'.$state.'</span></small></strong>
           </div>
       </div>';
 
@@ -78,19 +88,20 @@
       $evaluation = getEvaluationById($_POST["id_evaluation"]);
 
       if ((!$evaluation) || ($evaluation->isFinishedOrClosed()) || ($GLOBALS["USER_SESSION"] != $evaluation->getUser())) {
-        $this->finishMessage = '<div id="result_finish" class="alert alert-danger fade in" role="alert">
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <span class="glyphicon glyphicon-remove"></span> This evaluation is already finished or closed, it cannot be modified.
-        </div>';
+        $style = "danger";
+        $this->finishMessage = '<span class="glyphicon glyphicon-remove"></span> This evaluation is already finished or closed, it cannot be modified.';
+      } elseif (!$evaluation->allQuestionsAnswered()) {
+        $style = "danger";
+        $this->finishMessage = '<span class="glyphicon glyphicon-remove"></span> This evaluation is not completed. Please, answer all questions in order to finish.';
       } else {
-        $this->finishMessage = '<div id="result_finish" class="alert alert-info fade in" role="alert">
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <span class="glyphicon glyphicon-ok"></span> Evaluation has been finished.
-        </div>';
+        $style = "info";
+        $this->finishMessage = '<span class="glyphicon glyphicon-info-sign"></span> Evaluation has been finished.';
 
         $evaluation->setFinished(true);
         $evaluation->update();
       }
+      $this->finishMessage = '<div id="result_finish" class="alert alert-'.$style.' fade in" role="alert">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'.$this->finishMessage.'</div>';
       $this->showEvaluationTemplate($evaluation->getProject()->getId());
     }
 

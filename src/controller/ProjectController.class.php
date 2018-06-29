@@ -101,8 +101,13 @@
         $project->setName($_POST["name"]);
         $project->setDescription($_POST["description"]);
         $project->setLink($_POST["link"]);
+        $project->setFinishDate(new DateTime($_POST["finish_date"]));
         $originalTemplateId = $project->getTemplate()->getId();
-        $project->setTemplate(getTemplateById($_POST["template"]));
+        $newTemplate = getTemplateById($_POST["template"]);
+        if ($newTemplate) {
+          $project->setTemplate($newTemplate);
+        }
+
 
         if ($adminView) {
           $project->setActive($_POST["active"]=="1");
@@ -188,6 +193,18 @@
             $this->updateProjectView($adminView, $project->getId());
           }
 
+      }
+    }
+
+    function viewResults($projectId) {
+      $project = getProjectById($projectId);
+
+      if (!$project) {
+        $this->showProjectList($_GET["admin"] == "1");
+      }
+
+      foreach ($project->getEvaluations() as $evaluation) {
+        echo $evaluation->getUser()->getName();
       }
     }
 

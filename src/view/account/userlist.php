@@ -27,7 +27,7 @@ return '<!-- Modal -->
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <strong class="text-danger">Import csv file</strong>
+        <strong>Import CSV File</strong>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -55,7 +55,7 @@ return '<!-- Modal -->
 <!-- /.row -->
 <div class="row margin-lg-b">
   <a href="/admin/new-user" title="Add new User" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add new user</a>
-  <a href="#"  title="Import csv file" class="btn btn-primary" data-toggle="modal" data-target="#importcsv_modal"><span id="importcsv_modal" class="glyphicon glyphicon-plus"></span> Import csv file</a>
+  <a href="#"  title="Import CSV File" class="btn btn-primary" data-toggle="modal" data-target="#importcsv_modal"><span id="importcsv_modal" class="glyphicon glyphicon-cloud-upload"></span> Import CSV File</a>
 
 </div>
 

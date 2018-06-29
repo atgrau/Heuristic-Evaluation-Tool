@@ -24,6 +24,12 @@
     <link href="/dist/css/sb-admin-2.css" rel="stylesheet">
     <link href="/dist/css/custom.css" rel="stylesheet">
 
+    <!-- Datepicker UI CSS -->
+    <link rel="stylesheet" href="/dist/css/jquery-ui.min.css">
+
+    <!-- Datepicker UI Theme CSS -->
+    <link rel="stylesheet" href="/dist/css/jquery-ui.theme.min.css">
+
     <!-- Custom Fonts -->
     <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
@@ -36,4 +42,6 @@
 
     <link rel="shortcut icon" href="/dist/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/dist/favicon.ico" type="image/x-icon">
+
+    <?php include("JQuery.inc.php"); ?>
 </head>

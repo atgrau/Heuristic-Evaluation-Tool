@@ -1,5 +1,4 @@
 <?php include("head.inc.php"); ?>
-<?php include("JQuery.inc.php"); ?>
 <body>
     <div id="wrapper">
         <?php include("nav.inc.php"); ?>

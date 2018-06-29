@@ -81,6 +81,10 @@
       return round($this->getScore()*100/($this->getProject()->getTemplate()->getMaxAnswerValue()*$this->getQuestionsCount()), 1);
     }
 
+    function allQuestionsAnswered() {
+      return ($this->getQuestionsCount() == $this->getAnsweredQuestionsCount());
+    }
+
     function getScoreByCategory($categoryId) {
       $score = 0;
       $questions = array();

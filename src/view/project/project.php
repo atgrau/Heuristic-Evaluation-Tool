@@ -17,6 +17,12 @@
     $link = $this->project->getLink();
   }
 
+  if ($_POST["finish_date"]) {
+    $finishDate = $_POST["finish_date"];
+  } elseif ($this->project) {
+    $finishDate = $this->project->getFinishDate();
+  }
+
   if ($_POST["template"]) {
     $templateId = $_POST["template"];
   } elseif ($this->project) {
@@ -76,8 +82,8 @@
               </div>
               <div class="form-group">
                 <label for="name">Evaluation ending date:</label>
-                <div class="input-group date" id="finishDate">
-                    <input id="finishDate" name="finish_date" type="text" class="form-control" />
+                <div class="input-group date">
+                    <input id="finishDate" name="finish_date" type="text" class="form-control" value="<?=$finishDate?>" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -85,7 +91,7 @@
               </div>
               <div class="form-group">
                 <label for="template">Template:</label>
-                <select name="template" id="template" class="form-control">
+                <select name="template" id="template" class="form-control" <?php if (($this->project) && (count($this->project->getEvaluations()) > 0)) echo "disabled"; ?>>
                   <?php
                     foreach ($this->templateList as $template) { ?>
                     <option value="<?=$template->getId();?>" <?php if($templateId == $template->getId()) echo "selected"; ?>><?=$template->getName();?></option>
@@ -119,6 +125,11 @@
                 <?php infoModal("infoModal", "Send and e-mail reminder", "Checking this option, it will be send an e-mail reminder with the newer project information to the all assigned users."); ?>
                 <label class="form-check-label" for="email">Send an e-mail reminder</label> <a href="#" title="Send a notification to all users with project's information." class="text-blue" data-toggle="modal" data-target="#infoModal"><span class="glyphicon glyphicon-info-sign"></span></a>
               </div>
+              <?php if (($this->project) && (count($this->project->getEvaluations()) > 0)): ?>
+                <div class="alert alert-warning" role="alert">
+                  <span class="glyphicon glyphicon-info-sign"></span> <strong>Please note:</strong> If you modify this project, current evaluations may be affected.
+                </div>
+              <?php endif; ?>
               <button type="submit" class="btn btn-success margin-r"><span class="glyphicon glyphicon-floppy-disk"></span> Save Project</button>
               <?php if ($this->adminView): ?>
                 <a href="/admin/projects" class="btn btn-danger">Cancel</a>
@@ -131,8 +142,17 @@
     </div>
 </div>
 <!-- /.row -->
+
 <script>
-    $(function () {
-        $("#finishDate").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+  $(document).ready(function(){
+    $('#finishDate').datepicker({ dateFormat: 'yy-mm-dd' });
+
+    $('#finishDate').focus(function(){
+        $('#finishDate').datepicker('show');
     });
+
+    $('#finishDate').click(function(){
+        $('#finishDate').datepicker('show');
+    });
+  });
 </script>

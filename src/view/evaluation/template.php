@@ -1,3 +1,30 @@
+<div class="modal fade" id="finishModal" tabindex="-1" role="dialog" aria-labelledby="finishModal_label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <strong>Finish Evaluation</strong>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure about finishing this Evaluation?<br /><br />
+        <strong>Please note:</strong> If you finish it, you cannot be able to modify again.
+      </div>
+      <div class="modal-footer">
+        <form action="/evaluation/finish" method="POST">
+          <div class="right">
+              <input type="hidden" name="id_evaluation" value="<?=$this->evaluation->getId();?>" />
+              <button id="finish" type="submit" class="btn btn-warning" <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?>><span class="glyphicon glyphicon-ok"></span> Finish</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
 <button id="topButton" title="Go to top"><span class="glyphicon glyphicon-menu-up"></span></button>
   <div class="row">
       <div class="col-lg-12">
@@ -50,15 +77,13 @@
     <div class="col-lg">
         <!-- /.panel-heading -->
         <div class="panel-body">
-          <form action="/evaluation/finish" method="POST">
-            <div class="right">
+          <div class="right">
               <a class="btn btn-default" id="hideButton" href="#"><span class="glyphicon glyphicon-eye-close"></span> Hide Sidebar</a>
               <a style="display:none" class="btn btn-default" id="showButton" href="#"><span class="glyphicon glyphicon-eye-open"></span> Show Sidebar</a>
               <button <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?> id="save" type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
-                <input type="hidden" name="id_evaluation" value="<?=$this->evaluation->getId();?>" />
-                <button id="finish" type="submit" class="btn btn-warning" <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?>><span class="glyphicon glyphicon-ok"></span> Finish</button>
-            </div>
-          </form>
+              <input type="hidden" name="id_evaluation" value="<?=$this->evaluation->getId();?>" />
+              <button id="finish" type="button" class="btn btn-warning" <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?> data-toggle="modal" data-target="#finishModal"><span class="glyphicon glyphicon-ok"></span> Finish</button>
+          </div>
           <ul class="nav nav-tabs">
               <li <?php if ($this->tab != "results") echo "class='active'"; ?>>
                 <a href="#template" data-toggle="tab">Evaluation</a>
@@ -73,15 +98,19 @@
           <div class="margin-lg-t"></div>
           <div class="tab-content">
             <div class="tab-pane fade in <?php if ($this->tab != "results") echo "active"; ?> margin-lg-t" id="template">
-              <div id="percentage" class="progress progress-striped active ">
-                <?php
-                  $percentage = $this->evaluation->getPercentageDone();
-                  if ($percentage < 10) $style = "danger";
-                  elseif (($percentage >= 10) && ($percentage < 100)) $style = "warning";
-                  else $style = "success";
-                ?>
+              <?php
+                $percentage = $this->evaluation->getPercentageDone();
+                if ($percentage < 10) $style = "danger";
+                elseif (($percentage >= 10) && ($percentage < 100)) $style = "warning";
+                else $style = "success";
+              ?>
+              <div id="percentage" class="progress progress-striped <?php if ($percentage < 100) echo "active";?>">
                   <div class="progress-bar progress-bar-<?=$style;?>" role="progressbar" aria-valuenow="<?=$percentage;?>" aria-valuemin="0" aria-valuemax="100" style="width:<?=$percentage;?>%">
-                      <strong><small><span style="color:#333"><?=$percentage;?>%</span></small></strong>
+                      <?php if ($percentage < 100): ?>
+                        <strong><small><span style="color:#333"><?=$percentage;?>%</span></small></strong>
+                      <?php else: ?>
+                        <strong><small><span style="color:#333">Evaluation Completed</span></small></strong>
+                      <?php endif; ?>
                   </div>
               </div>
               <?=$this->finishMessage; ?>
@@ -148,7 +177,7 @@
               <div class="col-lg-6">
                 <table class="table">
                   <tbody>
-                    <th colspan="2" class="thead-light text-center">My own results</th>
+                    <th colspan="2" class="thead-light text-center">My Results</th>
                     <tr>
                       <th>Total Questions</th>
                       <td><?=$this->evaluation->getQuestionsCount();?></td>
@@ -167,7 +196,16 @@
                     </tr>
                     <tr>
                       <th>Usability Percentage</th>
-                      <td><big><span class="label label-danger"><?=$this->evaluation->getUsabilityPercentage();?>%</span></big></td>
+                      <?php
+                        $usabilityPercentage = $this->evaluation->getUsabilityPercentage();
+                        if ($usabilityPercentage < 35)
+                          $style = "danger";
+                        elseif (($usabilityPercentage >= 35) && ($usabilityPercentage < 70))
+                          $style = "warning";
+                        else
+                          $style = "success";
+                      ?>
+                      <td><big><span class="label label-<?=$style;?>"><?=$this->evaluation->getUsabilityPercentage();?>%</span></big></td>
                     </tr>
                     <tr>
                       <th>Ending at</th>
@@ -180,7 +218,7 @@
               <div class="col-lg-6">
                 <div class="panel panel-default">
                     <div class="panel-heading text-center text-bold">
-                        Answers
+                        My Answers
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
@@ -220,8 +258,17 @@
                       <td><?=round($this->evaluation->getProject()->getScore(), 1);?></td>
                     </tr>
                     <tr>
+                      <?php
+                        $usabilityPercentage = $this->evaluation->getProject()->getUsabilityPercentage();
+                        if ($usabilityPercentage < 35)
+                          $style = "danger";
+                        elseif (($usabilityPercentage >= 35) && ($usabilityPercentage < 70))
+                          $style = "warning";
+                        else
+                          $style = "success";
+                      ?>
                       <th>Average Usability Percentage</th>
-                      <td><big><span class="label label-danger"><?=$this->evaluation->getProject()->getUsabilityPercentage(); ?>%</span></big></td>
+                      <td><big><span class="label label-<?=$style;?>"><?=$usabilityPercentage;?>%</span></big></td>
                     </tr>
                   </tbody>
                 </table>
