@@ -53,17 +53,27 @@ return '<!-- Modal -->
 
             <div class="modal-body">
               <div class="form-group">
-                    <label for="category">Category Name:</label>
-                    <input name="categoryName" type="text" class="form-control" placeholder="Category name" />
-                    <input name="templateId" type="hidden" class="form-control" value=<?= $this->template->getId(); ?>/>
+                <label for="category">Category Name:</label>
+                <input name="categoryName" type="text" class="form-control" placeholder="Category name" />
+                <input name="idTemplate" type="hidden" class="form-control" value=<?= $this->template->getId(); ?>/>
               </div>
             </div>
-              <!--<div class="modal-body">
-                <div class="form-group">
-                  <label for="question">Questions :</label>
-                  <input name="question" type="text" class="form-control" id="question" placeholder="Insert question....." value="">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="question">Questions :</label>
+                <input name="question" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+                <?php
+                    function createInputQuestion()
+                    {?>
+                      <input name="question" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+                  <?php }
+
+                ?>
+                <div class="input-group-prepend" style="float:left"></br>
+                  <button class="btn btn-outline-secondary" >+</button>
                 </div>
-              </div>-->
+              </div></br>
+            </div></br>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
@@ -146,7 +156,7 @@ return '<!-- Modal -->
                                                 <td width="70%"><?= $question->getName(); ?></td>
                                                 <?php if ($this->editTemplate):?>
                                                 <td width="10%">
-                                                    <span class="glyphicon glyphicon-remove"></span></a><br>
+                                                    <a href="/template/question-remove/<?= $question->getId()?>?del=<?=$this->template->getId();?>" title="Remove question" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
                                                 </td>
                                                 <?php endif; ?>
                                               </tr>
@@ -155,8 +165,13 @@ return '<!-- Modal -->
                                     </table>
 
                                     <?php if ($this->editTemplate): ?>
-                                      <input name="question" type="text" class="form-control" id="question" placeholder="Insert question..." value="" >
-                                    <!--  <a data-toggle="modal" data-target="#newCategoryModal" href="#" title="Add new question" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add new question</a>-->
+                                      <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Insert question">
+                                        <div class="input-group-append">
+                                          <button class="btn btn-outline-secondary" type="button">+</button>
+                                        </div>
+                                      </div>
+
                                     <?php endif; ?>
                           <?php } ?>
 
@@ -227,7 +242,3 @@ return '<!-- Modal -->
     </div>
 </div>
 <!-- /.row -->
-
-<script>
-
-</script>

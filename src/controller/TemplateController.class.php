@@ -52,12 +52,19 @@
           $this->error = "The category's name is empty";
       }
       $category = new Category(0, $_POST["categoryName"],0, null);
-      $category->setTemplateId($_POST["templateId"]);
+      $category->setTemplateId($_POST["idTemplate"]);
       $category-> insert();
       if($category){
         $this->showTemplateView(true, $category->getTemplateId(), 1);
       }
 
+    }
+
+    function removeQuestion($idQuestion, $idTemplate){
+      $question = getQuestionbyId($idQuestion);
+      $question->setTemplateId($idTemplate);
+      $question->remove();
+      $this->showTemplateView(true, $question->getTemplateId(), 1);
     }
 
 
@@ -89,6 +96,8 @@
       $this->showTemplateList($adminView);
 
     }
+
+
 
   }
 

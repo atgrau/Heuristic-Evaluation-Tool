@@ -42,8 +42,10 @@
       "/admin/templates" => 2,
       "/template/category-remove" => 2,
       "/template/category-new" => 2,
+      "/template/question-remove" => 2,
       "/admin/importcsv" => 2,
       "/admin/template-remove" => 2,
+
 
     );
 
@@ -192,6 +194,12 @@
       } else if ($this->uri == "/template/category-new") {
         $controller = new TemplateController();
         $controller->newCategory();
+      } else if ($this->uri == "/template/question-remove") {
+        $controller = new TemplateController();
+        $controller->removeQuestion($_GET["param"], $_GET["del"]);
+      } else if ($this->uri == "/template/question-new") {
+        $controller = new TemplateController();
+        $controller->newQuestion();
       } else if ($this->uri == "/admin/importcsv") {
         $controller = new ImportCSVController();
         $controller->newImport();

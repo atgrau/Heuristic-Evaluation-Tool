@@ -1,7 +1,7 @@
 <?php
-function generateModal($templateId) {
+function generateModal($template) {
 return '<!-- Modal -->
-<div class="modal fade" id="deletingModal_'.$templateId.'" tabindex="-1" role="dialog" aria-labelledby="deletingModalLabel" aria-hidden="true">
+<div class="modal fade" id="deletingModal_'.$template->getId().'" tabindex="-1" role="dialog" aria-labelledby="deletingModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -11,11 +11,11 @@ return '<!-- Modal -->
         </button>
       </div>
       <div class="modal-body">
-        <h4>Project <strong>#'.$templateId.'</strong> and all related relations <span class="bg-danger">will be removed too</span>.<br /><br />Are you sure?</h4>
+        <h4>Template <strong>'.$template->getName().'</strong> and all related relations <span class="bg-danger">will be removed too</span>.<br /><br />Are you sure?</h4>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <a href="/admin/template-remove/'.$templateId.'" type="button" class="btn btn-danger">Delete Project</a>
+        <a href="/admin/template-remove/'.$template->getId().'" type="button" class="btn btn-danger">Delete Project</a>
       </div>
     </div>
   </div>
@@ -93,16 +93,14 @@ return '<!-- Modal -->
       if (!empty($this->templateList)):
       foreach ($this->templateList as $template) { ?>
           <tr>
-            <?= generateModal($template->getId()); ?>
-            <th scope="row"><?= $template->getId(); ?></th>
-            <td><?= $template->getName(); ?></td>
+            <?= generateModal($template); ?>
+            <th scope="row"><?=$template->getId(); ?></th>
+            <td><a href="/admin/templates/<?= $template->getId(); ?>?edit=0" title="<?= $template->getName(); ?> "><?= $template->getName(); ?></a> </td>
             <td><input type="checkbox" value=<?=$template->isActive()?>
                   <?php if($template->isActive()== 1): ?>
                     checked
                   <?php endif;?>></td>
             <td>
-              <a href="/admin/templates/<?= $template->getId(); ?>?edit=0" title="See template"><span class="glyphicon glyphicon-eye-open"></span></a>
-              <span class="margin-l"></span>
               <?php
               if ($template->getId() != 1):?>
                 <a href="/admin/templates/<?= $template->getId(); ?>?edit=1" title="Edit template"><span class="glyphicon glyphicon-pencil"></span></a>
