@@ -119,12 +119,13 @@ return '<!-- Modal -->
             <div class="tab-content">
                 <div class="tab-pane fade in <?php echo $active0; ?>" id="categories">
                         <?php if ($this->editTemplate): ?>
-                          <div class="form-group margin-r margin-rg-t">
+                          <div class="form-group margin-r margin-rg-t"></br>
                             <a data-toggle="modal" data-target="#newCategoryModal" href="#" title="Add new Category" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add new category</a>
                           </div>
                         <?php endif; ?>
 
                           <?php
+                              if(!empty($this->template->getCategories())):
                                 foreach ($this->template->getCategories() as $category) { ?>
                                     <table class="table">
                                       <tbody>
@@ -157,7 +158,19 @@ return '<!-- Modal -->
                                       <input name="question" type="text" class="form-control" id="question" placeholder="Insert question..." value="" >
                                     <!--  <a data-toggle="modal" data-target="#newCategoryModal" href="#" title="Add new question" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add new question</a>-->
                                     <?php endif; ?>
-                          <?php }  ?>
+                          <?php } ?>
+
+                          <?php else:?>
+                            <div class="container">
+                              <div class="alert alert-info" role="alert">
+                                  <h4 class="alert-heading">Empty template!</h4>
+                                  <p>You can create new categories </p>
+                                  <hr>
+                                  <p class="mb-0">Enter each category more questions and don't forget add your answer in next tab</p>
+                              </div>
+                            </div>
+                        <?php  ?>
+                      <?php endif;?>
                         </form>
                 </div>
 
@@ -206,7 +219,7 @@ return '<!-- Modal -->
                               </tbody>
                           </table>
                       <?php endif ?>
-          
+
                 </div>
             </div>
         </div>
