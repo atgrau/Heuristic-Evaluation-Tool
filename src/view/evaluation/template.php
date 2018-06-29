@@ -50,12 +50,15 @@
     <div class="col-lg">
         <!-- /.panel-heading -->
         <div class="panel-body">
-          <div class="right">
-            <a class="btn btn-default" id="hideButton" href="#"><span class="glyphicon glyphicon-eye-close"></span> Hide Sidebar</a>
-            <a style="display:none" class="btn btn-default" id="showButton" href="#"><span class="glyphicon glyphicon-eye-open"></span> Show Sidebar</a>
-            <button <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?> id="save" type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
-            <button id="finish" type="button" class="btn btn-warning" <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?>><span class="glyphicon glyphicon-ok"></span> Finish</button>
-          </div>
+          <form action="/evaluation/finish" method="POST">
+            <div class="right">
+              <a class="btn btn-default" id="hideButton" href="#"><span class="glyphicon glyphicon-eye-close"></span> Hide Sidebar</a>
+              <a style="display:none" class="btn btn-default" id="showButton" href="#"><span class="glyphicon glyphicon-eye-open"></span> Show Sidebar</a>
+              <button <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?> id="save" type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                <input type="hidden" name="id_evaluation" value="<?=$this->evaluation->getId();?>" />
+                <button id="finish" type="submit" class="btn btn-warning" <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?>><span class="glyphicon glyphicon-ok"></span> Finish</button>
+            </div>
+          </form>
           <ul class="nav nav-tabs">
               <li <?php if ($this->tab != "results") echo "class='active'"; ?>>
                 <a href="#template" data-toggle="tab">Evaluation</a>
@@ -81,6 +84,7 @@
                       <strong><small><span style="color:#333"><?=$percentage;?>%</span></small></strong>
                   </div>
               </div>
+              <?=$this->finishMessage; ?>
               <div id="result"></div>
               <form id="evaluation_form">
                 <input name="id_evaluation" type="hidden" value="<?=$this->evaluation->getId();?>">
@@ -166,7 +170,7 @@
                       <td><big><span class="label label-danger"><?=$this->evaluation->getUsabilityPercentage();?>%</span></big></td>
                     </tr>
                     <tr>
-                      <th>Finished at</th>
+                      <th>Ending at</th>
                       <td><?=$this->evaluation->getProject()->getFinishDate();?></td>
                     </tr>
                   </tbody>
@@ -218,10 +222,6 @@
                     <tr>
                       <th>Average Usability Percentage</th>
                       <td><big><span class="label label-danger"><?=$this->evaluation->getProject()->getUsabilityPercentage(); ?>%</span></big></td>
-                    </tr>
-                    <tr>
-                      <th>Finished at</th>
-                      <td><?=$this->evaluation->getProject()->getFinishDate();?></td>
                     </tr>
                   </tbody>
                 </table>
@@ -293,6 +293,7 @@
           $("#result").show();
           $("#result").html(msg);
           $("#percentage").hide("fast");
+          $("#result_finish").hide("fast");
           $("#resultMessage").delay(3000).hide("blind");
         }
     });

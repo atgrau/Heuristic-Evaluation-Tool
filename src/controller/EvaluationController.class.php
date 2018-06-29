@@ -29,7 +29,7 @@
         echo
         '<div id="result" class="alert alert-danger fade in" role="alert">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <span class="glyphicon glyphicon-remove"></span> This evaluation is already closed, it cannot be modified.
+          <span class="glyphicon glyphicon-remove"></span> This evaluation is already finished or closed, it cannot be modified.
         </div>';
         exit;
       }
@@ -71,6 +71,27 @@
         <span class="glyphicon glyphicon-ok"></span> Your changes have been saved successfully!
       </div>';
       exit;
+    }
+
+    function finish() {
+      // Check if exists the relationship
+      $evaluation = getEvaluationById($_POST["id_evaluation"]);
+
+      if ((!$evaluation) || ($evaluation->isFinishedOrClosed()) || ($GLOBALS["USER_SESSION"] != $evaluation->getUser())) {
+        $this->finishMessage = '<div id="result_finish" class="alert alert-danger fade in" role="alert">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <span class="glyphicon glyphicon-remove"></span> This evaluation is already finished or closed, it cannot be modified.
+        </div>';
+      } else {
+        $this->finishMessage = '<div id="result_finish" class="alert alert-info fade in" role="alert">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <span class="glyphicon glyphicon-ok"></span> Evaluation has been finished.
+        </div>';
+
+        $evaluation->setFinished(true);
+        $evaluation->update();
+      }
+      $this->showEvaluationTemplate($evaluation->getProject()->getId());
     }
 
   }
