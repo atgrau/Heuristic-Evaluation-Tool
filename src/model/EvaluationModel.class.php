@@ -73,7 +73,9 @@
     function getScore() {
       $score = 0;
       foreach ($this->results as $result) {
-        $score = $score + $result->getAnswer()->getValue();
+        if ($result->getAnswer()->isScorable()) {
+          $score = $score + $result->getAnswer()->getValue();
+        }
       }
       return $score;
     }

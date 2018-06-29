@@ -285,6 +285,10 @@ class Answer
       return $this->value;
     }
 
+    function isScorable() {
+      return ($this->getValue() >= 0);
+    }
+
     function isOriginal()
     {
       return $this->original;
