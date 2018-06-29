@@ -194,7 +194,7 @@
 
     function update() {
       DB::update('projects', array(
-        "finish_date" => date('Y-m-d H:i:s', $this->finishDate),
+        "finish_date" => $this->finishDate,
         "name" => $this->name,
         "description" => $this->description,
         "link" => $this->link,

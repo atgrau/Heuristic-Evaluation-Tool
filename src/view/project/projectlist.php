@@ -137,9 +137,12 @@ function generateModal($project, $admin) {
             <td><?= $project->getCreationDate(); ?></td>
             <?php if ($this->edit): ?>
               <td>
+                <a href="/projects/results/<?= $project->getId(); ?><?php if ($this->admin) echo "?admin=1"; ?>" title="View Results"><span class="glyphicon glyphicon-eye-open"></span></a>
                 <?php if ($this->admin): ?>
+                  <span class="margin-l"></span>
                   <a href="/admin/projects/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil"></span></a>
                 <?php else: ?>
+                  <span class="margin-l"></span>
                   <a href="/my-projects/edit/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil"></span></a>
                 <?php endif; ?>
                 <span class="margin-l"></span>

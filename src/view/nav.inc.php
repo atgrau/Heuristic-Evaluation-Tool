@@ -42,7 +42,7 @@
                               <strong><?php if (strlen($project->getName()) > 22) { echo substr($project->getName(), 0, 22)."..."; } else { echo $project->getName(); } ?></strong>
                               <span class="pull-right text-muted"><?=$percentage;?>% completed</span>
                           </p>
-                          <div class="progress progress-striped active">
+                          <div class="progress progress-striped <?php if ($percentage < 100) echo "active";?>">
                               <div class="progress-bar progress-bar-<?=$style;?>" role="progressbar" aria-valuenow="<?=$percentage;?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$percentage;?>%">
                                   <span class="sr-only"><?=$percentage;?>% Completado</span>
                               </div>

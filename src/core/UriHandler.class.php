@@ -29,6 +29,7 @@
       "/my-projects/add" => 1,
       "/my-projects/update" => 1,
       "/my-projects/remove" => 1,
+      "/projects/results" => 1,
       "/templates/edit" => 1,
       "/templates/new" => 1,
       "/admin/projects" => 2,
@@ -145,6 +146,13 @@
           $controller->showProjectList(true);
         } else {
           $controller->updateProjectView(true, $_GET["param"]);
+        }
+      } else if ($this->uri == "/projects/results") {
+        $controller = new ProjectController();
+        if (empty($_GET["param"])) {
+          $controller->showProjectList($_GET["admin"] == "1");
+        } else {
+          $controller->viewResults($_GET["param"]);
         }
       } else if ($this->uri == "/admin/project-update") {
         $controller = new ProjectController();
