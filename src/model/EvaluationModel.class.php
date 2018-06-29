@@ -62,7 +62,8 @@
     }
 
     function getAnsweredQuestionsCount() {
-      return count($this->results);
+      if ($this->results) return count($this->results);
+      else return 0;
     }
 
     function getPercentageDone() {
@@ -153,6 +154,11 @@
           "comment" => $result->getComment()
         ));
       }
+    }
+
+    function delete() {
+      DB::delete('evaluation_results', "id_evaluation=%i", $this->id);
+      DB::delete('evaluations', "ID=%i", $this->id);
     }
   }
 

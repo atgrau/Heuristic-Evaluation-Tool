@@ -99,6 +99,19 @@
 
         $evaluation->setFinished(true);
         $evaluation->update();
+
+        // Send and Email to the Project Manager
+        $user = $evaluation->getProject()->getUser();
+
+        $subject = "Results for ".$evaluation->getProject()->getName();
+        $body = "Hello <strong>".$user->getName()."</strong>, <br /><br />";
+        $body .= "<strong>".$evaluation->getUser()->getName()."</strong> has been finished his evaluation of your project called <strong>".$evaluation->getProject()->getName()."</strong>, ";
+        $body .= "the <strong>usability percentage</strong> is: <strong>".$evaluation->getUsabilityPercentage()."%</strong>";
+        $body .= "<br />You can see all detailed results here: <br />";
+        $body .= "<a href='".URL."projects/results/".$evaluation->getProject()->getId()."'>".URL."projects/results/".$evaluation->getProject()->getId()."</a><br /><br />";
+
+        $email = new Email($user->getEmail(), $subject, $body);
+        $email->send();
       }
       $this->finishMessage = '<div id="result_finish" class="alert alert-'.$style.' fade in" role="alert">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'.$this->finishMessage.'</div>';

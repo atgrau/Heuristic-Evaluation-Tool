@@ -83,7 +83,7 @@
               <div class="form-group">
                 <label for="name">Evaluation ending date:</label>
                 <div class="input-group date">
-                    <input id="finishDate" name="finish_date" type="text" class="form-control" value="<?=$finishDate?>" />
+                    <input id="finishDate" autocomplete="off" name="finish_date" type="text" class="form-control" value="<?=$finishDate?>" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -127,7 +127,7 @@
               </div>
               <?php if (($this->project) && (count($this->project->getEvaluations()) > 0)): ?>
                 <div class="alert alert-warning" role="alert">
-                  <span class="glyphicon glyphicon-info-sign"></span> <strong>Please note:</strong> If you modify this project, current evaluations may be affected.
+                  <span class="glyphicon glyphicon-info-sign"></span> <strong>Please note:</strong> Modifying this project, current evaluations may be affected.
                 </div>
               <?php endif; ?>
               <button type="submit" class="btn btn-success margin-r"><span class="glyphicon glyphicon-floppy-disk"></span> Save Project</button>

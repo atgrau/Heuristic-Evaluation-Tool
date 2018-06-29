@@ -27,7 +27,11 @@ A web application that allows to perform an heuristic evaluation of the interfac
 - [x] Forgot password
 - [x] Start a new Evaluation
 - [x] Finish an Evaluation
+- [x] Send an Email to project manager when an evaluation is finished
+- [ ] Update finish date when creating a project
+- [ ] View results of an Evaluation as a Project Manager
 - [ ] View results of an own Evaluation
+- [ ] Unscored answers
 - [ ] Evaluation Results View
 
 ## Entities Model

@@ -50,6 +50,7 @@
       // Validate Project
       $this->validateProject($project, 0, false);
 
+      //$project->setFinishDate(new DateTime($_POST["finish_date"]));
       // Insert into database
       $project->insert();
 
@@ -57,14 +58,14 @@
         foreach ($project->getUsers() as $user) {
           // Send Email to the users
           $subject = "You have been assigned to a new project";
-          $body = "Hello <b>".$user->getName()."</b>, <br /><br />";
+          $body = "Hello <strong>".$user->getName()."</strong>, <br /><br />";
           $body .= "You have been assigned to a new project:<br />";
           $body .= "<ul>";
           $body .= "<li><strong>Name:</strong> ".$project->getName()."</li>";
           $body .= "<li><strong>Description:</strong> ".$project->getDescription()."</li>";
           $body .= "<li><strong>Link:</strong> ".$project->getLink()."</li>";
           $body .= "</ul>";
-          $body .= "<br />You can evaluate the project here:<br /><a href='".URL."projects/evaluation/".$project->getId()."'>".URL."projects/evaluation/".$project->getId()."</a><br /><br />";
+          $body .= "<br />You can evaluate the project here:<br /><a href='".URL."evaluations/id/".$project->getId()."'>".URL."projects/evaluation/".$project->getId()."</a><br /><br />";
 
           $email = new Email($user->getEmail(), $subject, $body);
           $email->send();
@@ -131,14 +132,14 @@
           foreach ($project->getUsers() as $user) {
             // Send Email to the users
             $subject = "A project that you have been assigned in was modified";
-            $body = "Hello <b>".$user->getName()."</b>, <br /><br />";
+            $body = "Hello <strong>".$user->getName()."</strong>, <br /><br />";
             $body .= "You are assigned in a project which has been modified, check the newer information:<br />";
             $body .= "<ul>";
             $body .= "<li><strong>Name:</strong> ".$project->getName()."</li>";
             $body .= "<li><strong>Description:</strong> ".$project->getDescription()."</li>";
             $body .= "<li><strong>Link:</strong> ".$project->getLink()."</li>";
             $body .= "</ul>";
-            $body .= "<br />You can evaluate the project here:<br /><a href='".URL."projects/evaluation/".$project->getId()."'>".URL."projects/evaluation/".$project->getId()."</a><br /><br />";
+            $body .= "<br />You can evaluate the project here:<br /><a href='".URL."evaluations/id/".$project->getId()."'>".URL."projects/evaluation/".$project->getId()."</a><br /><br />";
 
             $email = new Email($user->getEmail(), $subject, $body);
             $email->send();
@@ -215,7 +216,10 @@
         $this->showProjectList($adminView);
       }
 
-      // Check user dependencies
+      // Delete all evaluations
+      foreach ($project->getEvaluations() as $evaluation) {
+        $evaluation->delete();
+      }
 
 
       // Delete Project
