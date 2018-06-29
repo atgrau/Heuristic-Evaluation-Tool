@@ -207,10 +207,6 @@
                       ?>
                       <td><big><span class="label label-<?=$style;?>"><?=$this->evaluation->getUsabilityPercentage();?>%</span></big></td>
                     </tr>
-                    <tr>
-                      <th>Ending at</th>
-                      <td><?=$this->evaluation->getProject()->getFinishDate();?></td>
-                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -252,6 +248,10 @@
                     <tr>
                       <th width="22%">Evaluations</th>
                       <td><?=count($this->evaluation->getProject()->getEvaluations());?></td>
+                    </tr>
+                    <tr>
+                      <th width="22%">Finished Evaluations</th>
+                      <td><?=count($this->evaluation->getProject()->getFinishedEvaluations());?></td>
                     </tr>
                     <tr>
                       <th width="22%">Average Score</th>

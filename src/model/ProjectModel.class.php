@@ -163,6 +163,15 @@
       return $evaluations;
     }
 
+    function getFinishedEvaluations() {
+      $evaluations = array();
+      $qry = DB::query("SELECT ID FROM evaluations WHERE id_project=%i AND finished=1", $this->id);
+      foreach ($qry as $row) {
+        array_push($evaluations, getEvaluationById($row["ID"]));
+      }
+      return $evaluations;
+    }
+
     function canReassignTemplate() {
       DB::query("SELECT id_project FROM evaluations WHERE id_project=%i", $this->id);
       return (DB::count() == 0);
