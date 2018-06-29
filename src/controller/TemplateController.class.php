@@ -29,32 +29,42 @@
           $this->render();
         }
     }
-
+/*
     function updateTemplateView($adminView, $templateId, $edit) {
       $template = getTemplateById($templateId);
 
         if ((!$template) || ((!$GLOBALS["USER_SESSION"]->isAdmin()) && ($GLOBALS["USER_SESSION"]->getId() != $template->getUser()->getId()))) {
             $this->showTemplateList($adminView);
         } else {
-
           $this->render();
         }
     }
-
+*/
     function removeCategory(){
 
       $category = getCategorybyId($_POST["idTemplate"], $_POST["idCategory"]);
-      if($category->remove())
-      {
-        $this->succesRemoveCategory = true;
+      $category->remove();
+      $this->showTemplateView(true, $category->getTemplateId(), 1);
+    }
+
+    function newCategory(){
+      if (empty($_POST["categoryName"])) {
+          $this->error = "The category's name is empty";
       }
+      $category = new Category(0, $_POST["categoryName"],0, null);
+      $category->setTemplateId($_POST["templateId"]);
+      $category-> insert();
+      if($category){
+        $this->showTemplateView(true, $category->getTemplateId(), 1);
+      }
+
     }
 
 
     function addNewTemplateView(){
 
       if ((empty($_POST["name"])) || (existTemplatebyName($_POST["name"]))) {
-          $this->error = "error";
+          $this->error = "The template's name is empty or already exists";
           $this->showTemplateList(true);
       } else {
           $template = new Template(0, $_POST["name"],0,null,null);
@@ -77,6 +87,7 @@
       $template->delete();
       $this->removeMessage = true;
       $this->showTemplateList($adminView);
+
     }
 
   }

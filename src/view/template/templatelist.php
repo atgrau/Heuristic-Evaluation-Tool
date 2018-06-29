@@ -60,8 +60,8 @@ return '<!-- Modal -->
 <?php endif; ?>
 
 <?php if ($this->error): ?>
-  <div class="row alert alert-info" role="alert">
-   <span class="glyphicon glyphicon-info-sign"></span> <?=$this->error; ?>
+  <div class="row alert alert-danger" role="alert">
+   <span class="glyphicon glyphicon-remove"></span> <?=$this->error; ?>
   </div>
 <?php endif; ?>
 <form action="" method="GET">

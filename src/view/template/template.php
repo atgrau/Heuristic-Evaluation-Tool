@@ -21,9 +21,12 @@ return '<!-- Modal -->
   </div>
 </div>';
 }
+
+
 ?>
 <div class="row">
-<form class="margin margin-lg-t" method="POST" action="/templates/edit">
+
+
   <div class="row">
       <div class="col-lg-12">
         <?php if (!$this->editTemplate): ?>
@@ -40,28 +43,32 @@ return '<!-- Modal -->
 <div class="modal fade" id="newCategoryModal" tabindex="-1" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <strong>New  Category </strong>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="category">Category Name:</label>
-            <input name="category" type="text" class="form-control" id="category" placeholder="Category name" value="">
-          </div>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="question">Questions :</label>
-            <input name="question" type="text" class="form-control" id="question" placeholder="Insert question....." value="">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
-        </div>
+      <form action="/template/category-new/" method="POST">
+            <div class="modal-header">
+              <strong>New  Category </strong>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+              <div class="form-group">
+                    <label for="category">Category Name:</label>
+                    <input name="categoryName" type="text" class="form-control" placeholder="Category name" />
+                    <input name="templateId" type="hidden" class="form-control" value=<?= $this->template->getId(); ?>/>
+              </div>
+            </div>
+              <!--<div class="modal-body">
+                <div class="form-group">
+                  <label for="question">Questions :</label>
+                  <input name="question" type="text" class="form-control" id="question" placeholder="Insert question....." value="">
+                </div>
+              </div>-->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+              </div>
+      </form>
     </div>
   </div>
 </div>
@@ -128,7 +135,7 @@ return '<!-- Modal -->
                                               <form action="/template/category-remove/" method="POST">
                                                 <input name="idTemplate" type="hidden" class="form-control"  value="<?= $this->template->getId()?>"/>
                                                 <input name="idCategory" type="hidden" class="form-control"  value="<?= $category->getId()?>"/>
-                                                <button type="submit" class="btn btn-danger"> Remove category</button>
+                                                <button type="submit" class="btn btn-danger">Remove category</button>
                                               </form>
                                             </td>
                                           <?php endif; ?>
@@ -158,27 +165,48 @@ return '<!-- Modal -->
                 <div class="tab-pane fade in <?php echo $active1 ; ?>" id="answers">
                   <form class="margin margin-lg-t" method="POST" action="">
                     <div class="form-group">
-                    <?php foreach ($this->template->getAnswers() as $answer) { ?>
                           <table class="table">
-                            <tbody>
-                              <tr>
-                                <td width="70%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"> <?= $answer->getName();?></td>
-                                <td width="20%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"> <?= $answer->getValue();?></td>
-                                <?php if ($this->editTemplate):?>
-                                <td width="10%">
-                                    <span class="glyphicon glyphicon-remove"></span></a><br>
-                                </td>
-                                <?php endif; ?>
-                              </tr>
-                            </tbody>
+                              <thead class="thead-light">
+                                <tr>
+                                  <th scope="col">Answer's name</th>
+                                  <th scope="col">Value</th>
+                                  <th scope="col">Colour</th>
+                                  <th scope="col"></th>
+                                </tr>
+                              </thread>
+                              <tbody>
+                                <?php foreach ($this->template->getAnswers() as $answer) { ?>
+                                <tr>
+                                  <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"> <?= $answer->getName();?></td>
+                                  <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"> <?= $answer->getValue();?></td>
+                                  <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"></td>
+                                  <?php if ($this->editTemplate):?>
+                                  <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd">
+                                      <span class="glyphicon glyphicon-remove"></span></a><br>
+                                  </td>
+                                  <?php endif; ?>
+                                </tr>
+                                  <?php } ?>
+                              </tbody>
                           </table>
-                        <?php } ?>
+
                     </div>
                     <br />
                       <?php if ($this->editTemplate): ?>
-                        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                          <table class="table">
+                              <tbody>
+                                  <tr>
+                                      <td width="10%">
+                                          <input name="answer" type="text" class="form-control" id="answer" placeholder="Insert answer..." value="" ></td>
+                                      <td width="10%" >
+                                        <input name="value" type="text" class="form-control" id="value" placeholder="Insert value..." value="" ></td>
+                                      <td width="10%" >
+                                        <input name="colour" type="text" class="form-control" id="answer" placeholder="Choose colour..." value="" ></td>
+                                  </tr>
+                              </tbody>
+                          </table>
                       <?php endif ?>
-                  </form>
+          
                 </div>
             </div>
         </div>
@@ -188,17 +216,5 @@ return '<!-- Modal -->
 <!-- /.row -->
 
 <script>
-// Save Button
-$("#save").click(function(){
-  $.ajax({
-      type:'POST',
-      url:'/template/update',
-      data:$('#evaluation_form').serialize(),
-      success:function(msg){
-        $("#result").fadeIn("slow");
-        $("#result").html(msg);
-        $("#result").delay(2000).fadeOut("slow");
-      }
-  });
-});
+
 </script>

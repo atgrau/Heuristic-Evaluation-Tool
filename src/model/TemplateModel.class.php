@@ -160,13 +160,38 @@ class Category
       return $this->original;
     }
 
+    function insert()
+    {
+      $category = DB::insert('template_categories', array(
+        "name" => $this->name,
+        "original" => false,
+      ));
+
+      $this->id = DB::insertId();
+        
+      if($category){
+        DB::insert('categoriesbytemplate', array(
+          "idTemplate" => $this->templateId,
+          "idCategory" => $this->id,
+        ));
+
+      }
+
+    }
+
     function remove()
     {
 
-      DB::delete('categoriesbytemplate', "idTemplate=%i", "idCategory=%i", $templateId, $this->id);
+      $whereCategorybyTemplate = new WhereClause('and');
+      $whereCategorybyTemplate->add('idTemplate=%i', $this->getTemplateId());
+      $whereCategorybyTemplate->add('idCategory=%i', $this->getId());
+      DB::delete('categoriesbytemplate', '%li', $whereCategorybyTemplate);
 
       foreach ($this->getQuestions() as $question) {
-        DB::delete('questionsbytemplate', "idTemplate=%i","idQuestion=%i", $templateId, $question->getId());
+        $whereQuestionbyTemplate = new WhereClause('and');
+        $whereQuestionbyTemplate->add('idTemplate=%i', $this->getTemplateId());
+        $whereQuestionbyTemplate->add('idQuestion=%i', $question->getId());
+        DB::delete('questionsbytemplate', '%li', $whereQuestionbyTemplate);
 
         if(!$question->isOriginal()){
             DB::delete('template_questions', "ID=%i", $question->getId());
@@ -313,13 +338,14 @@ class Answer
 
   function getCategorybyId($templateId, $categoryId)
   {
-    $qry =  "SELECT tc.ID, tc.name, tc.original  FROM categoriesbytemplate a JOIN template_categories tc ON a.idCategory = tc.ID WHERE a.idCategory=%i AND a.idTemplate=%i";
-    $category = DB::query($qry, $templateId, $categoryId);
+    $where = new WhereClause('and');
+    $where->add('idCategory=%i', $categoryId);
+    $where->add('idTemplate=%i', $templateId);
 
-    $categoryList = array();
+    $qryCategory = DB::queryFirstRow("SELECT tc.ID, tc.name, tc.original  FROM categoriesbytemplate a JOIN template_categories tc ON a.idCategory=tc.ID WHERE %li", $where);
 
-    if ($category) {
-        $questions = DB::query("SELECT ID, question, original FROM template_questions WHERE id_category=%i", $category["ID"]);
+    if ($qryCategory) {
+        $questions = DB::query("SELECT ID, question, original FROM template_questions WHERE id_category=%i", $qryCategory["ID"]);
         $questionList = array();
 
         if($questions)
@@ -329,9 +355,11 @@ class Answer
           }
         }
 
-        array_push($categoryList, new Category($row["ID"], $row["name"], $row["original"], $questionList));
+      $category = new Category($qryCategory["ID"], $qryCategory["name"], $qryCategory["original"], $questionList);
 
-      return $categoryList;
+      $category->setTemplateId($templateId);
+
+      return $category;
     } else {
       return null;
     }
