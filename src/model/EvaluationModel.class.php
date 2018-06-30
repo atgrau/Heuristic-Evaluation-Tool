@@ -116,7 +116,9 @@
 
       foreach ($this->results as $result) {
         if (in_array($result->getQuestion()->getId(), $questions)) {
-          $score += $result->getAnswer()->getValue();
+          if ($result->getAnswer()->isScorable()) {
+            $score += $result->getAnswer()->getValue();
+          }
         }
       }
 
