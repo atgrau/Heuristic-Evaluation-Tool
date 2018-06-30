@@ -77,20 +77,13 @@
               <strong><small><span style="color:#333">'.$state.'</span></small></strong>
           </div>
       </div>';
-
-      // Feedback
-      /*echo
-      '<div id="resultMessage" class="alert alert-info fade in" role="alert">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <span class="glyphicon glyphicon-ok"></span> Your changes have been saved successfully!
-      </div>';*/
     }
 
     function finish() {
       if ($_SERVER["REQUEST_METHOD"] != "POST") {
         header("Location: /evaluations");
       }
-      
+
       // Check if exists the relationship
       $evaluation = getEvaluationById($_POST["id_evaluation"]);
 
@@ -114,7 +107,7 @@
         $body = "Hello <strong>".$user->getName()."</strong>, <br /><br />";
         $body .= "<strong>".$evaluation->getUser()->getName()."</strong> has been finished his evaluation of your project called <strong>".$evaluation->getProject()->getName()."</strong>, ";
         $body .= "the <strong>usability percentage</strong> is: <strong>".$evaluation->getUsabilityPercentage()."%</strong>";
-        $body .= "<br />You can see all detailed results here: <br />";
+        $body .= "<br /><br />You can see all detailed results here: <br />";
         $body .= "<a href='".URL."projects/results/".$evaluation->getProject()->getId()."'>".URL."projects/results/".$evaluation->getProject()->getId()."</a><br /><br />";
 
         $email = new Email($user->getEmail(), $subject, $body);
