@@ -148,7 +148,7 @@
     function getUsabilityPercentage() {
       $total = 0;
       foreach ($this->getEvaluations() as $evaluation) {
-        $total += $evaluation->getScore()*100/($this->template->getMaxAnswerValue()*$evaluation->getQuestionsCount());
+        $total += $evaluation->getUsabilityPercentage();
         $i++;
       }
       return round($total/$i, 1);

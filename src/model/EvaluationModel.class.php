@@ -66,6 +66,21 @@
       else return 0;
     }
 
+    function getAnsweredScorableQuestionsCount() {
+      $total = 0;
+      if ($this->results) {
+        foreach ($this->results as $result) {
+          if ($result->getAnswer()->isScorable()) {
+            $total++;
+          }
+        }
+      } else {
+        $total = 0;
+      }
+
+      return $total;
+    }
+
     function getPercentageDone() {
       return round($this->getAnsweredQuestionsCount()*100/$this->getQuestionsCount(), 1);
     }
@@ -81,7 +96,7 @@
     }
 
     function getUsabilityPercentage() {
-      return round($this->getScore()*100/($this->getProject()->getTemplate()->getMaxAnswerValue()*$this->getQuestionsCount()), 1);
+      return round($this->getScore()*100/($this->getProject()->getTemplate()->getMaxAnswerValue()*$this->getAnsweredScorableQuestionsCount()), 1);
     }
 
     function allQuestionsAnswered() {
