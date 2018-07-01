@@ -84,7 +84,7 @@
                 <label for="name">Evaluation ending date:</label>
                 <div class="input-group date">
                     <input id="finishDate" autocomplete="off" name="finish_date" type="text" class="form-control" value="<?=$finishDate?>" />
-                    <span class="input-group-addon">
+                    <span id="finishDateIcon" style="cursor:pointer;" class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
@@ -98,6 +98,11 @@
                   <?php } ?>
                 </select>
               </div>
+              <?php if (($this->project) && (count($this->project->getEvaluations()) > 0)): ?>
+              <div class="alert alert-warning" role="alert">
+                <span class="glyphicon glyphicon-info-sign"></span> Is not possible to modify template, due to some evaluations have started.
+              </div>
+              <?php endif; ?>
               <?php if ($this->adminView): ?>
                 <div class="form-group">
                   <input value="1" name="active" type="checkbox" class="form-check-input" id="active" <?php if ($this->project->isActive()) echo 'checked="checked"'; ?>>
@@ -152,6 +157,10 @@
     });
 
     $('#finishDate').click(function(){
+        $('#finishDate').datepicker('show');
+    });
+
+    $('#finishDateIcon').click(function(){
         $('#finishDate').datepicker('show');
     });
   });

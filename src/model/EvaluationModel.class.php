@@ -96,7 +96,9 @@
     }
 
     function getUsabilityPercentage() {
-      return round($this->getScore()*100/($this->getProject()->getTemplate()->getMaxAnswerValue()*$this->getAnsweredScorableQuestionsCount()), 1);
+      $val = $this->getProject()->getTemplate()->getMaxAnswerValue()*$this->getAnsweredScorableQuestionsCount();
+      if ($val > 0) return round($this->getScore()*100/($val), 1);
+      else return 0;
     }
 
     function allQuestionsAnswered() {
@@ -158,7 +160,6 @@
 
     function update() {
       // Update results... (EvaluationResult)
-
       DB::update('evaluations', array(
         "finished" => $this->finished
       ), "ID=%i", $this->id);

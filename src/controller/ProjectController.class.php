@@ -38,7 +38,13 @@
         header("Location: /my-projects");
       }
 
-      $project = new Project(0, $GLOBALS["USER_SESSION"]->getId(), null, null, $_POST["name"], $_POST["description"], $_POST["link"], false, getTemplateById($_POST["template"]));
+      try {
+        $date = new DateTime($_POST["finish_date"]);
+      }  catch (Exception $e) {
+        $date = new DateTime(now());
+      }
+
+      $project = new Project(0, $GLOBALS["USER_SESSION"]->getId(), null, $date, $_POST["name"], $_POST["description"], $_POST["link"], false, getTemplateById($_POST["template"]));
       $users = array();
       if ($_POST["users"]):
         foreach ($_POST["users"] as $user) {
@@ -50,7 +56,6 @@
       // Validate Project
       $this->validateProject($project, 0, false);
 
-      //$project->setFinishDate(new DateTime($_POST["finish_date"]));
       // Insert into database
       $project->insert();
 
@@ -102,13 +107,14 @@
         $project->setName($_POST["name"]);
         $project->setDescription($_POST["description"]);
         $project->setLink($_POST["link"]);
-        $project->setFinishDate(new DateTime($_POST["finish_date"]));
+        try {
+          $project->setFinishDate(new DateTime($_POST["finish_date"]));
+        } catch (Exception $e) { }
         $originalTemplateId = $project->getTemplate()->getId();
         $newTemplate = getTemplateById($_POST["template"]);
         if ($newTemplate) {
           $project->setTemplate($newTemplate);
         }
-
 
         if ($adminView) {
           $project->setActive($_POST["active"]=="1");
@@ -120,6 +126,8 @@
             array_push($users, getUserById($user));
           }
           $project->setUsers($users);
+        else:
+          $project->setUsers(array());          
         endif;
 
         // Validate Project
@@ -204,8 +212,12 @@
         $this->showProjectList($_GET["admin"] == "1");
       }
 
+      if ($project->getUser() != $GLOBALS["USER_SESSION"]) {
+        $this->showProjectList($_GET["admin"] == "1");
+      }
+
       foreach ($project->getEvaluations() as $evaluation) {
-        echo $evaluation->getUser()->getName();
+        echo "<a href='/evaluations/result/".$evaluation->getId()."'>Evaluation of ".$evaluation->getUser()->getName()."</a>";
       }
     }
 

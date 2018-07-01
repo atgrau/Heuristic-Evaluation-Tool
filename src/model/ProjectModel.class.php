@@ -181,7 +181,7 @@
       DB::insert('projects', array(
         "id_user" => $this->user->getId(),
         "creation_date" => date('Y-m-d H:i:s', time()),
-        "finish_date" => date('Y-m-d H:i:s', $this->finishDate),
+        "finish_date" => $this->finishDate,
         "name" => $this->name,
         "description" => $this->description,
         "link" => $this->link,

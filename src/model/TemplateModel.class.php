@@ -262,12 +262,14 @@ class Answer
     private $id;
     private $answer;
     private $value;
+    private $color;
 
-    function __construct($id, $answer, $value, $original)
+    function __construct($id, $answer, $value, $color, $original)
     {
       $this->id = $id;
       $this->answer = $answer;
       $this->value = $value;
+      $this->color = $color;
       $this->original = $original;
     }
 
@@ -283,6 +285,14 @@ class Answer
     function getValue()
     {
       return $this->value;
+    }
+
+    function getColor() {
+      return $this->color;
+    }
+
+    function setColor($value) {
+      $this->color = $value;
     }
 
     function isScorable() {
@@ -331,13 +341,13 @@ class Answer
 
   function getAnswersbyTemplate($templateId)
   {
-    $qry = "SELECT ta.ID, ta.answer, ta.value, ta.original  FROM answersbytemplate a JOIN template_answers ta ON a.idAnswer = ta.ID WHERE a.idTemplate=%i";
+    $qry = "SELECT ta.ID, ta.answer, ta.value, ta.color, ta.original  FROM answersbytemplate a JOIN template_answers ta ON a.idAnswer = ta.ID WHERE a.idTemplate=%i";
     $answers = DB::query($qry,$templateId);
     $answerList = array();
 
     if ($answers) {
       foreach ($answers as $row) {
-        array_push($answerList, new Answer($row["ID"], $row["answer"], $row["value"], $row["original"]));
+        array_push($answerList, new Answer($row["ID"], $row["answer"], $row["value"], $row["color"], $row["original"]));
       }
       return $answerList;
     } else {
@@ -347,10 +357,10 @@ class Answer
 
   function getAnswerbyId($answerId)
   {
-    $qry = "SELECT ID, answer, value, original  FROM template_answers WHERE ID=%i";
+    $qry = "SELECT ID, answer, value, color, original  FROM template_answers WHERE ID=%i";
     $answer = DB::queryFirstRow($qry,$answerId);
     if ($answer) {
-      return new Answer($answer["ID"], $answer["answer"], $answer["value"], $answer["original"]);
+      return new Answer($answer["ID"], $answer["answer"], $answer["value"], $answer["color"], $answer["original"]);
     } else {
       return null;
     }

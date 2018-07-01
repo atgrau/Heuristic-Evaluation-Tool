@@ -11,6 +11,10 @@
       }
 
       $this->evaluation = getEvaluationByProjectAndUser($projectId, $GLOBALS["USER_SESSION"]->getId());
+      if ((!$this->evaluation) || (!$this->evaluation->getProject()->isActive())) {
+        header("Location: /evaluations");
+      }
+
       // If evaluation is not created yet, lets create it.
       if (!$this->evaluation) {
         $this->evaluation = new Evaluation(0, getProjectById($projectId), $GLOBALS["USER_SESSION"], false, null);
@@ -18,6 +22,17 @@
       }
       $this->tab = $_GET["tab"];
       $this->setContentView("evaluation/template");
+      $this->render();
+    }
+
+    function showEvaluationResults($evaluationId) {
+      // Check if exists the relationship
+      $this->evaluation = getEvaluationById($evaluationId);
+      if ((!$this->evaluation) || ($this->evaluation->getProject()->getUser() != $GLOBALS["USER_SESSION"])) {
+        header("Location: /my-projects");
+      }
+
+      $this->setContentView("evaluation/static_template");
       $this->render();
     }
 
@@ -76,6 +91,12 @@
           <div class="progress-bar progress-bar-'.$style.'" role="progressbar" aria-valuenow="'.$percentage.'" aria-valuemin="0" aria-valuemax="100" style="width:'.$percentage.'%">
               <strong><small><span style="color:#333">'.$state.'</span></small></strong>
           </div>
+      </div>';
+
+      echo
+      '<div id="resultMessage" class="alert alert-info fade in" role="alert">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <span class="glyphicon glyphicon-ok"></span> Your changes have been saved successfully!
       </div>';
     }
 
