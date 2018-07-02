@@ -97,7 +97,6 @@
               DB::insert('questionsbytemplate', array(
                 "idTemplate" => $this->id,
                 "idQuestion" => $row["ID"],
-                "idCategory" => $row["id_category"],
               ));
             }
         }
@@ -171,18 +170,30 @@ class Category
       $this->id = DB::insertId();
 
       if($category){
+
+        foreach ($this->getQuestions() as $row) {
+          $question = DB::insert('template_questions', array(
+            "id_category" => $this->id,
+            "question" => $row->getName(),
+            "original" => false,
+          ));
+          $row->setId(DB::insertId());
+          DB::insert('questionsbytemplate', array(
+            "idTemplate" => $this->templateId,
+            "idQuestion" => $row->getId(),
+          ));
+        }
+
         DB::insert('categoriesbytemplate', array(
           "idTemplate" => $this->templateId,
           "idCategory" => $this->id,
         ));
-
       }
 
     }
 
     function remove()
     {
-
       $whereCategorybyTemplate = new WhereClause('and');
       $whereCategorybyTemplate->add('idTemplate=%i', $this->getTemplateId());
       $whereCategorybyTemplate->add('idCategory=%i', $this->getId());
@@ -203,6 +214,7 @@ class Category
         DB::delete('template_categories', "ID=%i", $this->id);
       }
     }
+
 }
 
 /**
@@ -215,6 +227,7 @@ class Question
   private $question;
   private $original;
   private $templateId;
+  private $categoryId;
 
   function __construct($id, $question, $original)
   {
@@ -227,6 +240,10 @@ class Question
     return $this->id;
   }
 
+  function setId($value) {
+    $this->id = $value;
+  }
+
   function getName() {
     return $this->question;
   }
@@ -237,6 +254,14 @@ class Question
 
   function getTemplateId() {
     return $this->templateId;
+  }
+
+  function setCategoryId($value) {
+    $this->categoryId = $value;
+  }
+
+  function getCategoryId() {
+    return $this->categoryId;
   }
 
   function isOriginal()
@@ -255,6 +280,25 @@ class Question
       DB::delete('template_questions', "ID=%i", $this->id);
     }
   }
+
+  function insert()
+  {
+    $question = DB::insert('template_questions', array(
+      "id_category" => $this->getCategoryId(),
+      "question" => $this->question,
+      "original" => false,
+    ));
+
+    $this->id = DB::insertId();
+
+    if($question){
+      DB::insert('questionsbytemplate', array(
+        "idTemplate" => $this->getTemplateId(),
+        "idQuestion" => $this->id,
+      ));
+    }
+  }
+
 }
 
 class Answer
@@ -264,6 +308,7 @@ class Answer
     private $answer;
     private $value;
     private $color;
+    private $idTemplate;
 
     function __construct($id, $answer, $value, $color, $original)
     {
@@ -296,6 +341,14 @@ class Answer
       $this->color = $value;
     }
 
+    function getTemplateId() {
+      return $this->idTemplate;
+    }
+
+    function setTemplateId($value) {
+      $this->idTemplate = $value;
+    }
+
     function isScorable() {
       return ($this->getValue() >= 0);
     }
@@ -304,6 +357,38 @@ class Answer
     {
       return $this->original;
     }
+
+    function remove()
+    {
+      $whereAnswerbyTemplate = new WhereClause('and');
+      $whereAnswerbyTemplate->add('idTemplate=%i', $this->getTemplateId());
+      $whereAnswerbyTemplate->add('idAnswer=%i', $this->getId());
+      DB::delete('answersbytemplate', '%li', $whereAnswerbyTemplate);
+
+      if(!$this->isOriginal()){
+        DB::delete('template_answers', "ID=%i", $this->id);
+      }
+    }
+
+    function insert()
+    {
+      $answer = DB::insert('template_answers', array(
+        "answer" => $this->getName(),
+        "value" => $this->getValue(),
+        "color" => $this->getColor(),
+        "original" => false,
+      ));
+
+      $this->id = DB::insertId();
+
+      if($answer){
+        DB::insert('answersbytemplate', array(
+          "idTemplate" => $this->getTemplateId(),
+          "idAnswer" => $this->id,
+        ));
+      }
+    }
+
 }
 
 
@@ -330,7 +415,6 @@ class Answer
     $template = DB::queryFirstRow("SELECT * FROM templates WHERE ID=%i", $templateId);
 
     if ($template) {
-
       $categories = getCategoriesbyTemplate($template["ID"]);
       $answers = getAnswersbyTemplate($template["ID"]);
       return new Template($template["ID"], $template["name"], $template["active"], $categories, $answers);
@@ -373,10 +457,13 @@ class Answer
     $where->add('idCategory=%i', $categoryId);
     $where->add('idTemplate=%i', $templateId);
 
-    $qryCategory = DB::queryFirstRow("SELECT tc.ID, tc.name, tc.original  FROM categoriesbytemplate a JOIN template_categories tc ON a.idCategory=tc.ID WHERE %li", $where);
+    $qryCategory = DB::queryFirstRow("SELECT tc.ID, tc.name, tc.original  FROM categoriesbytemplate a JOIN template_categories tc ON a.idCategory = tc.ID WHERE %li", $where);
 
     if ($qryCategory) {
-        $questions = DB::query("SELECT ID, question, original FROM questionsbytemplate WHERE id_category=%i", $qryCategory["ID"]);
+        $whereQuestion = new WhereClause('and');
+        $whereQuestion->add('id_category=%i', $qryCategory["ID"]);
+        $whereQuestion->add('idTemplate=%i', $templateId);
+        $questions = DB::query("SELECT tq.ID, tq.question, tq.original FROM questionsbytemplate a JOIN template_questions tq ON a.idQuestion = tq.ID WHERE %li", $whereQuestion);
         $questionList = array();
 
         if($questions)
@@ -387,7 +474,6 @@ class Answer
         }
 
       $category = new Category($qryCategory["ID"], $qryCategory["name"], $qryCategory["original"], $questionList);
-
       $category->setTemplateId($templateId);
 
       return $category;
@@ -404,9 +490,10 @@ class Answer
     $categoryList = array();
 
     if ($categories) {
-
       foreach ($categories as $row) {
-        $questions = DB::query("SELECT tq.ID, tq.question, tq.original FROM questionsbytemplate a  JOIN template_questions tq ON a.idQuestion = tq.ID WHERE tq.id_category=%i AND a.idTemplate=%i", $row["ID"], $templateId);
+
+        $questions = DB::query("SELECT tq.ID, tq.question, tq.original FROM questionsbytemplate a JOIN template_questions tq ON a.idQuestion = tq.ID WHERE tq.id_category=%i AND a.idTemplate=%i", $row["ID"], $templateId);
+
         $questionList = array();
 
         if($questions)
@@ -464,15 +551,9 @@ class Answer
 
   function existTemplatebyName($name)
   {
-      $qry = DB::queryFirstRow("SELECT * FROM templates WHERE name=%i", $name);
-
-      if($qry){
-        return false;
-      } else {
-        return false;
-      }
-
-
+      $qry = DB::queryFirstRow("SELECT * FROM templates WHERE name=%s", $name);
+      $counter = DB::count();
+      return ($counter>0);
   }
 
 ?>

@@ -1,3 +1,5 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.3/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.3/js/bootstrap-colorpicker.min.js"></script>
 <?php
 function generateModal($categoryId) {
 return '<!-- Modal -->
@@ -54,21 +56,14 @@ return '<!-- Modal -->
             <div class="modal-body">
               <div class="form-group">
                 <label for="category">Category Name:</label>
-                <input name="categoryName" type="text" class="form-control" placeholder="Category name" />
+                <input name="categoryName" type="text" class="form-control" placeholder="Insert category name" />
                 <input name="idTemplate" type="hidden" class="form-control" value=<?= $this->template->getId(); ?>/>
               </div>
             </div>
             <div class="modal-body">
               <div class="form-group">
                 <label for="question">Questions :</label>
-                <input name="question" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
-                <?php
-                    function createInputQuestion()
-                    {?>
-                      <input name="question" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
-                  <?php }
-
-                ?>
+                <input name="questionName" type="text" class="form-control" placeholder="Insert question..." aria-label="" aria-describedby="basic-addon1">
                 <div class="input-group-prepend" style="float:left"></br>
                   <button class="btn btn-outline-secondary" >+</button>
                 </div>
@@ -76,14 +71,14 @@ return '<!-- Modal -->
             </div></br>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                <button type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-floppy-disk"></span> Save </button>
               </div>
       </form>
     </div>
   </div>
 </div>
 <?php endif; ?>
-</form>
+
 </div>
 <!-- /.row -->
 <div class="row">
@@ -91,21 +86,11 @@ return '<!-- Modal -->
       <div class="right">
         <a href="/admin/templates" class="btn btn-primary"><span class="glyphicon glyphicon-menu-left"></span> Template List</a>
         <?php if($this->editTemplate): ?>
-          <button id="save" type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+          <button href="" type="button" class="btn btn-warning"><span class="glyphicon glyphicon-ok"></span> Finish </button>
         <?php endif; ?>
       </div>
         <!-- /.panel-heading -->
         <div class="panel-body">
-
-          <?php if (isset($this->success)) { ?>
-            <div class="alert alert-info" role="alert">
-             <?php echo $this->success; ?>
-            </div>
-          <?php } else if (isset($this->error)) { ?>
-            <div class="alert alert-danger" role="alert">
-             <?php echo $this->error; ?>
-            </div>
-          <?php } ?>
             <!-- Nav tabs -->
             <?php
               if ($this->tab == 0) {
@@ -140,7 +125,7 @@ return '<!-- Modal -->
                                     <table class="table">
                                       <tbody>
                                         <tr>
-                                          <td width="70%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"><h4> <?= $category->getName(); ?></h4></td>
+                                          <td width="70%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"><h4> <?=++$c.". ". $category->getName(); ?></h4></td>
                                           <?php if ($this->editTemplate):?>
                                             <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd">
                                               <form action="/template/category-remove/" method="POST">
@@ -152,25 +137,28 @@ return '<!-- Modal -->
                                           <?php endif; ?>
                                         </tr>
                                         <?php foreach ($category->getQuestions() as $question) { ?>
-                                              <tr>
-                                                <td width="70%"><?= $question->getName(); ?></td>
-                                                <?php if ($this->editTemplate):?>
-                                                <td width="10%">
-                                                    <a href="/template/question-remove/<?= $question->getId()?>?del=<?=$this->template->getId();?>" title="Remove question" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
-                                                </td>
-                                                <?php endif; ?>
-                                              </tr>
-                                          <?php } ?>
+                                        <tr>
+                                          <td width="70%"><?= $question->getName(); ?></td>
+                                          <?php if ($this->editTemplate):?>
+                                          <td width="10%">
+                                              <a href="/template/question-remove/<?= $question->getId()?>?del=<?=$this->template->getId();?>" title="Remove question" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
+                                          </td>
+                                          <?php endif; ?>
+                                        </tr>
+                                        <?php } ?>
                                       </tbody>
                                     </table>
-
+                                    <form action="/template/question-new" method="POST">
                                     <?php if ($this->editTemplate): ?>
-                                      <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Insert question">
-                                        <div class="input-group-append">
-                                          <button class="btn btn-outline-secondary" type="button">+</button>
+                                        <div class="input-group mb-3">
+                                          <input name="idCategory" type="hidden" class="form-control"  value="<?= $category->getId()?>"/>
+                                          <input name="idTemplate" type="hidden" class="form-control"  value="<?= $this->template->getId()?>"/>
+                                          <input name="questionName" type="text" class="form-control" placeholder="Insert question">
+                                          <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary" type="submit">+</button>
+                                          </div>
                                         </div>
-                                      </div>
+                                      </form>
 
                                     <?php endif; ?>
                           <?php } ?>
@@ -186,12 +174,11 @@ return '<!-- Modal -->
                             </div>
                         <?php  ?>
                       <?php endif;?>
-                        </form>
+
                 </div>
 
 
                 <div class="tab-pane fade in <?php echo $active1 ; ?>" id="answers">
-                  <form class="margin margin-lg-t" method="POST" action="">
                     <div class="form-group">
                           <table class="table">
                               <thead class="thead-light">
@@ -207,32 +194,48 @@ return '<!-- Modal -->
                                 <tr>
                                   <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"> <?= $answer->getName();?></td>
                                   <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"> <?= $answer->getValue();?></td>
-                                  <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"></td>
+                                  <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd; background-color:<?= $answer->getColor();?>"></td>
                                   <?php if ($this->editTemplate):?>
                                   <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd">
-                                      <span class="glyphicon glyphicon-remove"></span></a><br>
+                                      <a href="/template/answer-remove/<?= $answer->getId()?>?del=<?=$this->template->getId();?>" title="Remove answer" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
                                   </td>
                                   <?php endif; ?>
                                 </tr>
                                   <?php } ?>
                               </tbody>
                           </table>
-
                     </div>
                     <br />
                       <?php if ($this->editTemplate): ?>
-                          <table class="table">
+
+                            <table class="table">
                               <tbody>
                                   <tr>
-                                      <td width="10%">
-                                          <input name="answer" type="text" class="form-control" id="answer" placeholder="Insert answer..." value="" ></td>
+                                      <form action="/template/answer-new" method="POST">
+                                      <input name="idTemplate" type="hidden" class="form-control" value="<?=$this->template->getId();?>" ></td>
+                                      <td>
+                                        <input name="answer" type="text" class="form-control" placeholder="Insert answer..." ></td>
                                       <td width="10%" >
-                                        <input name="value" type="text" class="form-control" id="value" placeholder="Insert value..." value="" ></td>
+                                        <input name="value" type="text" class="form-control" placeholder="Insert value..." ></td>
+                                      <td>
+                                        <div id="cp2" class="input-group colorpicker-component">
+                                            <input name="color"type="hidden" class="form-control" />
+                                            <span class="input-group-addon" style="background-color:white"><i></i></span>
+                                            <script>
+                                                $(function() {
+                                                    $('#cp2').colorpicker();
+                                                });
+                                            </script>
+                                        </div>
+                                      </td>
                                       <td width="10%" >
-                                        <input name="colour" type="text" class="form-control" id="answer" placeholder="Choose colour..." value="" ></td>
+                                      <button class="btn btn-outline-secondary" type="submit">+</button></td>
+                                      </form>
                                   </tr>
+
                               </tbody>
                           </table>
+
                       <?php endif ?>
 
                 </div>
@@ -241,4 +244,6 @@ return '<!-- Modal -->
         <!-- /.panel-body -->
     </div>
 </div>
+
+
 <!-- /.row -->
