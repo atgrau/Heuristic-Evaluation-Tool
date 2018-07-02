@@ -41,7 +41,7 @@
       <tbody>
         <th colspan="2" class="thead-light text-center">Project Information</th>
         <tr>
-          <th width="15%">Project's Name:</th>
+          <th width="20%">Project's Name:</th>
           <td><?=$this->evaluation->getProject()->getName();?></td>
         </tr>
         <tr>
@@ -219,7 +219,7 @@
               <div class="col-lg-5">
                 <div class="panel panel-default">
                     <div class="panel-heading text-center text-bold">
-                        My Answers
+                        My Answers Chart
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
@@ -236,7 +236,7 @@
                     <th colspan="2" class="thead-light text-center">Score per Category</th>
                     <?php foreach ($this->evaluation->getProject()->getTemplate()->getCategories() as $category) { ?>
                       <tr>
-                        <th width="80%"><?=++$cs.". ".$category->getName(); ?></th>
+                        <th width="90%"><?=++$cs.". ".$category->getName(); ?></th>
                         <td><?=$this->evaluation->getScoreByCategory($category->getId());?></td>
                       </tr>
                   <?php } ?>
@@ -281,21 +281,7 @@
                 <div class="col-lg-6">
                   <div class="panel panel-default">
                       <div class="panel-heading text-center text-bold">
-                          Global Answers
-                      </div>
-                      <!-- /.panel-heading -->
-                      <div class="panel-body">
-                        <canvas id="chartjs-2" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
-                        <script>new Chart(document.getElementById("chartjs-2"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->evaluation->getProject()->getGlobalAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'#".$value->getColor()."',"; } ?>]}]}});</script>
-                      </div>
-                      <!-- /.panel-body -->
-                  </div>
-                  <!-- /.panel -->
-                </div>
-                <div class="col-lg-6">
-                  <div class="panel panel-default">
-                      <div class="panel-heading text-center text-bold">
-                          Global Usability Percentage
+                          Global Usability Percentage Chart
                       </div>
                       <!-- /.panel-heading -->
                       <div class="panel-body">
@@ -309,9 +295,25 @@
                         <?php endif; ?>
                       </div>
                       <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+              </div>
+
+                <div class="col-lg-6">
+                  <div class="panel panel-default">
+                      <div class="panel-heading text-center text-bold">
+                          Global Answers Chart
+                      </div>
+                      <!-- /.panel-heading -->
+                      <div class="panel-body">
+                        <canvas id="chartjs-2" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
+                        <script>new Chart(document.getElementById("chartjs-2"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->evaluation->getProject()->getGlobalAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'#".$value->getColor()."',"; } ?>]}]}});</script>
+                      </div>
+                      <!-- /.panel-body -->
                   </div>
                   <!-- /.panel -->
-                  </div>
+                </div>
+
             </div>
           </div>
         </div>

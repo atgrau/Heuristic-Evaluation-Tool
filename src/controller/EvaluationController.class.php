@@ -25,15 +25,32 @@
       $this->render();
     }
 
-    function showEvaluationResults($evaluationId) {
+    function showEvaluationResults($projectId) {
       // Check if exists the relationship
-      $this->evaluation = getEvaluationById($evaluationId);
-      if ((!$this->evaluation) || ($this->evaluation->getProject()->getUser() != $GLOBALS["USER_SESSION"])) {
+      $this->project = getProjectById($projectId);
+
+      if ((!$this->project) || (($this->project->getUser() != $GLOBALS["USER_SESSION"]) && (!$GLOBALS["USER_SESSION"]->isAdmin()))) {
         header("Location: /my-projects");
       }
 
-      $this->setContentView("evaluation/static_template");
+      $this->setContentView("evaluation/template_results");
       $this->render();
+    }
+
+    function reOpenEvaluation() {
+      if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        header("Location: /evaluations");
+      }
+
+      // Check if exists the relationship
+      $evaluation = getEvaluationById($_POST["id_evaluation"]);
+
+      if ((!$evaluation) || (($evaluation->getProject()->getUser() != $GLOBALS["USER_SESSION"]) && (!$GLOBALS["USER_SESSION"]->isAdmin()))) {
+        header("Location: /my-projects");
+      } else {
+        $evaluation->setFinished(false);
+        $evaluation->update();
+      }
     }
 
     function update() {

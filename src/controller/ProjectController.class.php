@@ -127,7 +127,7 @@
           }
           $project->setUsers($users);
         else:
-          $project->setUsers(array());          
+          $project->setUsers(array());
         endif;
 
         // Validate Project
@@ -202,22 +202,6 @@
             $this->updateProjectView($adminView, $project->getId());
           }
 
-      }
-    }
-
-    function viewResults($projectId) {
-      $project = getProjectById($projectId);
-
-      if (!$project) {
-        $this->showProjectList($_GET["admin"] == "1");
-      }
-
-      if ($project->getUser() != $GLOBALS["USER_SESSION"]) {
-        $this->showProjectList($_GET["admin"] == "1");
-      }
-
-      foreach ($project->getEvaluations() as $evaluation) {
-        echo "<a href='/evaluations/result/".$evaluation->getId()."'>Evaluation of ".$evaluation->getUser()->getName()."</a>";
       }
     }
 
