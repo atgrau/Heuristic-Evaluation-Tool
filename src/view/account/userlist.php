@@ -47,10 +47,7 @@ return '<!-- Modal -->
 </div>
 
 <div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">List of Users</h1>
-    </div>
-    <!-- /.col-lg-12 -->
+  <h1 class="page-header">List of Users</h1>
 </div>
 <!-- /.row -->
 <div class="row margin-lg-b">
@@ -124,7 +121,7 @@ return '<!-- Modal -->
   </table>
   <?php
     if (empty($this->userList)) {
-      echo "No users found...<br /><br />";
+      echo "<span class='glyphicon glyphicon-info-sign'></span> No users found...";
     } else {
       echo "<strong>Total Users:</strong> ".sizeof($this->userList);
     }

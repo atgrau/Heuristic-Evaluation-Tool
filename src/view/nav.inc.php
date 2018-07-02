@@ -60,7 +60,7 @@
               </li>
             <?php else: ?>
               <li>
-                  <a class="#" href="/projects" title="You have no assigned projects">
+                  <a class="#" href="/evaluations" title="You have no assigned projects">
                       <strong>You have no assigned projects...</strong>
                   </a>
               </li>

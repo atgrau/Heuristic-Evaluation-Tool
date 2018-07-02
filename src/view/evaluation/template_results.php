@@ -28,11 +28,15 @@ function generateModal($evaluationId) {
 
 <button id="topButton" title="Go to top"><span class="glyphicon glyphicon-menu-up"></span></button>
   <div class="row">
-      <div class="col-lg-12">
-        <h1 class="page-header">Evaluation</h1>
-      </div>
-      <!-- /.col-lg-12 -->
+    <h1 class="page-header">Evaluation</h1>
   </div>
+
+  <?php if ($this->reopened): ?>
+    <div class="alert alert-info" role="alert">
+      <span class="glyphicon glyphicon-info-sign"></span> Evaluation has been re-opened.
+    </div>
+  <?php endif; ?>
+
   <!-- /.row -->
   <!-- /.row -->
   <div class="row">
@@ -83,7 +87,7 @@ function generateModal($evaluationId) {
           </tr>
           <tr>
             <th width="22%">Finished Evaluations</th>
-            <td><?=count($this->project->getFinishedEvaluations());?></td>
+            <td><?=count($this->project->getFinishedEvaluations());?> <strong>(<?=round(count($this->project->getFinishedEvaluations())*100/count($this->project->getEvaluations()), 1);?>%)</strong></td>
           </tr>
           <tr>
             <th width="22%">Average Score</th>
@@ -114,8 +118,8 @@ function generateModal($evaluationId) {
             <div class="panel-body">
               <?php if (count($this->project->getFinishedEvaluations()) > 0): ?>
                 <canvas id="chartjs-1" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
-                <script>new Chart(document.getElementById("chartjs-1"),{"type":"radar","data":{"labels":[<?php foreach ($this->project->getEvaluations() as $value) { echo "'".$value->getUser()->getName()."',"; } ?>],"datasets":[
-                  {"label":"<?=$this->project->getName();?>","data":[<?php foreach ($this->project->getEvaluations() as $value) { echo $value->getUsabilityPercentage().","; } ?>],"fill":true,"backgroundColor":"rgba(255, 99, 132, 0.2)","borderColor":"rgb(255, 99, 132)","pointBackgroundColor":"rgb(255, 99, 132)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(255, 99, 132)"}
+                <script>new Chart(document.getElementById("chartjs-1"),{"type":"radar","data":{"labels":[<?php foreach ($this->project->getFinishedEvaluations() as $value) { echo "'".$value->getUser()->getName()."',"; } ?>],"datasets":[
+                  {"label":"<?=$this->project->getName();?>","data":[<?php foreach ($this->project->getFinishedEvaluations() as $value) { echo $value->getUsabilityPercentage().","; } ?>],"fill":true,"backgroundColor":"rgba(255, 99, 132, 0.2)","borderColor":"rgb(255, 99, 132)","pointBackgroundColor":"rgb(255, 99, 132)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(255, 99, 132)"}
                 ]},"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}});</script>
               <?php else: ?>
                 There is not finished evaluations yet...
@@ -133,14 +137,18 @@ function generateModal($evaluationId) {
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
+              <?php if (count($this->project->getFinishedEvaluations()) > 0): ?>
               <canvas id="chartjs-2" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
               <script>new Chart(document.getElementById("chartjs-2"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->project->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->project->getGlobalAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":[<?php foreach ($this->project->getTemplate()->getAnswers() as $value) { echo "'#".$value->getColor()."',"; } ?>]}]}});</script>
+              <?php else: ?>
+                There is not finished evaluations yet...
+              <?php endif; ?>
             </div>
             <!-- /.panel-body -->
         </div>
         <!-- /.panel -->
       </div>
-
+      <?php if ($this->project->getFinishedEvaluations()): ?>
       <div class="col-lg-12">
         <h2 class="page-header">Detailed Results</h2>
       </div>
@@ -267,7 +275,8 @@ function generateModal($evaluationId) {
 
               <?php
                 // End foreach
-                }
+                  }
+                endif;
               ?>
           </div>
         </div>

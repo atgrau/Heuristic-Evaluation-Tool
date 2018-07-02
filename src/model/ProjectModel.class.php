@@ -15,8 +15,9 @@
     private $active;
     private $users;
     private $template;
+    private $archived;
 
-    function __construct($id, $userId, $creationDate, $finishDate, $name, $description, $link, $active, $template) {
+    function __construct($id, $userId, $creationDate, $finishDate, $name, $description, $link, $active, $template, $archived) {
       $this->id = $id;
       $this->user = getUserById($userId);
       $this->creationDate = $creationDate;
@@ -27,6 +28,7 @@
       $this->active = $active;
       $this->users = array();
       $this->template = $template;
+      $this->archived = $archived;
     }
 
     function setId($value) {
@@ -111,6 +113,14 @@
 
     function setTemplate($value) {
       $this->template = $value;
+    }
+
+    function isArchived() {
+      return $this->archived;
+    }
+
+    function setArchived($value) {
+      $this->archived = $value;
     }
 
     function isClosed() {
@@ -215,6 +225,7 @@
         "description" => $this->description,
         "link" => $this->link,
         "active" => $this->active,
+        "archived" => $this->archived,
         "id_template" => $this->template->getId()
       ), "ID=%i", $this->id);
 
@@ -242,7 +253,7 @@
     $project = DB::queryFirstRow("SELECT * FROM projects WHERE ID=%i", $projectId);
     if ($project) {
       $template = getTemplateById($project["id_template"]);
-      $project = new Project($project["ID"], $project["id_user"], $project["creation_date"], $project["finish_date"], $project["name"], $project["description"], $project["link"], boolval($project["active"]), $template);
+      $project = new Project($project["ID"], $project["id_user"], $project["creation_date"], $project["finish_date"], $project["name"], $project["description"], $project["link"], boolval($project["active"]), $template, boolval($project["archived"]));
       $projectUsers = DB::query("SELECT * FROM projects_user WHERE id_project=%i", $projectId);
       $projectUsersList = array();
       if ($projectUsers) {
@@ -260,11 +271,24 @@
   function getMyProjects($userId,$filter) {
     $qry = "SELECT * FROM projects ";
 
-    $condition = "WHERE projects.id_user = %i";
+    $condition = "WHERE projects.id_user = %i AND projects.archived = 0";
     if (!empty($filter))
       $condition .= " AND (projects.name like %ss OR projects.description like %ss)";
 
-    $qry = $qry." ".$condition." ORDER BY projects.name";
+    $qry = $qry." ".$condition." ORDER BY projects.ID";
+    $projects = DB::query($qry, $userId, $filter, $filter);
+
+    return buildRs($projects);
+  }
+
+  function getMyArchivedProjects($userId,$filter) {
+    $qry = "SELECT * FROM projects ";
+
+    $condition = "WHERE projects.id_user = %i AND projects.archived = 1";
+    if (!empty($filter))
+      $condition .= " AND (projects.name like %ss OR projects.description like %ss)";
+
+    $qry = $qry." ".$condition." ORDER BY projects.finish_date DESC";
     $projects = DB::query($qry, $userId, $filter, $filter);
 
     return buildRs($projects);
@@ -273,7 +297,7 @@
   function getAssignedProjects($userId,$filter) {
     $qry = "SELECT * FROM projects ";
 
-    $condition = "WHERE active=1 AND ID IN (SELECT id_project FROM projects_user WHERE id_user = %i)";
+    $condition = "WHERE active=1 AND archived=0 AND ID IN (SELECT id_project FROM projects_user WHERE id_user = %i)";
     if (!empty($filter))
       $condition .= " AND (projects.name like %ss OR projects.description like %ss)";
 
@@ -323,7 +347,7 @@
     if ($projects) {
       foreach ($projects as $row) {
         $template = getTemplateById($row["id_template"]);
-        $project = new Project($row["ID"], $row["id_user"], $row["creation_date"], $row["finish_date"], $row["name"], $row["description"], $row["link"], boolval($row["active"]), $template);
+        $project = new Project($row["ID"], $row["id_user"], $row["creation_date"], $row["finish_date"], $row["name"], $row["description"], $row["link"], boolval($row["active"]), $template, boolval($row["archived"]));
         array_push($projectList, $project);
       }
       return $projectList;

@@ -11,15 +11,17 @@
       }
 
       $this->evaluation = getEvaluationByProjectAndUser($projectId, $GLOBALS["USER_SESSION"]->getId());
-      if ((!$this->evaluation) || (!$this->evaluation->getProject()->isActive())) {
-        header("Location: /evaluations");
-      }
 
       // If evaluation is not created yet, lets create it.
       if (!$this->evaluation) {
         $this->evaluation = new Evaluation(0, getProjectById($projectId), $GLOBALS["USER_SESSION"], false, null);
         $this->evaluation->insert();
       }
+
+      if ((!$this->evaluation) || (!$this->evaluation->getProject()->isActive())) {
+        header("Location: /evaluations");
+      }
+
       $this->tab = $_GET["tab"];
       $this->setContentView("evaluation/template");
       $this->render();
@@ -50,6 +52,8 @@
       } else {
         $evaluation->setFinished(false);
         $evaluation->update();
+        $this->reopened = true;
+        $this->showEvaluationResults($evaluation->getProject()->getId());
       }
     }
 

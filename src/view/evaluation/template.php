@@ -27,10 +27,7 @@
 
 <button id="topButton" title="Go to top"><span class="glyphicon glyphicon-menu-up"></span></button>
   <div class="row">
-      <div class="col-lg-12">
-        <h1 class="page-header">Evaluation</h1>
-      </div>
-      <!-- /.col-lg-12 -->
+    <h1 class="page-header">Evaluation</h1>
   </div>
   <!-- /.row -->
   <!-- /.row -->
@@ -287,8 +284,8 @@
                       <div class="panel-body">
                         <?php if (count($this->evaluation->getProject()->getFinishedEvaluations()) > 0): ?>
                           <canvas id="chartjs-3" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
-                          <script>new Chart(document.getElementById("chartjs-3"),{"type":"radar","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getEvaluations() as $value) { echo "'".$value->getUser()->getName()."',"; } ?>],"datasets":[
-                            {"label":"<?=$this->evaluation->getProject()->getName();?>","data":[<?php foreach ($this->evaluation->getProject()->getEvaluations() as $value) { echo $value->getUsabilityPercentage().","; } ?>],"fill":true,"backgroundColor":"rgba(255, 99, 132, 0.2)","borderColor":"rgb(255, 99, 132)","pointBackgroundColor":"rgb(255, 99, 132)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(255, 99, 132)"}
+                          <script>new Chart(document.getElementById("chartjs-3"),{"type":"radar","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getFinishedEvaluations() as $value) { echo "'".$value->getUser()->getName()."',"; } ?>],"datasets":[
+                            {"label":"<?=$this->evaluation->getProject()->getName();?>","data":[<?php foreach ($this->evaluation->getProject()->getFinishedEvaluations() as $value) { echo $value->getUsabilityPercentage().","; } ?>],"fill":true,"backgroundColor":"rgba(255, 99, 132, 0.2)","borderColor":"rgb(255, 99, 132)","pointBackgroundColor":"rgb(255, 99, 132)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(255, 99, 132)"}
                           ]},"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}});</script>
                         <?php else: ?>
                           There is not finished evaluations yet...

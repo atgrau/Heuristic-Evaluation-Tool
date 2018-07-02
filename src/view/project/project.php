@@ -101,14 +101,24 @@
                   <small class="text-muted"><span class="glyphicon glyphicon-info-sign"></span> Is not possible to modify template, due to some evaluations have started.</small>
                 <?php endif; ?>
               </div>
-              <?php if (($this->project) && (count($this->project->getEvaluations()) > 0)): ?>
-              <?php endif; ?>
+
+
               <?php if ($this->adminView): ?>
                 <div class="form-group">
                   <input value="1" name="active" type="checkbox" class="form-check-input" id="active" <?php if ($this->project->isActive()) echo 'checked="checked"'; ?>>
-                  <label class="form-check-label" for="active">Active</label>
+                  <label class="form-check-label" for="active">Active</label> <br />
+                  <small class="text-muted"><span class="glyphicon glyphicon-info-sign"></span> By activating this option, evaluations will be allowed to be started.</small>
                 </div>
               <?php endif; ?>
+
+              <?php if(!$this->new): ?>
+                <div class="form-group">
+                  <input value="1" name="archived" type="checkbox" class="form-check-input" id="archived" <?php if (($this->project) && ($this->project->isArchived())) echo 'checked="checked"'; ?>>
+                  <label class="form-check-label" for="archived">Archive Project</label><br />
+                  <small class="text-muted"><span class="glyphicon glyphicon-info-sign"></span> By activating this option, the project will be archived and won't be shown to the evaluators.</small>
+                </div>
+              <?php endif; ?>
+
               <h4>Assign Evaluators</h4>
               <div class="form-group">
               <select name="users[]" id="users" class="form-control selectpicker" data-live-search="true" multiple>

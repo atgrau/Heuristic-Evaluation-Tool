@@ -12,6 +12,7 @@
       $this->edit = true;
       if (!$admin) {
         $this->projectList = getMyProjects($GLOBALS["USER_SESSION"]->getId(), $this->query);
+        $this->archivedProjectList = getMyArchivedProjects($GLOBALS["USER_SESSION"]->getId(), $this->query);
       } else {
         $this->projectList = getProjects($this->query, $this->userId);
       }
@@ -29,6 +30,7 @@
 
     function addNewProjectView() {
       $this->templateList = getActiveTemplates();
+      $this->new = true;
       $this->setContentView("project/project");
       $this->render();
     }
@@ -44,7 +46,7 @@
         $date = new DateTime(now());
       }
 
-      $project = new Project(0, $GLOBALS["USER_SESSION"]->getId(), null, $date, $_POST["name"], $_POST["description"], $_POST["link"], false, getTemplateById($_POST["template"]));
+      $project = new Project(0, $GLOBALS["USER_SESSION"]->getId(), null, $date, $_POST["name"], $_POST["description"], $_POST["link"], false, getTemplateById($_POST["template"]), false);
       $users = array();
       if ($_POST["users"]):
         foreach ($_POST["users"] as $user) {
@@ -115,6 +117,8 @@
         if ($newTemplate) {
           $project->setTemplate($newTemplate);
         }
+
+        $project->setArchived(($_POST["archived"] == "1"));
 
         if ($adminView) {
           $project->setActive($_POST["active"]=="1");

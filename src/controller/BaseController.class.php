@@ -39,7 +39,9 @@
     }
 
     function numberOfEvaluations() {
-      return getNumberOfEvaluationsByUser($GLOBALS["USER_SESSION"]->getId());
+      $projects = getAssignedProjects($GLOBALS["USER_SESSION"]->getId(), "");
+      if ($projects) return count($projects);
+      else return 0;
     }
   }
 

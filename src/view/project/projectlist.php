@@ -29,16 +29,13 @@ function generateModal($project, $admin) {
 ?>
 
 <div class="row">
-    <div class="col-lg-12">
-      <?php if ($this->admin): ?>
-        <h1 class="page-header">Projects</h1>
-      <?php elseif ($this->edit): ?>
-        <h1 class="page-header">My Projects</h1>
-      <?php else: ?>
-        <h1 class="page-header">Project Evaluations</h1>
-      <?php endif; ?>
-    </div>
-    <!-- /.col-lg-12 -->
+  <?php if ($this->admin): ?>
+    <h1 class="page-header">Projects</h1>
+  <?php elseif ($this->edit): ?>
+    <h1 class="page-header">My Projects</h1>
+  <?php else: ?>
+    <h1 class="page-header">Project Evaluations</h1>
+  <?php endif; ?>
 </div>
 <!-- /.row -->
 <?php if ($this->addMessage): ?>
@@ -119,11 +116,9 @@ function generateModal($project, $admin) {
       foreach ($this->projectList as $project) {
         if (!$this->edit) {
           $link = "style='cursor:pointer' class='clickable-row' data-href='/evaluations/id/".$project->getId()."'";
-        } else {
-          $link = "style='cursor:pointer' class='clickable-row' data-href='/my-projects/results/".$project->getId()."'";
         }
         ?>
-          <tr <?=$link;?> <?php if(!$project->isActive()) echo " style='background:#EFEFEF;'"; ?>>
+          <tr <?=$link;?> <?php if((!$project->isActive()) || ($project->isArchived())) echo " style='background:#EFEFEF;'"; ?>>
             <?php
               $userId = $project->getId();
               if ($this->admin) {
@@ -141,7 +136,7 @@ function generateModal($project, $admin) {
             <td><?= $project->getFinishDate(); ?></td>
             <?php if ($this->edit): ?>
               <td>
-                <a href="/evaluations/result/<?= $project->getId(); ?><?php if ($this->admin) echo "?admin=1"; ?>" title="View Results"><span class="glyphicon glyphicon-eye-open"></span></a>
+                <a href="/my-projects/results/<?= $project->getId(); ?><?php if ($this->admin) echo "?admin=1"; ?>" title="View Results"><span class="glyphicon glyphicon-eye-open"></span></a>
                 <?php if ($this->admin): ?>
                   <span class="margin-l"></span>
                   <a href="/admin/projects/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil"></span></a>
@@ -157,14 +152,24 @@ function generateModal($project, $admin) {
             <td>
               <?php
                 $evaluation = getEvaluationByProjectAndUser($project->getId(), $GLOBALS["USER_SESSION"]->getId());
-                if ((!$evaluation->getProject()->isClosed()) && ($evaluation->isFinished())):
-                ?>
+                if (!$evaluation):
+                  if (!$project->isClosed()):
+              ?>
+                <span class="label label-success">Open</span>
+              <?php else: ?>
+                <span class="label label-danger">Closed</span>
+              <?php endif; ?>                  
+              <?php
+                else:
+                  if ((!$evaluation->getProject()->isClosed()) && ($evaluation->isFinished())):
+              ?>
                 <span class="label label-warning">Finished</span>
               <?php elseif (!$evaluation->getProject()->isClosed()): ?>
                 <span class="label label-success">Open</span>
               <?php else: ?>
                 <span class="label label-danger">Closed</span>
               <?php endif; ?>
+            <?php endif; ?>
             </td>
             <?php endif; ?>
           </tr>
@@ -176,12 +181,100 @@ function generateModal($project, $admin) {
   </table>
   <?php
     if (empty($this->projectList)) {
-      echo "<div class='alert alert-info' role='alert'>
-              <span class='glyphicon glyphicon-info-sign'></span> No projects found...
-            </div>";
+      echo "<span class='glyphicon glyphicon-info-sign'></span> No projects found...";
     } else {
       echo "<strong>Total projects:</strong> ".sizeof($this->projectList);
     }
+  ?>
+
+  <?php if ((!$this->admin) && ($this->edit)): ?>
+    <h1 class="page-header">My Archived Projects</h1>
+    <table class="table table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <?php if ($this->admin): ?>
+            <th scope="col">Owner</th>
+          <?php endif; ?>
+          <th scope="col">Project's Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Link</th>
+          <th scope="col">Finishes at</th>
+          <?php if (!$this->edit): ?>
+            <th scope="col">Status</th>
+          <?php else: ?>
+            <th scope="col"> </th>
+          <?php endif; ?>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        if (!empty($this->archivedProjectList)):
+        foreach ($this->archivedProjectList as $project) {
+          if (!$this->edit) {
+            $link = "style='cursor:pointer' class='clickable-row' data-href='/evaluations/id/".$project->getId()."'";
+          }
+          ?>
+            <tr <?=$link;?> <?php if(!$project->isActive()) echo " style='background:#EFEFEF;'"; ?>>
+              <?php
+                $userId = $project->getId();
+                if ($this->admin) {
+                  $admin = "?admin=1";
+                }
+                echo generateModal($project, $admin);
+              ?>
+              <th scope="row"><?= $project->getId(); ?></th>
+              <?php if ($this->admin): ?>
+                <td><a href="/admin/users/<?= $project->getUser()->getId(); ?>" title="<?= $project->getUser()->getName(); ?>'s profile"><?= $project->getUser()->getFirstName(); ?></a></td>
+              <?php endif; ?>
+              <td><?= $project->getName(); ?></td>
+              <td><?= $project->getShortDescription(); ?></td>
+              <td><?= $project->getLink(); ?> <a href="<?= $project->getLink(); ?>" target="_blank" title="Link to <?= $project->getName(); ?>"><span class="glyphicon glyphicon-link"></span></a></td>
+              <td><?= $project->getFinishDate(); ?></td>
+              <?php if ($this->edit): ?>
+                <td>
+                  <a href="/my-projects/results/<?= $project->getId(); ?><?php if ($this->admin) echo "?admin=1"; ?>" title="View Results"><span class="glyphicon glyphicon-eye-open"></span></a>
+                  <?php if ($this->admin): ?>
+                    <span class="margin-l"></span>
+                    <a href="/admin/projects/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil"></span></a>
+                  <?php else: ?>
+                    <span class="margin-l"></span>
+                    <a href="/my-projects/edit/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil"></span></a>
+                  <?php endif; ?>
+                  <span class="margin-l"></span>
+                  <a data-toggle="modal" data-target="#deletingModal_<?= $project->getId(); ?>" href="#" title="Remove Project" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
+                </td>
+              <?php endif; ?>
+              <?php if (!$this->edit): ?>
+              <td>
+                <?php
+                  $evaluation = getEvaluationByProjectAndUser($project->getId(), $GLOBALS["USER_SESSION"]->getId());
+                  if ((!$evaluation->getProject()->isClosed()) && ($evaluation->isFinished())):
+                  ?>
+                  <span class="label label-warning">Finished</span>
+                <?php elseif (!$evaluation->getProject()->isClosed()): ?>
+                  <span class="label label-success">Open</span>
+                <?php else: ?>
+                  <span class="label label-danger">Closed</span>
+                <?php endif; ?>
+              </td>
+              <?php endif; ?>
+            </tr>
+        <?php
+        }
+        endif;
+        ?>
+      </tbody>
+    </table>
+  <?php endif; ?>
+  <?php
+    if ((!$this->admin) && ($this->edit)):
+      if (empty($this->archivedProjectList)) {
+        echo "<span class='glyphicon glyphicon-info-sign'></span> No projects found...";
+      } else {
+        echo "<strong>Total of archived projects:</strong> ".sizeof($this->archivedProjectList);
+      }
+    endif;
   ?>
 </div>
 <!-- /.row -->
