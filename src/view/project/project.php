@@ -97,11 +97,11 @@
                     <option value="<?=$template->getId();?>" <?php if($templateId == $template->getId()) echo "selected"; ?>><?=$template->getName();?></option>
                   <?php } ?>
                 </select>
+                <?php if (($this->project) && (count($this->project->getEvaluations()) > 0)): ?>
+                  <small class="text-muted"><span class="glyphicon glyphicon-info-sign"></span> Is not possible to modify template, due to some evaluations have started.</small>
+                <?php endif; ?>
               </div>
               <?php if (($this->project) && (count($this->project->getEvaluations()) > 0)): ?>
-              <div class="alert alert-warning" role="alert">
-                <span class="glyphicon glyphicon-info-sign"></span> Is not possible to modify template, due to some evaluations have started.
-              </div>
               <?php endif; ?>
               <?php if ($this->adminView): ?>
                 <div class="form-group">

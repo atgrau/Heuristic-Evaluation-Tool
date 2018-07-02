@@ -128,8 +128,8 @@
         $body = "Hello <strong>".$user->getName()."</strong>, <br /><br />";
         $body .= "<strong>".$evaluation->getUser()->getName()."</strong> has been finished his evaluation of your project called <strong>".$evaluation->getProject()->getName()."</strong>, ";
         $body .= "the <strong>usability percentage</strong> is: <strong>".$evaluation->getUsabilityPercentage()."%</strong>";
-        $body .= "<br /><br />You can see all detailed results here: <br />";
-        $body .= "<a href='".URL."projects/results/".$evaluation->getProject()->getId()."'>".URL."projects/results/".$evaluation->getProject()->getId()."</a><br /><br />";
+        $body .= "<br /><br />You can see detailed results here: <br />";
+        $body .= "<a href='".URL."evaluations/result/".$evaluation->getProject()->getId()."'>".URL."projects/results/".$evaluation->getProject()->getId()."</a><br /><br />";
 
         $email = new Email($user->getEmail(), $subject, $body);
         $email->send();

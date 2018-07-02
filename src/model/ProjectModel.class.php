@@ -128,7 +128,7 @@
       $totals = array();
       $qry = "SELECT evaluation_results.id_answer, count(1) AS value FROM ";
       $qry .= "evaluations JOIN evaluation_results ON evaluations.ID = evaluation_results.id_evaluation ";
-      $qry .= " WHERE evaluations.id_project=%i GROUP BY evaluation_results.id_answer";
+      $qry .= " WHERE evaluations.id_project=%i and evaluations.finished = 1 GROUP BY evaluation_results.id_answer";
       $qry = DB::query($qry, $this->id);
       foreach ($qry as $row) {
         array_push($totals, $row["value"]);
@@ -139,19 +139,26 @@
     function getScore() {
       $totalScore = 0;
       foreach ($this->getEvaluations() as $evaluation) {
-        $totalScore = $totalScore + $evaluation->getScore();
-        $i++;
+        if ($evaluation->isFinished()) {
+          $totalScore = $totalScore + $evaluation->getScore();
+          $i++;
+        }
       }
-      return ($totalScore/$i);
+      if ($totalScore == 0) return 0;
+      else return ($totalScore/$i);
     }
 
     function getUsabilityPercentage() {
       $total = 0;
       foreach ($this->getEvaluations() as $evaluation) {
-        $total += $evaluation->getUsabilityPercentage();
-        $i++;
+        if ($evaluation->isFinished()) {
+          $total += $evaluation->getUsabilityPercentage();
+          $i++;
+        }
       }
-      return round($total/$i, 1);
+
+      if ($total == 0) return 0;
+      else return round($total/$i, 1);
     }
 
     function getEvaluations() {

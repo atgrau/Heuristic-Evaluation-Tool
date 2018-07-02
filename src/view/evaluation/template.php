@@ -299,10 +299,14 @@
                       </div>
                       <!-- /.panel-heading -->
                       <div class="panel-body">
-                        <canvas id="chartjs-3" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
-                        <script>new Chart(document.getElementById("chartjs-3"),{"type":"radar","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getEvaluations() as $value) { echo "'".$value->getUser()->getName()."',"; } ?>],"datasets":[
-                          {"label":"<?=$this->evaluation->getProject()->getName();?>","data":[<?php foreach ($this->evaluation->getProject()->getEvaluations() as $value) { echo $value->getUsabilityPercentage().","; } ?>],"fill":true,"backgroundColor":"rgba(255, 99, 132, 0.2)","borderColor":"rgb(255, 99, 132)","pointBackgroundColor":"rgb(255, 99, 132)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(255, 99, 132)"}
-                        ]},"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}});</script>
+                        <?php if (count($this->evaluation->getProject()->getFinishedEvaluations()) > 0): ?>
+                          <canvas id="chartjs-3" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
+                          <script>new Chart(document.getElementById("chartjs-3"),{"type":"radar","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getEvaluations() as $value) { echo "'".$value->getUser()->getName()."',"; } ?>],"datasets":[
+                            {"label":"<?=$this->evaluation->getProject()->getName();?>","data":[<?php foreach ($this->evaluation->getProject()->getEvaluations() as $value) { echo $value->getUsabilityPercentage().","; } ?>],"fill":true,"backgroundColor":"rgba(255, 99, 132, 0.2)","borderColor":"rgb(255, 99, 132)","pointBackgroundColor":"rgb(255, 99, 132)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(255, 99, 132)"}
+                          ]},"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}});</script>
+                        <?php else: ?>
+                          There is not finished evaluations yet...
+                        <?php endif; ?>
                       </div>
                       <!-- /.panel-body -->
                   </div>
