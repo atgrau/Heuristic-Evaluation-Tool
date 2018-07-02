@@ -106,8 +106,10 @@ function generateModal($project, $admin) {
         <th scope="col">Description</th>
         <th scope="col">Link</th>
         <th scope="col">Finishes at</th>
-        <?php if ($this->edit): ?>
-          <th scope="col"></th>
+        <?php if (!$this->edit): ?>
+          <th scope="col">Status</th>
+        <?php else: ?>
+          <th scope="col"> </th>
         <?php endif; ?>
       </tr>
     </thead>
@@ -117,6 +119,8 @@ function generateModal($project, $admin) {
       foreach ($this->projectList as $project) {
         if (!$this->edit) {
           $link = "style='cursor:pointer' class='clickable-row' data-href='/evaluations/id/".$project->getId()."'";
+        } else {
+          $link = "style='cursor:pointer' class='clickable-row' data-href='/my-projects/results/".$project->getId()."'";
         }
         ?>
           <tr <?=$link;?> <?php if(!$project->isActive()) echo " style='background:#EFEFEF;'"; ?>>
@@ -137,7 +141,7 @@ function generateModal($project, $admin) {
             <td><?= $project->getFinishDate(); ?></td>
             <?php if ($this->edit): ?>
               <td>
-                <a href="/projects/results/<?= $project->getId(); ?><?php if ($this->admin) echo "?admin=1"; ?>" title="View Results"><span class="glyphicon glyphicon-eye-open"></span></a>
+                <a href="/evaluations/result/<?= $project->getId(); ?><?php if ($this->admin) echo "?admin=1"; ?>" title="View Results"><span class="glyphicon glyphicon-eye-open"></span></a>
                 <?php if ($this->admin): ?>
                   <span class="margin-l"></span>
                   <a href="/admin/projects/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil"></span></a>
@@ -148,6 +152,20 @@ function generateModal($project, $admin) {
                 <span class="margin-l"></span>
                 <a data-toggle="modal" data-target="#deletingModal_<?= $project->getId(); ?>" href="#" title="Remove Project" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
               </td>
+            <?php endif; ?>
+            <?php if (!$this->edit): ?>
+            <td>
+              <?php
+                $evaluation = getEvaluationByProjectAndUser($project->getId(), $GLOBALS["USER_SESSION"]->getId());
+                if ((!$evaluation->getProject()->isClosed()) && ($evaluation->isFinished())):
+                ?>
+                <span class="label label-warning">Finished</span>
+              <?php elseif (!$evaluation->getProject()->isClosed()): ?>
+                <span class="label label-success">Open</span>
+              <?php else: ?>
+                <span class="label label-danger">Closed</span>
+              <?php endif; ?>
+            </td>
             <?php endif; ?>
           </tr>
       <?php

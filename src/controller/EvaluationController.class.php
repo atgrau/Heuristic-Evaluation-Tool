@@ -25,15 +25,32 @@
       $this->render();
     }
 
-    function showEvaluationResults($evaluationId) {
+    function showEvaluationResults($projectId) {
       // Check if exists the relationship
-      $this->evaluation = getEvaluationById($evaluationId);
-      if ((!$this->evaluation) || ($this->evaluation->getProject()->getUser() != $GLOBALS["USER_SESSION"])) {
+      $this->project = getProjectById($projectId);
+
+      if ((!$this->project) || (($this->project->getUser() != $GLOBALS["USER_SESSION"]) && (!$GLOBALS["USER_SESSION"]->isAdmin()))) {
         header("Location: /my-projects");
       }
 
-      $this->setContentView("evaluation/static_template");
+      $this->setContentView("evaluation/template_results");
       $this->render();
+    }
+
+    function reOpenEvaluation() {
+      if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        header("Location: /evaluations");
+      }
+
+      // Check if exists the relationship
+      $evaluation = getEvaluationById($_POST["id_evaluation"]);
+
+      if ((!$evaluation) || (($evaluation->getProject()->getUser() != $GLOBALS["USER_SESSION"]) && (!$GLOBALS["USER_SESSION"]->isAdmin()))) {
+        header("Location: /my-projects");
+      } else {
+        $evaluation->setFinished(false);
+        $evaluation->update();
+      }
     }
 
     function update() {
@@ -128,8 +145,8 @@
         $body = "Hello <strong>".$user->getName()."</strong>, <br /><br />";
         $body .= "<strong>".$evaluation->getUser()->getName()."</strong> has been finished his evaluation of your project called <strong>".$evaluation->getProject()->getName()."</strong>, ";
         $body .= "the <strong>usability percentage</strong> is: <strong>".$evaluation->getUsabilityPercentage()."%</strong>";
-        $body .= "<br /><br />You can see all detailed results here: <br />";
-        $body .= "<a href='".URL."projects/results/".$evaluation->getProject()->getId()."'>".URL."projects/results/".$evaluation->getProject()->getId()."</a><br /><br />";
+        $body .= "<br /><br />You can see detailed results here: <br />";
+        $body .= "<a href='".URL."evaluations/result/".$evaluation->getProject()->getId()."'>".URL."projects/results/".$evaluation->getProject()->getId()."</a><br /><br />";
 
         $email = new Email($user->getEmail(), $subject, $body);
         $email->send();

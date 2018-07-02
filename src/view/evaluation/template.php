@@ -41,7 +41,7 @@
       <tbody>
         <th colspan="2" class="thead-light text-center">Project Information</th>
         <tr>
-          <th width="15%">Project's Name:</th>
+          <th width="20%">Project's Name:</th>
           <td><?=$this->evaluation->getProject()->getName();?></td>
         </tr>
         <tr>
@@ -219,7 +219,7 @@
               <div class="col-lg-5">
                 <div class="panel panel-default">
                     <div class="panel-heading text-center text-bold">
-                        My Answers
+                        My Answers Chart
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
@@ -236,7 +236,7 @@
                     <th colspan="2" class="thead-light text-center">Score per Category</th>
                     <?php foreach ($this->evaluation->getProject()->getTemplate()->getCategories() as $category) { ?>
                       <tr>
-                        <th width="80%"><?=++$cs.". ".$category->getName(); ?></th>
+                        <th width="90%"><?=++$cs.". ".$category->getName(); ?></th>
                         <td><?=$this->evaluation->getScoreByCategory($category->getId());?></td>
                       </tr>
                   <?php } ?>
@@ -281,7 +281,28 @@
                 <div class="col-lg-6">
                   <div class="panel panel-default">
                       <div class="panel-heading text-center text-bold">
-                          Global Answers
+                          Global Usability Percentage Chart
+                      </div>
+                      <!-- /.panel-heading -->
+                      <div class="panel-body">
+                        <?php if (count($this->evaluation->getProject()->getFinishedEvaluations()) > 0): ?>
+                          <canvas id="chartjs-3" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
+                          <script>new Chart(document.getElementById("chartjs-3"),{"type":"radar","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getEvaluations() as $value) { echo "'".$value->getUser()->getName()."',"; } ?>],"datasets":[
+                            {"label":"<?=$this->evaluation->getProject()->getName();?>","data":[<?php foreach ($this->evaluation->getProject()->getEvaluations() as $value) { echo $value->getUsabilityPercentage().","; } ?>],"fill":true,"backgroundColor":"rgba(255, 99, 132, 0.2)","borderColor":"rgb(255, 99, 132)","pointBackgroundColor":"rgb(255, 99, 132)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(255, 99, 132)"}
+                          ]},"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}});</script>
+                        <?php else: ?>
+                          There is not finished evaluations yet...
+                        <?php endif; ?>
+                      </div>
+                      <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+              </div>
+
+                <div class="col-lg-6">
+                  <div class="panel panel-default">
+                      <div class="panel-heading text-center text-bold">
+                          Global Answers Chart
                       </div>
                       <!-- /.panel-heading -->
                       <div class="panel-body">
@@ -292,22 +313,7 @@
                   </div>
                   <!-- /.panel -->
                 </div>
-                <div class="col-lg-6">
-                  <div class="panel panel-default">
-                      <div class="panel-heading text-center text-bold">
-                          Global Usability Percentage
-                      </div>
-                      <!-- /.panel-heading -->
-                      <div class="panel-body">
-                        <canvas id="chartjs-3" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
-                        <script>new Chart(document.getElementById("chartjs-3"),{"type":"radar","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getEvaluations() as $value) { echo "'".$value->getUser()->getName()."',"; } ?>],"datasets":[
-                          {"label":"<?=$this->evaluation->getProject()->getName();?>","data":[<?php foreach ($this->evaluation->getProject()->getEvaluations() as $value) { echo $value->getUsabilityPercentage().","; } ?>],"fill":true,"backgroundColor":"rgba(255, 99, 132, 0.2)","borderColor":"rgb(255, 99, 132)","pointBackgroundColor":"rgb(255, 99, 132)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(255, 99, 132)"}
-                        ]},"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}});</script>
-                      </div>
-                      <!-- /.panel-body -->
-                  </div>
-                  <!-- /.panel -->
-                  </div>
+
             </div>
           </div>
         </div>

@@ -20,9 +20,9 @@
       "/account/update-password" => 0,
       "/evaluations" => 0,
       "/evaluations/id" => 0,
-      "/evaluations/result" => 0,
       "/evaluation/update" => 0,
       "/evaluation/finish" => 0,
+      "/evaluation/reopen" => 1,
       "/template/setCategory" => 0,
       "/my-projects" => 1,
       "/my-projects/new" => 1,
@@ -30,7 +30,7 @@
       "/my-projects/add" => 1,
       "/my-projects/update" => 1,
       "/my-projects/remove" => 1,
-      "/projects/results" => 1,
+      "/my-projects/results" => 1,
       "/templates/edit" => 1,
       "/templates/new" => 1,
       "/admin/projects" => 2,
@@ -120,7 +120,10 @@
       } else if ($this->uri == "/evaluations/id") {
         $controller = new EvaluationController();
         $controller->showEvaluationTemplate($_GET["param"]);
-      } else if ($this->uri == "/evaluations/result") {
+      } else if ($this->uri == "/evaluation/reopen") {
+        $controller = new EvaluationController();
+        $controller->reOpenEvaluation();
+      } else if ($this->uri == "/my-projects/results") {
         $controller = new EvaluationController();
         $controller->showEvaluationResults($_GET["param"]);
       }else if ($this->uri == "/evaluation/update") {
@@ -153,13 +156,6 @@
           $controller->showProjectList(true);
         } else {
           $controller->updateProjectView(true, $_GET["param"]);
-        }
-      } else if ($this->uri == "/projects/results") {
-        $controller = new ProjectController();
-        if (empty($_GET["param"])) {
-          $controller->showProjectList($_GET["admin"] == "1");
-        } else {
-          $controller->viewResults($_GET["param"]);
         }
       } else if ($this->uri == "/admin/project-update") {
         $controller = new ProjectController();
