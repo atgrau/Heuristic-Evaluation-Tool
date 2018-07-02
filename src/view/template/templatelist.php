@@ -94,8 +94,8 @@ return '<!-- Modal -->
       foreach ($this->templateList as $template) { ?>
           <tr>
             <?= generateModal($template); ?>
-            <th scope="row"><?=$template->getId(); ?></th>
-            <td><a href="/admin/templates/<?= $template->getId(); ?>?edit=0" title="<?= $template->getName(); ?> "><?= $template->getName(); ?></a> </td>
+            <th scope="row"><?=++$te; ?></th>
+            <td><a href="/admin/templates/<?= $template->getId(); ?>?edit=0" title="<?= $template->getName(); ?> "><?=$template->getName(); ?></a> </td>
             <td><input type="checkbox" value=<?=$template->isActive()?>
                   <?php if($template->isActive()== 1): ?>
                     checked
