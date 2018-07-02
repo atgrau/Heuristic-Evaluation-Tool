@@ -491,11 +491,9 @@ class Answer
 
     if ($categories) {
       foreach ($categories as $row) {
-<<<<<<< HEAD
+
         $questions = DB::query("SELECT tq.ID, tq.question, tq.original FROM questionsbytemplate a JOIN template_questions tq ON a.idQuestion = tq.ID WHERE tq.id_category=%i AND a.idTemplate=%i", $row["ID"], $templateId);
-=======
-        $questions = DB::query("SELECT tq.ID, tq.question, tq.original FROM questionsbytemplate a  JOIN template_questions tq ON a.idQuestion = tq.ID WHERE tq.id_category=%i AND a.idTemplate=%i", $row["ID"], $templateId);
->>>>>>> 4611793e51120c9afb7b82b4d84ce9de1640480b
+
         $questionList = array();
 
         if($questions)
