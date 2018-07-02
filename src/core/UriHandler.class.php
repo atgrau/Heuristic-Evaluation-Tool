@@ -45,6 +45,7 @@
       "/template/category-remove" => 2,
       "/template/category-new" => 2,
       "/template/question-remove" => 2,
+      "/template/question-new" => 2,
       "/admin/importcsv" => 2,
       "/admin/template-remove" => 2,
 

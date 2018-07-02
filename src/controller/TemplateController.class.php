@@ -51,7 +51,12 @@
       if (empty($_POST["categoryName"])) {
           $this->error = "The category's name is empty";
       }
-      $category = new Category(0, $_POST["categoryName"],0, null);
+      if (empty($_POST["questionName"])) {
+          $this->error = "The question is empty";
+      }
+      $questionList = array();
+      array_push($questionList, new Question(0, $_POST["questionName"],0));
+      $category = new Category(0, $_POST["categoryName"],0, $questionList);
       $category->setTemplateId($_POST["idTemplate"]);
       $category-> insert();
       if($category){
@@ -67,6 +72,20 @@
       $this->showTemplateView(true, $question->getTemplateId(), 1);
     }
 
+    function newQuestion(){
+      if (empty($_POST["questionName"])) {
+          $this->error = "The question is empty";
+      }
+
+      $question = new Question(0, $_POST["questionName"],0);
+      $question->setTemplateId($_POST["idTemplate"]);
+      $question->setCategoryId($_POST["idCategory"]);
+      $question-> insert();
+      if($question){
+        $this->showTemplateView(true, $question->getTemplateId(), 1);
+      }
+
+    }
 
     function addNewTemplateView(){
 

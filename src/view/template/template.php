@@ -54,21 +54,14 @@ return '<!-- Modal -->
             <div class="modal-body">
               <div class="form-group">
                 <label for="category">Category Name:</label>
-                <input name="categoryName" type="text" class="form-control" placeholder="Category name" />
+                <input name="categoryName" type="text" class="form-control" placeholder="Insert category name" />
                 <input name="idTemplate" type="hidden" class="form-control" value=<?= $this->template->getId(); ?>/>
               </div>
             </div>
             <div class="modal-body">
               <div class="form-group">
                 <label for="question">Questions :</label>
-                <input name="question" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
-                <?php
-                    function createInputQuestion()
-                    {?>
-                      <input name="question" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
-                  <?php }
-
-                ?>
+                <input name="questionName" type="text" class="form-control" placeholder="Insert question..." aria-label="" aria-describedby="basic-addon1">
                 <div class="input-group-prepend" style="float:left"></br>
                   <button class="btn btn-outline-secondary" >+</button>
                 </div>
@@ -76,7 +69,7 @@ return '<!-- Modal -->
             </div></br>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                <button type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-floppy-disk"></span> Save </button>
               </div>
       </form>
     </div>
@@ -140,7 +133,7 @@ return '<!-- Modal -->
                                     <table class="table">
                                       <tbody>
                                         <tr>
-                                          <td width="70%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"><h4> <?= $category->getName(); ?></h4></td>
+                                          <td width="70%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"><h4> <?=++$c.". ". $category->getName(); ?></h4></td>
                                           <?php if ($this->editTemplate):?>
                                             <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd">
                                               <form action="/template/category-remove/" method="POST">
@@ -152,25 +145,28 @@ return '<!-- Modal -->
                                           <?php endif; ?>
                                         </tr>
                                         <?php foreach ($category->getQuestions() as $question) { ?>
-                                              <tr>
-                                                <td width="70%"><?= $question->getName(); ?></td>
-                                                <?php if ($this->editTemplate):?>
-                                                <td width="10%">
-                                                    <a href="/template/question-remove/<?= $question->getId()?>?del=<?=$this->template->getId();?>" title="Remove question" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
-                                                </td>
-                                                <?php endif; ?>
-                                              </tr>
-                                          <?php } ?>
+                                        <tr>
+                                          <td width="70%"><?= $question->getName(); ?></td>
+                                          <?php if ($this->editTemplate):?>
+                                          <td width="10%">
+                                              <a href="/template/question-remove/<?= $question->getId()?>?del=<?=$this->template->getId();?>" title="Remove question" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
+                                          </td>
+                                          <?php endif; ?>
+                                        </tr>
+                                        <?php } ?>
                                       </tbody>
                                     </table>
-
+                                    <form action="/template/question-new" method="POST">
                                     <?php if ($this->editTemplate): ?>
-                                      <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Insert question">
-                                        <div class="input-group-append">
-                                          <button class="btn btn-outline-secondary" type="button">+</button>
+                                        <div class="input-group mb-3">
+                                          <input name="idCategory" type="hidden" class="form-control"  value="<?= $category->getId()?>"/>
+                                          <input name="idTemplate" type="hidden" class="form-control"  value="<?= $this->template->getId()?>"/>
+                                          <input name="questionName" type="text" class="form-control" placeholder="Insert question">
+                                          <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary" type="submit">+</button>
+                                          </div>
                                         </div>
-                                      </div>
+                                      </form>
 
                                     <?php endif; ?>
                           <?php } ?>
