@@ -32,15 +32,33 @@ return '<!-- Modal -->
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <form class="box" method="POST" action="" enctype="multipart/form-data">
+        <div class="modal-body">
 
-      </div>
+        </div>
 
-      <div class="modal-body">
+        <div class="modal-body">
+          <table class="table table-hover">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">E-mail</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th><input value="Ok"/></th>
+                <th><input value="@gmal..com"/></th>
+                <th><span class="glyphicon glyphicon-remove"></th>
+              </tr>
+            <tbody>
+          </table>
+        </div>
+      </form>
 
-      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success" data-dismiss="modal">Finish</button>
       </div>
     </div>
   </div>
@@ -127,4 +145,5 @@ return '<!-- Modal -->
     }
   ?>
 </div>
+
 <!-- /.row -->
