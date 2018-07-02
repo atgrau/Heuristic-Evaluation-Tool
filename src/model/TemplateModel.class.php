@@ -370,6 +370,25 @@ class Answer
       }
     }
 
+    function insert()
+    {
+      $answer = DB::insert('template_answers', array(
+        "answer" => $this->getName(),
+        "value" => $this->getValue(),
+        "color" => $this->getColor(),
+        "original" => false,
+      ));
+
+      $this->id = DB::insertId();
+
+      if($answer){
+        DB::insert('answersbytemplate', array(
+          "idTemplate" => $this->getTemplateId(),
+          "idAnswer" => $this->id,
+        ));
+      }
+    }
+
 }
 
 

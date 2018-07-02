@@ -29,17 +29,7 @@
           $this->render();
         }
     }
-/*
-    function updateTemplateView($adminView, $templateId, $edit) {
-      $template = getTemplateById($templateId);
 
-        if ((!$template) || ((!$GLOBALS["USER_SESSION"]->isAdmin()) && ($GLOBALS["USER_SESSION"]->getId() != $template->getUser()->getId()))) {
-            $this->showTemplateList($adminView);
-        } else {
-          $this->render();
-        }
-    }
-*/
     function removeCategory(){
 
       $category = getCategorybyId($_POST["idTemplate"], $_POST["idCategory"]);
@@ -113,10 +103,30 @@
       $template->delete();
       $this->removeMessage = true;
       $this->showTemplateList($adminView);
-
     }
 
+    function removeAnswer($idAnswer, $idTemplate){
 
+      $answer = getAnswerbyId($idAnswer);
+      $answer->setTemplateId($idTemplate);
+      $answer->remove();
+      $this->showTemplateView(true, $answer->getTemplateId(), 1);
+    }
+
+    function newAnswer(){
+      if ((empty($_POST["answer"])) || (empty($_POST["value"])) || (empty($_POST["color"]))) {
+          $this->error = "Some value is incorrect.";
+      }
+
+      $answer = new Answer(0, $_POST["answer"], $_POST["value"], 0,0);
+      $answer->setColor($_POST["color"]);
+      $answer->setTemplateId($_POST["idTemplate"]);
+      $answer-> insert();
+      if($answer){
+        $this->showTemplateView(true, $answer->getTemplateId(), 1);
+      }
+
+    }
 
   }
 
