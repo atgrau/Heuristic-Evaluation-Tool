@@ -11,6 +11,10 @@
       }
 
       $this->evaluation = getEvaluationByProjectAndUser($projectId, $GLOBALS["USER_SESSION"]->getId());
+      if ((!$this->evaluation) || (!$this->evaluation->getProject()->isActive())) {
+        header("Location: /evaluations");
+      }
+
       // If evaluation is not created yet, lets create it.
       if (!$this->evaluation) {
         $this->evaluation = new Evaluation(0, getProjectById($projectId), $GLOBALS["USER_SESSION"], false, null);
@@ -21,7 +25,22 @@
       $this->render();
     }
 
+    function showEvaluationResults($evaluationId) {
+      // Check if exists the relationship
+      $this->evaluation = getEvaluationById($evaluationId);
+      if ((!$this->evaluation) || ($this->evaluation->getProject()->getUser() != $GLOBALS["USER_SESSION"])) {
+        header("Location: /my-projects");
+      }
+
+      $this->setContentView("evaluation/static_template");
+      $this->render();
+    }
+
     function update() {
+      if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        header("Location: /evaluations");
+      }
+
       // Check if exists the relationship
       $evaluation = getEvaluationById($_POST["id_evaluation"]);
 
@@ -74,16 +93,18 @@
           </div>
       </div>';
 
-      // Feedback
       echo
       '<div id="resultMessage" class="alert alert-info fade in" role="alert">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <span class="glyphicon glyphicon-ok"></span> Your changes have been saved successfully!
       </div>';
-      exit;
     }
 
     function finish() {
+      if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        header("Location: /evaluations");
+      }
+
       // Check if exists the relationship
       $evaluation = getEvaluationById($_POST["id_evaluation"]);
 
@@ -99,6 +120,19 @@
 
         $evaluation->setFinished(true);
         $evaluation->update();
+
+        // Send and Email to the Project Manager
+        $user = $evaluation->getProject()->getUser();
+
+        $subject = "Results for ".$evaluation->getProject()->getName();
+        $body = "Hello <strong>".$user->getName()."</strong>, <br /><br />";
+        $body .= "<strong>".$evaluation->getUser()->getName()."</strong> has been finished his evaluation of your project called <strong>".$evaluation->getProject()->getName()."</strong>, ";
+        $body .= "the <strong>usability percentage</strong> is: <strong>".$evaluation->getUsabilityPercentage()."%</strong>";
+        $body .= "<br /><br />You can see all detailed results here: <br />";
+        $body .= "<a href='".URL."projects/results/".$evaluation->getProject()->getId()."'>".URL."projects/results/".$evaluation->getProject()->getId()."</a><br /><br />";
+
+        $email = new Email($user->getEmail(), $subject, $body);
+        $email->send();
       }
       $this->finishMessage = '<div id="result_finish" class="alert alert-'.$style.' fade in" role="alert">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'.$this->finishMessage.'</div>';

@@ -38,7 +38,13 @@
         header("Location: /my-projects");
       }
 
-      $project = new Project(0, $GLOBALS["USER_SESSION"]->getId(), null, null, $_POST["name"], $_POST["description"], $_POST["link"], false, getTemplateById($_POST["template"]));
+      try {
+        $date = new DateTime($_POST["finish_date"]);
+      }  catch (Exception $e) {
+        $date = new DateTime(now());
+      }
+
+      $project = new Project(0, $GLOBALS["USER_SESSION"]->getId(), null, $date, $_POST["name"], $_POST["description"], $_POST["link"], false, getTemplateById($_POST["template"]));
       $users = array();
       if ($_POST["users"]):
         foreach ($_POST["users"] as $user) {
@@ -57,14 +63,14 @@
         foreach ($project->getUsers() as $user) {
           // Send Email to the users
           $subject = "You have been assigned to a new project";
-          $body = "Hello <b>".$user->getName()."</b>, <br /><br />";
+          $body = "Hello <strong>".$user->getName()."</strong>, <br /><br />";
           $body .= "You have been assigned to a new project:<br />";
           $body .= "<ul>";
           $body .= "<li><strong>Name:</strong> ".$project->getName()."</li>";
           $body .= "<li><strong>Description:</strong> ".$project->getDescription()."</li>";
           $body .= "<li><strong>Link:</strong> ".$project->getLink()."</li>";
           $body .= "</ul>";
-          $body .= "<br />You can evaluate the project here:<br /><a href='".URL."projects/evaluation/".$project->getId()."'>".URL."projects/evaluation/".$project->getId()."</a><br /><br />";
+          $body .= "<br />You can evaluate the project here:<br /><a href='".URL."evaluations/id/".$project->getId()."'>".URL."projects/evaluation/".$project->getId()."</a><br /><br />";
 
           $email = new Email($user->getEmail(), $subject, $body);
           $email->send();
@@ -101,13 +107,14 @@
         $project->setName($_POST["name"]);
         $project->setDescription($_POST["description"]);
         $project->setLink($_POST["link"]);
-        $project->setFinishDate(new DateTime($_POST["finish_date"]));
+        try {
+          $project->setFinishDate(new DateTime($_POST["finish_date"]));
+        } catch (Exception $e) { }
         $originalTemplateId = $project->getTemplate()->getId();
         $newTemplate = getTemplateById($_POST["template"]);
         if ($newTemplate) {
           $project->setTemplate($newTemplate);
         }
-
 
         if ($adminView) {
           $project->setActive($_POST["active"]=="1");
@@ -119,6 +126,8 @@
             array_push($users, getUserById($user));
           }
           $project->setUsers($users);
+        else:
+          $project->setUsers(array());          
         endif;
 
         // Validate Project
@@ -131,14 +140,14 @@
           foreach ($project->getUsers() as $user) {
             // Send Email to the users
             $subject = "A project that you have been assigned in was modified";
-            $body = "Hello <b>".$user->getName()."</b>, <br /><br />";
+            $body = "Hello <strong>".$user->getName()."</strong>, <br /><br />";
             $body .= "You are assigned in a project which has been modified, check the newer information:<br />";
             $body .= "<ul>";
             $body .= "<li><strong>Name:</strong> ".$project->getName()."</li>";
             $body .= "<li><strong>Description:</strong> ".$project->getDescription()."</li>";
             $body .= "<li><strong>Link:</strong> ".$project->getLink()."</li>";
             $body .= "</ul>";
-            $body .= "<br />You can evaluate the project here:<br /><a href='".URL."projects/evaluation/".$project->getId()."'>".URL."projects/evaluation/".$project->getId()."</a><br /><br />";
+            $body .= "<br />You can evaluate the project here:<br /><a href='".URL."evaluations/id/".$project->getId()."'>".URL."projects/evaluation/".$project->getId()."</a><br /><br />";
 
             $email = new Email($user->getEmail(), $subject, $body);
             $email->send();
@@ -203,8 +212,12 @@
         $this->showProjectList($_GET["admin"] == "1");
       }
 
+      if ($project->getUser() != $GLOBALS["USER_SESSION"]) {
+        $this->showProjectList($_GET["admin"] == "1");
+      }
+
       foreach ($project->getEvaluations() as $evaluation) {
-        echo $evaluation->getUser()->getName();
+        echo "<a href='/evaluations/result/".$evaluation->getId()."'>Evaluation of ".$evaluation->getUser()->getName()."</a>";
       }
     }
 
@@ -215,7 +228,10 @@
         $this->showProjectList($adminView);
       }
 
-      // Check user dependencies
+      // Delete all evaluations
+      foreach ($project->getEvaluations() as $evaluation) {
+        $evaluation->delete();
+      }
 
 
       // Delete Project

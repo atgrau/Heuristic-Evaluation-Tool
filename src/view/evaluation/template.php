@@ -15,8 +15,8 @@
         <form action="/evaluation/finish" method="POST">
           <div class="right">
               <input type="hidden" name="id_evaluation" value="<?=$this->evaluation->getId();?>" />
-              <button id="finish" type="submit" class="btn btn-warning" <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?>><span class="glyphicon glyphicon-ok"></span> Finish</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button id="finish" type="submit" class="btn btn-warning" <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?>><span class="glyphicon glyphicon-ok"></span> Finish</button>
           </div>
         </form>
 
@@ -41,7 +41,7 @@
       <tbody>
         <th colspan="2" class="thead-light text-center">Project Information</th>
         <tr>
-          <th width="20%">Project's Name:</th>
+          <th width="15%">Project's Name:</th>
           <td><?=$this->evaluation->getProject()->getName();?></td>
         </tr>
         <tr>
@@ -53,7 +53,7 @@
           <td><a href="<?=$this->evaluation->getProject()->getLink();?>" target="_blank" title="Link to <?=$this->evaluation->getProject()->getLink();?>"><?=$this->evaluation->getProject()->getLink();?></a></td>
         </tr>
         <tr>
-          <th>Ending at:</th>
+          <th>Finishes at:</th>
           <?php
             if (($daysLeft = $this->evaluation->getProject()->getDaysLeft()) == 0) $daysLeft = "some hours"; elseif ($daysLeft < 0) $daysLeft = "0 days"; else $daysLeft = $daysLeft." days";
           ?>
@@ -81,6 +81,7 @@
               <a class="btn btn-default" id="hideButton" href="#"><span class="glyphicon glyphicon-eye-close"></span> Hide Sidebar</a>
               <a style="display:none" class="btn btn-default" id="showButton" href="#"><span class="glyphicon glyphicon-eye-open"></span> Show Sidebar</a>
               <button <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?> id="save" type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+              <a href="/evaluations" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Close</a>
               <input type="hidden" name="id_evaluation" value="<?=$this->evaluation->getId();?>" />
               <button id="finish" type="button" class="btn btn-warning" <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?> data-toggle="modal" data-target="#finishModal"><span class="glyphicon glyphicon-ok"></span> Finish</button>
           </div>
@@ -121,7 +122,7 @@
                   <table class="table">
                     <thead class="thead-light">
                       <tr>
-                        <th colspan="2"><?=$category->getName(); ?></th>
+                        <th colspan="2"><?=++$c.". ".$category->getName(); ?></th>
                         <th>Answer</th>
                         <th>Comments</th>
                       </tr>
@@ -136,8 +137,8 @@
                           <td width="50%"><?=$question->getName(); ?></td>
                           <td width="20%">
                             <div class="form-group">
-                              <select <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?> name="answer_<?=$question->getId();?>" class="form-control" onChange="$('#save').click()">
-                                <option value="">Select...</option>
+                              <select id="question_<?=$question->getId();?>" <?php if ($result): ?>style="color:#<?=$result->getAnswer()->getColor()?>;" <?php endif; ?> <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?> name="answer_<?=$question->getId();?>" class="form-control text-bold" onChange="changed = true; $('#question_<?=$question->getId(); ?>').css('color',$(this).children(':selected').attr('color'));" <?php //onChange="$('#save').click()"?>>
+                                <option value=""></option>
                                 <?php
                                   foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $answer) {
                                     if (($result) && ($result->getAnswer()->getId() == $answer->getId())) {
@@ -146,14 +147,14 @@
                                       $selected = "";
                                     }
                                 ?>
-                                <option <?=$selected;?> value="<?=$answer->getId();?>"><?=$answer->getName();?></option>
+                                <option color="#<?=$answer->getColor();?>" style="color:#<?=$answer->getColor();?>;" <?=$selected;?> value="<?=$answer->getId();?>"><?=$answer->getName();?></option>
                               <?php } ?>
                               </select>
                              </div>
                           </td>
                           <td width="30%">
                             <div class="form-group">
-                              <textarea <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?> onfocusout="$('#save').click()" name="comment_<?=$question->getId();?>" class="form-control"><?php
+                              <textarea <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?> onChange="changed = true;" <?php //onfocusout="$('#save').click()"?> name="comment_<?=$question->getId();?>" class="form-control"><?php
                                   if ($result) {
                                     echo $result->getComment();
                                   }
@@ -174,17 +175,21 @@
 
             <div class="tab-pane fade in <?php if ($this->tab == "results") echo "active"; ?> margin-lg-t" id="results">
 
-              <div class="col-lg-6">
+              <div class="col-lg-7">
                 <table class="table">
                   <tbody>
                     <th colspan="2" class="thead-light text-center">My Results</th>
                     <tr>
-                      <th>Total Questions</th>
+                      <th width="30%">Total Questions</th>
                       <td><?=$this->evaluation->getQuestionsCount();?></td>
                     </tr>
                     <tr>
                       <th>Answered Questions</th>
                       <td><?=$this->evaluation->getAnsweredQuestionsCount();?> <big>(<?=round($this->evaluation->getAnsweredQuestionsCount()/$this->evaluation->getQuestionsCount()*100, 1);?>%)</big></td>
+                    </tr>
+                    <tr>
+                      <th>Answered Questions without N/A</th>
+                      <td><?=$this->evaluation->getAnsweredScorableQuestionsCount();?></td>
                     </tr>
                     <tr>
                       <th>Unanswered Questions</th>
@@ -207,23 +212,19 @@
                       ?>
                       <td><big><span class="label label-<?=$style;?>"><?=$this->evaluation->getUsabilityPercentage();?>%</span></big></td>
                     </tr>
-                    <tr>
-                      <th>Ending at</th>
-                      <td><?=$this->evaluation->getProject()->getFinishDate();?></td>
-                    </tr>
                   </tbody>
                 </table>
               </div>
 
-              <div class="col-lg-6">
+              <div class="col-lg-5">
                 <div class="panel panel-default">
                     <div class="panel-heading text-center text-bold">
                         My Answers
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                      <canvas id="chartjs-1" class="chartjs" width="770" height="300" style="display: block; width: 770px; height: 385px;"></canvas>
-                      <script>new Chart(document.getElementById("chartjs-1"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->evaluation->getAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":["rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(255, 205, 86)"]}]}});</script>
+                      <canvas id="chartjs-1" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
+                      <script>new Chart(document.getElementById("chartjs-1"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->evaluation->getAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'#".$value->getColor()."',"; } ?>]}]}});</script>
                     </div>
                     <!-- /.panel-body -->
                 </div>
@@ -235,7 +236,7 @@
                     <th colspan="2" class="thead-light text-center">Score per Category</th>
                     <?php foreach ($this->evaluation->getProject()->getTemplate()->getCategories() as $category) { ?>
                       <tr>
-                        <th width="80%"><?=$category->getName(); ?></th>
+                        <th width="80%"><?=++$cs.". ".$category->getName(); ?></th>
                         <td><?=$this->evaluation->getScoreByCategory($category->getId());?></td>
                       </tr>
                   <?php } ?>
@@ -252,6 +253,10 @@
                     <tr>
                       <th width="22%">Evaluations</th>
                       <td><?=count($this->evaluation->getProject()->getEvaluations());?></td>
+                    </tr>
+                    <tr>
+                      <th width="22%">Finished Evaluations</th>
+                      <td><?=count($this->evaluation->getProject()->getFinishedEvaluations());?></td>
                     </tr>
                     <tr>
                       <th width="22%">Average Score</th>
@@ -281,7 +286,7 @@
                       <!-- /.panel-heading -->
                       <div class="panel-body">
                         <canvas id="chartjs-2" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
-                        <script>new Chart(document.getElementById("chartjs-2"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->evaluation->getProject()->getGlobalAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":["rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(255, 205, 86)"]}]}});</script>
+                        <script>new Chart(document.getElementById("chartjs-2"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->evaluation->getProject()->getGlobalAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'#".$value->getColor()."',"; } ?>]}]}});</script>
                       </div>
                       <!-- /.panel-body -->
                   </div>
@@ -313,6 +318,7 @@
 <!-- /.row -->
 
 <script>
+  var changed = false;
   // Hide SidebarButton
   $("#hideButton").click(function() {
     $("#sidebar").hide("fast");
@@ -331,7 +337,8 @@
 
   // Save Button
   $("#save").click(function(){
-
+    $("#save").html("<span class='glyphicon glyphicon-floppy-disk'></span> Saving...");
+    $("#save").prop('disabled', true);
     $.ajax({
         type:'POST',
         url:'/evaluation/update',
@@ -342,9 +349,18 @@
           $("#percentage").hide("fast");
           $("#result_finish").hide("fast");
           $("#resultMessage").delay(3000).hide("blind");
+          $("#save").html("<span class='glyphicon glyphicon-floppy-disk'></span> Save");
+          $("#save").prop('disabled', false);
+          changed = false;
         }
     });
   });
+
+  window.onbeforeunload = function() {
+    if (changed) {
+      return 1;
+    }
+  };
 
   // Top Button
   window.onscroll = function() {scrollFunction()};
@@ -365,4 +381,5 @@
         scrollTop: $("#results").offset().top
     }, 500);
   });
+
 </script>

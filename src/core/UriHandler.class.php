@@ -20,6 +20,7 @@
       "/account/update-password" => 0,
       "/evaluations" => 0,
       "/evaluations/id" => 0,
+      "/evaluations/result" => 0,
       "/evaluation/update" => 0,
       "/evaluation/finish" => 0,
       "/template/setCategory" => 0,
@@ -57,7 +58,6 @@
     }
 
     function execute() {
-
       // 1- Firstly, check if Uri exists
       if (!isset($this->uris[$this->uri])) {
         $view = new BaseController("404","");
@@ -75,6 +75,7 @@
         $view->uri = $this->uri."/".$_GET["param"];
         $view->render();
       }
+
 
       // 3- Load Controller
       if ($this->uri == "/") {
@@ -116,7 +117,10 @@
       } else if ($this->uri == "/evaluations/id") {
         $controller = new EvaluationController();
         $controller->showEvaluationTemplate($_GET["param"]);
-      } else if ($this->uri == "/evaluation/update") {
+      } else if ($this->uri == "/evaluations/result") {
+        $controller = new EvaluationController();
+        $controller->showEvaluationResults($_GET["param"]);
+      }else if ($this->uri == "/evaluation/update") {
         $controller = new EvaluationController();
         $controller->update();
       } else if ($this->uri == "/evaluation/finish") {

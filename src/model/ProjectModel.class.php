@@ -148,7 +148,7 @@
     function getUsabilityPercentage() {
       $total = 0;
       foreach ($this->getEvaluations() as $evaluation) {
-        $total += $evaluation->getScore()*100/($this->template->getMaxAnswerValue()*$evaluation->getQuestionsCount());
+        $total += $evaluation->getUsabilityPercentage();
         $i++;
       }
       return round($total/$i, 1);
@@ -157,6 +157,15 @@
     function getEvaluations() {
       $evaluations = array();
       $qry = DB::query("SELECT ID FROM evaluations WHERE id_project=%i", $this->id);
+      foreach ($qry as $row) {
+        array_push($evaluations, getEvaluationById($row["ID"]));
+      }
+      return $evaluations;
+    }
+
+    function getFinishedEvaluations() {
+      $evaluations = array();
+      $qry = DB::query("SELECT ID FROM evaluations WHERE id_project=%i AND finished=1", $this->id);
       foreach ($qry as $row) {
         array_push($evaluations, getEvaluationById($row["ID"]));
       }
@@ -172,7 +181,7 @@
       DB::insert('projects', array(
         "id_user" => $this->user->getId(),
         "creation_date" => date('Y-m-d H:i:s', time()),
-        "finish_date" => date('Y-m-d H:i:s', $this->finishDate),
+        "finish_date" => $this->finishDate,
         "name" => $this->name,
         "description" => $this->description,
         "link" => $this->link,

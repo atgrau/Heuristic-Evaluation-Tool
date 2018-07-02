@@ -105,7 +105,7 @@ function generateModal($project, $admin) {
         <th scope="col">Project's Name</th>
         <th scope="col">Description</th>
         <th scope="col">Link</th>
-        <th scope="col">Created On</th>
+        <th scope="col">Finishes at</th>
         <?php if ($this->edit): ?>
           <th scope="col"></th>
         <?php endif; ?>
@@ -134,7 +134,7 @@ function generateModal($project, $admin) {
             <td><?= $project->getName(); ?></td>
             <td><?= $project->getShortDescription(); ?></td>
             <td><?= $project->getLink(); ?> <a href="<?= $project->getLink(); ?>" target="_blank" title="Link to <?= $project->getName(); ?>"><span class="glyphicon glyphicon-link"></span></a></td>
-            <td><?= $project->getCreationDate(); ?></td>
+            <td><?= $project->getFinishDate(); ?></td>
             <?php if ($this->edit): ?>
               <td>
                 <a href="/projects/results/<?= $project->getId(); ?><?php if ($this->admin) echo "?admin=1"; ?>" title="View Results"><span class="glyphicon glyphicon-eye-open"></span></a>

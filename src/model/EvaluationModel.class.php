@@ -62,7 +62,23 @@
     }
 
     function getAnsweredQuestionsCount() {
-      return count($this->results);
+      if ($this->results) return count($this->results);
+      else return 0;
+    }
+
+    function getAnsweredScorableQuestionsCount() {
+      $total = 0;
+      if ($this->results) {
+        foreach ($this->results as $result) {
+          if ($result->getAnswer()->isScorable()) {
+            $total++;
+          }
+        }
+      } else {
+        $total = 0;
+      }
+
+      return $total;
     }
 
     function getPercentageDone() {
@@ -72,13 +88,17 @@
     function getScore() {
       $score = 0;
       foreach ($this->results as $result) {
-        $score = $score + $result->getAnswer()->getValue();
+        if ($result->getAnswer()->isScorable()) {
+          $score = $score + $result->getAnswer()->getValue();
+        }
       }
       return $score;
     }
 
     function getUsabilityPercentage() {
-      return round($this->getScore()*100/($this->getProject()->getTemplate()->getMaxAnswerValue()*$this->getQuestionsCount()), 1);
+      $val = $this->getProject()->getTemplate()->getMaxAnswerValue()*$this->getAnsweredScorableQuestionsCount();
+      if ($val > 0) return round($this->getScore()*100/($val), 1);
+      else return 0;
     }
 
     function allQuestionsAnswered() {
@@ -98,7 +118,9 @@
 
       foreach ($this->results as $result) {
         if (in_array($result->getQuestion()->getId(), $questions)) {
-          $score += $result->getAnswer()->getValue();
+          if ($result->getAnswer()->isScorable()) {
+            $score += $result->getAnswer()->getValue();
+          }
         }
       }
 
@@ -138,7 +160,6 @@
 
     function update() {
       // Update results... (EvaluationResult)
-
       DB::update('evaluations', array(
         "finished" => $this->finished
       ), "ID=%i", $this->id);
@@ -153,6 +174,11 @@
           "comment" => $result->getComment()
         ));
       }
+    }
+
+    function delete() {
+      DB::delete('evaluation_results', "id_evaluation=%i", $this->id);
+      DB::delete('evaluations', "ID=%i", $this->id);
     }
   }
 
