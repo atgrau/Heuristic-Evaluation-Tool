@@ -1,5 +1,6 @@
 <?php
 
+
   /**
    * Template Controller
    */
@@ -17,7 +18,7 @@
     }
 
     function showTemplateView($adminView, $templateId, $edit) {
-      $template = getTemplateById($templateId);
+        $template = getTemplateById($templateId);
 
         if ((!$template) || (!$GLOBALS["USER_SESSION"]->isAdmin())){
             $this->showTemplateList($adminView);
@@ -162,7 +163,7 @@
     function editStateTemplate($idTemplate, $state){
       $template = getTemplateById($idTemplate);
       $template->changeState($state);
-      $this->showTemplateView(true, $idTemplate, 1); 
+      $this->showTemplateView(true, $idTemplate, 1);
     }
 
   }
