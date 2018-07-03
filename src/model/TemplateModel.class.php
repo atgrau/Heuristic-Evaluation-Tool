@@ -160,37 +160,29 @@ class Category
       return $this->original;
     }
 
-    function insert()
-    {
+    function insert() {
+
       $category = DB::insert('template_categories', array(
         "name" => $this->name,
-        "original" => false,
+        "original" => false
       ));
 
       $this->id = DB::insertId();
 
-      if($category){
-
-        foreach ($this->getQuestions() as $row) {
-          $question = DB::insert('template_questions', array(
-            "id_category" => $this->id,
-            "question" => $row->getName(),
-            "original" => false,
-          ));
-          $row->setId(DB::insertId());
-          DB::insert('questionsbytemplate', array(
-            "idTemplate" => $this->templateId,
-            "idQuestion" => $row->getId(),
-          ));
+      if($category) {
+        foreach ($this->questions as $question) {
+          $question->setCategoryId($this->id);
+          $question->setTemplateId($this->templateId);
+          $question->insert();
         }
 
         DB::insert('categoriesbytemplate', array(
           "idTemplate" => $this->templateId,
-          "idCategory" => $this->id,
+          "idCategory" => $this->id
         ));
       }
-
     }
+
 
     function remove()
     {
@@ -284,16 +276,16 @@ class Question
   function insert()
   {
     $question = DB::insert('template_questions', array(
-      "id_category" => $this->getCategoryId(),
+      "id_category" => $this->categoryId,
       "question" => $this->question,
-      "original" => false,
+      "original" => false
     ));
 
     $this->id = DB::insertId();
 
     if($question){
       DB::insert('questionsbytemplate', array(
-        "idTemplate" => $this->getTemplateId(),
+        "idTemplate" => $this->templateId,
         "idQuestion" => $this->id,
       ));
     }

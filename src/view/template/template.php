@@ -1,3 +1,4 @@
+<button id="topButton" title="Go to top"><span class="glyphicon glyphicon-menu-up"></span></button>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.3/css/bootstrap-colorpicker.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.3/js/bootstrap-colorpicker.min.js"></script>
 <?php
@@ -28,9 +29,8 @@ return '<!-- Modal -->
 ?>
 <div class="row">
 
-
   <div class="row">
-      <div class="col-lg-12">
+      <div class="col-lg-12 margin-lg-t">
         <?php if (!$this->editTemplate): ?>
           <h1 class="page-header"><?= $this->template->getName();?></h1>
         <?php else: ?>
@@ -41,38 +41,43 @@ return '<!-- Modal -->
       </div>
   </div>
 
+  <?php if (isset($this->error)) { ?>
+    <div class="alert alert-danger" role="alert">
+     <?=$this->error; ?>
+    </div>
+  <?php } ?>
+
 <?php if ($this->editTemplate): ?>
 <div class="modal fade" id="newCategoryModal" tabindex="-1" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <form action="/template/category-new/" method="POST">
-            <div class="modal-header">
-              <strong>New  Category </strong>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
+        <div class="modal-header">
+          <strong>New  Category </strong>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
 
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="category">Category Name:</label>
-                <input name="categoryName" type="text" class="form-control" placeholder="Insert category name" />
-                <input name="idTemplate" type="hidden" class="form-control" value=<?= $this->template->getId(); ?>/>
-              </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="category">Category Name:</label>
+            <input name="categoryName" type="text" class="form-control" placeholder="Insert category name" />
+            <input name="idTemplate" type="hidden" class="form-control" value="<?= $this->template->getId(); ?>" />
+            <div class="margin-lg-t"></div>
+
+            <label for="question">Questions:</label>
+            <div id="questions">
+              <input name="questionName_0" type="text" class="form-control" placeholder="Insert question">
             </div>
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="question">Questions :</label>
-                <input name="questionName" type="text" class="form-control" placeholder="Insert question..." aria-label="" aria-describedby="basic-addon1">
-                <div class="input-group-prepend" style="float:left"></br>
-                  <button class="btn btn-outline-secondary" >+</button>
-                </div>
-              </div></br>
-            </div></br>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-floppy-disk"></span> Save </button>
-              </div>
+            <input id="questionsCount" type="hidden" value="0" name="questionsCount" />
+            <a id="addQuestion" href="#" class="btn btn-sm btn-secondary margin-lg-t"><span class="glyphicon glyphicon-plus"></span> Add new question</a>
+          </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success" ><span class="glyphicon glyphicon-floppy-disk"></span> Save </button>
+        </div>
       </form>
     </div>
   </div>
@@ -141,7 +146,11 @@ return '<!-- Modal -->
                                           <td width="70%"><?= $question->getName(); ?></td>
                                           <?php if ($this->editTemplate):?>
                                           <td width="10%">
-                                              <a href="/template/question-remove/<?= $question->getId()?>?del=<?=$this->template->getId();?>" title="Remove question" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
+                                            <form action="/template/question-remove" method="POST">
+                                              <input type="hidden" value="<?=$this->template->getId();?>" name="id_template" />
+                                              <input type="hidden" value="<?=$question->getId();?>" name="id_question" />
+                                              <button type="submit" class="btn btn-secondary text-danger" style="background-color:white;"><span class="glyphicon glyphicon-remove"></span></button>
+                                            </form>
                                           </td>
                                           <?php endif; ?>
                                         </tr>
@@ -150,12 +159,14 @@ return '<!-- Modal -->
                                     </table>
                                     <form action="/template/question-new" method="POST">
                                     <?php if ($this->editTemplate): ?>
-                                        <div class="input-group mb-3">
-                                          <input name="idCategory" type="hidden" class="form-control"  value="<?= $category->getId()?>"/>
-                                          <input name="idTemplate" type="hidden" class="form-control"  value="<?= $this->template->getId()?>"/>
-                                          <input name="questionName" type="text" class="form-control" placeholder="Insert question">
-                                          <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary" type="submit">+</button>
+                                        <div class="input-group col-xs-6">
+                                          <input name="idCategory" type="hidden" class="form-control"  value="<?= $category->getId()?>" />
+                                          <input name="idTemplate" type="hidden" class="form-control"  value="<?= $this->template->getId()?>" />
+                                          <div class="input-group">
+                                            <input name="questionName" type="text" class="form-control" placeholder="Insert question">
+                                            <span class="input-group-btn">
+                                              <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus"></span></button>
+                                            </span>
                                           </div>
                                         </div>
                                       </form>
@@ -245,5 +256,26 @@ return '<!-- Modal -->
     </div>
 </div>
 
+<script>
+  // Top Button
+  window.onscroll = function() {scrollFunction()};
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      $("#topButton").fadeIn( "slow");
+    } else {
+      $("#topButton").fadeOut( "slow");
+    }
+  }
+  $("#topButton").click(function(){
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+  });
 
-<!-- /.row -->
+  var questionId = 0;
+
+  $("#addQuestion").click(function() {
+    questionId++;
+    var html = '<input name="questionName_' + questionId + '" type="text" class="form-control margin-lg-t" placeholder="Insert question">';
+    $("#questions").append(html);
+    $("#questionsCount").val(questionId);
+  })
+</script>

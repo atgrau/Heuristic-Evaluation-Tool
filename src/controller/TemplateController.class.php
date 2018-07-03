@@ -31,35 +31,60 @@
     }
 
     function removeCategory(){
-
+      if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        header("Location: /admin/templates");
+      }
       $category = getCategorybyId($_POST["idTemplate"], $_POST["idCategory"]);
-      $category->remove();
-      $this->showTemplateView(true, $category->getTemplateId(), 1);
+
+      if ($category) {
+        $category->remove();
+      }
+
+      $this->showTemplateView(true, $_POST["idTemplate"], 1);
     }
 
     function newCategory(){
-      if (empty($_POST["categoryName"])) {
-          $this->error = "The category's name is empty";
-      }
-      if (empty($_POST["questionName"])) {
-          $this->error = "The question is empty";
-      }
-      $questionList = array();
-      array_push($questionList, new Question(0, $_POST["questionName"],0));
-      $category = new Category(0, $_POST["categoryName"],0, $questionList);
-      $category->setTemplateId($_POST["idTemplate"]);
-      $category-> insert();
-      if($category){
-        $this->showTemplateView(true, $category->getTemplateId(), 1);
+      if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        header("Location: /admin/templates");
       }
 
+      if (!getTemplateById($_POST["idTemplate"])) {
+          header("Location: /admin/templates");
+      }
+
+      if (empty($_POST["categoryName"])) {
+          $this->error = "Category name is empty";
+          $this->showTemplateView(true, $_POST["idTemplate"], 1);
+      }
+
+      $questionCount = $_POST["questionsCount"];
+
+      $questionList = array();
+      for($i = 0; $i <= $questionCount; ++$i) {
+        $question = new Question(0, $_POST["questionName_".$i], 0);
+        array_push($questionList, $question);
+      }
+
+      $category = new Category(0, $_POST["categoryName"], 0, $questionList);
+
+      $category->setTemplateId($_POST["idTemplate"]);
+
+      $category->insert();
+      
+      $this->showTemplateView(true, $category->getTemplateId(), 1);
     }
 
-    function removeQuestion($idQuestion, $idTemplate){
-      $question = getQuestionbyId($idQuestion);
-      $question->setTemplateId($idTemplate);
-      $question->remove();
-      $this->showTemplateView(true, $question->getTemplateId(), 1);
+    function removeQuestion(){
+      if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        header("Location: /admin/templates");
+      }
+
+      $question = getQuestionbyId($_POST["id_question"]);
+      if ($question) {
+        $question->setTemplateId($_POST["id_template"]);
+        $question->remove();
+      }
+      $this->showTemplateView(true, $_POST["id_template"], 1);
     }
 
     function newQuestion(){

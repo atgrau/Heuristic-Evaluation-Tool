@@ -207,7 +207,7 @@
         $controller->newCategory();
       } else if ($this->uri == "/template/question-remove") {
         $controller = new TemplateController();
-        $controller->removeQuestion($_GET["param"], $_GET["del"]);
+        $controller->removeQuestion();
       } else if ($this->uri == "/template/question-new") {
         $controller = new TemplateController();
         $controller->newQuestion();
