@@ -39,14 +39,11 @@
   }
 ?>
 <div class="row">
-    <div class="col-lg-12">
-      <?php if (!$this->project): ?>
-        <h1 class="page-header">New Project</h1>
-      <?php else: ?>
-        <h1 class="page-header">Edit Project</h1>
-      <?php endif; ?>
-    </div>
-    <!-- /.col-lg-12 -->
+  <?php if (!$this->project): ?>
+    <h1 class="page-header">New Project</h1>
+  <?php else: ?>
+    <h1 class="page-header">Edit Project</h1>
+  <?php endif; ?>
 </div>
 <!-- /.row -->
 <!-- /.row -->

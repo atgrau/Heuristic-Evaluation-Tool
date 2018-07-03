@@ -18,6 +18,3 @@
 
     <!-- Datepicker -->
     <script src="/dist/js/jquery-ui.min.js"></script>
-
-    <!-- Datepicker -->
-    <script src="/dist/js/print.min.js"></script>

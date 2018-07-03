@@ -6,6 +6,19 @@
 
     function showProjectList($admin) {
       $this->admin = $admin;
+
+      // Breadcrumb
+      if ($admin) {
+        $this->setBreadcrumb(array(
+            array("Projects")
+        ));
+      } else {
+        $this->setBreadcrumb(array(
+            array("My Projects")
+        ));
+      }
+
+
       $this->setContentView("project/projectlist");
       $this->query = $_GET["q"];
       $this->userId = $_GET["user"];
@@ -20,6 +33,11 @@
     }
 
     function showAssignedProjectList() {
+      // Breadcrumb
+      $this->setBreadcrumb(array(
+          array("Project Evaluations")
+      ));
+
       $this->setContentView("project/projectlist");
       $this->query = $_GET["q"];
       $this->userId = $_GET["user"];
@@ -29,6 +47,11 @@
     }
 
     function addNewProjectView() {
+      $this->setBreadcrumb(array(
+          array("My Projects","/my-projects"),
+          array("New project")
+      ));
+
       $this->templateList = getActiveTemplates();
       $this->new = true;
       $this->setContentView("project/project");
@@ -86,9 +109,24 @@
 
     function updateProjectView($adminView, $projectId) {
       $project = getProjectById($projectId);
+
       if ((!$project) || ((!$GLOBALS["USER_SESSION"]->isAdmin()) && ($GLOBALS["USER_SESSION"]->getId() != $project->getUser()->getId()))){
           $this->showProjectList($adminView);
       } else {
+
+        if ($adminView) {
+          $this->setBreadcrumb(array(
+              array("Projects","/projects"),
+              array($project->getName())
+          ));
+        } else {
+          $this->setBreadcrumb(array(
+              array("My Projects","/my-projects"),
+              array($project->getName())
+          ));
+        }
+
+
         $this->setContentView("project/project");
         $this->project = $project;
         $this->adminView = $adminView;

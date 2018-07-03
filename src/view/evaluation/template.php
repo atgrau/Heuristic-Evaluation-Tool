@@ -177,7 +177,7 @@
                   <tbody>
                     <th colspan="2" class="thead-light text-center">My Results</th>
                     <tr>
-                      <th width="30%">Total Questions</th>
+                      <th width="50%">Total Questions</th>
                       <td><?=$this->evaluation->getQuestionsCount();?></td>
                     </tr>
                     <tr>

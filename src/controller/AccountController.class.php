@@ -125,6 +125,18 @@
       if (!$this->user) {
         $this->showUserList($adminView);
       } else {
+        // Breadcrumb
+        if ($adminView) {
+          $this->setBreadcrumb(array(
+              array("Users","/admin/users"),
+              array($this->user->getName())
+          ));
+        } else {
+          $this->setBreadcrumb(array(
+              array("Profile"),
+          ));
+        }
+        
         $this->render();
       }
     }
@@ -270,6 +282,11 @@
 
     // Admin Functions below
     function showUserList() {
+      // Breadcrumb
+      $this->setBreadcrumb(array(
+          array("Users")
+      ));
+
       $this->setContentView("account/userlist");
       $this->query = $_GET["q"];
       $this->userList = getUsers($this->query);
@@ -277,6 +294,12 @@
     }
 
     function addNewUserView() {
+      // Breadcrumb
+      $this->setBreadcrumb(array(
+          array("Users","/admin/users"),
+          array("New User")
+      ));
+
       $this->setContentView("account/profile");
       $this->new = true;
       $this->admin = true;

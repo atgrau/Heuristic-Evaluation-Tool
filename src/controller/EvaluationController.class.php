@@ -10,6 +10,12 @@
         header("Location: /evaluations");
       }
 
+      // Breadcrumb
+      $this->setBreadcrumb(array(
+          array("Project Evaluations","/evaluations"),
+          array("Evaluation ".$project->getName())
+      ));
+
       $this->evaluation = getEvaluationByProjectAndUser($projectId, $GLOBALS["USER_SESSION"]->getId());
 
       // If evaluation is not created yet, lets create it.
@@ -34,6 +40,12 @@
       if ((!$this->project) || (($this->project->getUser() != $GLOBALS["USER_SESSION"]) && (!$GLOBALS["USER_SESSION"]->isAdmin()))) {
         header("Location: /my-projects");
       }
+
+      // Breadcrumb
+      $this->setBreadcrumb(array(
+          array("Evaluations Results","/my-projects"),
+          array("Evaluation ".$this->project->getName())
+      ));
 
       $this->setContentView("evaluation/template_results");
       $this->render();
