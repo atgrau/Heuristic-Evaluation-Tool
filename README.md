@@ -42,11 +42,12 @@ A web application that allows to perform an heuristic evaluation of the interfac
 - [ ] importar csv
 - [ ] enviar mensaje de activación a todos los usuarios añadidos desde csv
 - [ ] dividir pantalla para evaluar
-- [ ] colores de grafico no se muestran por añadir '#' en el valor de color de answer
+- [x] colores de grafico no se muestran por añadir '#' en el valor de color de answer
 - [x] Añadir Breadcrumb
 - [ ] Aumentar tamaño nombre usuario en el grafico
 - [ ] Traducir <button>'title' a ingles
 - [ ] Después de introducir correo para recuperar contraseña te reenvie a login
+- [ ] Info para realizar evaluaciones
 
 
 ## Entities Model

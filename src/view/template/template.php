@@ -127,7 +127,7 @@
                                             <form action="/template/question-remove" method="POST">
                                               <input type="hidden" value="<?=$this->template->getId();?>" name="id_template" />
                                               <input type="hidden" value="<?=$question->getId();?>" name="id_question" />
-                                              <button type="submit" class="btn btn-secondary text-danger" style="background-color:white;"><span class="glyphicon glyphicon-remove"></span></button>
+                                              <button type="submit" class="btn btn-secondary text-danger" style="background-color:white;" title="Remove question"><span class="glyphicon glyphicon-remove"></span></button>
                                             </form>
                                           </td>
                                           <?php endif; ?>
@@ -143,7 +143,7 @@
                                           <div class="input-group">
                                             <input name="questionName" type="text" class="form-control" placeholder="Insert question">
                                             <span class="input-group-btn">
-                                              <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus"></span></button>
+                                              <button class="btn btn-default" type="submit"  title="Add question"><span class="glyphicon glyphicon-plus"></span></button>
                                             </span>
                                           </div>
                                         </div>
@@ -192,7 +192,7 @@
                                     <form action="/template/answer-remove" method="POST">
                                       <input type="hidden" value="<?=$this->template->getId();?>" name="id_template" />
                                       <input type="hidden" value="<?=$answer->getId();?>" name="id_answer" />
-                                      <button type="submit" class="btn btn-secondary text-danger" style="background-color:white;"><span class="glyphicon glyphicon-remove"></span></button>
+                                      <button type="submit" class="btn btn-secondary text-danger" style="background-color:white;" title="Remove answer"><span class="glyphicon glyphicon-remove"></span></button>
                                     </form>
                                   </td>
                                   <?php endif; ?>

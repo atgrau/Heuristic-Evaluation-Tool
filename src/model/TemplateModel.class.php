@@ -185,7 +185,10 @@ class Category
         foreach ($this->questions as $question) {
           $question->setCategoryId($this->id);
           $question->setTemplateId($this->templateId);
-          $question->insert();
+
+          if (!empty($question->getName())){
+            $question->insert();
+          }
         }
 
         DB::insert('categoriesbytemplate', array(
