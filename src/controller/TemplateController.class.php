@@ -165,6 +165,10 @@
     }
 
     function newAnswer(){
+        
+      if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        header("Location: /admin/templates");
+      }
 
       if ((empty($_POST["answer"])) || (empty($_POST["value"])) || (empty($_POST["color"]))) {
           $this->error = "Some value is incorrect.";
