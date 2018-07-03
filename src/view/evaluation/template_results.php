@@ -139,7 +139,7 @@ function generateModal($evaluationId) {
             <div class="panel-body">
               <?php if (count($this->project->getFinishedEvaluations()) > 0): ?>
               <canvas id="chartjs-2" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
-              <script>new Chart(document.getElementById("chartjs-2"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->project->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->project->getGlobalAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":[<?php foreach ($this->project->getTemplate()->getAnswers() as $value) { echo "'#".$value->getColor()."',"; } ?>]}]}});</script>
+              <script>new Chart(document.getElementById("chartjs-2"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->project->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->project->getGlobalAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":[<?php foreach ($this->project->getTemplate()->getAnswers() as $value) { echo "'".$value->getColor()."',"; } ?>]}]}});</script>
               <?php else: ?>
                 There is not finished evaluations yet...
               <?php endif; ?>
@@ -219,7 +219,7 @@ function generateModal($evaluationId) {
                           <!-- /.panel-heading -->
                           <div class="panel-body">
                             <canvas id="chartjs-ev-<?=$evaluation->getId();?>" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
-                            <script>new Chart(document.getElementById("chartjs-ev-<?=$evaluation->getId();?>"),{"type":"doughnut","data":{"labels":[<?php foreach ($evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($evaluation->getAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":[<?php foreach ($evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'#".$value->getColor()."',"; } ?>]}]}});</script>
+                            <script>new Chart(document.getElementById("chartjs-ev-<?=$evaluation->getId();?>"),{"type":"doughnut","data":{"labels":[<?php foreach ($evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($evaluation->getAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":[<?php foreach ($evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getColor()."',"; } ?>]}]}});</script>
                           </div>
                           <!-- /.panel-body -->
                       </div>
@@ -261,7 +261,7 @@ function generateModal($evaluationId) {
                             <th scope="row" width="20px">#<?=++$q;?></th>
                             <td width="60%"><?=$question->getName(); ?></td>
                             <td width="10%">
-                              <span class="text-bold" style="color:#<?=$result->getAnswer()->getColor();?>"><?=$result->getAnswer()->getName();?></span>
+                              <span class="text-bold" style="color:<?=$result->getAnswer()->getColor();?>"><?=$result->getAnswer()->getName();?></span>
                             </td>
                             <td width="30%">
                                 <?=$result->getComment();?></textarea>

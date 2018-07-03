@@ -338,8 +338,7 @@ class Answer
     }
 
     function getColor() {
-      $a ="#";
-      return $a . $this->color;
+      return "#".$this->color;
     }
 
     function setColor($value) {

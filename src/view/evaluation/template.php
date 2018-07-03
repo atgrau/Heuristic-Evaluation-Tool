@@ -134,7 +134,7 @@
                           <td width="50%"><?=$question->getName(); ?></td>
                           <td width="20%">
                             <div class="form-group">
-                              <select id="question_<?=$question->getId();?>" <?php if ($result): ?>style="color:#<?=$result->getAnswer()->getColor()?>;" <?php endif; ?> <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?> name="answer_<?=$question->getId();?>" class="form-control text-bold" onChange="changed = true; $('#question_<?=$question->getId(); ?>').css('color',$(this).children(':selected').attr('color'));" <?php //onChange="$('#save').click()"?>>
+                              <select id="question_<?=$question->getId();?>" <?php if ($result): ?>style="color:<?=$result->getAnswer()->getColor()?>;" <?php endif; ?> <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?> name="answer_<?=$question->getId();?>" class="form-control text-bold" onChange="changed = true; $('#question_<?=$question->getId(); ?>').css('color',$(this).children(':selected').attr('color'));" <?php //onChange="$('#save').click()"?>>
                                 <option value=""></option>
                                 <?php
                                   foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $answer) {
@@ -144,7 +144,7 @@
                                       $selected = "";
                                     }
                                 ?>
-                                <option color="#<?=$answer->getColor();?>" style="color:#<?=$answer->getColor();?>;" <?=$selected;?> value="<?=$answer->getId();?>"><?=$answer->getName();?></option>
+                                <option color="<?=$answer->getColor();?>" style="color:<?=$answer->getColor();?>;" <?=$selected;?> value="<?=$answer->getId();?>"><?=$answer->getName();?></option>
                               <?php } ?>
                               </select>
                              </div>
@@ -221,7 +221,7 @@
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                       <canvas id="chartjs-1" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
-                      <script>new Chart(document.getElementById("chartjs-1"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->evaluation->getAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'#".$value->getColor()."',"; } ?>]}]}});</script>
+                      <script>new Chart(document.getElementById("chartjs-1"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->evaluation->getAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getColor()."',"; } ?>]}]}});</script>
                     </div>
                     <!-- /.panel-body -->
                 </div>
@@ -304,7 +304,7 @@
                       <!-- /.panel-heading -->
                       <div class="panel-body">
                         <canvas id="chartjs-2" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
-                        <script>new Chart(document.getElementById("chartjs-2"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->evaluation->getProject()->getGlobalAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'#".$value->getColor()."',"; } ?>]}]}});</script>
+                        <script>new Chart(document.getElementById("chartjs-2"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->evaluation->getProject()->getGlobalAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":[<?php foreach ($this->evaluation->getProject()->getTemplate()->getAnswers() as $value) { echo "'".$value->getColor()."',"; } ?>]}]}});</script>
                       </div>
                       <!-- /.panel-body -->
                   </div>
