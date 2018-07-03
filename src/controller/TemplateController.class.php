@@ -165,13 +165,13 @@
     }
 
     function newAnswer(){
-        
+
       if ($_SERVER["REQUEST_METHOD"] != "POST") {
         header("Location: /admin/templates");
       }
 
       if ((empty($_POST["answer"])) || (empty($_POST["value"])) || (empty($_POST["color"]))) {
-          $this->error = "Some value is incorrect.";
+          $this->error = "Some value is invalid.";
       }
       else
       {
@@ -182,7 +182,6 @@
 
       }
       $this->showTemplateView(true, $_POST["idTemplate"], 1, 1);
-
     }
 
     function editStateTemplate($idTemplate, $state){
