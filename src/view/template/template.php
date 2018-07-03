@@ -181,7 +181,8 @@
                                 </tr>
                               </thread>
                               <tbody>
-                                <?php foreach ($this->template->getAnswers() as $answer) { ?>
+                              <?php if(!empty($this->template->getAnswers())):
+                                 foreach ($this->template->getAnswers() as $answer) { ?>
                                 <tr>
                                   <td style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"> <?= $answer->getName();?></td>
                                   <td style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"> <?= $answer->getValue();?></td>
@@ -197,6 +198,7 @@
                                   <?php endif; ?>
                                 </tr>
                                   <?php } ?>
+                                <?php endif;?>
                               </tbody>
                           </table>
                     </div>
