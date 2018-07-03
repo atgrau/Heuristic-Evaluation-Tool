@@ -24,21 +24,23 @@
       $this->render();
     }
 
-    function showTemplateView($adminView, $templateId, $edit) {
+    function showTemplateView($adminView, $templateId, $edit, $tab) {
 
         $template = getTemplateById($templateId);
-        $this->setBreadcrumb(array(
-            array("Templates","/admin/templates"),
-            array($template->getName())
-        ));
 
         if ((!$template) || (!$GLOBALS["USER_SESSION"]->isAdmin())){
             $this->showTemplateList($adminView);
         } else {
+          $this->setBreadcrumb(array(
+              array("Templates","/admin/templates"),
+              array($template->getName())
+          ));
+
           $this->setContentView("template/template");
           $this->template = $template;
           $this->adminView = $adminView;
           $this->editTemplate = (($edit == 1) && ($template->getId()!= 1));
+          $this->tab = $tab;
           $this->render();
         }
     }
@@ -53,7 +55,7 @@
         $category->remove();
       }
 
-      $this->showTemplateView(true, $_POST["idTemplate"], 1);
+      $this->showTemplateView(true, $_POST["idTemplate"], 1, 0);
     }
 
     function newCategory(){
@@ -67,7 +69,7 @@
 
       if (empty($_POST["categoryName"])) {
           $this->error = "Category name is empty";
-          $this->showTemplateView(true, $_POST["idTemplate"], 1);
+          $this->showTemplateView(true, $_POST["idTemplate"], 1, 0);
       }
 
       $questionCount = $_POST["questionsCount"];
@@ -84,7 +86,7 @@
 
       $category->insert();
 
-      $this->showTemplateView(true, $category->getTemplateId(), 1);
+      $this->showTemplateView(true, $category->getTemplateId(), 1, 0);
     }
 
     function removeQuestion(){
@@ -97,7 +99,7 @@
         $question->setTemplateId($_POST["id_template"]);
         $question->remove();
       }
-      $this->showTemplateView(true, $_POST["id_template"], 1);
+      $this->showTemplateView(true, $_POST["id_template"], 1, 0);
     }
 
     function newQuestion(){
@@ -109,7 +111,7 @@
       $question->setTemplateId($_POST["idTemplate"]);
       $question->setCategoryId($_POST["idCategory"]);
       $question-> insert();
-      $this->showTemplateView(true, $question->getTemplateId(), 1);
+      $this->showTemplateView(true, $question->getTemplateId(), 1, 0);
 
     }
 
@@ -129,7 +131,7 @@
 
           if($template)
           {
-            $this->showTemplateView(true,$template->getId(),1);
+            $this->showTemplateView(true,$template->getId(), 1, 0);
           }
       }
     }
@@ -158,7 +160,8 @@
         $answer->remove();
       }
 
-      $this->showTemplateView(true, $answer->getTemplateId(), 1);
+      $this->showTemplateView(true, $answer->getTemplateId(), 1, 1);
+
     }
 
     function newAnswer(){
@@ -173,14 +176,14 @@
         $answer-> insert();
       }
 
-      $this->showTemplateView(true, $answer->getTemplateId(), 1);
+      $this->showTemplateView(true, $answer->getTemplateId(), 1, 1);
 
     }
 
     function editStateTemplate($idTemplate, $state){
       $template = getTemplateById($idTemplate);
       $template->changeState($state);
-      $this->showTemplateView(true, $idTemplate, 1);
+      $this->showTemplateView(true, $idTemplate, 1, 0);
     }
 
   }

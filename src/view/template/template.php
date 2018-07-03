@@ -194,8 +194,8 @@ return '<!-- Modal -->
 
 
                 <div class="tab-pane fade in <?php echo $active1 ; ?>" id="answers">
-                    <div class="form-group">
-                          <table class="table">
+                    <div class="form-group margin-lg-t">
+                          <table class="table" style="width:50%">
                               <thead class="thead-light">
                                 <tr>
                                   <th scope="col">Answer's name</th>
@@ -207,11 +207,11 @@ return '<!-- Modal -->
                               <tbody>
                                 <?php foreach ($this->template->getAnswers() as $answer) { ?>
                                 <tr>
-                                  <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"> <?= $answer->getName();?></td>
-                                  <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"> <?= $answer->getValue();?></td>
-                                  <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd; background-color:<?= $answer->getColor();?>"></td>
+                                  <td style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"> <?= $answer->getName();?></td>
+                                  <td style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"> <?= $answer->getValue();?></td>
+                                  <td style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"><span class="glyphicon glyphicon-tint" style="color:<?= $answer->getColor();?>"></span></td>
                                   <?php if ($this->editTemplate):?>
-                                  <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd">
+                                  <td style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd">
                                     <form action="/template/answer-remove" method="POST">
                                       <input type="hidden" value="<?=$this->template->getId();?>" name="id_template" />
                                       <input type="hidden" value="<?=$answer->getId();?>" name="id_answer" />
@@ -227,28 +227,29 @@ return '<!-- Modal -->
                     <br />
                       <?php if ($this->editTemplate): ?>
 
-                            <table class="table">
+                            <table class="table" style="width:50%">
                               <tbody>
                                   <tr>
                                       <form action="/template/answer-new" method="POST">
                                       <input name="idTemplate" type="hidden" class="form-control" value="<?=$this->template->getId();?>" ></td>
-                                      <td>
-                                        <input name="answer" type="text" class="form-control" placeholder="Insert answer..." ></td>
-                                      <td width="10%" >
-                                        <input name="value" type="text" class="form-control" placeholder="Insert value..." ></td>
-                                      <td>
-                                        <div id="cp2" class="input-group colorpicker-component">
-                                            <input name="color"type="hidden" class="form-control" />
-                                            <span class="input-group-addon" style="background-color:white"><i></i></span>
-                                            <script>
-                                                $(function() {
-                                                    $('#cp2').colorpicker();
-                                                });
-                                            </script>
-                                        </div>
-                                      </td>
-                                      <td width="10%" >
-                                      <button class="btn btn-outline-secondary" type="submit">+</button></td>
+                                        <td>
+                                            <input name="answer" type="text" class="form-control" placeholder="Insert answer..." ></td>
+                                        <td>
+                                          <input name="value" type="text" class="form-control" placeholder="Insert value..." ></td>
+                                        <td>
+                                          <div id="cp2" class="input-group colorpicker-component">
+                                              <input name="color"type="hidden" class="form-control" />
+                                              <span class="input-group-addon" style="background-color:white"><i></i></span>
+                                              <script>
+                                                  $(function() {
+                                                      $('#cp2').colorpicker();
+                                                  });
+                                              </script>
+                                          </div>
+                                        </td>
+
+                                      <td >
+                                        <button class="btn btn-outline-secondary" type="submit">+</button></td>
                                       </form>
                                   </tr>
 
