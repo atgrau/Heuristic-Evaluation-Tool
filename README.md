@@ -36,7 +36,7 @@ A web application that allows to perform an heuristic evaluation of the interfac
 - [x] Activar template una vez finalizada la modificación
 - [x] Controlar eliminación/modificación template si esta en uso/abierto para usuarios
 - [x] Si esta en el tab Answer modificando valores, mantener la misma pestaña al guardar
-- [ ] Diseño icono color de answer
+- [x] Diseño icono color de answer
 - [ ] Cambiar colorpicker
 - [x] Poner status a templates
 - [ ] importar csv
