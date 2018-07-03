@@ -338,10 +338,12 @@ class Answer
     }
 
     function getColor() {
-      return $this->color;
+      $a ="#";
+      return $a . $this->color;
     }
 
     function setColor($value) {
+      $value = str_replace("#","",$value);
       $this->color = $value;
     }
 
@@ -378,8 +380,8 @@ class Answer
     {
       $answer = DB::insert('template_answers', array(
         "answer" => $this->getName(),
-        "value" => $this->getValue(),
-        "color" => $this->getColor(),
+        "value" => $this->value,
+        "color" => $this->color,
         "original" => false,
       ));
 

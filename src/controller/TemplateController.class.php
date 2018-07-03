@@ -165,18 +165,19 @@
     }
 
     function newAnswer(){
+
       if ((empty($_POST["answer"])) || (empty($_POST["value"])) || (empty($_POST["color"]))) {
           $this->error = "Some value is incorrect.";
       }
-
-      $answer = new Answer(0, $_POST["answer"], $_POST["value"], 0,0);
-      if($answer){
+      else
+      {
+        $answer = new Answer(0, $_POST["answer"], $_POST["value"], 0,0);
         $answer->setColor($_POST["color"]);
         $answer->setTemplateId($_POST["idTemplate"]);
         $answer-> insert();
-      }
 
-      $this->showTemplateView(true, $answer->getTemplateId(), 1, 1);
+      }
+      $this->showTemplateView(true, $_POST["idTemplate"], 1, 1);
 
     }
 

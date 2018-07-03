@@ -201,7 +201,9 @@ return '<!-- Modal -->
                                   <th scope="col">Answer's name</th>
                                   <th scope="col">Value</th>
                                   <th scope="col">Colour</th>
+                                  <?php if ($this->editTemplate):?>
                                   <th scope="col"></th>
+                                  <?php endif;?>
                                 </tr>
                               </thread>
                               <tbody>
