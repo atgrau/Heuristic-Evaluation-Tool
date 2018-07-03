@@ -90,8 +90,12 @@ return '<!-- Modal -->
     <div class="col-lg">
       <div class="right">
         <a href="/admin/templates" class="btn btn-primary"><span class="glyphicon glyphicon-menu-left"></span> Template List</a>
-        <?php if($this->editTemplate): ?>
-          <button href="" type="button" class="btn btn-warning"><span class="glyphicon glyphicon-ok"></span> Finish </button>
+        <?php if ($this->editTemplate):
+            if ($this->template->isActive() == 0):?>
+              <a href="/template/active/<?=$this->template->getId();?>?edit=1" title="Active template"  class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Active</a>
+            <?php else: ?>
+              <a href="/template/active/<?=$this->template->getId();?>?edit=0" title="Inactive template"  class="btn btn-warning"><span class="glyphicon glyphicon-warning"></span> Inactive</a>
+            <?php endif; ?>
         <?php endif; ?>
       </div>
         <!-- /.panel-heading -->

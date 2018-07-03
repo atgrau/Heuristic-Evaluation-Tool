@@ -134,7 +134,7 @@
         header("Location: /admin/templates");
       }
 
-      $answer = getAnswerbyId($_POST["id_answer"]);      
+      $answer = getAnswerbyId($_POST["id_answer"]);
       if ($answer){
         $answer->setTemplateId($_POST["id_template"]);
         $answer->remove();
@@ -157,6 +157,12 @@
 
       $this->showTemplateView(true, $answer->getTemplateId(), 1);
 
+    }
+
+    function editStateTemplate($idTemplate, $state){
+      $template = getTemplateById($idTemplate);
+      $template->changeState($state);
+      $this->showTemplateView(true, $idTemplate, 1); 
     }
 
   }

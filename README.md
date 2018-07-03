@@ -33,8 +33,8 @@ A web application that allows to perform an heuristic evaluation of the interfac
 - [x] View results of an own Evaluation
 - [x] Unscored answers
 - [x] Evaluation Results View
-- [ ] Activar template una vez finalizada la modificación
-- [ ] Controlar eliminación/modificación template si esta en uso/abierto para usuarios
+- [x] Activar template una vez finalizada la modificación
+- [x] Controlar eliminación/modificación template si esta en uso/abierto para usuarios
 - [ ] Si esta en el tab Answer modificando valores, mantener la misma pestaña al guardar
 - [ ] Diseño icono color de answer
 - [ ] Cambiar colorpicker

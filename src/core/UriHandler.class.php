@@ -50,7 +50,7 @@
       "/template/answer-new" => 2,
       "/admin/importcsv" => 2,
       "/admin/template-remove" => 2,
-
+      "/template/active" => 2,
 
     );
 
@@ -217,6 +217,9 @@
       } else if ($this->uri == "/template/answer-new") {
         $controller = new TemplateController();
         $controller->newAnswer();
+      } else if ($this->uri == "/template/active") {
+        $controller = new TemplateController();
+        $controller->editStateTemplate($_GET["param"], $_GET["edit"]);
       } else if ($this->uri == "/admin/importcsv") {
         $controller = new ImportCSVController();
         $controller->newImport();

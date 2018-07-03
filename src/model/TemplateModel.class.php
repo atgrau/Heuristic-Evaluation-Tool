@@ -56,6 +56,18 @@
       return $max;
     }
 
+    function getEvaluations()
+    {
+      $qry = DB::query("SELECT * FROM projects p  WHERE id_template=%i AND active=true ", $this->id);
+      $counter = DB::count();
+      return ($counter>0);
+    }
+
+    function changeState($status)
+    {
+      DB::query("UPDATE templates SET active=%i WHERE ID=%i", $status, $this->id);
+    }
+
     function insert() {
       $template = DB::insert('templates', array(
         "name" => $this->name,
@@ -547,5 +559,7 @@ class Answer
       $counter = DB::count();
       return ($counter>0);
   }
+
+
 
 ?>

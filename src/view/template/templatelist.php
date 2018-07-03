@@ -84,7 +84,7 @@ return '<!-- Modal -->
       <tr>
         <th scope="col">#</th>
         <th scope="col">Template's Name</th>
-        <th scope="col">Active</th>
+        <th scope="col">Status</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -96,10 +96,14 @@ return '<!-- Modal -->
             <?= generateModal($template); ?>
             <th scope="row"><?=++$te; ?></th>
             <td><a href="/admin/templates/<?= $template->getId(); ?>?edit=0" title="<?= $template->getName(); ?> "><?=$template->getName(); ?></a> </td>
-            <td><input type="checkbox" value=<?=$template->isActive()?>
-                  <?php if($template->isActive()== 1): ?>
-                    checked
-                  <?php endif;?>></td>
+            <td>
+              <?php if ($template->getEvaluations()): ?>
+              <span class="label label-danger">In use</span>
+              <?php elseif ($template->isActive() == 0): ?>
+              <span class="label label-warning">Inactive</span>
+              <?php else: ?>
+              <span class="label label-success">Active</span>
+              <?php endif; ?>
             <td>
               <?php
               if ($template->getId() != 1):?>
