@@ -94,7 +94,7 @@ return '<!-- Modal -->
             if ($this->template->isActive() == 0):?>
               <a href="/template/active/<?=$this->template->getId();?>?edit=1" title="Active template"  class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Active</a>
             <?php else: ?>
-              <a href="/template/active/<?=$this->template->getId();?>?edit=0" title="Inactive template"  class="btn btn-warning"><span class="glyphicon glyphicon-warning"></span> Inactive</a>
+              <a href="/template/active/<?=$this->template->getId();?>?edit=0" title="Inactive template"  class="btn btn-default"><span class="glyphicon glyphicon-ban-circle"></span> Inactive</a>
             <?php endif; ?>
         <?php endif; ?>
       </div>

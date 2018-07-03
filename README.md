@@ -38,7 +38,7 @@ A web application that allows to perform an heuristic evaluation of the interfac
 - [ ] Si esta en el tab Answer modificando valores, mantener la misma pestaña al guardar
 - [ ] Diseño icono color de answer
 - [ ] Cambiar colorpicker
-- [ ] Poner status a templates
+- [x] Poner status a templates
 - [ ] importar csv
 - [ ] enviar mensaje de activación a todos los usuarios añadidos desde csv
 - [ ] dividir pantalla para evaluar

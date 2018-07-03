@@ -9,6 +9,13 @@
     function __construct() { }
 
     function showTemplateList($admin) {
+      // Breadcrumb
+      if ($admin) {
+        $this->setBreadcrumb(array(
+            array("Templates")
+        ));
+      }
+
       $this->admin = $admin;
       $this->setContentView("template/templatelist");
       $this->new = false;
@@ -18,7 +25,12 @@
     }
 
     function showTemplateView($adminView, $templateId, $edit) {
+
         $template = getTemplateById($templateId);
+        $this->setBreadcrumb(array(
+            array("Templates","/admin/templates"),
+            array($template->getName())
+        ));
 
         if ((!$template) || (!$GLOBALS["USER_SESSION"]->isAdmin())){
             $this->showTemplateList($adminView);
@@ -102,6 +114,11 @@
     }
 
     function addNewTemplateView(){
+
+      $this->setBreadcrumb(array(
+          array("Templates"),
+          array($_POST["name"])
+      ));
 
       if ((empty($_POST["name"])) || (existTemplatebyName($_POST["name"]))) {
           $this->error = "The template's name is empty or already exists";
