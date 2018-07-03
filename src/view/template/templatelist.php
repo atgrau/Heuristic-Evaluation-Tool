@@ -15,7 +15,7 @@ return '<!-- Modal -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <a href="/admin/template-remove/'.$template->getId().'" type="button" class="btn btn-danger">Delete Project</a>
+        <a href="/admin/template-remove/'.$template->getId().'" type="button" class="btn btn-danger">Delete template</a>
       </div>
     </div>
   </div>
