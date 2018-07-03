@@ -76,9 +76,11 @@ function generateModal($evaluationId) {
         </tr>
       </tbody>
     </table>
-
+    <button type="button" onclick="printJS('global_results', 'html')">
+        Print Form
+     </button>
     <div class="col-lg">
-      <table class="table">
+      <table id="global_results" class="table">
         <tbody>
           <th colspan="2" class="thead-light text-center">Global results Chart</th>
           <tr>
