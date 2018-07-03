@@ -136,7 +136,7 @@
               array("Profile"),
           ));
         }
-        
+
         $this->render();
       }
     }
@@ -389,9 +389,8 @@
         exit;
       }
 
-      // Check user dependencies
-
-      // Delete Users
+      // Delete User
+      $user->remove();
 
       //Render View
       $this->removeMessage = true;

@@ -124,7 +124,7 @@ function generateModal($project, $admin) {
               }
               echo generateModal($project, $admin);
             ?>
-            <th scope="row"><?= $project->getId(); ?></th>
+            <th scope="row"><?= ++$i; ?></th>
             <?php if ($this->admin): ?>
               <td><a href="/admin/users/<?= $project->getUser()->getId(); ?>" title="<?= $project->getUser()->getName(); ?>'s profile"><?= $project->getUser()->getFirstName(); ?></a></td>
             <?php endif; ?>
@@ -231,7 +231,7 @@ function generateModal($project, $admin) {
                 }
                 echo generateModal($project, $admin);
               ?>
-              <th scope="row"><?= $project->getId(); ?></th>
+              <th scope="row"><?= ++$ii ?></th>
               <?php if ($this->admin): ?>
                 <td><a href="/admin/users/<?= $project->getUser()->getId(); ?>" title="<?= $project->getUser()->getName(); ?>'s profile"><?= $project->getUser()->getFirstName(); ?></a></td>
               <?php endif; ?>

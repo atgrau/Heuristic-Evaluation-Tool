@@ -120,7 +120,7 @@ return '<!-- Modal -->
         foreach ($this->userList as $user) {
       ?>
         <tr>
-          <th scope="row"><?= $user->getId(); ?></th>
+          <th scope="row"><?= ++$i; ?></th>
           <td><?= $user->getName(); ?></td>
           <td><?= $user->getEmail(); ?></td>
           <td><?= getRoleName($user->getRole()); ?></td>

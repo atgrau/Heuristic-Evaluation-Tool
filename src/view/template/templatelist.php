@@ -47,10 +47,7 @@ return '<!-- Modal -->
 </div>
 
 <div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">Templates</h1>
-    </div>
-    <!-- /.col-lg-12 -->
+  <h1 class="page-header">Templates</h1>
 </div>
 <!-- /.row -->
 <?php if ($this->admin): ?>

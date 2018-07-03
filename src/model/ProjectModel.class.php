@@ -127,6 +127,10 @@
       return ($this->getDaysLeft() < 0);
     }
 
+    function isArchivedOrClosedOrInactived() {
+      return (($this->isClosed()) || (!$this->isActive()) || ($this->isArchived()));
+    }
+
     function getDaysLeft() {
       $now = new DateTime();
       $finish = new DateTime($this->finishDate);

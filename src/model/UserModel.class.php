@@ -151,6 +151,19 @@
         "country" => $this->country->getIso()
       ));
     }
+
+    function remove() {
+      // Delete evaluations
+      DB::delete('evaluation_results', "id_evaluation=(SELECT ID FROM evaluations WHERE id_user = %i)", $this->id);
+      DB::delete('evaluations', "id_user=%i", $this->id);
+
+      // Delete Project Users
+      DB::delete('projects_user', "id_user=%i", $this->id);
+      DB::delete('projects', "id_user=%i", $this->id);
+
+      // Delete User
+      DB::delete('users', "ID=%i", $this->id);
+    }
   }
 
   function buildUser($account) {
