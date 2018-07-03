@@ -78,7 +78,6 @@
               <a class="btn btn-default" id="hideButton" href="#"><span class="glyphicon glyphicon-eye-close"></span> Hide Sidebar</a>
               <a style="display:none" class="btn btn-default" id="showButton" href="#"><span class="glyphicon glyphicon-eye-open"></span> Show Sidebar</a>
               <button <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?> id="save" type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
-              <a href="/evaluations" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Close</a>
               <input type="hidden" name="id_evaluation" value="<?=$this->evaluation->getId();?>" />
               <button id="finish" type="button" class="btn btn-warning" <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?> data-toggle="modal" data-target="#finishModal"><span class="glyphicon glyphicon-ok"></span> Finish</button>
           </div>

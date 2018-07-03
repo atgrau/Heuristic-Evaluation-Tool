@@ -100,14 +100,12 @@ function generateModal($project, $admin) {
           <th scope="col">Owner</th>
         <?php endif; ?>
         <th scope="col">Project's Name</th>
-        <th scope="col">Description</th>
         <th scope="col">Link</th>
         <th scope="col">Finishes at</th>
-        <?php if (!$this->edit): ?>
-          <th scope="col">Status</th>
-        <?php else: ?>
-          <th scope="col"> </th>
-        <?php endif; ?>
+        <th scope="col">Status</th>
+        <?php if ($this->edit): ?>
+          <th scope="col"></th>
+        <?php endif;?>
       </tr>
     </thead>
     <tbody>
@@ -118,7 +116,7 @@ function generateModal($project, $admin) {
           $link = "style='cursor:pointer' class='clickable-row' data-href='/evaluations/id/".$project->getId()."'";
         }
         ?>
-          <tr <?=$link;?> <?php if((!$project->isActive()) || ($project->isArchived())) echo " style='background:#EFEFEF;'"; ?>>
+          <tr <?=$link;?>>
             <?php
               $userId = $project->getId();
               if ($this->admin) {
@@ -131,9 +129,47 @@ function generateModal($project, $admin) {
               <td><a href="/admin/users/<?= $project->getUser()->getId(); ?>" title="<?= $project->getUser()->getName(); ?>'s profile"><?= $project->getUser()->getFirstName(); ?></a></td>
             <?php endif; ?>
             <td><?= $project->getName(); ?></td>
-            <td><?= $project->getShortDescription(); ?></td>
             <td><?= $project->getLink(); ?> <a href="<?= $project->getLink(); ?>" target="_blank" title="Link to <?= $project->getName(); ?>"><span class="glyphicon glyphicon-link"></span></a></td>
             <td><?= $project->getFinishDate(); ?></td>
+            <?php if (!$this->edit): ?>
+              <td>
+                <?php
+                  $evaluation = getEvaluationByProjectAndUser($project->getId(), $GLOBALS["USER_SESSION"]->getId());
+                  if (!$evaluation):
+                    if (!$project->isClosed()):
+                ?>
+                  <span class="label label-success">Open</span>
+                <?php else: ?>
+                  <span class="label label-danger">Closed</span>
+                <?php endif; ?>
+                <?php
+                  else:
+                    if ((!$evaluation->getProject()->isClosed()) && ($evaluation->isFinished())):
+                ?>
+                  <span class="label label-warning">Finished</span>
+                <?php elseif (!$evaluation->getProject()->isClosed()): ?>
+                  <span class="label label-success">Open</span>
+                <?php else: ?>
+                  <span class="label label-danger">Closed</span>
+                <?php endif; ?>
+              <?php endif; ?>
+              </td>
+            <?php endif; ?>
+
+            <?php if ($this->edit): ?>
+              <td>
+                <?php if ($project->isArchived()): ?>
+                  <span class="label label-warning">Archived</span>
+                <?php elseif (!$project->isActive()): ?>
+                  <span class="label label-primary">Inactive</span>
+                <?php elseif ($project->isClosed()): ?>
+                  <span class="label label-danger">Closed</span>
+                <?php else: ?>
+                  <span class="label label-success">Open</span>
+                <?php endif; ?>
+              </td>
+            <?php endif; ?>
+
             <?php if ($this->edit): ?>
               <td>
                 <a href="/my-projects/results/<?= $project->getId(); ?><?php if ($this->admin) echo "?admin=1"; ?>" title="View Results"><span class="glyphicon glyphicon-eye-open"></span></a>
@@ -147,30 +183,6 @@ function generateModal($project, $admin) {
                 <span class="margin-l"></span>
                 <a data-toggle="modal" data-target="#deletingModal_<?= $project->getId(); ?>" href="#" title="Remove Project" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
               </td>
-            <?php endif; ?>
-            <?php if (!$this->edit): ?>
-            <td>
-              <?php
-                $evaluation = getEvaluationByProjectAndUser($project->getId(), $GLOBALS["USER_SESSION"]->getId());
-                if (!$evaluation):
-                  if (!$project->isClosed()):
-              ?>
-                <span class="label label-success">Open</span>
-              <?php else: ?>
-                <span class="label label-danger">Closed</span>
-              <?php endif; ?>                  
-              <?php
-                else:
-                  if ((!$evaluation->getProject()->isClosed()) && ($evaluation->isFinished())):
-              ?>
-                <span class="label label-warning">Finished</span>
-              <?php elseif (!$evaluation->getProject()->isClosed()): ?>
-                <span class="label label-success">Open</span>
-              <?php else: ?>
-                <span class="label label-danger">Closed</span>
-              <?php endif; ?>
-            <?php endif; ?>
-            </td>
             <?php endif; ?>
           </tr>
       <?php
@@ -197,14 +209,10 @@ function generateModal($project, $admin) {
             <th scope="col">Owner</th>
           <?php endif; ?>
           <th scope="col">Project's Name</th>
-          <th scope="col">Description</th>
           <th scope="col">Link</th>
           <th scope="col">Finishes at</th>
-          <?php if (!$this->edit): ?>
-            <th scope="col">Status</th>
-          <?php else: ?>
-            <th scope="col"> </th>
-          <?php endif; ?>
+          <th scope="col">Status</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -215,7 +223,7 @@ function generateModal($project, $admin) {
             $link = "style='cursor:pointer' class='clickable-row' data-href='/evaluations/id/".$project->getId()."'";
           }
           ?>
-            <tr <?=$link;?> <?php if(!$project->isActive()) echo " style='background:#EFEFEF;'"; ?>>
+            <tr <?=$link;?>>
               <?php
                 $userId = $project->getId();
                 if ($this->admin) {
@@ -228,9 +236,23 @@ function generateModal($project, $admin) {
                 <td><a href="/admin/users/<?= $project->getUser()->getId(); ?>" title="<?= $project->getUser()->getName(); ?>'s profile"><?= $project->getUser()->getFirstName(); ?></a></td>
               <?php endif; ?>
               <td><?= $project->getName(); ?></td>
-              <td><?= $project->getShortDescription(); ?></td>
               <td><?= $project->getLink(); ?> <a href="<?= $project->getLink(); ?>" target="_blank" title="Link to <?= $project->getName(); ?>"><span class="glyphicon glyphicon-link"></span></a></td>
               <td><?= $project->getFinishDate(); ?></td>
+
+              <?php if ($this->edit): ?>
+                <td>
+                  <?php if ($project->isArchived()): ?>
+                    <span class="label label-warning">Archived</span>
+                  <?php elseif (!$project->isActive()): ?>
+                    <span class="label label-primary">Inactive</span>
+                  <?php elseif ($project->isClosed()): ?>
+                    <span class="label label-danger">Closed</span>
+                  <?php else: ?>
+                    <span class="label label-success">Open</span>
+                  <?php endif; ?>
+                </td>
+              <?php endif; ?>
+
               <?php if ($this->edit): ?>
                 <td>
                   <a href="/my-projects/results/<?= $project->getId(); ?><?php if ($this->admin) echo "?admin=1"; ?>" title="View Results"><span class="glyphicon glyphicon-eye-open"></span></a>
@@ -245,20 +267,7 @@ function generateModal($project, $admin) {
                   <a data-toggle="modal" data-target="#deletingModal_<?= $project->getId(); ?>" href="#" title="Remove Project" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
                 </td>
               <?php endif; ?>
-              <?php if (!$this->edit): ?>
-              <td>
-                <?php
-                  $evaluation = getEvaluationByProjectAndUser($project->getId(), $GLOBALS["USER_SESSION"]->getId());
-                  if ((!$evaluation->getProject()->isClosed()) && ($evaluation->isFinished())):
-                  ?>
-                  <span class="label label-warning">Finished</span>
-                <?php elseif (!$evaluation->getProject()->isClosed()): ?>
-                  <span class="label label-success">Open</span>
-                <?php else: ?>
-                  <span class="label label-danger">Closed</span>
-                <?php endif; ?>
-              </td>
-              <?php endif; ?>
+
             </tr>
         <?php
         }
