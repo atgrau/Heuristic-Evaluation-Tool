@@ -50,7 +50,7 @@
                     <input type="hidden" name="UserId" value="<?php if(!$this->new) echo $this->user->getId(); ?>" />
                     <div class="form-group">
                       <label for="email">E-mail:</label>
-                      <input autofocus name="email" type="email" class="form-control disabled" id="email" <?php if(!$this->new) echo "disabled" ; ?> placeholder="E-mail" value="
+                      <input autofocus name="email" type="email" class="form-control" id="email" <?php if(!$this->new) echo "disabled" ; ?> placeholder="E-mail" value="
                       <?php
                         if (!$this->new)
                           echo $this->user->getEmail();
