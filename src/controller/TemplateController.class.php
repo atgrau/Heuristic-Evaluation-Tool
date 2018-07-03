@@ -70,7 +70,7 @@
       $category->setTemplateId($_POST["idTemplate"]);
 
       $category->insert();
-      
+
       $this->showTemplateView(true, $category->getTemplateId(), 1);
     }
 
@@ -96,9 +96,7 @@
       $question->setTemplateId($_POST["idTemplate"]);
       $question->setCategoryId($_POST["idCategory"]);
       $question-> insert();
-      if($question){
-        $this->showTemplateView(true, $question->getTemplateId(), 1);
-      }
+      $this->showTemplateView(true, $question->getTemplateId(), 1);
 
     }
 
@@ -130,11 +128,18 @@
       $this->showTemplateList($adminView);
     }
 
-    function removeAnswer($idAnswer, $idTemplate){
+    function removeAnswer(){
 
-      $answer = getAnswerbyId($idAnswer);
-      $answer->setTemplateId($idTemplate);
-      $answer->remove();
+      if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        header("Location: /admin/templates");
+      }
+
+      $answer = getAnswerbyId($_POST["id_answer"]);      
+      if ($answer){
+        $answer->setTemplateId($_POST["id_template"]);
+        $answer->remove();
+      }
+
       $this->showTemplateView(true, $answer->getTemplateId(), 1);
     }
 
@@ -144,12 +149,13 @@
       }
 
       $answer = new Answer(0, $_POST["answer"], $_POST["value"], 0,0);
-      $answer->setColor($_POST["color"]);
-      $answer->setTemplateId($_POST["idTemplate"]);
-      $answer-> insert();
       if($answer){
-        $this->showTemplateView(true, $answer->getTemplateId(), 1);
+        $answer->setColor($_POST["color"]);
+        $answer->setTemplateId($_POST["idTemplate"]);
+        $answer-> insert();
       }
+
+      $this->showTemplateView(true, $answer->getTemplateId(), 1);
 
     }
 

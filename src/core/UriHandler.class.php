@@ -213,7 +213,7 @@
         $controller->newQuestion();
       } else if ($this->uri == "/template/answer-remove") {
         $controller = new TemplateController();
-        $controller->removeAnswer($_GET["param"], $_GET["del"]);
+        $controller->removeAnswer();
       } else if ($this->uri == "/template/answer-new") {
         $controller = new TemplateController();
         $controller->newAnswer();

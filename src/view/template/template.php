@@ -208,7 +208,11 @@ return '<!-- Modal -->
                                   <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd; background-color:<?= $answer->getColor();?>"></td>
                                   <?php if ($this->editTemplate):?>
                                   <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd">
-                                      <a href="/template/answer-remove/<?= $answer->getId()?>?del=<?=$this->template->getId();?>" title="Remove answer" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
+                                    <form action="/template/answer-remove" method="POST">
+                                      <input type="hidden" value="<?=$this->template->getId();?>" name="id_template" />
+                                      <input type="hidden" value="<?=$answer->getId();?>" name="id_answer" />
+                                      <button type="submit" class="btn btn-secondary text-danger" style="background-color:white;"><span class="glyphicon glyphicon-remove"></span></button>
+                                    </form>
                                   </td>
                                   <?php endif; ?>
                                 </tr>
