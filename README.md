@@ -35,7 +35,7 @@ A web application that allows to perform an heuristic evaluation of the interfac
 - [x] Evaluation Results View
 - [x] Activar template una vez finalizada la modificación
 - [x] Controlar eliminación/modificación template si esta en uso/abierto para usuarios
-- [ ] Si esta en el tab Answer modificando valores, mantener la misma pestaña al guardar
+- [x] Si esta en el tab Answer modificando valores, mantener la misma pestaña al guardar
 - [ ] Diseño icono color de answer
 - [ ] Cambiar colorpicker
 - [x] Poner status a templates
@@ -43,7 +43,7 @@ A web application that allows to perform an heuristic evaluation of the interfac
 - [ ] enviar mensaje de activación a todos los usuarios añadidos desde csv
 - [ ] dividir pantalla para evaluar
 - [ ] colores de grafico no se muestran por añadir '#' en el valor de color de answer
-- [ ] Añadir Breadcrumb
+- [x] Añadir Breadcrumb
 - [ ] Aumentar tamaño nombre usuario en el grafico
 - [ ] Traducir <button>'title' a ingles
 - [ ] Después de introducir correo para recuperar contraseña te reenvie a login

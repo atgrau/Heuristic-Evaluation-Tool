@@ -43,7 +43,7 @@
 
       // Breadcrumb
       $this->setBreadcrumb(array(
-          array("Evaluations Results","/my-projects"),
+          array("My Projects","/my-projects"),
           array("Evaluation ".$this->project->getName())
       ));
 
