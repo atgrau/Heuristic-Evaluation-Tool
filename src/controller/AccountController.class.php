@@ -397,5 +397,9 @@
       $this->recentUser = $user->getName();
       $this->showUserList();
     }
+
+    function newImport(){
+    }
+
   }
 ?>

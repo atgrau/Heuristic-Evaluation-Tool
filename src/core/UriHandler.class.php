@@ -225,7 +225,7 @@
         $controller = new TemplateController();
         $controller->editStateTemplate($_GET["param"], $_GET["edit"]);
       } else if ($this->uri == "/admin/importcsv") {
-        $controller = new ImportCSVController();
+        $controller = new AccountController();
         $controller->newImport();
       } else {
         include(BASE_URI."view/index.php");
