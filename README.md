@@ -48,6 +48,7 @@ A web application that allows to perform an heuristic evaluation of the interfac
 - [ ] Traducir <button>'title' a ingles
 - [ ] Después de introducir correo para recuperar contraseña te reenvie a login
 - [ ] Info para realizar evaluaciones
+- [ ] Remove Evaluations when a user is unassigned form a project (?)
 
 
 ## Entities Model
