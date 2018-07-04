@@ -34,7 +34,7 @@
       "/templates/edit" => 1,
       "/templates/new" => 1,
       "/admin/projects" => 2,
-      "/admin/project-update" => 1,
+      "/admin/project-update" => 2,
       "/admin/user-update" => 2,
       "/admin/users" => 2,
       "/admin/new-user" => 2,
