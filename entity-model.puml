@@ -46,8 +46,45 @@ not_null(description) VARCHAR[1000]
 link VARCHAR[50]
 }
 
+Table(evaluation, "Evaluation\n(List of Evaluations)") {
+primary_key(ID) INTEGER
+id_project INTEGER
+id_user INTEGER
+}
+
+Table(template, "Template\n(List of Templates)") {
+primary_key(ID) INTEGER
+name VARCHAR[50]
+}
+
+Table(template_category, "Category\n(List of Categories)") {
+primary_key(ID) INTEGER
+id_template INTEGER
+name VARCHAR[50]
+}
+
+Table(template_question, "Question\n(List of Questions)") {
+primary_key(ID) INTEGER
+id_category INTEGER
+name VARCHAR[50]
+}
+
+Table(template_answer, "Answer\n(List of Answers)") {
+primary_key(ID) INTEGER
+id_template INTEGER
+name VARCHAR[50]
+value DOUBLE
+colour VARCHAR[6]
+}
 
 ' relationships
-user -- country : "A user is assigned\nto one country"
-project -- user : "A user (with role greater than 0)\ncan create one or more projects"
+user -- country : "User is assigned\nto one country"
+project -- user : "User (with role greater than 0)\ncan create one or more projects"
+user -- project : "User\nis assigned to N projects."
+evaluation -- project : "Evaluation\nis assigned to one project"
+evaluation -- user : "Evaluation\nis done by one user"
+project -- template : "Project\nis assigned to one template"
+template -- template_category : "Template has one or more categories"
+template_category -- template_question : "Category has one or more questions"
+template -- template_answer : "Template has one or more answers"
 @enduml
