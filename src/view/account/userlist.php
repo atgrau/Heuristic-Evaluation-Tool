@@ -1,3 +1,4 @@
+<script src="./path/to/dropzone.js"></script>
 <?php
 function generateModal($user) {
 return '<!-- Modal -->
@@ -32,27 +33,30 @@ return '<!-- Modal -->
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form class="box" method="POST" action="" enctype="multipart/form-data">
+      <form action="/file-upload" class="dropzone" method="POST">
         <div class="modal-body">
+          <div class="fallback">
+            <input name="file" type="file" id="filename" />
 
-        </div>
 
-        <div class="modal-body">
-          <table class="table table-hover">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">E-mail</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th><input value="Ok"/></th>
-                <th><input value="@gmal..com"/></th>
-                <th><span class="glyphicon glyphicon-remove"></th>
-              </tr>
-            <tbody>
-          </table>
+              <table class="table table-hover">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th><input value="Ok"/></th>
+                    <th><input value="@gmal..com"/></th>
+                    <th><span class="glyphicon glyphicon-remove"></th>
+                  </tr>
+                <tbody>
+              </table>
+
+          </div>
         </div>
       </form>
 
@@ -147,3 +151,7 @@ return '<!-- Modal -->
 </div>
 
 <!-- /.row -->
+<script>
+src="./path/to/dropzone.js">
+$("div#myId").dropzone({ url: "/file/post" });
+</script>
