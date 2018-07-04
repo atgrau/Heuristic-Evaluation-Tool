@@ -31,8 +31,9 @@
       "/my-projects/update" => 1,
       "/my-projects/remove" => 1,
       "/my-projects/results" => 1,
-      "/templates/edit" => 1,
-      "/templates/new" => 1,
+      "/templates/view" => 1,
+      "/templates/edit" => 2,
+      "/templates/new" => 2,
       "/admin/projects" => 2,
       "/admin/project-update" => 2,
       "/admin/user-update" => 2,
@@ -182,13 +183,9 @@
       } else if ($this->uri == "/admin/user-remove") {
         $controller = new AccountController();
         $controller->removeUser();
-      } else if ($this->uri == "/admin/templates") {
+      } else if ($this->uri == "/templates/view") {
         $controller = new TemplateController();
-        if (empty($_GET["param"])) {
-          $controller->showTemplateList(true);
-        } else {
-          $controller->showTemplateView(true, $_GET["param"], $_GET["edit"], 0);
-        }
+        $controller->showTemplateView(false, $_GET["param"], 0, 0);
       } else if ($this->uri == "/templates/new") {
         $controller = new TemplateController();
         $controller->addNewTemplateView();
