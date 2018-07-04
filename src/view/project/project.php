@@ -86,18 +86,27 @@
                     </span>
                 </div>
               </div>
+
               <div class="form-group">
-                <label for="template">Template:</label>
-                <select name="template" id="template" class="form-control" <?php if (($this->project) && (count($this->project->getEvaluations()) > 0)) echo "disabled"; ?>>
-                  <?php
-                    foreach ($this->templateList as $template) { ?>
-                    <option value="<?=$template->getId();?>" <?php if($templateId == $template->getId()) echo "selected"; ?>><?=$template->getName();?></option>
-                  <?php } ?>
-                </select>
+                <label for="name">Template:</label>
+                <div class="input-group">
+                  <select id="template" name="template" id="template" class="form-control" <?php if (($this->project) && (count($this->project->getEvaluations()) > 0)) echo "disabled"; ?>>
+                    <?php
+                      foreach ($this->templateList as $template) { ?>
+                      <option value="<?=$template->getId();?>" <?php if($templateId == $template->getId()) echo "selected"; ?>><?=$template->getName();?></option>
+                    <?php } ?>
+                  </select>
+                  <span class="input-group-btn">
+                    <a href="#" id="viewTemplate" href="#" class="btn btn-default" title="View Template"><span class="glyphicon glyphicon-eye-open"></span> View</a>
+                  </span>
+                </div>
                 <?php if (($this->project) && (count($this->project->getEvaluations()) > 0)): ?>
                   <small class="text-muted"><span class="glyphicon glyphicon-info-sign"></span> Is not possible to modify template, due to some evaluations have started.</small>
                 <?php endif; ?>
               </div>
+
+
+
 
 
               <?php if ($this->adminView): ?>
@@ -171,4 +180,8 @@
         $('#finishDate').datepicker('show');
     });
   });
+
+  $("#viewTemplate").click(function(){
+    window.open("/templates/view/" + $("#template").val());
+  })
 </script>

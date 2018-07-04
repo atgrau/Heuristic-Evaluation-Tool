@@ -186,6 +186,13 @@
       } else if ($this->uri == "/templates/view") {
         $controller = new TemplateController();
         $controller->showTemplateView(false, $_GET["param"], 0, 0);
+      } else if ($this->uri == "/admin/templates") {
+        $controller = new TemplateController();
+        if (empty($_GET["param"])) {
+          $controller->showTemplateList(true);
+        } else {
+          $controller->showTemplateView(true, $_GET["param"], $_GET["edit"], 0);
+        }
       } else if ($this->uri == "/templates/new") {
         $controller = new TemplateController();
         $controller->addNewTemplateView();
