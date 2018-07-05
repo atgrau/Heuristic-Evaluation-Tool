@@ -5,5 +5,11 @@
         <?php include("page_content.inc.php"); ?>
     </div>
     <?php include("footer.inc.php"); ?>
+
 </body>
+<script>
+  $(document).ready(function(){
+    $.cookieBar();
+  });
+</script>
 </html>

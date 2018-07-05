@@ -18,3 +18,6 @@
 
     <!-- Datepicker -->
     <script src="/dist/js/jquery-ui.min.js"></script>
+
+    <!-- Cookies -->
+    <script src="/dist/js/jquery.cookiebar.js"></script>

@@ -15,6 +15,8 @@
       "/forgot/generate" => -1,
       "/account/login" => -1,
       "/logout" => 0,
+      "/privacy-policy" => 0,
+      "/legal-disclaimer" => 0,
       "/account/profile" => 0,
       "/account/update-profile" => 0,
       "/account/update-password" => 0,
@@ -106,6 +108,18 @@
       } else if ($this->uri == "/logout") {
         $controller = new AccountController();
         $controller->logout();
+      } else if ($this->uri == "/privacy-policy") {
+        $view = new BaseController("index","privacy-policy");
+        $view->setBreadcrumb(array(
+            array("Privacy Policy")
+        ));
+        $view->render();
+      } else if ($this->uri == "/legal-disclaimer") {
+        $view = new BaseController("index","legal-disclaimer");
+        $view->setBreadcrumb(array(
+            array("Legal Disclaimer")
+        ));
+        $view->render();
       } else if ($this->uri == "/account/profile") {
         $controller = new AccountController();
         $controller->showProfile(false);

@@ -29,6 +29,10 @@
     <!-- Datepicker UI Theme CSS -->
     <link rel="stylesheet" href="/dist/css/jquery-ui.theme.min.css">
 
+    <!-- Cookies -->
+    <link rel="stylesheet" href="/dist/css/jquery.cookiebar.css">
+
+
     <!-- Custom Fonts -->
     <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
