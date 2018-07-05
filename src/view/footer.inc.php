@@ -3,8 +3,9 @@
   <div class="container">
     <div class="margin text-center">
       <div class="col-lg-4">
-        <a href="http://www.udl.cat/" target="_blank" title="Go to Universitat de Lleida website">Universitat de Lleida</a> <br />
-        <a href="http://www.eps.udl.cat/" target="_blank" title="Go to Escola Politècnica Superior">Escola Politècnica Superior</a>
+        <a href="http://www.udl.cat/" target="_blank" title="Go to Universitat de Lleida website">Universitat de Lleida</a><br />
+        <a href="http://www.eps.udl.cat/" target="_blank" title="Go to Escola Politècnica Superior">Escola Politècnica Superior</a><br />
+        <a href="http://griho.udl.cat/" target="_blank" title="Go to GRIHO">GRIHO</a>
       </div>
       <div class="col-lg-4">
         <strong><?=APP_TITLE?></strong> <br /> E-mail: <a href="mailto:<?=EMAIL?>" title="Send us and E-mail"><?=EMAIL?></a>
