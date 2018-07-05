@@ -102,10 +102,11 @@ function generateModal($project, $admin) {
         <th scope="col">Project's Name</th>
         <th scope="col">Link</th>
         <th scope="col">Finishes at</th>
-        <th scope="col">Status</th>
+        <th scope="col" class="text-center">Status</th>
         <?php if ($this->edit): ?>
           <th scope="col">Manage</th>
         <?php else:?>
+          <th scope="col" class="text-center">Percentage done</th>
           <th scope="col" class="text-center">View Results</th>
         <?php endif;?>
       </tr>
@@ -134,7 +135,7 @@ function generateModal($project, $admin) {
             <td><?= $project->getLink(); ?> <a href="<?= $project->getLink(); ?>" target="_blank" title="Link to <?= $project->getName(); ?>"><span class="glyphicon glyphicon-link"></span></a></td>
             <td><?= $project->getFinishDate(); ?></td>
             <?php if (!$this->edit): ?>
-              <td>
+              <td class="text-center">
                 <?php
                   $evaluation = getEvaluationByProjectAndUser($project->getId(), $GLOBALS["USER_SESSION"]->getId());
                   if (!$evaluation):
@@ -159,7 +160,7 @@ function generateModal($project, $admin) {
             <?php endif; ?>
 
             <?php if ($this->edit): ?>
-              <td>
+              <td class="text-center" width="15%">
                 <?php if ($project->isArchived()): ?>
                   <span class="label label-warning">Archived</span>
                 <?php elseif (!$project->isActive()): ?>
@@ -186,7 +187,22 @@ function generateModal($project, $admin) {
                 <a data-toggle="modal" data-target="#deletingModal_<?= $project->getId(); ?>" href="#" title="Remove Project" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
               </td>
             <?php else: ?>
-              <td class="text-center">
+              <td width="15%" class="text-center">
+                <?php
+                  if ($evaluation)
+                    $percent = $evaluation->getPercentageDone();
+                  else
+                    $percent = 0;
+                ?>
+                <?php if ($percent == 100): ?>
+                <span class="label label-success"><?="100%";?></span>
+              <?php elseif ($percent == 0): ?>
+                <span class="label label-danger"><?="0%";?></span>
+              <?php else: ?>
+                <span class="label label-warning"><?=$percent."%";?></span>
+                <?php endif; ?>
+              </td>
+              <td width="10%" class="text-center">
                 <a href="/evaluations/id/<?= $project->getId(); ?>?tab=results" title="View Results"><span class="glyphicon glyphicon-eye-open"></span></a>
               </td>
             <?php endif; ?>
@@ -217,7 +233,7 @@ function generateModal($project, $admin) {
           <th scope="col">Project's Name</th>
           <th scope="col">Link</th>
           <th scope="col">Finishes at</th>
-          <th scope="col">Status</th>
+          <th scope="col" class="text-center">Status</th>
           <th scope="col">Manage</th>
         </tr>
       </thead>
@@ -246,7 +262,7 @@ function generateModal($project, $admin) {
               <td><?= $project->getFinishDate(); ?></td>
 
               <?php if ($this->edit): ?>
-                <td>
+                <td class="text-center" width="15%">
                   <?php if ($project->isArchived()): ?>
                     <span class="label label-warning">Archived</span>
                   <?php elseif (!$project->isActive()): ?>
@@ -260,7 +276,7 @@ function generateModal($project, $admin) {
               <?php endif; ?>
 
               <?php if ($this->edit): ?>
-                <td >
+                <td width="15%">
                   <a href="/my-projects/results/<?= $project->getId(); ?><?php if ($this->admin) echo "?admin=1"; ?>" title="View Results"><span class="glyphicon glyphicon-eye-open"></span></a>
                   <?php if ($this->admin): ?>
                     <span class="margin-l"></span>
