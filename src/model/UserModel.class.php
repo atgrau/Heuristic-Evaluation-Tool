@@ -16,11 +16,11 @@
     private $entity;
 
     public static function create() {
-        $instance = new self(0, 0, '', '', '', '', 0, '', '', null);
+        $instance = new self(0, 0, '', '', '', '', 0, '', '', 1);
         return $instance;
     }
 
-    function __construct($id, $role, $email, $password, $firstName, $lastName, $gender, $entity, $country)
+    function __construct($id, $role, $email, $password, $firstName, $lastName, $gender, $entity, $country, $active)
     {
       $this->id = $id;
       $this->role = $role;
@@ -31,6 +31,7 @@
       $this->gender = $gender;
       $this->country = $country;
       $this->entity = $entity;
+      $this->active = $active;
     }
 
     function getId() {
@@ -113,6 +114,14 @@
       $this->country = $value;
     }
 
+    function isActive() {
+      return $this->active;
+    }
+
+    function setActive($value) {
+      $this->active = $value;
+    }
+
     function setNewToken($token) {
       DB::update("users", array(
         "token" => $token
@@ -134,7 +143,8 @@
           "lastname" => $this->lastName,
           "gender" => $this->gender,
           "entity" => $this->entity,
-          "country" => $this->country->getIso()
+          "country" => $this->country->getIso(),
+          "active" => $this->active
         ), "ID=%i", $this->id);
       }
     }
@@ -148,7 +158,8 @@
         "lastname" => $this->lastName,
         "gender" => $this->gender,
         "entity" => $this->entity,
-        "country" => $this->country->getIso()
+        "country" => $this->country->getIso(),
+        "active" => true
       ));
     }
 
@@ -168,7 +179,7 @@
 
   function buildUser($account) {
     if ($account) {
-      return new User($account["ID"], $account["role"], $account["email"], $account["password"], $account["firstname"], $account["lastname"], $account["gender"], $account["entity"], new Country($account["iso"], $account["name"]));
+      return new User($account["ID"], $account["role"], $account["email"], $account["password"], $account["firstname"], $account["lastname"], $account["gender"], $account["entity"], new Country($account["iso"], $account["name"]), boolval($account["active"]));
     } else {
       return null;
     }
@@ -235,7 +246,7 @@
   }
 
   function doLogin($email, $password) {
-    $account = DB::queryFirstRow("SELECT ID FROM users WHERE email=%s and password=%s", $email, $password);
+    $account = DB::queryFirstRow("SELECT ID FROM users WHERE active = 1 AND email=%s AND password=%s", $email, $password);
     if ($account) {
       // Create new Session
       session_start();

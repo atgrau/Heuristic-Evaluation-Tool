@@ -57,7 +57,7 @@ function generateModal($project, $admin) {
   <div class="row margin-lg-b">
     <div id="custom-search-input">
       <div class="input-group col-md-12">
-        <input name="q" type="text" class="form-control input" placeholder="Search by name or description..." value="<?= $this->query; ?>" />
+        <input name="q" type="text" class="form-control input" placeholder="Search by name..." value="<?= $this->query; ?>" />
         <span class="input-group-btn">
         <button class="btn btn-primary btn" type="submit">
         <i class="glyphicon glyphicon-search"></i>

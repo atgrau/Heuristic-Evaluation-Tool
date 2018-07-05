@@ -116,7 +116,7 @@
 
         if ($adminView) {
           $this->setBreadcrumb(array(
-              array("Projects","/projects"),
+              array("Projects","/admin/projects"),
               array($project->getName())
           ));
         } else {

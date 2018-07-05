@@ -259,6 +259,7 @@ $(document).on('drop', function (e)
         <th scope="col">Name</th>
         <th scope="col">E-mail</th>
         <th scope="col">Role</th>
+        <th scope="col">Status</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -272,6 +273,13 @@ $(document).on('drop', function (e)
           <td><?= $user->getName(); ?></td>
           <td><?= $user->getEmail(); ?></td>
           <td><?= getRoleName($user->getRole()); ?></td>
+          <td>
+            <?php if ($user->isActive()): ?>
+              <span class="label label-success">Actived</span>
+            <?php else: ?>
+              <span class="label label-danger">Inactive</span>
+            <?php endif; ?>
+          </td>
           <td>
             <?= generateModal($user); ?>
             <a href="/admin/users/<?= $user->getId(); ?>" title="Editar Usuario"><span class="glyphicon glyphicon-pencil padding-l"></span></a>

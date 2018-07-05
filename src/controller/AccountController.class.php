@@ -92,7 +92,7 @@
         $subject = "Recovered Account";
         $body = "Hello <b>".$user->getName()."</b>, <br /><br />";
         $body .= "Your account has been recovered successfully!<br /><br />";
-        $body .= "You can access using the following credentials:<br />";
+        $body .= "You can access by using the following credentials:<br />";
         $body .= "<b>Email:</b> ".$user->getEmail()."<br />";
         $body .= "<b>Password:</b> ".$password."<br /><br />";
         $body .= "<a href='".URL."' target='_blank'>Click here to Sign In</a><br /><br />";
@@ -159,6 +159,7 @@
       $gender = $_POST["gender"];
       $entity = $_POST["entity"];
       $country = $_POST["country"];
+      $active = $_POST["active"];
 
       // Validation
       if (($isAdmin) && ($role != 0) && ($role != 1) && ($role != 2)) {
@@ -166,7 +167,11 @@
       }
 
       if (($isAdmin) && ($role != 2) && ($userId == $GLOBALS["USER_SESSION"]->getId())) {
-        $this->error .= "<li>You cannot re-assign a role to yourself.</li>";
+        $this->error .= "<li>You cannot re-assign a role to your own account.</li>";
+      }
+
+      if (($isAdmin) && (!$active) && ($userId == $GLOBALS["USER_SESSION"]->getId())) {
+        $this->error .= "<li>You cannot deactivate your own account.</li>";
       }
 
       $this->validateProfile($firstname, $lastname, $gender, $entity, $country);
@@ -179,6 +184,7 @@
         // Only if is Admin
         if ($isAdmin) {
           $user->setRole($role);
+          $user->setActive($active);
         }
         $user->setFirstName($firstname);
         $user->setLastName($lastname);

@@ -3,7 +3,7 @@
   <h1>Legal Disclaimer</h1>
     <p>Last updated: July 05, 2018</p>
 
-    <p>The information contained on <a href="/"><?=URI?></a> website (the "Service") is for general information purposes only.</p>
+    <p>The information contained on <a href="/"><?=URL?></a> website (the "Service") is for general information purposes only.</p>
 
     <p><?=APP_TITLE;?> assumes no responsibility for errors or omissions in the contents on the Service.</p>
 

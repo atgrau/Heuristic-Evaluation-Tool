@@ -277,10 +277,10 @@
 
     $condition = "WHERE projects.id_user = %i AND projects.archived = 0";
     if (!empty($filter))
-      $condition .= " AND (projects.name like %ss OR projects.description like %ss)";
+      $condition .= " AND (projects.name like %ss)";
 
     $qry = $qry." ".$condition." ORDER BY projects.ID";
-    $projects = DB::query($qry, $userId, $filter, $filter);
+    $projects = DB::query($qry, $userId, $filter);
 
     return buildRs($projects);
   }
@@ -290,10 +290,10 @@
 
     $condition = "WHERE projects.id_user = %i AND projects.archived = 1";
     if (!empty($filter))
-      $condition .= " AND (projects.name like %ss OR projects.description like %ss)";
+      $condition .= " AND (projects.name like %ss)";
 
     $qry = $qry." ".$condition." ORDER BY projects.finish_date DESC";
-    $projects = DB::query($qry, $userId, $filter, $filter);
+    $projects = DB::query($qry, $userId, $filter);
 
     return buildRs($projects);
   }

@@ -50,12 +50,16 @@
                                 <?= $this->error; ?>
                               </div>
                             <?php } ?>
+                            <?php if(!$this->recovered) { ?>
                               <div class="form-group">
                                 Introduce your e-mail in order to recover your account:
                                 <input class="form-control margin-t" placeholder="E-mail" name="email" type="email" autofocus value="<?php echo $this->email; ?>">
                               </div>
                               <input type="submit" value="Recover Account" class="btn btn-success" />
                               <a class="btn btn-danger" href="/">Cancel</a>
+                            <?php } else { ?>
+                              <a href="/" title="Go to the Sign In page">Go Back</a>
+                            <?php } ?>
                           </fieldset>
                         </form>
                       <?php elseif ($this->content == "reset"): ?>
@@ -75,7 +79,7 @@
                           ?>
                         </form>
                       <?php else: ?>
-                        <?="We have <strong>send a new password</strong> to your <strong>email</strong>. <br /><br />Click <a href='/' title='Sign in'>here</a> to sign in.";?>
+                        <?="We have <strong>sent a new password</strong> to your <strong>email</strong>. <br /><br />Click <a href='/' title='Sign in'>here</a> to sign in.";?>
                       <?php endif; ?>
                     </div>
                 </div>
