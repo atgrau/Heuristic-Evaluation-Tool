@@ -104,7 +104,9 @@ function generateModal($project, $admin) {
         <th scope="col">Finishes at</th>
         <th scope="col">Status</th>
         <?php if ($this->edit): ?>
-          <th scope="col"></th>
+          <th scope="col">Manage</th>
+        <?php else:?>
+          <th scope="col" class="text-center">View Results</th>
         <?php endif;?>
       </tr>
     </thead>
@@ -183,6 +185,10 @@ function generateModal($project, $admin) {
                 <span class="margin-l"></span>
                 <a data-toggle="modal" data-target="#deletingModal_<?= $project->getId(); ?>" href="#" title="Remove Project" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
               </td>
+            <?php else: ?>
+              <td class="text-center">
+                <a href="/evaluations/id/<?= $project->getId(); ?>?tab=results" title="View Results"><span class="glyphicon glyphicon-eye-open"></span></a>
+              </td>
             <?php endif; ?>
           </tr>
       <?php
@@ -212,7 +218,7 @@ function generateModal($project, $admin) {
           <th scope="col">Link</th>
           <th scope="col">Finishes at</th>
           <th scope="col">Status</th>
-          <th scope="col"></th>
+          <th scope="col">Manage</th>
         </tr>
       </thead>
       <tbody>
@@ -254,7 +260,7 @@ function generateModal($project, $admin) {
               <?php endif; ?>
 
               <?php if ($this->edit): ?>
-                <td>
+                <td >
                   <a href="/my-projects/results/<?= $project->getId(); ?><?php if ($this->admin) echo "?admin=1"; ?>" title="View Results"><span class="glyphicon glyphicon-eye-open"></span></a>
                   <?php if ($this->admin): ?>
                     <span class="margin-l"></span>
