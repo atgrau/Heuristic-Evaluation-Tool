@@ -93,7 +93,7 @@ function generateModal($project, $admin) {
 </form>
 <div class="row">
   <table id="tableProject" class="table table-hover">
-    <thead class="thead-light">
+    <thead class="thead-light" style="cursor:pointer">
       <tr>
         <th scope="col" width="5%">#</th>
         <?php if ($this->admin): ?>
@@ -224,7 +224,7 @@ function generateModal($project, $admin) {
   <?php if ((!$this->admin) && ($this->edit)): ?>
     <h1 class="page-header">My Archived Projects</h1>
     <table id="tableProjectArchived" class="table table-hover">
-      <thead class="thead-light">
+      <thead class="thead-light" style="cursor:pointer">
         <tr>
           <th scope="col" width="5%">#</th>
           <?php if ($this->admin): ?>

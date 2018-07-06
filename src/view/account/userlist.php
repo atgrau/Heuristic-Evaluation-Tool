@@ -109,7 +109,7 @@ return '<!-- Modal -->
 </div>
 <div class="row">
   <table id="tableUsers" class="table table-hover">
-    <thead class="thead-light">
+    <thead class="thead-light" style="cursor:pointer">
       <tr>
         <th scope="col">#</th>
         <th scope="col">Name</th>

@@ -77,7 +77,7 @@ return '<!-- Modal -->
 </form>
 <div class="row">
   <table id="tableTemplates" class="table table-hover">
-    <thead class="thead-light">
+    <thead class="thead-light" style="cursor:pointer">
       <tr>
         <th scope="col">#</th>
         <th scope="col">Template's Name</th>
