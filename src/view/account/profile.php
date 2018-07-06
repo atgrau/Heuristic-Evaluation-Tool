@@ -137,7 +137,7 @@
 
                     <?php if ($this->admin): ?>
                       <div class="form-group">
-                        <input value="1" name="active" type="checkbox" class="form-check-input" id="active" <?php if ($this->user->isActive()) echo 'checked="checked"'; ?>>
+                        <input value="1" name="active" type="checkbox" class="form-check-input" id="active" <?php if ((!$this->new) && $this->user->isActive()) echo 'checked="checked"'; ?>>
                         <label class="form-check-label" for="active">Active</label> <br />
                         <small class="text-muted"><span class="glyphicon glyphicon-info-sign"></span> By deactivating this option, user will no longer be able to log in.</small>
                       </div>
