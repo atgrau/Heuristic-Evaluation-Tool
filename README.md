@@ -37,18 +37,20 @@ A web application that allows to perform an heuristic evaluation of the interfac
 - [x] Controlar eliminación/modificación template si esta en uso/abierto para usuarios
 - [x] Si esta en el tab Answer modificando valores, mantener la misma pestaña al guardar
 - [x] Diseño icono color de answer
-- [ ] Cambiar colorpicker
+- [x] Cambiar colorpicker
 - [x] Poner status a templates
-- [ ] importar csv
-- [ ] enviar mensaje de activación a todos los usuarios añadidos desde csv
+- [x] importar csv
+- [x] enviar mensaje de activación a todos los usuarios añadidos desde csv
 - [ ] dividir pantalla para evaluar
 - [x] colores de grafico no se muestran por añadir '#' en el valor de color de answer
 - [x] Añadir Breadcrumb
 - [ ] Aumentar tamaño nombre usuario en el grafico
 - [ ] Traducir <button>'title' a ingles
-- [ ] Después de introducir correo para recuperar contraseña te reenvie a login
+- [x] Después de introducir correo para recuperar contraseña te reenvie a login
 - [ ] Info para realizar evaluaciones
 - [ ] Remove Evaluations when a user is unassigned form a project (?)
+- [ ] Home Content
+- [ ] Print Reports (maybe using window.print())
 
 
 ## Entities Model
