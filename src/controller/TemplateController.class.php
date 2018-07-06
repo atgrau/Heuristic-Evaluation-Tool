@@ -28,7 +28,7 @@
 
         $template = getTemplateById($templateId);
 
-        if ((!$template) || (!$GLOBALS["USER_SESSION"]->isAdmin())){
+        if (!$template){
             $this->showTemplateList($adminView);
         } else {
           $this->setBreadcrumb(array(
