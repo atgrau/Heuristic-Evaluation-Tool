@@ -405,6 +405,108 @@
     }
 
     function newImport(){
+      if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        header("Location: /admin/users");
+      }
+
+      $uploadDir = UPLOAD_URI;
+      $uploadFile = $uploadDir."users.csv";
+
+      move_uploaded_file($_FILES['file']['tmp_name'], $uploadFile);
+    }
+
+    function newImportProcess() {
+      $file = UPLOAD_URI."/users.csv";
+      $mimes = array('application/vnd.ms-excel','text/plain','text/csv','text/tsv');
+      if (file_exists($file)) {
+        if(in_array(mime_content_type($file),$mimes)) {
+          $row = 1;
+          if (($gestor = fopen($file, "r")) !== FALSE) {
+              $userList = array();
+              while (($data = fgetcsv($gestor, 1000, ",")) !== FALSE) {
+                  $number = count($data);
+                  $row++;
+                  array_push($userList, $this->buildUser($data));
+              }
+              fclose($gestor);
+          }
+
+          if ($userList) {
+            foreach ($userList as $user) {
+              $user->insert();
+
+              // Send and Email with Password
+              $subject = "Welcome to ".APP_TITLE;
+              $body = "Hello <b>".$user->getName()."</b>, <br /><br />";
+              $body .= "Welcome to <b>".APP_TITLE."</b>, your account has been created successfully!<br /><br />";
+              $body .= "You can access using the following credentials:<br />";
+              $body .= "<b>Email:</b> ".$user->getEmail()."<br />";
+              $body .= "<b>Password:</b> ".$user->getClearPassword()."<br /><br />";
+              $body .= "<a href='".URL."' target='_blank'>Click here to Sign In</a><br /><br />";
+
+              $email = new Email($user->getEmail(), $subject, $body);
+              $email->send();
+
+              $this->importedUsers .= "<li>".$user->getName()." with e-mail ".$user->getEmail().".</li>";
+            }
+
+            // Delete imported file
+            unlink($file);
+            $this->showUserList();
+          } else {
+            $this->showUserList();
+          }
+        } else {
+          $this->error = "Sorry, MIME type is not allowed.";
+          // Delete imported file
+          unlink($file);
+          $this->showUserList();
+        }
+      } else {
+        $this->error = "Imported file does not exists.";
+        $this->showUserList();
+      }
+    }
+
+    private function buildUser($data) {
+      $email = $data[0];
+      $firstname = $data[1];
+      $lastname = $data[2];
+      $gender = $data[3];
+      $entity = $data[4];
+      $country = $data[5];
+
+      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $this->error .= "<li><em>".$email."</em> is not a valid e-mail format.</li>";
+        // Delete imported file
+        unlink($file);
+        $this->showUserList();
+      }
+
+      if (userEmailExists($email)) {
+        $this->error .= "<li><em>".$email."</em> already exists in our database.</li>";
+        // Delete imported file
+        unlink($file);
+        $this->showUserList();
+      }
+
+      if (!countryExists($country)) {
+        $this->error .= "<li>Specified country for the user <em>".$email."</em> does not exists.</li>";
+        // Delete imported file
+        unlink($file);
+        $this->showUserList();
+      } else {
+        $country = getCountryByIso($country);
+      }
+
+      $password = randomPassword();
+      $md5Password = md5($password);
+
+
+      // FORMAT -> email, firstname, lastname, gender, entity, country
+      $user = new User(0, 0, $email, $md5Password, $firstname, $lastname, boolval($gender), $entity, $country, true);
+      $user->setClearPassword($password);
+      return $user;
     }
 
   }

@@ -1,7 +1,6 @@
-<button id="topButton" title="Go to top"><span class="glyphicon glyphicon-menu-up"></span></button>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.3/css/bootstrap-colorpicker.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.3/js/bootstrap-colorpicker.min.js"></script>
-
+<button id="topButton" title="Go to top"><span class="glyphicon glyphicon-menu-up"></span></button>
 <div class="row">
 
   <div class="row">
@@ -213,9 +212,9 @@
                                         <td>
                                             <input name="answer" type="text" class="form-control" placeholder="Insert answer..." ></td>
                                         <td>
-                                          <input name="value" type="text" class="form-control" placeholder="Insert value..." ></td>
+                                          <input name="value" type="number" step="0.5" class="form-control" placeholder="Insert value..." ></td>
                                         <td>
-                                          <div id="cp2" class="input-group colorpicker-component">
+                                          <div id="cp2" class="input-group colorpicker-component" style="cursor:pointer">
                                               <input name="color"type="hidden" class="form-control" />
                                               <span class="input-group-addon" style="background-color:white"><i></i></span>
                                               <script>

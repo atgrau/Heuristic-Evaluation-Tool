@@ -2,6 +2,7 @@
 
   // Initial configurations: Setting up base uri of project
   define("BASE_URI", $_SERVER["DOCUMENT_ROOT"]."/src/");
+  define("UPLOAD_URI", $_SERVER["DOCUMENT_ROOT"]."/upload/");
 
   // Include configuration files
   require_once(BASE_URI."config/global.php");

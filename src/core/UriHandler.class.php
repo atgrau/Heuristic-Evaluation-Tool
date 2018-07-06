@@ -52,6 +52,7 @@
       "/template/answer-remove" => 2,
       "/template/answer-new" => 2,
       "/admin/importcsv" => 2,
+      "/admin/process-csv" => 2,
       "/admin/template-remove" => 2,
       "/template/active" => 2,
 
@@ -241,6 +242,9 @@
       } else if ($this->uri == "/admin/importcsv") {
         $controller = new AccountController();
         $controller->newImport();
+      } else if ($this->uri == "/admin/process-csv") {
+        $controller = new AccountController();
+        $controller->newImportProcess();
       } else {
         include(BASE_URI."view/index.php");
       }

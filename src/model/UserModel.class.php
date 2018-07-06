@@ -9,6 +9,7 @@
     private $role;
     private $email;
     private $password;
+    private $clearPassword;
     private $firstName;
     private $lastName;
     private $gender;
@@ -68,6 +69,14 @@
 
     function setPassword($value) {
       $this->password = $value;
+    }
+
+    function getClearPassword() {
+      return $this->clearPassword;
+    }
+
+    function setClearPassword($value) {
+      $this->clearPassword = $value;
     }
 
     function getFirstName() {

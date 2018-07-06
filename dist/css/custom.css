@@ -100,7 +100,7 @@ thead {
 .padding-l {
   padding-left: 10px;
 }
-/*--------------------------------------------------------------*/
+
 .disabled {
   pointer-events: none;
   cursor: default;
@@ -108,31 +108,6 @@ thead {
   color: #999;
 }
 
-#file{
-    display: none;
-}
-
-/* Thumbnail */
-.thumbnail{
-    width: 80px;
-    height: 80px;
-    padding: 2px;
-    border: 2px solid lightgray;
-    border-radius: 3px;
-    float: left;
-}
-
 .size{
     font-size:12px;
-}
-
-#dragandrophandler
-{
-border:2px dotted #0B85A1;
-width:400px;
-color:#92AAB0;
-text-align:left;vertical-align:middle;
-padding:10px 10px 10 10px;
-margin-bottom:10px;
-font-size:200%;
 }

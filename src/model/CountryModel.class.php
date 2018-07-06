@@ -24,7 +24,7 @@
 
   function getCountryByIso($iso) {
     $country = DB::queryFirstRow("SELECT iso, name FROM countries WHERE iso=%s", $iso);
-    if ($account) {
+    if ($country) {
       return new Country($country["iso"], $country["name"]);
     } else {
       return null;
