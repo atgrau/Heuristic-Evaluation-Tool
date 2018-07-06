@@ -76,13 +76,13 @@ return '<!-- Modal -->
   </div>
 </form>
 <div class="row">
-  <table class="table table-hover">
+  <table id="tableTemplates" class="table table-hover">
     <thead class="thead-light">
       <tr>
         <th scope="col">#</th>
         <th scope="col">Template's Name</th>
         <th scope="col">Status</th>
-        <th scope="col"></th>
+        <th scope="col" width="15%">Manage</th>
       </tr>
     </thead>
     <tbody>
@@ -125,3 +125,13 @@ return '<!-- Modal -->
   ?>
 </div>
 <!-- /.row -->
+<script>
+  $(document).ready(function() {
+    $('#tableTemplates').DataTable( {searching: false, paging: false,"bInfo": false, "language": {
+      "emptyTable": "No templates found..."
+    },
+        "order": [[ 0, "asc" ]]
+    } );
+
+  } );
+</script>

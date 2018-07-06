@@ -108,7 +108,7 @@ return '<!-- Modal -->
   </div>
 </div>
 <div class="row">
-  <table class="table table-hover">
+  <table id="tableUsers" class="table table-hover">
     <thead class="thead-light">
       <tr>
         <th scope="col">#</th>
@@ -150,9 +150,7 @@ return '<!-- Modal -->
     </tbody>
   </table>
   <?php
-    if (empty($this->userList)) {
-      echo "<span class='glyphicon glyphicon-info-sign'></span> No users found...";
-    } else {
+    if (!empty($this->userList)) {
       echo "<strong>Total Users:</strong> ".sizeof($this->userList);
     }
   ?>
@@ -164,4 +162,13 @@ return '<!-- Modal -->
   $("#btnUpload").click(function() {
     $("#uploadForm").submit();
   });
+
+  $(document).ready(function() {
+    $('#tableUsers').DataTable( {searching: false, paging: false,"bInfo": false, "language": {
+      "emptyTable": "No users found..."
+    },
+        "order": [[ 0, "asc" ]]
+    } );
+
+  } );
 </script>

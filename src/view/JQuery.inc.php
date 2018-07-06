@@ -21,3 +21,6 @@
 
     <!-- Cookies -->
     <script src="/dist/js/jquery.cookiebar.js"></script>
+
+    <!-- Datatables -->
+    <script src="/dist/js/jquery.dataTables.min.js"></script>

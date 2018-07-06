@@ -71,7 +71,7 @@
               </div>
               <div class="form-group">
                 <label for="description">Description:</label>
-                <textarea id="description" name="description" maxlength="1000" class="form-control" placeholder="Description of project"><?=$desription?></textarea>
+                <textarea rows="4" id="description" name="description" maxlength="1000" class="form-control" placeholder="Description of project"><?=$desription?></textarea>
               </div>
               <div class="form-group">
                 <label for="link">Link:</label>
@@ -104,10 +104,6 @@
                   <small class="text-muted"><span class="glyphicon glyphicon-info-sign"></span> Is not possible to modify template, due to some evaluations have started.</small>
                 <?php endif; ?>
               </div>
-
-
-
-
 
               <?php if ($this->adminView): ?>
                 <div class="form-group">

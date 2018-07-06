@@ -92,10 +92,10 @@ function generateModal($project, $admin) {
 <?php endif; ?>
 </form>
 <div class="row">
-  <table class="table table-hover">
+  <table id="tableProject" class="table table-hover">
     <thead class="thead-light">
       <tr>
-        <th scope="col">#</th>
+        <th scope="col" width="5%">#</th>
         <?php if ($this->admin): ?>
           <th scope="col">Owner</th>
         <?php endif; ?>
@@ -107,7 +107,7 @@ function generateModal($project, $admin) {
           <th scope="col">Manage</th>
         <?php else:?>
           <th scope="col" class="text-center">Percentage done</th>
-          <th scope="col" class="text-center">View Results</th>
+          <th scope="col" class="text-center">Results</th>
         <?php endif;?>
       </tr>
     </thead>
@@ -203,7 +203,9 @@ function generateModal($project, $admin) {
                 <?php endif; ?>
               </td>
               <td width="10%" class="text-center">
-                <a href="/evaluations/id/<?= $project->getId(); ?>?tab=results" title="View Results"><span class="glyphicon glyphicon-eye-open"></span></a>
+                <?php if($evaluation): ?>
+                  <a href="/evaluations/id/<?= $project->getId(); ?>?tab=results" title="View Results"><span class="glyphicon glyphicon-eye-open"></span></a>
+                <?php endif; ?>
               </td>
             <?php endif; ?>
           </tr>
@@ -214,19 +216,17 @@ function generateModal($project, $admin) {
     </tbody>
   </table>
   <?php
-    if (empty($this->projectList)) {
-      echo "<span class='glyphicon glyphicon-info-sign'></span> No projects found...";
-    } else {
+    if (!empty($this->projectList)) {
       echo "<strong>Total projects:</strong> ".sizeof($this->projectList);
     }
   ?>
 
   <?php if ((!$this->admin) && ($this->edit)): ?>
     <h1 class="page-header">My Archived Projects</h1>
-    <table class="table table-hover">
+    <table id="tableProjectArchived" class="table table-hover">
       <thead class="thead-light">
         <tr>
-          <th scope="col">#</th>
+          <th scope="col" width="5%">#</th>
           <?php if ($this->admin): ?>
             <th scope="col">Owner</th>
           <?php endif; ?>
@@ -300,19 +300,36 @@ function generateModal($project, $admin) {
   <?php endif; ?>
   <?php
     if ((!$this->admin) && ($this->edit)):
-      if (empty($this->archivedProjectList)) {
-        echo "<span class='glyphicon glyphicon-info-sign'></span> No projects found...";
-      } else {
+      if (!empty($this->archivedProjectList)) {
         echo "<strong>Total of archived projects:</strong> ".sizeof($this->archivedProjectList);
       }
     endif;
   ?>
 </div>
 <!-- /.row -->
+
 <script>
-jQuery(document).ready(function($) {
-    $(".clickable-row").click(function() {
-        window.location = $(this).data("href");
+  jQuery(document).ready(function($) {
+      $(".clickable-row").click(function() {
+          window.location = $(this).data("href");
+      });
+  });
+
+  $(document).ready(function() {
+    $('#tableProject').DataTable( {searching: false, paging: false,"bInfo": false, "language": {
+      "emptyTable": "No projects found..."
+    },
+        "order": [[ 0, "asc" ]]
+    } );
+
+  } );
+
+  $(document).ready(function() {
+    $('#tableProjectArchived').DataTable( {searching: false, paging: false, "bInfo": false, "language": {
+      "emptyTable": "No projects found..."
+    },
+        "order": [[ 0, "asc" ]]
     });
-});
+
+  });
 </script>
