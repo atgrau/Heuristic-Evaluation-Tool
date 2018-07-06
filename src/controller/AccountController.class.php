@@ -478,22 +478,16 @@
 
       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $this->error .= "<li><em>".$email."</em> is not a valid e-mail format.</li>";
-        // Delete imported file
-        unlink($file);
         $this->showUserList();
       }
 
       if (userEmailExists($email)) {
         $this->error .= "<li><em>".$email."</em> already exists in our database.</li>";
-        // Delete imported file
-        unlink($file);
         $this->showUserList();
       }
 
       if (!countryExists($country)) {
         $this->error .= "<li>Specified country for the user <em>".$email."</em> does not exists.</li>";
-        // Delete imported file
-        unlink($file);
         $this->showUserList();
       } else {
         $country = getCountryByIso($country);
