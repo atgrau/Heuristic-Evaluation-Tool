@@ -35,7 +35,7 @@ return '<!-- Modal -->
         <div class="row">
           <div class="row alert alert-info margin" role="alert">
            <span class="glyphicon glyphicon-info-sign"></span> In order to import multiple users, you have to upload a <strong><span class="label label-primary">csv</span></strong> with the following format: <br />
-           <em>[email],[firstname],[lastname],[entity],[country]</em><br /><br /><strong>Note: </strong>Account passwords will be sent to their emails.
+           <em>[email],[firstname],[lastname],[gender(0=male|1=female)],[entity],[country]</em><br /><br /><strong>Note: </strong>Account passwords will be sent to their emails.
           </div>
            <div class="col-md-12">
              <form method="post" id="uploadForm" action="/admin/importcsv" class="dropzone needsclick dz-clickable" enctype="multipart/form-data">
@@ -72,7 +72,7 @@ return '<!-- Modal -->
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <a href="/admin/remove-users" title="Import CSV" class="btn btn-danger">Remove</a>
+        <a id="massiveDeleteBtn" href="#" title="Import CSV" class="btn btn-danger">Remove</a>
       </div>
     </div>
   </div>
@@ -97,6 +97,13 @@ return '<!-- Modal -->
     <div class="alert alert-info" role="alert">
      <?php echo $this->success; ?>
     </div>
+  <?php elseif ($this->removedUsers): ?>
+      <div class="alert alert-info" role="alert">
+       <span class="glyphicon glyphicon-info-sign"></span> Some users have been removed:
+       <?php foreach ($this->removedUsers as $removedUser) { ?>
+         <li><?=$removedUser->getName()?></li>
+        <?php } ?>
+      </div>
 <?php elseif (isset($this->error)): ?>
     <div class="alert alert-danger" role="alert">
       <span class="glyphicon glyphicon-info-sign"></span> <strong>Error importing users:</strong>
@@ -133,51 +140,53 @@ return '<!-- Modal -->
 </div>
 <div class="row">
   <a href="#" class="btn btn-danger right" title="Remove users" data-toggle="modal" data-target="#massiveDeletingModal">Remove selected Users</a>
-  <table id="tableUsers" class="table table-hover">
-    <thead class="thead-light" style="cursor:pointer">
-      <tr>
-        <th scope="col" width="5%"></th>
-        <th scope="col" width="5%">#</th>
-        <th scope="col" width="20%">Name</th>
-        <th scope="col" width="25%">E-mail</th>
-        <th scope="col" width="15%">Entity</th>
-        <th scope="col" width="15%">Role</th>
-        <th scope="col" width="5%">Status</th>
-        <th scope="col" width="10%"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php
-        if (!empty($this->userList)):
-        foreach ($this->userList as $user) {
-      ?>
+  <form id="usersForm" action="/admin/remove-users" method="POST">
+    <table id="tableUsers" class="table table-hover">
+      <thead class="thead-light" style="cursor:pointer">
         <tr>
-          <th scope="row"><input type="checkbox" name="check_<?=$user->getId();?>" value="1" /></th>
-          <th scope="row"><?= ++$i; ?></th>
-          <td><?= $user->getName(); ?></td>
-          <td><?= $user->getEmail(); ?></td>
-          <td><?= $user->getEntity(); ?></td>
-          <td><?= getRoleName($user->getRole()); ?></td>
-          <td>
-            <?php if ($user->isActive()): ?>
-              <span class="label label-success">Actived</span>
-            <?php else: ?>
-              <span class="label label-danger">Inactive</span>
-            <?php endif; ?>
-          </td>
-          <td>
-            <?= generateModal($user); ?>
-            <a href="/admin/users/<?= $user->getId(); ?>" title="Editar Usuario"><span class="glyphicon glyphicon-pencil padding-l"></span></a>
-            <span class="margin-l"></span>
-            <a href="#" data-toggle="modal" data-target="#deletingModal_<?= $user->getId(); ?>" title="Eliminar Usuario" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
-          </td>
+          <th scope="col" width="5%"></th>
+          <th scope="col" width="5%">#</th>
+          <th scope="col" width="20%">Name</th>
+          <th scope="col" width="25%">E-mail</th>
+          <th scope="col" width="15%">Entity</th>
+          <th scope="col" width="15%">Role</th>
+          <th scope="col" width="5%">Status</th>
+          <th scope="col" width="10%"></th>
         </tr>
-      <?php
-        }
-        endif;
-      ?>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <?php
+          if (!empty($this->userList)):
+          foreach ($this->userList as $user) {
+        ?>
+          <tr>
+            <th scope="row"><input type="checkbox" name="user_<?=$user->getId();?>" value="1" <?php if ($user->getId() == $GLOBALS["USER_SESSION"]->getId()) echo "disabled"; ?> /></th>
+            <th scope="row"><?= ++$i; ?></th>
+            <td><?= $user->getName(); ?></td>
+            <td><?= $user->getEmail(); ?></td>
+            <td><?= $user->getEntity(); ?></td>
+            <td><?= getRoleName($user->getRole()); ?></td>
+            <td>
+              <?php if ($user->isActive()): ?>
+                <span class="label label-success">Actived</span>
+              <?php else: ?>
+                <span class="label label-danger">Inactive</span>
+              <?php endif; ?>
+            </td>
+            <td>
+              <?= generateModal($user); ?>
+              <a href="/admin/users/<?= $user->getId(); ?>" title="Editar Usuario"><span class="glyphicon glyphicon-pencil padding-l"></span></a>
+              <span class="margin-l"></span>
+              <a href="#" data-toggle="modal" data-target="#deletingModal_<?= $user->getId(); ?>" title="Eliminar Usuario" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
+            </td>
+          </tr>
+        <?php
+          }
+          endif;
+        ?>
+      </tbody>
+    </table>
+  </form>
   <?php
     if (!empty($this->userList)) {
       echo "<strong>Total Users:</strong> ".sizeof($this->userList);
@@ -200,5 +209,9 @@ return '<!-- Modal -->
         "order": [[ 0, "asc" ]]
     } );
 
-  } );
+  });
+
+  $("#massiveDeleteBtn").click(function() {
+    $('#usersForm').submit();
+  })
 </script>
