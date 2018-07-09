@@ -139,7 +139,7 @@ return '<!-- Modal -->
   </div>
 </div>
 <div class="row">
-  <a href="#" class="btn btn-danger right" title="Remove users" data-toggle="modal" data-target="#massiveDeletingModal">Remove selected Users</a>
+  <a href="#" class="btn btn-xs btn-danger left" title="Remove users" data-toggle="modal" data-target="#massiveDeletingModal">Remove selected Users</a>
   <form id="usersForm" action="/admin/remove-users" method="POST">
     <table id="tableUsers" class="table table-hover">
       <thead class="thead-light" style="cursor:pointer">
