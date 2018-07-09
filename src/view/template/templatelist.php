@@ -81,7 +81,7 @@ return '<!-- Modal -->
   <table id="tableTemplates" class="table table-hover">
     <thead class="thead-light" style="cursor:pointer">
       <tr>
-        <th scope="col">#</th>
+        <th scope="col" width="7%">#</th>
         <th scope="col">Template's Name</th>
         <th scope="col">Status</th>
         <th scope="col" width="15%">Manage</th>
@@ -129,7 +129,7 @@ return '<!-- Modal -->
 <!-- /.row -->
 <script>
   $(document).ready(function() {
-    $('#tableTemplates').DataTable( {searching: false, paging: false,"bInfo": false, "language": {
+    $('#tableTemplates').DataTable( {searching: false, "bInfo": false, "language": {
       "emptyTable": "No templates found..."
     },
         "order": [[ 0, "asc" ]]

@@ -468,6 +468,25 @@
       }
     }
 
+    function removeUsers() {
+      if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        header("Location: /admin/users");
+      }
+
+      // Obtain number of users
+      $users = getUsers("");
+      $removedUsers = array();
+      foreach ($users as $user) {
+        if (($_POST["user_".$user->getId()] == "1") && ($user->getId() != $GLOBALS["USER_SESSION"]->getId())) {
+          $user->remove();
+          array_push($removedUsers, $user);
+        }
+      }
+
+      $this->removedUsers = $removedUsers;
+      $this->showUserList();
+    }
+
     private function buildUser($data) {
       $email = $data[0];
       $firstname = $data[1];

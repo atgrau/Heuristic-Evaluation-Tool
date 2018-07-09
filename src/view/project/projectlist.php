@@ -316,7 +316,7 @@ function generateModal($project, $admin) {
   });
 
   $(document).ready(function() {
-    $('#tableProject').DataTable( {searching: false, paging: false,"bInfo": false, "language": {
+    $('#tableProject').DataTable( {searching: false, "bInfo": false, "language": {
       "emptyTable": "No projects found..."
     },
         "order": [[ 0, "asc" ]]
@@ -325,7 +325,7 @@ function generateModal($project, $admin) {
   } );
 
   $(document).ready(function() {
-    $('#tableProjectArchived').DataTable( {searching: false, paging: false, "bInfo": false, "language": {
+    $('#tableProjectArchived').DataTable( {searching: false,  "bInfo": false, "language": {
       "emptyTable": "No projects found..."
     },
         "order": [[ 0, "asc" ]]

@@ -49,9 +49,28 @@
       return $output;
     }
 
+    function editHomePage() {
+      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        DB::update('home', array(
+          "content" => $_POST["content"]
+        ), "1=%i", 1);
+        $this->saved = true;
+      }
+      $this->render();
+    }
+
     function render() {
       include(BASE_URI."view/".$this->view.".php");
       exit;
+    }
+
+    function getHomeContent() {
+      $content = DB::queryFirstRow("SELECT content FROM home");
+      if ($content) {
+        return $content["content"];
+      } else {
+        return "";
+      }
     }
 
     /*

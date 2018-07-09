@@ -33,10 +33,15 @@
     <link rel="stylesheet" href="/dist/css/jquery.cookiebar.css">
 
     <!-- DropZone -->
-    <link rel="stylesheet" href="/dist/css/dropzone.css">    
+    <link rel="stylesheet" href="/dist/css/dropzone.css">
 
     <!-- Custom Fonts -->
     <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Datatable -->
+    <link rel="stylesheet" href="/dist/css/datatable.css" type="text/css">
+
+    <link href="/dist/summernote/summernote.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
