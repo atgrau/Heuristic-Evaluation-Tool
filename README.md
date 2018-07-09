@@ -34,20 +34,18 @@ A web application that allows to perform an heuristic evaluation of the interfac
 - [x] Unscored answers
 - [x] Evaluation Results View
 - [x] Activar template una vez finalizada la modificación
-- [x] Controlar eliminación/modificación template si esta en uso/abierto para usuarios
-- [x] Si esta en el tab Answer modificando valores, mantener la misma pestaña al guardar
-- [x] Diseño icono color de answer
-- [x] Cambiar colorpicker
-- [x] Poner status a templates
-- [x] importar csv
-- [x] enviar mensaje de activación a todos los usuarios añadidos desde csv
-- [ ] dividir pantalla para evaluar
-- [x] colores de grafico no se muestran por añadir '#' en el valor de color de answer
-- [x] Añadir Breadcrumb
-- [x] Aumentar tamaño nombre usuario en el grafico
-- [x] Traducir <button>'title' a ingles
-- [x] Después de introducir correo para recuperar contraseña te reenvie a login
-- [ ] Info para realizar evaluaciones
+- [x] Check if an evaluation is in use before modify or delete
+- [x] Keep active Tab on refresh template page
+- [x] Color icon design
+- [x] Change colorpicker
+- [x] Set status on templates
+- [x] Import CSV file
+- [x] Send and activation email to all imported users
+- [ ] Split evaluation screen
+- [x] Bug on value of color (# missing)
+- [x] Add breadcrumb
+- [x] Enlarge size of user on radar graphs
+- [ ] Infotion about how to make evaluations
 - [x] Remove Evaluations when a user is unassigned form a project (?)
 - [x] Home Content
 - [ ] Print Reports (maybe using window.print())
