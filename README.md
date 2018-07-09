@@ -44,12 +44,12 @@ A web application that allows to perform an heuristic evaluation of the interfac
 - [ ] dividir pantalla para evaluar
 - [x] colores de grafico no se muestran por añadir '#' en el valor de color de answer
 - [x] Añadir Breadcrumb
-- [ ] Aumentar tamaño nombre usuario en el grafico
-- [ ] Traducir <button>'title' a ingles
+- [x] Aumentar tamaño nombre usuario en el grafico
+- [x] Traducir <button>'title' a ingles
 - [x] Después de introducir correo para recuperar contraseña te reenvie a login
 - [ ] Info para realizar evaluaciones
-- [ ] Remove Evaluations when a user is unassigned form a project (?)
-- [ ] Home Content
+- [x] Remove Evaluations when a user is unassigned form a project (?)
+- [x] Home Content
 - [ ] Print Reports (maybe using window.print())
 
 
