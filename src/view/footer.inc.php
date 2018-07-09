@@ -8,7 +8,9 @@
         <a href="http://griho.udl.cat/" target="_blank" title="Go to GRIHO">GRIHO</a>
       </div>
       <div class="col-lg-4">
-        <strong><?=APP_TITLE?></strong> <br /> E-mail: <a href="mailto:<?=EMAIL?>" title="Send us and E-mail"><?=EMAIL?></a>
+        <strong><?=APP_TITLE?></strong><br />
+        Release date: <em>July 2018</em><br />
+        Contact us: <a href="mailto:<?=EMAIL?>" title="Send us and E-mail"><?=EMAIL?></a>
       </div>
       <div class="col-lg-4">
         <a href="/privacy-policy" title="Privacy Policy">Privacy Policy</a><br />

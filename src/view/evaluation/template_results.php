@@ -299,4 +299,8 @@ function generateModal($evaluationId) {
   $("#topButton").click(function(){
     $("html, body").animate({ scrollTop: 0 }, "slow");
   });
+
+  $( document ).ready(function() {
+    alert('ready');
+  });
 </script>

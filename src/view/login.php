@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
-                <div class="login-panel panel panel-default">
+                <div class="login-panel panel panel-default" style="min-width:350px;">
                   <?php if ($this->content != "signin"): ?>
                     <div class="panel-heading">
                       <h3 class="panel-title text-center font-weight-bold">Recover Account</h3>
@@ -82,6 +82,7 @@
                         <?="We have <strong>sent a new password</strong> to your <strong>email</strong>. <br /><br />Click <a href='/' title='Sign in'>here</a> to sign in.";?>
                       <?php endif; ?>
                     </div>
+                    <div class="row margin text-center">Contact us: <a href="mailto:<?=EMAIL?>" title="Contact Us"><?=EMAIL?></a></div>
                 </div>
             </div>
         </div>
