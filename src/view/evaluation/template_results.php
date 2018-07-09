@@ -91,7 +91,7 @@ function generateModal($evaluationId) {
           </tr>
           <tr>
             <th width="22%">Average Score</th>
-            <td><?=round($this->project->getScore(), 1);?></td>
+            <td><?=round($this->project->getScore(), 1);?>/<?=$this->project->getMaxScore()?></td>
           </tr>
           <tr>
             <?php
@@ -120,7 +120,7 @@ function generateModal($evaluationId) {
                 <canvas id="chartjs-1" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
                 <script>new Chart(document.getElementById("chartjs-1"),{"type":"radar","data":{"labels":[<?php foreach ($this->project->getFinishedEvaluations() as $value) { echo "'".$value->getUser()->getName()."',"; } ?>],"datasets":[
                   {"label":"<?=$this->project->getName();?>","data":[<?php foreach ($this->project->getFinishedEvaluations() as $value) { echo $value->getUsabilityPercentage().","; } ?>],"fill":true,"backgroundColor":"rgba(255, 99, 132, 0.2)","borderColor":"rgb(255, 99, 132)","pointBackgroundColor":"rgb(255, 99, 132)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(255, 99, 132)"}
-                ]},"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}});</script>
+                ]},"options":{"scale":{"ticks":{"beginAtZero":true,"max":100}},"legend":{"display":false},"elements":{"line":{"tension":0,"borderWidth":3}}}});</script>
               <?php else: ?>
                 There is not finished evaluations yet...
               <?php endif; ?>
@@ -185,7 +185,7 @@ function generateModal($evaluationId) {
                           </tr>
                           <tr>
                             <th>Score</th>
-                            <td><?=$evaluation->getScore();?></td>
+                            <td><?=$evaluation->getScore();?>/<?=$evaluation->getMaxScore();?></td>
                           </tr>
                           <tr>
                             <th>Usability Percentage</th>

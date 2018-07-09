@@ -162,6 +162,19 @@
       else return ($totalScore/$i);
     }
 
+    function getMaxScore() {
+      foreach ($this->getEvaluations() as $evaluation) {
+        if ($evaluation->isFinished()) {
+          $maxScore += $evaluation->getMaxScore();
+          $i++;
+        }
+      }
+      if ($i > 0)
+        return $maxScore/$i;
+      else
+        return 0;
+    }
+
     function getUsabilityPercentage() {
       $total = 0;
       foreach ($this->getEvaluations() as $evaluation) {

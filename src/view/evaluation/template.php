@@ -193,7 +193,7 @@
                     </tr>
                     <tr>
                       <th>Score</th>
-                      <td><?=$this->evaluation->getScore();?></td>
+                      <td><?=$this->evaluation->getScore();?>/<?=$this->evaluation->getMaxScore();?></td>
                     </tr>
                     <tr>
                       <th>Usability Percentage</th>
@@ -256,7 +256,7 @@
                     </tr>
                     <tr>
                       <th width="22%">Average Score</th>
-                      <td><?=round($this->evaluation->getProject()->getScore(), 1);?></td>
+                      <td><?=round($this->evaluation->getProject()->getScore(), 1);?>/<?=$this->evaluation->getProject()->getMaxScore()?></td>
                     </tr>
                     <tr>
                       <?php
@@ -285,7 +285,7 @@
                           <canvas id="chartjs-3" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
                           <script>new Chart(document.getElementById("chartjs-3"),{"type":"radar","data":{"labels":[<?php foreach ($this->evaluation->getProject()->getFinishedEvaluations() as $value) { echo "'".$value->getUser()->getName()."',"; } ?>],"datasets":[
                             {"label":"<?=$this->evaluation->getProject()->getName();?>","data":[<?php foreach ($this->evaluation->getProject()->getFinishedEvaluations() as $value) { echo $value->getUsabilityPercentage().","; } ?>],"fill":true,"backgroundColor":"rgba(255, 99, 132, 0.2)","borderColor":"rgb(255, 99, 132)","pointBackgroundColor":"rgb(255, 99, 132)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(255, 99, 132)"}
-                          ]},"options":{"elements":{"line":{"tension":0,"borderWidth":3}}}});</script>
+                          ]},"options":{"scale":{"ticks":{"beginAtZero":true,"max":100}},"legend":{"display":false},"elements":{"line":{"tension":0,"borderWidth":3}}}});</script>
                         <?php else: ?>
                           There is not finished evaluations yet...
                         <?php endif; ?>
