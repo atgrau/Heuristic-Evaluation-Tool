@@ -136,7 +136,6 @@ return '<!-- Modal -->
   <table id="tableUsers" class="table table-hover">
     <thead class="thead-light" style="cursor:pointer">
       <tr>
-<<<<<<< HEAD
         <th scope="col" width="5%"></th>
         <th scope="col" width="5%">#</th>
         <th scope="col" width="20%">Name</th>
@@ -145,15 +144,6 @@ return '<!-- Modal -->
         <th scope="col" width="15%">Role</th>
         <th scope="col" width="5%">Status</th>
         <th scope="col" width="10%"></th>
-=======
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">E-mail</th>
-        <th scope="col">Entity</th>
-        <th scope="col">Role</th>
-        <th scope="col">Status</th>
-        <th scope="col"></th>
->>>>>>> b48729a378273ccbb6156d72203a5550bf8df06d
       </tr>
     </thead>
     <tbody>
