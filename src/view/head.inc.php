@@ -13,6 +13,10 @@
     <!-- Bootstrap Core CSS -->
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+
     <!-- MetisMenu CSS -->
     <link href="/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 

@@ -1,3 +1,11 @@
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Bree Serif', serif;
+}
+
 .logo {
   background:url('/dist/images/logo.png') no-repeat center;
   width:240px;
