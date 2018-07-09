@@ -45,7 +45,7 @@ A web application that allows to perform an heuristic evaluation of the interfac
 - [x] Bug on value of color (# missing)
 - [x] Add breadcrumb
 - [x] Enlarge size of user on radar graphs
-- [ ] Infotion about how to make evaluations
+- [ ] Information about how to make evaluations
 - [x] Remove Evaluations when a user is unassigned form a project (?)
 - [x] Home Content
 - [ ] Print Reports (maybe using window.print())
