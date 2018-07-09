@@ -130,7 +130,7 @@
         $this->setContentView("project/project");
         $this->project = $project;
         $this->adminView = $adminView;
-        $this->templateList = getTemplates();
+        $this->templateList = getTemplates("");
         $this->render();
       }
     }
