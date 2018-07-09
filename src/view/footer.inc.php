@@ -12,7 +12,8 @@
       </div>
       <div class="col-lg-4">
         <a href="/privacy-policy" title="Privacy Policy">Privacy Policy</a><br />
-        <a href="/legal-disclaimer" title="Legal Disclaimer">Legal Disclaimer</a>
+        <a href="/legal-disclaimer" title="Legal Disclaimer">Legal Disclaimer</a><br />
+        <a href="/about-us" title="About Us">About Us</a>
       </div>
       <br />
     </div>

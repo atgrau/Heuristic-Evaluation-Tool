@@ -49,12 +49,22 @@
       return $output;
     }
 
-    function editHomePage() {
+    function editContent() {
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        DB::update('home', array(
-          "content" => $_POST["content"]
-        ), "1=%i", 1);
-        $this->saved = true;
+        if ($_POST["entry"] == "home") {
+          DB::update('content_entries', array(
+            "content" => $_POST["content"]
+          ), "ID=%s", "home");
+          $this->saved = true;
+          $this->tab = 0;
+        } elseif ($_POST["entry"] == "about-us") {
+          DB::update('content_entries', array(
+            "content" => $_POST["content"]
+          ), "ID=%s", "about-us");
+          $this->saved = true;
+          $this->tab = 1;
+        }
+
       }
       $this->render();
     }
@@ -65,7 +75,16 @@
     }
 
     function getHomeContent() {
-      $content = DB::queryFirstRow("SELECT content FROM home");
+      $content = DB::queryFirstRow("SELECT content FROM content_entries WHERE ID=%s", "home");
+      if ($content) {
+        return $content["content"];
+      } else {
+        return "";
+      }
+    }
+
+    function getAboutUsContent() {
+      $content = DB::queryFirstRow("SELECT content FROM content_entries WHERE ID=%s", "about-us");
       if ($content) {
         return $content["content"];
       } else {

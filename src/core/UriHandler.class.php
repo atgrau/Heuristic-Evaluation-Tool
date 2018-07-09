@@ -14,6 +14,7 @@
       "/forgot/reset" => -1,
       "/forgot/generate" => -1,
       "/account/login" => -1,
+      "/about-us" => 0,
       "/logout" => 0,
       "/privacy-policy" => 0,
       "/legal-disclaimer" => 0,
@@ -56,7 +57,7 @@
       "/admin/process-csv" => 2,
       "/admin/template-remove" => 2,
       "/template/active" => 2,
-      "/admin/home" => 2
+      "/admin/content" => 2
     );
 
     private $uri;
@@ -88,6 +89,12 @@
       // 3- Load Controller
       if ($this->uri == "/") {
         $view = new BaseController("index","");
+        $view->render();
+      } elseif ($this->uri == "/about-us") {
+        $view = new BaseController("index","about-us");
+        $view->setBreadcrumb(array(
+            array("About Us")
+        ));
         $view->render();
       } else if ($this->uri == "/signin") {
         $view = new BaseController("login","signin");
@@ -253,12 +260,12 @@
       } else if ($this->uri == "/admin/process-csv") {
         $controller = new AccountController();
         $controller->newImportProcess();
-      } else if ($this->uri == "/admin/home") {
-        $view = new BaseController("index","edit-home");
+      } else if ($this->uri == "/admin/content") {
+        $view = new BaseController("index","edit-content");
         $view->setBreadcrumb(array(
-            array("Home Page")
+            array("Edit Content")
         ));
-        $view->editHomePage();
+        $view->editContent();
         $view->render();
       } else {
         include(BASE_URI."view/index.php");

@@ -34,7 +34,7 @@
                         <a href="/admin/templates" rel="/templates"><i class="glyphicon glyphicon-th-list"></i> Evaluation Template</a>
                     </li>
                     <li>
-                        <a href="/admin/home" rel="/admin/home"><i class="glyphicon glyphicon-pencil"></i> Home Page</a>
+                        <a href="/admin/content" rel="/admin/content"><i class="glyphicon glyphicon-pencil"></i> Edit Content</a>
                     </li>
                   </ul>
                   <!-- /.nav-second-level -->

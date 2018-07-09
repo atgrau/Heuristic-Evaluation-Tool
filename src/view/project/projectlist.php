@@ -132,7 +132,7 @@ function generateModal($project, $admin) {
               <td><a href="/admin/users/<?= $project->getUser()->getId(); ?>" title="<?= $project->getUser()->getName(); ?>'s profile"><?= $project->getUser()->getFirstName(); ?></a></td>
             <?php endif; ?>
             <td><?= $project->getName(); ?></td>
-            <td><?= $project->getLink(); ?> <a href="<?= $project->getLink(); ?>" target="_blank" title="Link to <?= $project->getName(); ?>"><span class="glyphicon glyphicon-link"></span></a></td>
+            <td><?= $project->getLink(); ?> <a class="link" href="<?= $project->getLink(); ?>" target="_blank" title="Link to <?= $project->getName(); ?>"><span class="glyphicon glyphicon-link"></span></a></td>
             <td><?= $project->getFinishDate(); ?></td>
             <?php if (!$this->edit): ?>
               <td class="text-center">
@@ -320,9 +320,8 @@ function generateModal($project, $admin) {
       "emptyTable": "No projects found..."
     },
         "order": [[ 0, "asc" ]]
-    } );
-
-  } );
+    });
+  });
 
   $(document).ready(function() {
     $('#tableProjectArchived').DataTable( {searching: false,  "bInfo": false, "language": {
@@ -330,6 +329,9 @@ function generateModal($project, $admin) {
     },
         "order": [[ 0, "asc" ]]
     });
-
   });
+
+  $(".link").click(function(e) {
+    e.stopPropagation();
+});
 </script>
