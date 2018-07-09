@@ -97,7 +97,7 @@ return '<!-- Modal -->
   <div id="custom-search-input">
     <form action="/admin/users" method="GET">
       <div class="input-group col-md-12">
-          <input name="q" type="text" class="form-control input" placeholder="Search by first name, last name, email..." value="<?= $this->query; ?>" />
+          <input name="q" type="text" class="form-control input" placeholder="Search by first name, last name, email, entity..." value="<?= $this->query; ?>" />
           <span class="input-group-btn">
               <button class="btn btn-primary btn" type="submit">
                   <i class="glyphicon glyphicon-search"></i>
@@ -114,6 +114,7 @@ return '<!-- Modal -->
         <th scope="col">#</th>
         <th scope="col">Name</th>
         <th scope="col">E-mail</th>
+        <th scope="col">Entity</th>
         <th scope="col">Role</th>
         <th scope="col">Status</th>
         <th scope="col"></th>
@@ -128,6 +129,7 @@ return '<!-- Modal -->
           <th scope="row"><?= ++$i; ?></th>
           <td><?= $user->getName(); ?></td>
           <td><?= $user->getEmail(); ?></td>
+          <td><?= $user->getEntity(); ?></td>
           <td><?= getRoleName($user->getRole()); ?></td>
           <td>
             <?php if ($user->isActive()): ?>
