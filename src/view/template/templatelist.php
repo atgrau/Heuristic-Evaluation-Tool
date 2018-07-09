@@ -61,20 +61,22 @@ return '<!-- Modal -->
    <span class="glyphicon glyphicon-remove"></span> <?=$this->error; ?>
   </div>
 <?php endif; ?>
-<form action="" method="GET">
-  <div class="row margin-lg-b">
-    <div id="custom-search-input">
-      <div class="input-group col-md-12">
-        <input name="q" type="text" class="form-control input" placeholder="Search by name ..." value="" />
-        <span class="input-group-btn">
-        <button class="btn btn-primary btn" type="submit">
-        <i class="glyphicon glyphicon-search"></i>
-        </button>
-        </span>
-      </div>
+
+<div class="row margin-lg-b">
+  <div id="custom-search-input">
+    <form action="/admin/templates" method="GET">
+    <div class="input-group col-md-12">
+      <input name="q" type="text" class="form-control input" placeholder="Search by name ..." value="" />
+      <span class="input-group-btn">
+      <button class="btn btn-primary btn" type="submit">
+      <i class="glyphicon glyphicon-search"></i>
+      </button>
+      </span>
     </div>
+    </form>
   </div>
-</form>
+</div>
+
 <div class="row">
   <table id="tableTemplates" class="table table-hover">
     <thead class="thead-light" style="cursor:pointer">

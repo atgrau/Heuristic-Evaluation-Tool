@@ -203,10 +203,14 @@
         $controller->showTemplateView(false, $_GET["param"], 0, 0);
       } else if ($this->uri == "/admin/templates") {
         $controller = new TemplateController();
-        if (empty($_GET["param"])) {
-          $controller->showTemplateList(true);
-        } else {
+        if (!empty($_GET["param"]))  {
           $controller->showTemplateView(true, $_GET["param"], $_GET["edit"], 0);
+        }
+        else if (!empty($_GET["q"]))  {
+          $controller->showTemplateList(true, $_GET["q"]);
+        }
+        else {
+          $controller->showTemplateList(true, "");
         }
       } else if ($this->uri == "/templates/new") {
         $controller = new TemplateController();

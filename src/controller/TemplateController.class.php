@@ -8,7 +8,7 @@
   {
     function __construct() { }
 
-    function showTemplateList($admin) {
+    function showTemplateList($admin, $filter) {
       // Breadcrumb
       if ($admin) {
         $this->setBreadcrumb(array(
@@ -20,7 +20,7 @@
       $this->setContentView("template/templatelist");
       $this->new = false;
       $this->edit = false;
-      $this->templateList = getTemplates();
+      $this->templateList = getTemplates($filter);
       $this->render();
     }
 

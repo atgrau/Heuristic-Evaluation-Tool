@@ -400,9 +400,18 @@ class Answer
 }
 
 
-  function getTemplates() {
+  function getTemplates($filter) {
     $qry = "SELECT * FROM templates";
-    $templates = DB::query($qry);
+
+    if (!empty($filter)) {
+      $condition = " WHERE templates.name like %ss";
+      $qry .= $condition." ORDER BY templates.name";
+      $templates = DB::query($qry, $filter);
+    }
+    else {
+      $templates = DB::query($qry);
+    }
+    
     return buildTmp($templates);
   }
 
@@ -564,6 +573,28 @@ class Answer
       return ($counter>0);
   }
 
+  function searchTemplates($filter)
+  {
+    $templateList = array();
+    $qry = "SELECT * FROM templa LEFT JOIN countries on users.country = countries.iso";
+    if (!empty($filter)) {
+      $condition = " WHERE users.email like %ss OR users.firstname like %ss OR users.lastname like %ss OR users.entity like %ss";
+      $qry .= $condition." ORDER BY users.lastname";
+      $users = DB::query($qry, $filter, $filter, $filter, $filter);
+    } else {
+      $qry .= " ORDER BY users.lastname";
+      $users = DB::query($qry);
+    }
+
+    if ($users) {
+      foreach ($users as $row) {
+        array_push($userlist, buildUser($row));
+      }
+      return $userlist;
+    } else {
+      return null;
+    }
+  }
 
 
 ?>
