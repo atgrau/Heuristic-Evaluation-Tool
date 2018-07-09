@@ -468,6 +468,10 @@
       }
     }
 
+    function removeUsers() {
+      echo "hola";
+    }
+
     private function buildUser($data) {
       $email = $data[0];
       $firstname = $data[1];

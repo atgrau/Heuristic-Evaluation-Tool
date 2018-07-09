@@ -43,6 +43,7 @@
       "/admin/new-user" => 2,
       "/admin/add-user" => 2,
       "/admin/user-remove" => 2,
+      "/admin/remove-users" => 2,
       "/admin/project-remove" => 2,
       "/admin/templates" => 2,
       "/template/category-remove" => 2,
@@ -55,7 +56,7 @@
       "/admin/process-csv" => 2,
       "/admin/template-remove" => 2,
       "/template/active" => 2,
-
+      "/admin/home" => 2
     );
 
     private $uri;
@@ -182,6 +183,9 @@
       } else if ($this->uri == "/admin/user-update") {
         $controller = new AccountController();
         $controller->updateProfile(true);
+      } else if ($this->uri == "/admin/remove-users") {
+        $controller = new AccountController();
+        $controller->removeUsers();
       } else if ($this->uri == "/admin/users") {
         $controller = new AccountController();
         if (!empty($_GET["param"])) {
@@ -245,6 +249,13 @@
       } else if ($this->uri == "/admin/process-csv") {
         $controller = new AccountController();
         $controller->newImportProcess();
+      } else if ($this->uri == "/admin/home") {
+        $view = new BaseController("index","edit-home");
+        $view->setBreadcrumb(array(
+            array("Home Page")
+        ));
+        $view->editHomePage();
+        $view->render();
       } else {
         include(BASE_URI."view/index.php");
       }

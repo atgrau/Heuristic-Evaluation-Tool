@@ -5,7 +5,7 @@ return '<!-- Modal -->
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <strong class="text-danger">User Deletion</strong>
+        <strong class="text-danger">Remove User</strong>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -33,10 +33,13 @@ return '<!-- Modal -->
       </div>
       <div class="modal-body">
         <div class="row">
+          <div class="row alert alert-info margin" role="alert">
+           <span class="glyphicon glyphicon-info-sign"></span> In order to import multiple users, you have to upload a <strong><span class="label label-primary">csv</span></strong> with the following format: <br />
+           <em>[email],[firstname],[lastname],[entity],[country]</em><br /><br /><strong>Note: </strong>Account passwords will be sent to their emails.
+          </div>
            <div class="col-md-12">
              <form method="post" id="uploadForm" action="/admin/importcsv" class="dropzone needsclick dz-clickable" enctype="multipart/form-data">
                <input type="file" name="file" id="file" style="display:none" />
-
                <div class="dz-message needsclick" style="color:#666">
                  <h2>Drop files here or click to upload</h2>
                  <h1 class="glyphicon glyphicon-cloud-upload"></h1>
@@ -49,6 +52,27 @@ return '<!-- Modal -->
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <a href="/admin/process-csv" title="Import CSV" class="btn btn-success">Import</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="massiveDeletingModal" tabindex="-1" role="dialog" aria-labelledby="massiveDeletingModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <strong>Remove Users</strong>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5><strong>Selected users </strong> and all his projects and evaluations <span class="bg-danger">will be removed too</span>.<br /><br />Are you sure?</h5>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a href="/admin/remove-users" title="Import CSV" class="btn btn-danger">Remove</a>
       </div>
     </div>
   </div>
@@ -108,15 +132,18 @@ return '<!-- Modal -->
   </div>
 </div>
 <div class="row">
+  <a href="#" class="btn btn-danger right" title="Remove users" data-toggle="modal" data-target="#massiveDeletingModal">Remove selected Users</a>
   <table id="tableUsers" class="table table-hover">
     <thead class="thead-light" style="cursor:pointer">
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">E-mail</th>
-        <th scope="col">Role</th>
-        <th scope="col">Status</th>
-        <th scope="col"></th>
+        <th scope="col" width="5%"></th>
+        <th scope="col" width="5%">#</th>
+        <th scope="col" width="20%">Name</th>
+        <th scope="col" width="25%">E-mail</th>
+        <th scope="col" width="15%">Entity</th>
+        <th scope="col" width="15%">Role</th>
+        <th scope="col" width="5%">Status</th>
+        <th scope="col" width="10%"></th>
       </tr>
     </thead>
     <tbody>
@@ -125,9 +152,11 @@ return '<!-- Modal -->
         foreach ($this->userList as $user) {
       ?>
         <tr>
+          <th scope="row"><input type="checkbox" name="check_<?=$user->getId();?>" value="1" /></th>
           <th scope="row"><?= ++$i; ?></th>
           <td><?= $user->getName(); ?></td>
           <td><?= $user->getEmail(); ?></td>
+          <td><?= $user->getEntity(); ?></td>
           <td><?= getRoleName($user->getRole()); ?></td>
           <td>
             <?php if ($user->isActive()): ?>
@@ -158,13 +187,14 @@ return '<!-- Modal -->
 
 <!-- /.row -->
 <script src="/dist/js/dropzone.js"></script>
+
 <script>
   $("#btnUpload").click(function() {
     $("#uploadForm").submit();
   });
 
   $(document).ready(function() {
-    $('#tableUsers').DataTable( {searching: false, paging: false,"bInfo": false, "language": {
+    $('#tableUsers').DataTable( {searching: false, "bInfo": false, "language": {
       "emptyTable": "No users found..."
     },
         "order": [[ 0, "asc" ]]

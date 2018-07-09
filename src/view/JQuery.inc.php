@@ -24,3 +24,6 @@
 
     <!-- Datatables -->
     <script src="/dist/js/jquery.dataTables.min.js"></script>
+
+    <!-- Summernote -->
+    <script src="/dist/summernote/summernote.min.js"></script>
