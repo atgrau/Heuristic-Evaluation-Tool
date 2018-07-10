@@ -2,7 +2,7 @@
 <div id="page-wrapper" style="min-height:100vh">
   <div class="row">
     <div class="margin-lg-t"></div>
-    <nav aria-label="breadcrumb">
+    <nav id="breadcrumb" aria-label="breadcrumb">
       <ol class="breadcrumb">
         <?=$this->getBreadcrumb();?>
       </ol>

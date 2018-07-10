@@ -47,7 +47,7 @@ A web application that allows to perform an heuristic evaluation of the interfac
 - [x] Information about how to make evaluations
 - [x] Remove Evaluations when a user is unassigned form a project (?)
 - [x] Home Content
-- [ ] Print Reports (maybe using window.print())
+- [x] Print Reports (maybe using window.print())
 
 
 ## Entities Model

@@ -27,3 +27,6 @@
 
     <!-- Summernote -->
     <script src="/dist/summernote/summernote.min.js"></script>
+
+    <!-- jsPDF -->
+    <script src="/dist/js/jspdf.js"></script>

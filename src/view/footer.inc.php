@@ -1,5 +1,5 @@
 <!-- #page-footer -->
-<footer class="footer margin-b" style="border-top:solid 1px #e7e7e7;">
+<footer id="footer" class="footer margin-b" style="border-top:solid 1px #e7e7e7;">
   <div class="container">
     <div class="margin text-center">
       <div class="col-lg-4">
