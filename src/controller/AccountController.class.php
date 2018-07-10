@@ -185,11 +185,11 @@
         if ($isAdmin) {
           $user->setRole($role);
           $user->setActive($active);
+          $user->setEntity($entity);
         }
         $user->setFirstName($firstname);
         $user->setLastName($lastname);
         $user->setGender($gender);
-        $user->setEntity($entity);
         $user->setCountry(new Country($country, getCountryByIso($country)));
 
         $user->update();

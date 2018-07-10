@@ -162,7 +162,7 @@
       if (!$this->country) {
         $country = "";
       } else {
-        $country = $this->country->getIs();
+        $country = $this->country->getIso();
       }
       DB::insert('users', array(
         "email" => $this->email,

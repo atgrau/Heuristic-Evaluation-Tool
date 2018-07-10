@@ -2,6 +2,8 @@
     <div class="col-lg-12">
       <?php if ($this->new): ?>
         <h1 class="page-header">New User</h1>
+      <?php elseif ((!$this->new) && (!$this->admin)): ?>
+        <h1 class="page-header">Your Profile</h1>
       <?php else: ?>
         <h1 class="page-header"><?= $this->user->getName(); ?>'s profile</h1>
       <?php endif; ?>
@@ -110,12 +112,15 @@
                     <br />
                     <div class="form-group">
                       <label for="entity">Entity:</label>
-                      <input name="entity" type="text" maxlength="50" class="form-control" id="entity" placeholder="Organización" value="<?php
+                      <input <?php if (!$this->admin) echo "disabled"; ?> name="entity" type="text" maxlength="50" class="form-control" id="entity" placeholder="Organización" value="<?php
                         if (!$this->new)
                           echoDef($_POST["entity"], $this->user->getEntity());
                         else
                           echo $_POST["entity"];
                       ?>" />
+                      <?php if((!$this->new) && (!$this->admin)): ?>
+                        <small id="entityHelp" class="form-text text-muted">You are not allowed to modify your own entity.</small>
+                      <?php endif; ?>
                     </div>
                     <div class="form-group">
                       <label for="country">Country:</label>
