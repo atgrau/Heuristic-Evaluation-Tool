@@ -133,7 +133,7 @@
                       if (in_array($user, $usersProject)) echo " selected ";
                     endif;
                     ?>
-                    value="<?=$user->getId();?>"><?=$user->getName();?></option>
+                    value="<?=$user->getId();?>"><?="(".$user->getEntity().") ".$user->getName();?></option>
                 <?php } ?>
                 </select>
               </div>
