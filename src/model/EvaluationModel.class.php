@@ -52,6 +52,11 @@
       $this->results = $value;
     }
 
+    function remove() {
+      DB::delete('evaluation_results', "id_evaluation=%i", $this->id);
+      DB::delete('evaluations', "ID=%i", $this->id);
+    }
+
     function getQuestionsCount() {
       foreach ($this->project->getTemplate()->getCategories() as $category) {
         foreach ($category->getQuestions() as $question) {

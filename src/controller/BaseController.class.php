@@ -63,6 +63,12 @@
           ), "ID=%s", "about-us");
           $this->saved = true;
           $this->tab = 1;
+        } elseif ($_POST["entry"] == "evaluation") {
+          DB::update('content_entries', array(
+            "content" => $_POST["content"]
+          ), "ID=%s", "evaluation");
+          $this->saved = true;
+          $this->tab = 2;
         }
 
       }
@@ -85,6 +91,15 @@
 
     function getAboutUsContent() {
       $content = DB::queryFirstRow("SELECT content FROM content_entries WHERE ID=%s", "about-us");
+      if ($content) {
+        return $content["content"];
+      } else {
+        return "";
+      }
+    }
+
+    function getEvaluationContent() {
+      $content = DB::queryFirstRow("SELECT content FROM content_entries WHERE ID=%s", "evaluation");
       if ($content) {
         return $content["content"];
       } else {

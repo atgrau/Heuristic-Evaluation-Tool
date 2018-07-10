@@ -1,3 +1,4 @@
+<?php infoModal("evaluationModal", "How to make an Heuristic Evaluation", $this->getEvaluationContent()); ?>
 <div class="modal fade" id="finishModal" tabindex="-1" role="dialog" aria-labelledby="finishModal_label" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -66,6 +67,9 @@
             <?php else: ?>
               <span class="label label-danger">Closed</span>
             <?php endif; ?>
+            <div class="right">
+              <a href="#" data-toggle="modal" data-target="#evaluationModal" title="About Us"><span class="glyphicon glyphicon-info-sign"></span> How to make and Heuristic Evaluation?</a>
+            </div>
           </td>
         </tr>
       </tbody>

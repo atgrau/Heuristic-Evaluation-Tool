@@ -26,6 +26,7 @@
       "/evaluation/update" => 0,
       "/evaluation/finish" => 0,
       "/evaluation/reopen" => 1,
+      "/evaluation/remove" => 1,
       "/template/setCategory" => 0,
       "/my-projects" => 1,
       "/my-projects/new" => 1,
@@ -147,6 +148,9 @@
       } else if ($this->uri == "/evaluation/reopen") {
         $controller = new EvaluationController();
         $controller->reOpenEvaluation();
+      } else if ($this->uri == "/evaluation/remove") {
+        $controller = new EvaluationController();
+        $controller->removeEvaluation();
       } else if ($this->uri == "/my-projects/results") {
         $controller = new EvaluationController();
         $controller->showEvaluationResults($_GET["param"]);

@@ -41,11 +41,10 @@ A web application that allows to perform an heuristic evaluation of the interfac
 - [x] Set status on templates
 - [x] Import CSV file
 - [x] Send and activation email to all imported users
-- [ ] Split evaluation screen
 - [x] Bug on value of color (# missing)
 - [x] Add breadcrumb
 - [x] Enlarge size of user on radar graphs
-- [ ] Information about how to make evaluations
+- [x] Information about how to make evaluations
 - [x] Remove Evaluations when a user is unassigned form a project (?)
 - [x] Home Content
 - [ ] Print Reports (maybe using window.print())

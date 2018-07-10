@@ -16,8 +16,33 @@ function generateModal($evaluationId) {
         <div class="modal-footer">
           <form action="/evaluation/reopen" method="POST">
             <input name="id_evaluation" type="hidden" value="'.$evaluationId.'" />
-            <button type="submit" class="btn btn-primary">Re-Open Evaluation</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Re-Open Evaluation</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>';
+}
+function generateModalRemove($evaluationId) {
+  return '<!-- Modal -->
+  <div class="modal fade" id="remove_'.$evaluationId.'" tabindex="-1" role="dialog" aria-labelledby="open_evaluation_'.$evaluationId.' aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <strong>Remove Evaluation</strong>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h5>Evaluation will be removed, are you sure?</h5>
+        </div>
+        <div class="modal-footer">
+          <form action="/evaluation/remove" method="POST">
+            <input name="id_evaluation" type="hidden" value="'.$evaluationId.'" />
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger">Remove Evaluation</button>
           </form>
         </div>
       </div>
@@ -39,6 +64,10 @@ function generateModal($evaluationId) {
       <div class="alert alert-info" role="alert">
         <span class="glyphicon glyphicon-info-sign"></span> Evaluation has been re-opened.
       </div>
+    <?php elseif ($this->removed): ?>
+        <div class="alert alert-info" role="alert">
+          <span class="glyphicon glyphicon-info-sign"></span> Evaluation has been removed.
+        </div>
     <?php endif; ?>
 
     <!-- /.row -->
@@ -208,7 +237,9 @@ function generateModal($evaluationId) {
                               <th>Options</th>
                               <td>
                                 <?=generateModal($evaluation->getId()); ?>
+                                <?=generateModalRemove($evaluation->getId()); ?>
                                 <a data-toggle="modal" data-target="#open_<?=$evaluation->getId(); ?>" href="#" title="Re-Open evaluation" class="btn btn-default">Re-Open Evaluation</a>
+                                <a data-toggle="modal" data-target="#remove_<?=$evaluation->getId(); ?>" href="#" title="Re-Open evaluation" class="btn btn-danger">Remove Evaluation</a>
                               </td>
                             </tr>
                           </tbody>

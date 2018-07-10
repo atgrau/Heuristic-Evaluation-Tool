@@ -69,6 +69,23 @@
       }
     }
 
+    function removeEvaluation() {
+      if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        header("Location: /evaluations");
+      }
+
+      // Check if exists the relationship
+      $evaluation = getEvaluationById($_POST["id_evaluation"]);
+
+      if ((!$evaluation) || (($evaluation->getProject()->getUser() != $GLOBALS["USER_SESSION"]) && (!$GLOBALS["USER_SESSION"]->isAdmin()))) {
+        header("Location: /my-projects");
+      } else {
+        $evaluation->remove();
+        $this->removed = true;
+        $this->showEvaluationResults($evaluation->getProject()->getId());
+      }
+    }
+
     function update() {
       if ($_SERVER["REQUEST_METHOD"] != "POST") {
         header("Location: /evaluations");

@@ -22,20 +22,27 @@
           if ($this->tab == 0) {
             $change0 = "active";
             $change1 = "";
-          } else {
+            $change2 = "";
+          } elseif ($this->tab == 1) {
             $change0 = "";
             $change1 = "active";
+            $change2 = "";
+          } else {
+            $change0 = "";
+            $change1 = "";
+            $change2 = "active";
           }
         ?>
         <ul class="nav nav-tabs">
             <li class="<?php echo $change0; ?>">
               <a href="#home" data-toggle="tab">Home</a>
             </li>
-            <?php if(!$this->admin): ?>
             <li class="<?php echo $change1; ?>">
               <a href="#about-us" data-toggle="tab">About Us</a>
             </li>
-          <?php endif; ?>
+            <li class="<?php echo $change2; ?>">
+              <a href="#evaluation" data-toggle="tab">How to make an Evaluation</a>
+            </li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
@@ -55,6 +62,17 @@
                 <input type="hidden" name="entry" value="about-us" />
                 <textarea id="summernote2" name="content">
                   <?=$this->getAboutUsContent()?>
+                </textarea>
+                <div class="margin-b right">
+                  <button class="btn btn-success" type="submit"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                </div>
+              </form>
+            </div>
+            <div class="tab-pane fade in <?php echo $change2; ?>" id="evaluation">
+              <form id="postForm3" method="POST" action="/admin/content" enctype="multipart/form-data" onsubmit="return postForm()">
+                <input type="hidden" name="entry" value="evaluation" />
+                <textarea id="summernote3" name="content">
+                  <?=$this->getEvaluationContent()?>
                 </textarea>
                 <div class="margin-b right">
                   <button class="btn btn-success" type="submit"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
@@ -81,11 +99,21 @@
     height: 300
   });
 
+  $('#summernote3').summernote({
+    placeholder: 'Enter here how to make an evaluation content...',
+    tabsize: 2,
+    height: 300
+  });
+
   var postForm = function() {
   	var content = $('textarea[name="content"]').html($('#summernote').code());
   }
 
   var postForm = function() {
     var content = $('textarea[name="content"]').html($('#summernote2').code());
+  }
+
+  var postForm = function() {
+    var content = $('textarea[name="content"]').html($('#summernote3').code());
   }
 </script>

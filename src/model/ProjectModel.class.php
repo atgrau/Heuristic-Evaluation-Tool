@@ -170,7 +170,7 @@
         }
       }
       if ($i > 0)
-        return $maxScore/$i;
+        return round($maxScore/$i, 1);
       else
         return 0;
     }
