@@ -95,7 +95,7 @@ function generateModal($evaluationId) {
             </tr>
             <tr>
               <th width="22%">Average Score</th>
-              <td><?=round($this->project->getScore(), 1);?>/<?=$this->project->getMaxScore()?></td>
+              <td><?=round($this->project->getScore(), 1);?>/<?=$this->project->getMaxScore()?> (Maximum Achievable: <?=$this->project->getMaxPosibleScore()?>)</td>
             </tr>
             <tr>
               <?php
@@ -189,7 +189,7 @@ function generateModal($evaluationId) {
                             </tr>
                             <tr>
                               <th>Score</th>
-                              <td><?=$evaluation->getScore();?>/<?=$evaluation->getMaxScore();?></td>
+                              <td><?=$evaluation->getScore();?>/<?=$evaluation->getMaxScore();?> (Maximum Achievable: <?=$evaluation->getMaxPosibleScore()?>)</td>
                             </tr>
                             <tr>
                               <th>Usability Percentage</th>

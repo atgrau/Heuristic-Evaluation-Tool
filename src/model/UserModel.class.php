@@ -159,6 +159,11 @@
     }
 
     function insert() {
+      if (!$this->country) {
+        $country = "";
+      } else {
+        $country = $this->country->getIs();
+      }
       DB::insert('users', array(
         "email" => $this->email,
         "role" => $this->role,
@@ -167,7 +172,7 @@
         "lastname" => $this->lastName,
         "gender" => $this->gender,
         "entity" => $this->entity,
-        "country" => $this->country->getIso(),
+        "country" => $country,
         "active" => true
       ));
     }

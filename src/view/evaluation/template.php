@@ -193,7 +193,7 @@
                     </tr>
                     <tr>
                       <th>Score</th>
-                      <td><?=$this->evaluation->getScore();?>/<?=$this->evaluation->getMaxScore();?></td>
+                      <td><?=$this->evaluation->getScore();?>/<?=$this->evaluation->getMaxScore();?>  (Maximum Achievable: <?=$this->evaluation->getMaxPosibleScore()?>)</td>
                     </tr>
                     <tr>
                       <th>Usability Percentage</th>
@@ -256,7 +256,7 @@
                     </tr>
                     <tr>
                       <th width="22%">Average Score</th>
-                      <td><?=round($this->evaluation->getProject()->getScore(), 1);?>/<?=$this->evaluation->getProject()->getMaxScore()?></td>
+                      <td><?=round($this->evaluation->getProject()->getScore(), 1);?>/<?=$this->evaluation->getProject()->getMaxScore()?>  (Maximum Achievable: <?=$this->evaluation->getProject()->getMaxPosibleScore()?>)</td>
                     </tr>
                     <tr>
                       <?php

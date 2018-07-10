@@ -99,6 +99,10 @@
       return $this->getProject()->getTemplate()->getMaxAnswerValue()*$this->getAnsweredScorableQuestionsCount();
     }
 
+    function getMaxPosibleScore() {
+      return $this->getProject()->getTemplate()->getMaxAnswerValue()*$this->getQuestionsCount();
+    }
+
     function getUsabilityPercentage() {
       $val = $this->getProject()->getTemplate()->getMaxAnswerValue()*$this->getAnsweredScorableQuestionsCount();
       if ($val > 0) return round($this->getScore()*100/($val), 1);

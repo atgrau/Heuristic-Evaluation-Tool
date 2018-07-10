@@ -1,4 +1,5 @@
 <?php include("head.inc.php"); ?>
+<?php infoModal("aboutUsModal", "About Us", $this->getAboutUsContent()); ?>
 <body>
     <div class="container">
         <div class="row">
@@ -82,7 +83,10 @@
                         <?="We have <strong>sent a new password</strong> to your <strong>email</strong>. <br /><br />Click <a href='/' title='Sign in'>here</a> to sign in.";?>
                       <?php endif; ?>
                     </div>
-                    <div class="row margin text-center">Contact us: <a href="mailto:<?=EMAIL?>" title="Contact Us"><?=EMAIL?></a></div>
+                    <div class="row margin text-center">
+                      Contact Us: <a href="mailto:<?=EMAIL?>" title="Contact Us"><?=EMAIL?></a> |
+                      <a href="#" data-toggle="modal" data-target="#aboutUsModal" title="About Us">About Us</a>
+                    </div>
                 </div>
             </div>
         </div>

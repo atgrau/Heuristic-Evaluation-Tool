@@ -175,6 +175,13 @@
         return 0;
     }
 
+    function getMaxPosibleScore() {
+      foreach ($this->getEvaluations() as $evaluation) {
+        $maxScore += $evaluation->getMaxPosibleScore();
+        return $maxScore;
+      }
+    }
+
     function getUsabilityPercentage() {
       $total = 0;
       foreach ($this->getEvaluations() as $evaluation) {

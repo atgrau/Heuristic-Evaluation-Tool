@@ -491,9 +491,7 @@
       $email = $data[0];
       $firstname = $data[1];
       $lastname = $data[2];
-      $gender = $data[3];
-      $entity = $data[4];
-      $country = $data[5];
+      $entity = $data[3];
 
       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $this->error .= "<li><em>".$email."</em> is not a valid e-mail format.</li>";
@@ -505,19 +503,12 @@
         $this->showUserList();
       }
 
-      if (!countryExists($country)) {
-        $this->error .= "<li>Specified country for the user <em>".$email."</em> does not exists.</li>";
-        $this->showUserList();
-      } else {
-        $country = getCountryByIso($country);
-      }
-
       $password = randomPassword();
       $md5Password = md5($password);
 
 
       // FORMAT -> email, firstname, lastname, gender, entity, country
-      $user = new User(0, 0, $email, $md5Password, $firstname, $lastname, boolval($gender), $entity, $country, true);
+      $user = new User(0, 0, $email, $md5Password, $firstname, $lastname, NULL, $entity, NULL, true);
       $user->setClearPassword($password);
       return $user;
     }
