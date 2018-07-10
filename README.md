@@ -10,11 +10,11 @@ A web application that allows to perform an heuristic evaluation of the interfac
 | ----------------------------- | -------------------------------------------------- | ----------------------------------------------------- |
 | Update his own profile        | Update his own profile                             | Update his own profile                                |
 | Make an evaluation            | Make an evaluation                                 | Make an evaluation                                    |
-|                               | Create/Update/Delete their own projects            | Create/Update/Delete their own projects               |
-|                               | Assign evaluators to their own projects            | Assign evaluators to their own projects               |
+|                               | Create/Update/Delete their own projects            | Create/Update/Delete all projects                     |
+|                               | Assign evaluators to their own projects            | Assign evaluators to all projects                     |
 |                               | View results of an evaluation                      | Create/Update/Delete Users                            |
-|                               | View results and global results of his own project | Modify evaluation template                            |
-|                               |                                                    | View results and global results of his own evaluation |
+|                               |                                                    | Modify evaluation template                            |
+|                               |                                                    | View results and global results of all evaluations    |
 ## Checklist
 - [x] Core Program
 - [x] Send Email to recipient when a new account has been created
