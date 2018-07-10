@@ -42,7 +42,7 @@ A web application that allows to perform an heuristic evaluation of the interfac
 - [x] Import CSV file
 - [x] Send and activation email to all imported users
 - [x] Bug on value of color (# missing)
-- [x] Add breadcrumb
+- [x] Add breadcrumb to all content
 - [x] Enlarge size of user on radar graphs
 - [x] Information about how to make evaluations
 - [x] Remove Evaluations when a user is unassigned form a project (?)

@@ -86,7 +86,6 @@
         $view->render();
       }
 
-
       // 3- Load Controller
       if ($this->uri == "/") {
         $view = new BaseController("index","");
