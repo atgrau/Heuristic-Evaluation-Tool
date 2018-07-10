@@ -134,4 +134,8 @@ thead {
    .col-lg-6 {
         width: 50%;
    }
+
+   .panel, .panel-default, .panel-heading {
+     border: 0;
+   }
 }
