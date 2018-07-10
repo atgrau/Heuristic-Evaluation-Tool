@@ -134,7 +134,7 @@ function generateModalRemove($evaluationId) {
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                   <?php if (count($this->project->getFinishedEvaluations()) > 0): ?>
-                    <canvas id="chartjs-1" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
+                    <canvas id="chartjs-1" class="chartjs" width="770" height="385"></canvas>
                     <script>new Chart(document.getElementById("chartjs-1"),{"type":"radar","data":{"labels":[<?php foreach ($this->project->getFinishedEvaluations() as $value) { echo "'".$value->getUser()->getName()."',"; } ?>],"datasets":[
                       {"label":"<?=$this->project->getName();?>","data":[<?php foreach ($this->project->getFinishedEvaluations() as $value) { echo $value->getUsabilityPercentage().","; } ?>],"fill":true,"backgroundColor":"rgba(255, 99, 132, 0.2)","borderColor":"rgb(255, 99, 132)","pointBackgroundColor":"rgb(255, 99, 132)","pointBorderColor":"#fff","pointHoverBackgroundColor":"#fff","pointHoverBorderColor":"rgb(255, 99, 132)"}
                     ]},"options":{"scale":{"ticks":{"beginAtZero":true,"max":100}},"legend":{"display":false},"elements":{"line":{"tension":0,"borderWidth":3}}}});</script>
@@ -155,7 +155,7 @@ function generateModalRemove($evaluationId) {
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                   <?php if (count($this->project->getFinishedEvaluations()) > 0): ?>
-                  <canvas id="chartjs-2" class="chartjs" width="770" height="385" style="display: block; width: 770px; height: 385px;"></canvas>
+                  <canvas id="chartjs-2" class="chartjs" width="770" height="385"></canvas>
                   <script>new Chart(document.getElementById("chartjs-2"),{"type":"doughnut","data":{"labels":[<?php foreach ($this->project->getTemplate()->getAnswers() as $value) { echo "'".$value->getName()."',"; } ?>],"datasets":[{"data":[<?php foreach ($this->project->getGlobalAnswerValue() as $value) { echo $value.","; } ?>],"backgroundColor":[<?php foreach ($this->project->getTemplate()->getAnswers() as $value) { echo "'".$value->getColor()."',"; } ?>]}]}});</script>
                   <?php else: ?>
                     There is not finished evaluations yet...
@@ -356,7 +356,9 @@ function generateModalRemove($evaluationId) {
     $("#detailedResults").hide();
     $('a[name = "export"]').hide();
     $("#topButton").hide();
+    $("#sidebar").hide();
     window.print();
+    $("#sidebar").show();
     $("#topButton").show();
     $('a[name = "export"]').show();
     $("#footer").show();

@@ -212,7 +212,7 @@
                                         <td>
                                             <input name="answer" type="text" class="form-control" placeholder="Insert answer..." ></td>
                                         <td>
-                                          <input name="value" type="number" step="0.5" class="form-control" placeholder="Insert value..." ></td>
+                                          <input name="value" type="number" step="0.25" class="form-control" placeholder="Insert value..." ></td>
                                         <td>
                                           <div id="cp2" class="input-group colorpicker-component" style="cursor:pointer">
                                               <input name="color"type="hidden" class="form-control" />
