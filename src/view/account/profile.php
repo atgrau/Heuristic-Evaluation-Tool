@@ -63,6 +63,18 @@
                         <small id="emailHelp" class="form-text text-muted">E-mail cannot be modified.</small>
                       <?php endif; ?>
                     </div>
+                    <div class="form-group">
+                      <label for="entity">Entity:</label>
+                      <input <?php if (!$this->admin) echo "disabled"; ?> name="entity" type="text" maxlength="50" class="form-control" id="entity" placeholder="Entity" value="<?php
+                        if (!$this->new)
+                          echoDef($_POST["entity"], $this->user->getEntity());
+                        else
+                          echo $_POST["entity"];
+                      ?>" />
+                      <?php if((!$this->new) && (!$this->admin)): ?>
+                        <small id="entityHelp" class="form-text text-muted">You are not allowed to modify your own entity.</small>
+                      <?php endif; ?>
+                    </div>
                     <?php if ($this->admin): ?>
                       <div class="form-group">
                         <label for="country">Rol:</label>
@@ -110,18 +122,6 @@
                       </label>
                     </div>
                     <br />
-                    <div class="form-group">
-                      <label for="entity">Entity:</label>
-                      <input <?php if (!$this->admin) echo "disabled"; ?> name="entity" type="text" maxlength="50" class="form-control" id="entity" placeholder="Organización" value="<?php
-                        if (!$this->new)
-                          echoDef($_POST["entity"], $this->user->getEntity());
-                        else
-                          echo $_POST["entity"];
-                      ?>" />
-                      <?php if((!$this->new) && (!$this->admin)): ?>
-                        <small id="entityHelp" class="form-text text-muted">You are not allowed to modify your own entity.</small>
-                      <?php endif; ?>
-                    </div>
                     <div class="form-group">
                       <label for="country">Country:</label>
                       <select name="country" class="form-control">

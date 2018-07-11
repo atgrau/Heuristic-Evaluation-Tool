@@ -1,9 +1,12 @@
 <div id="sidebar" class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
-            <li>
-                <a href="/" rel="/"><i class="glyphicon glyphicon-home"></i> Home</a>
-            </li>
+          <li>
+              <a href="/" rel="/"><i class="glyphicon glyphicon-home"></i> Home</a>
+          </li>
+          <li>
+              <a href="/about-us" rel="/about-us"><i class="glyphicon glyphicon-info-sign"></i> About Us</a>
+          </li>
             <li>
                 <a href="/evaluations" rel="/evaluations"><i class="glyphicon glyphicon-tasks"></i> Project Evaluations (<?=$this->numberOfEvaluations();?>)</a>
             </li>

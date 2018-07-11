@@ -431,6 +431,9 @@
               fclose($gestor);
           }
 
+          // Check if email of imported users match
+          $this->checkEmails($userList);
+
           if ($userList) {
             foreach ($userList as $user) {
               $user->insert();
@@ -487,11 +490,24 @@
       $this->showUserList();
     }
 
+    private function checkEmails($userList) {
+      $emailList = array();
+
+      foreach ($userList as $user) {
+        if (in_array($user->getEmail(), $emailList)) {
+          $this->error = "There are some users with the same e-mail.";
+          $this->showUserList();
+        } else {
+          array_push($emailList, $user->getEmail());
+        }
+      }
+    }
+
     private function buildUser($data) {
       $email = $data[0];
-      $firstname = $data[1];
-      $lastname = $data[2];
-      $entity = $data[3];
+      $entity = $data[1];
+      $firstname = $data[2];
+      $lastname = $data[3];
 
       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $this->error .= "<li><em>".$email."</em> is not a valid e-mail format.</li>";

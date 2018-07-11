@@ -3,8 +3,8 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-sm-6 col-sm-offset-3">
-                <div class="login-panel panel panel-default" style="min-width:350px;">
+            <div class="col-lg-6 col-lg-offset-3">
+                <div class="login-panel panel panel-default" style="min-width:350px;margin-top:70px">
                   <?php if ($this->content != "signin"): ?>
                     <div class="panel-heading">
                       <h3 class="panel-title text-center font-weight-bold">Recover Account</h3>
@@ -32,7 +32,7 @@
                                     <input class="form-control" placeholder="Password" name="password" type="password" value="" <?php if ($this->email) echo "autofocus"; ?>>
                                 </div>
                                 <div class="form-group">
-                                    <a href="/forgot">Forgot your password?</a>
+                                    <a href="/forgot" title="Recover your account">Forgot your password?</a>
                                 </div>
                                 <input type="hidden" name="uri" value="<?=$this->uri;?>" />
                                 <input type="submit" value="Sign In" class="btn btn-lg btn-success btn-block" />
@@ -83,9 +83,13 @@
                         <?="We have <strong>sent a new password</strong> to your <strong>email</strong>. <br /><br />Click <a href='/' title='Sign in'>here</a> to sign in.";?>
                       <?php endif; ?>
                     </div>
-                    <div class="row margin text-center">
-                      Contact Us: <a href="mailto:<?=EMAIL?>" title="Contact Us"><?=EMAIL?></a> |
-                      <a href="#" data-toggle="modal" data-target="#aboutUsModal" title="About Us">About Us</a>
+                    <div class="row margin">
+                      <div class="left text-bold">
+                        <span class="glyphicon glyphicon-envelope"></span> <a href="mailto:<?=EMAIL?>" title="Send us and E-mail"><?=EMAIL?></a>
+                      </div>
+                      <div class="right text-bold">
+                        <a href="#" data-toggle="modal" data-target="#aboutUsModal" title="About Us">What is Heuristic Evaluation Tool?</a>
+                      </div>
                     </div>
                 </div>
             </div>

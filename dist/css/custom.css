@@ -62,6 +62,10 @@ thead {
   font-weight: bold;
 }
 
+.text-right {
+  text-align: right;
+}
+
 .right {
   float: right;
 }
