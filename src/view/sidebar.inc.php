@@ -28,16 +28,16 @@
                   <a href="#"><i class="glyphicon glyphicon-wrench"></i> Administration<span class="fa arrow"></span></a>
                   <ul class="nav nav-second-level">
                     <li class="in">
-                        <a href="/admin/users" rel="/admin/user"><i class="fa fa-user fa-fw"></i> Users</a>
+                        <a href="/admin/users" rel="/admin/user"><i class="fa fa-user fa-fw"></i> User Accounts</a>
                     </li>
                     <li>
                         <a href="/admin/projects" rel="/admin/project"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Projects</a>
                     </li>
                     <li>
-                        <a href="/admin/templates" rel="/templates"><i class="glyphicon glyphicon-th-list"></i> Evaluation Template</a>
+                        <a href="/admin/templates" rel="/templates"><i class="glyphicon glyphicon-th-list"></i> Templates</a>
                     </li>
                     <li>
-                        <a href="/admin/content" rel="/admin/content"><i class="glyphicon glyphicon-pencil"></i> Edit Content</a>
+                        <a href="/admin/content" rel="/admin/content"><i class="glyphicon glyphicon-pencil"></i> Content</a>
                     </li>
                   </ul>
                   <!-- /.nav-second-level -->

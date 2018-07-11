@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-lg-12">
-    <h2>Edit Content</h2>
+    <h2>Content</h2>
     <?php if ($this->saved): ?>
       <div class="alert alert-info" role="alert">
        <span class="glyphicon glyphicon-info-sign"></span> Saved

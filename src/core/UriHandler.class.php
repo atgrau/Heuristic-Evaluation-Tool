@@ -266,7 +266,7 @@
       } else if ($this->uri == "/admin/content") {
         $view = new BaseController("index","edit-content");
         $view->setBreadcrumb(array(
-            array("Edit Content")
+            array("Content")
         ));
         $view->editContent();
         $view->render();

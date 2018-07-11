@@ -128,12 +128,12 @@
         // Breadcrumb
         if ($adminView) {
           $this->setBreadcrumb(array(
-              array("Users","/admin/users"),
+              array("User Accounts","/admin/users"),
               array($this->user->getName())
           ));
         } else {
           $this->setBreadcrumb(array(
-              array("Profile"),
+              array("My Account"),
           ));
         }
 
@@ -153,6 +153,7 @@
       }
 
       // Getting POST paramters
+      $email = $_POST["email"];
       $role = $_POST["role"];
       $firstname = $_POST["firstname"];
       $lastname = $_POST["lastname"];
@@ -183,6 +184,7 @@
 
         // Only if is Admin
         if ($isAdmin) {
+          $user->setEmail($email);
           $user->setRole($role);
           $user->setActive($active);
           $user->setEntity($entity);
@@ -290,7 +292,7 @@
     function showUserList() {
       // Breadcrumb
       $this->setBreadcrumb(array(
-          array("Users")
+          array("User Accounts")
       ));
 
       $this->setContentView("account/userlist");

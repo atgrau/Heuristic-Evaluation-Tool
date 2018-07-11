@@ -3,9 +3,9 @@
       <?php if ($this->new): ?>
         <h1 class="page-header">New User</h1>
       <?php elseif ((!$this->new) && (!$this->admin)): ?>
-        <h1 class="page-header">Your Profile</h1>
+        <h1 class="page-header">My Account</h1>
       <?php else: ?>
-        <h1 class="page-header"><?= $this->user->getName(); ?>'s profile</h1>
+        <h1 class="page-header"><?= $this->user->getName(); ?>'s account</h1>
       <?php endif; ?>
     </div>
     <!-- /.col-lg-12 -->
@@ -24,7 +24,12 @@
             <div class="alert alert-danger" role="alert">
              <?php echo $this->error; ?>
             </div>
+          <?php } else { ?>
+            <div class="alert alert-info" role="alert">
+              <strong>Please Note:</strong> Fields marked with <big>*</big> are obligatory
+            </div>
           <?php } ?>
+
             <!-- Nav tabs -->
             <?php
               if ($this->tab == 0) {
@@ -51,7 +56,7 @@
                   <form class="margin margin-lg-t" method="POST" action="<?= $this->action; ?>">
                     <input type="hidden" name="UserId" value="<?php if(!$this->new) echo $this->user->getId(); ?>" />
                     <div class="form-group">
-                      <label for="email">E-mail:</label>
+                      <label for="email">E-mail (*):</label>
                       <input autofocus name="email" type="email" class="form-control" id="email" <?php if(!$this->new) echo "disabled" ; ?> placeholder="E-mail" value="
                       <?php
                         if (!$this->new)
@@ -77,7 +82,7 @@
                     </div>
                     <?php if ($this->admin): ?>
                       <div class="form-group">
-                        <label for="country">Rol:</label>
+                        <label for="country">Rol (*):</label>
                         <select id="country" name="role" class="form-control">
                           <option value="0" <?php if ((!$this->new) && ($this->user->getRole() == 0)) echo "selected"; ?>>Evaluator</option>
                           <option value="1" <?php if ((!$this->new) && ($this->user->getRole() == 1)) echo "selected"; ?>>Project Manager</option>
@@ -86,7 +91,7 @@
                        </div>
                     <?php endif; ?>
                     <div class="form-group">
-                      <label for="firstname">First name:</label>
+                      <label for="firstname">First name (*):</label>
                       <input name="firstname" maxlength="50" type="text" class="form-control" id="firstname" placeholder="First name" value="<?php
                         if (!$this->new)
                           echoDef($_POST["firstname"], $this->user->getFirstName());
@@ -95,7 +100,7 @@
                       ?>" />
                     </div>
                     <div class="form-group">
-                      <label for="lastname">Last name:</label>
+                      <label for="lastname">Last name (*):</label>
                       <input name="lastname" maxlength="50" type="text" class="form-control" id="lastname" placeholder="Last name" value="<?php
                         if (!$this->new)
                           echoDef($_POST["lastname"], $this->user->getLastName());
@@ -103,7 +108,7 @@
                           echo $_POST["lastname"];
                       ?>" />
                     </div>
-                    <label>Gender:</label>
+                    <label>Gender (*):</label>
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="gender" id="cbMale" value="0" <?php
                       if ($_POST["gender"] == "0") echo "checked";
@@ -123,7 +128,7 @@
                     </div>
                     <br />
                     <div class="form-group">
-                      <label for="country">Country:</label>
+                      <label for="country">Country (*):</label>
                       <select name="country" class="form-control">
                         <?php
                           foreach (getCountries() as $country) {

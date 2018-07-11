@@ -55,6 +55,10 @@
             <div class="alert alert-danger" role="alert">
              <strong>Project has errors:</strong><br /><ul><?=$this->error; ?></ul>
             </div>
+          <?php } else { ?>
+            <div class="alert alert-info" role="alert">
+              <strong>Please Note:</strong> Fields marked with <big>*</big> are obligatory
+            </div>
           <?php } ?>
           <?php if (($this->project) && ($this->adminView)): ?>
             <form action="/admin/project-update" method="POST">
@@ -66,19 +70,19 @@
             <form action="/my-projects/add" method="POST">
           <?php endif; ?>
               <div class="form-group">
-                <label for="name">Project's Name:</label>
+                <label for="name">Project's Name (*):</label>
                 <input name="name" type="text" maxlength="50" class="form-control" id="name" placeholder="Name of project" value="<?=$name?>" />
               </div>
               <div class="form-group">
-                <label for="description">Description:</label>
+                <label for="description">Description (*):</label>
                 <textarea rows="4" id="description" name="description" maxlength="1000" class="form-control" placeholder="Description of project"><?=$desription?></textarea>
               </div>
               <div class="form-group">
-                <label for="link">Link:</label>
+                <label for="link">Link (*):</label>
                 <input name="link" type="text" maxlength="100" class="form-control" id="name" placeholder="http://website.domain" value="<?=$link?>" />
               </div>
               <div class="form-group">
-                <label for="name">Evaluation ending date:</label>
+                <label for="name">Evaluation ending date (*):</label>
                 <div class="input-group date">
                     <input id="finishDate" autocomplete="off" name="finish_date" type="text" class="form-control" value="<?=$finishDate?>" placeholder="yyyy-mm-dd"/>
                     <span id="finishDateIcon" style="cursor:pointer;" class="input-group-addon">
@@ -88,7 +92,7 @@
               </div>
 
               <div class="form-group">
-                <label for="name">Template:</label>
+                <label for="name">Template (*):</label>
                 <div class="input-group">
                   <select id="template" name="template" id="template" class="form-control" <?php if (($this->project) && (count($this->project->getEvaluations()) > 0)) echo "disabled"; ?>>
                     <?php

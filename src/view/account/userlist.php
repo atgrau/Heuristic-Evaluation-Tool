@@ -79,7 +79,7 @@ return '<!-- Modal -->
 </div>
 
 <div class="row">
-  <h1 class="page-header">List of Users</h1>
+  <h1 class="page-header">User Accounts</h1>
 </div>
 <!-- /.row -->
 <div class="row margin-lg-b">
