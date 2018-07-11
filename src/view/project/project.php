@@ -80,7 +80,7 @@
               <div class="form-group">
                 <label for="name">Evaluation ending date:</label>
                 <div class="input-group date">
-                    <input id="finishDate" autocomplete="off" name="finish_date" type="text" class="form-control" value="<?=$finishDate?>" />
+                    <input id="finishDate" autocomplete="off" name="finish_date" type="text" class="form-control" value="<?=$finishDate?>" placeholder="yyyy-mm-dd"/>
                     <span id="finishDateIcon" style="cursor:pointer;" class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
