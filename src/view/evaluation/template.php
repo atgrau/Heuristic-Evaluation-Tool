@@ -13,11 +13,11 @@
         <strong>Please note:</strong> If you finish it, you cannot be able to modify again.
       </div>
       <div class="modal-footer">
-        <form action="/evaluation/finish" method="POST">
+        <form id="finishForm" action="/evaluation/finish" method="POST">
           <div class="right">
               <input type="hidden" name="id_evaluation" value="<?=$this->evaluation->getId();?>" />
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button id="finish" type="submit" class="btn btn-warning" <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?>><span class="glyphicon glyphicon-ok"></span> Finish</button>
+              <button onclick="$(this).attr('disabled', true );$(this).text('Finishing...');$('#finishForm').submit();" id="finish" type="button" class="btn btn-warning" <?php if ($this->evaluation->isFinishedOrClosed()) echo "disabled"; ?>><span class="glyphicon glyphicon-ok"></span> Finish</button>
           </div>
         </form>
 
@@ -31,7 +31,10 @@
     <h1 class="page-header">Evaluation</h1>
   </div>
   <!-- /.row -->
-  <!-- /.row -->
+  <div class="row">
+    <?=$this->finishMessage; ?>
+  </div>
+  
   <div class="row">
     <table class="table">
       <thead>
@@ -114,7 +117,7 @@
                       <?php endif; ?>
                   </div>
               </div>
-              <?=$this->finishMessage; ?>
+
               <div id="result"></div>
               <form id="evaluation_form">
                 <input name="id_evaluation" type="hidden" value="<?=$this->evaluation->getId();?>">

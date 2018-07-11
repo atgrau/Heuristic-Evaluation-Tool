@@ -99,7 +99,7 @@ return '<!-- Modal -->
               <?php if ($template->getEvaluations()): ?>
               <span class="label label-danger">In use</span>
               <?php elseif ($template->isActive() == 0): ?>
-              <span class="label label-warning">Inactive</span>
+              <span class="label label-primary">Inactive</span>
               <?php else: ?>
               <span class="label label-success">Active</span>
               <?php endif; ?>

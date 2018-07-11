@@ -110,7 +110,7 @@
                                           <td width="70%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd"><h4> <?=++$c.". ". $category->getName(); ?></h4></td>
                                           <?php if ($this->editTemplate):?>
                                             <td width="10%" style="border-bottom: 1px solid #ddd ; border-top: 0px solid #ddd">
-                                              <form action="/template/category-remove/" method="POST">
+                                              <form action="/template/category-remove/" method="POST" class="text-center">
                                                 <input name="idTemplate" type="hidden" class="form-control"  value="<?= $this->template->getId()?>"/>
                                                 <input name="idCategory" type="hidden" class="form-control"  value="<?= $category->getId()?>"/>
                                                 <button type="submit" class="btn btn-danger">Remove category</button>
@@ -123,7 +123,7 @@
                                           <td width="70%"><?= $question->getName(); ?></td>
                                           <?php if ($this->editTemplate):?>
                                           <td width="10%">
-                                            <form action="/template/question-remove" method="POST">
+                                            <form action="/template/question-remove" method="POST" class="text-center">
                                               <input type="hidden" value="<?=$this->template->getId();?>" name="id_template" />
                                               <input type="hidden" value="<?=$question->getId();?>" name="id_question" />
                                               <button type="submit" class="btn btn-secondary text-danger" style="background-color:white;" title="Remove question"><span class="glyphicon glyphicon-remove"></span></button>

@@ -58,11 +58,11 @@ function generateModalRemove($evaluationId) {
     </div>
 
     <?php if ($this->reopened): ?>
-      <div class="alert alert-info" role="alert">
+      <div class="alert alert-info row" role="alert">
         <span class="glyphicon glyphicon-info-sign"></span> Evaluation has been re-opened.
       </div>
     <?php elseif ($this->removed): ?>
-        <div class="alert alert-info" role="alert">
+        <div class="alert alert-info row" role="alert">
           <span class="glyphicon glyphicon-info-sign"></span> Evaluation has been removed.
         </div>
     <?php endif; ?>

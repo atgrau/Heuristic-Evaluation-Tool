@@ -52,7 +52,7 @@
         $body .= "You have requested to reset your password.<br /><br />";
         $body .= "You can proceed by doing click below:<br />";
         $body .= "<a href='".URL."/forgot/reset?token=".$token."' target='_blank'>".URL."/forgot/reset/?token=".$token."</a><br /><br />";
-        $body .= "If you have not request a password reset, please remove this e-mail.<br /><br />";
+        $body .= "If you have not requested a password reset, please ignore this e-mail.<br /><br />";
 
         $email = new Email($_POST["email"], $subject, $body);
         $email->send();
