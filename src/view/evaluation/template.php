@@ -34,7 +34,7 @@
   <div class="row">
     <?=$this->finishMessage; ?>
   </div>
-  
+
   <div class="row">
     <table class="table">
       <thead>
@@ -71,7 +71,7 @@
               <span class="label label-danger">Closed</span>
             <?php endif; ?>
             <div class="right">
-              <a href="#" data-toggle="modal" data-target="#evaluationModal" title="About Us"><span class="glyphicon glyphicon-info-sign"></span> How to make and Heuristic Evaluation?</a>
+              <a href="#" data-toggle="modal" data-target="#evaluationModal" title="About Us" class="text-bold"><span class="glyphicon glyphicon-info-sign"></span> How to make and Heuristic Evaluation?</a>
             </div>
           </td>
         </tr>
