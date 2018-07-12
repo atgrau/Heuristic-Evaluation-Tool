@@ -10,6 +10,7 @@
     <meta name="author" content="">
 
     <title><?= APP_TITLE; ?></title>
+
     <!-- Bootstrap Core CSS -->
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 

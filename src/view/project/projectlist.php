@@ -260,20 +260,9 @@ function generateModal($project, $admin) {
               <td><?= $project->getName(); ?></td>
               <td><?= $project->getLink(); ?> <a href="<?= $project->getLink(); ?>" target="_blank" title="Link to <?= $project->getName(); ?>"><span class="glyphicon glyphicon-link"></span></a></td>
               <td><?= $project->getFinishDate(); ?></td>
-
-              <?php if ($this->edit): ?>
-                <td class="text-center" width="15%">
-                  <?php if ($project->isArchived()): ?>
-                    <span class="label label-warning">Archived</span>
-                  <?php elseif (!$project->isActive()): ?>
-                    <span class="label label-primary">Inactive</span>
-                  <?php elseif ($project->isClosed()): ?>
-                    <span class="label label-danger">Closed</span>
-                  <?php else: ?>
-                    <span class="label label-success">Open</span>
-                  <?php endif; ?>
-                </td>
-              <?php endif; ?>
+              <td class="text-center" width="15%">
+                <span class="label label-warning">Archived</span>
+              </td>
 
               <?php if ($this->edit): ?>
                 <td width="15%">

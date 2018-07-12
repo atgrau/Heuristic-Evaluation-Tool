@@ -127,8 +127,8 @@
       return ($this->getDaysLeft() < 0);
     }
 
-    function isArchivedOrClosedOrInactived() {
-      return (($this->isClosed()) || (!$this->isActive()) || ($this->isArchived()));
+    function isInactivedOrArchived() {
+      return ((!$this->isActive()) || ($this->isArchived()));
     }
 
     function getDaysLeft() {
