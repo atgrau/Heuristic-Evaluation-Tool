@@ -34,7 +34,7 @@ return '<!-- Modal -->
       <div class="modal-body">
         <div class="row">
           <div class="row alert alert-info margin" role="alert">
-           <span class="glyphicon glyphicon-info-sign"></span> In order to import multiple users, you have to upload a <strong><span class="label label-primary">csv</span></strong> with the following format: <br />
+           <span class="glyphicon glyphicon-info-sign"></span> In order to import multiple users, you have to upload a <big><span class="label label-primary">csv file</span></big> with the following format: <br />
            <em>[email],[entity],[firstname],[lastname]</em><br /><br /><strong>Note: </strong>Account passwords will be sent to their emails.
           </div>
            <div class="col-md-12">
