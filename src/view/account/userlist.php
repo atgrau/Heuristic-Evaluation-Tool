@@ -159,8 +159,8 @@ return '<!-- Modal -->
           if (!empty($this->userList)):
           foreach ($this->userList as $user) {
         ?>
-          <tr>
-            <th scope="row"><input type="checkbox" name="user_<?=$user->getId();?>" value="1" <?php if ($user->getId() == $GLOBALS["USER_SESSION"]->getId()) echo "disabled"; ?> /></th>
+          <tr style="cursor:pointer;" onclick="$('#user_<?=$user->getId();?>').prop('checked', !$('#user_<?=$user->getId();?>').prop('checked') && !$('#user_<?=$user->getId();?>').prop('disabled'));">
+            <th scope="row"><input class="ch" type="checkbox" id="user_<?=$user->getId();?>" name="user_<?=$user->getId();?>" value="1" <?php if ($user->getId() == $GLOBALS["USER_SESSION"]->getId()) echo "disabled"; ?> /></th>
             <th scope="row"><?= ++$i; ?></th>
             <td><?= $user->getName(); ?></td>
             <td><?= $user->getEmail(); ?></td>
@@ -214,4 +214,9 @@ return '<!-- Modal -->
   $("#massiveDeleteBtn").click(function() {
     $('#usersForm').submit();
   })
+
+  $('.ch').click(function(e) {
+    e.stopPropagation();
+  });
+
 </script>
