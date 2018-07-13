@@ -34,7 +34,7 @@ return '<!-- Modal -->
       <div class="modal-body">
         <div class="row">
           <div class="row alert alert-info margin" role="alert">
-           <span class="glyphicon glyphicon-info-sign"></span> In order to import multiple users, you have to upload a <strong><span class="label label-primary">csv</span></strong> with the following format: <br />
+           <span class="glyphicon glyphicon-info-sign"></span> In order to import multiple users, you have to upload a <big><span class="label label-primary">csv file</span></big> with the following format: <br />
            <em>[email],[entity],[firstname],[lastname]</em><br /><br /><strong>Note: </strong>Account passwords will be sent to their emails.
           </div>
            <div class="col-md-12">
@@ -113,7 +113,7 @@ return '<!-- Modal -->
     </div>
   <?php elseif (isset($this->importedUsers)): ?>
     <div class="alert alert-info" role="alert">
-      <span class="glyphicon glyphicon-info-sign"></span> <strong>The following users has been imported successfully:</strong>
+      <span class="glyphicon glyphicon-info-sign"></span> <strong>The following users have been imported successfully:</strong>
       <ul>
         <?php echo $this->importedUsers; ?>
       </ul>
@@ -121,7 +121,7 @@ return '<!-- Modal -->
 <?php endif; ?>
 <?php if ($this->removeMessage): ?>
   <div class="row alert alert-info" role="alert">
-   <span class="glyphicon glyphicon-info-sign"></span> User <strong><?= $this->recentUser; ?></strong> has beed removed successfully!
+   <span class="glyphicon glyphicon-info-sign"></span> User <strong><?= $this->recentUser; ?></strong> has been removed successfully!
   </div>
 <?php endif; ?>
 <div class="row margin-lg-b">
