@@ -54,7 +54,7 @@ function generateModalRemove($evaluationId) {
 <div id="content">
   <button id="topButton" title="Go to top"><span class="glyphicon glyphicon-menu-up"></span></button>
     <div class="row">
-      <h1 class="page-header">Evaluation</h1>
+      <h1 class="page-header">Evaluation Results</h1>
     </div>
 
     <?php if ($this->reopened): ?>
