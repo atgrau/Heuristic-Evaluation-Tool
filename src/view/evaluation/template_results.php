@@ -78,15 +78,15 @@ function generateModalRemove($evaluationId) {
             <a id="exportGlobal" class="right" href="#"><span class="glyphicon glyphicon-print"></span> Print global results</a>
           </th>
           <tr>
-            <th width="20%">Project's Name:</th>
+            <th width="15%">Name:</th>
             <td><?=$this->project->getName();?></td>
           </tr>
           <tr>
-            <th>Project's Description:</th>
+            <th>Description:</th>
             <td><?=$this->project->getDescription();?></td>
           </tr>
           <tr>
-            <th>Project's Link:</th>
+            <th>Link:</th>
             <td><a href="<?=$this->project->getLink();?>" target="_blank" title="Link to <?=$this->project->getLink();?>"><?=$this->project->getLink();?></a></td>
           </tr>
         </tbody>

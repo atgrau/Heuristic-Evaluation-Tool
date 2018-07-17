@@ -42,15 +42,15 @@
       <tbody>
         <th colspan="2" class="thead-light text-center">Project Information</th>
         <tr>
-          <th width="20%">Project's Name:</th>
+          <th width="15%">Name:</th>
           <td><?=$this->evaluation->getProject()->getName();?></td>
         </tr>
         <tr>
-          <th>Project's Description:</th>
+          <th>Description:</th>
           <td><?=$this->evaluation->getProject()->getDescription();?></td>
         </tr>
         <tr>
-          <th>Project's Link:</th>
+          <th>Link:</th>
           <td><a href="<?=$this->evaluation->getProject()->getLink();?>" target="_blank" title="Link to <?=$this->evaluation->getProject()->getLink();?>"><?=$this->evaluation->getProject()->getLink();?></a></td>
         </tr>
         <tr>
