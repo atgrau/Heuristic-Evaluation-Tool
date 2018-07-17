@@ -25,11 +25,13 @@
                                   <span class="glyphicon glyphicon-remove-sign"></span> User credentials are not valid.
                                 </div>
                               <?php } ?>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="E-mail" name="email" type="email" <?php if (!$this->email) echo "autofocus"; ?> value="<?php echo $this->email; ?>">
+                                <div class="form-group input-group">
+                                  <span class="input-group-addon text-bold">@</span>
+                                  <input class="form-control" placeholder="E-mail" name="email" type="email" <?php if (!$this->email) echo "autofocus"; ?> value="<?php echo $this->email; ?>">
                                 </div>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="" <?php if ($this->email) echo "autofocus"; ?>>
+                                <div class="form-group input-group">
+                                  <span class="input-group-addon text-bold"><span class="fa fa-key"></span></span>
+                                  <input class="form-control" placeholder="Password" name="password" type="password" value="" <?php if ($this->email) echo "autofocus"; ?>>
                                 </div>
                                 <div class="form-group">
                                     <a href="/forgot" title="Recover your account">Forgot your password?</a>
