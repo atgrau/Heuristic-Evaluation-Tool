@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-lg-offset-3">
-                <div class="login-panel panel panel-default" style="min-width:350px;margin-top:70px">
+                <div id="loginForm" class="login-panel panel panel-default" style="min-width:350px;margin-top:70px;display:none">
                   <?php if ($this->content != "signin"): ?>
                     <div class="panel-heading">
                       <h3 class="panel-title text-center font-weight-bold">Recover Account</h3>
@@ -42,8 +42,6 @@
                         </form>
                       <?php elseif ($this->content == "forgot"): ?>
                         <form role="form" method="POST" action="/forgot/send">
-                          <fieldset>
-
                             <?php if($this->recovered) { ?>
                               <div class="alert alert-info" role="alert">
                                 <?= $this->recovered; ?>
@@ -63,7 +61,6 @@
                             <?php } else { ?>
                               <a href="/" title="Go to the Sign In page">Go Back</a>
                             <?php } ?>
-                          </fieldset>
                         </form>
                       <?php elseif ($this->content == "reset"): ?>
                         <form role="form" method="POST" action="/forgot/generate">
@@ -101,3 +98,18 @@
 </body>
 
 </html>
+
+<script>
+  if (window.location.pathname == '/signin') {
+    $("body").loading({
+      stoppable: false
+    });
+    $("#loginForm").delay(1000).fadeIn(1000);
+    setTimeout(function (){
+      $("body").delay(1000).loading('stop');
+    }, 1000);
+    loaded = true;
+  } else {
+    $("#loginForm").fadeIn(700);
+  }
+</script>

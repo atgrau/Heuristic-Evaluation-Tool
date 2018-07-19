@@ -194,7 +194,7 @@ function generateModal($project, $admin) {
 
                   $.ajax({
                       type:'GET',
-                      url:'/my-projects/results/<?= $project->getId(); ?><?php if ($this->admin) echo "?admin=1"; ?>',
+                      url:'/my-projects/results/<?= $project->getId(); ?>?ajax=1<?php if ($this->admin) echo "&admin=1"; ?>',
                       success:function(msg){
                         $("#page-wrapper").html(msg);
                         $("body").loading('stop')
@@ -301,7 +301,7 @@ function generateModal($project, $admin) {
 
                     $.ajax({
                         type:'GET',
-                        url:'/my-projects/results/<?= $project->getId(); ?><?php if ($this->admin) echo "?admin=1"; ?>',
+                        url:'/my-projects/results/<?= $project->getId(); ?>?ajax=1<?php if ($this->admin) echo "&admin=1"; ?>',
                         success:function(msg){
                           $("#page-wrapper").html(msg);
                           $("body").loading('stop')

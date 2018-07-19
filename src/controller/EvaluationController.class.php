@@ -33,7 +33,7 @@
       $this->render();
     }
 
-    function showEvaluationResults($projectId) {
+    function showEvaluationResults($projectId, $loadAll) {
       // Check if exists the relationship
       $this->project = getProjectById($projectId);
 
@@ -48,7 +48,12 @@
       ));
 
       $this->setContentView("evaluation/template_results");
-      $this->renderContent();
+      $this->showBreadcrumb = !$loadAll;
+      if ($loadAll) {
+        $this->render();
+      } else {
+        $this->renderContent();
+      }
     }
 
     function reOpenEvaluation() {
@@ -65,7 +70,7 @@
         $evaluation->setFinished(false);
         $evaluation->update();
         $this->reopened = true;
-        $this->showEvaluationResults($evaluation->getProject()->getId());
+        $this->showEvaluationResults($evaluation->getProject()->getId(), true);
       }
     }
 
@@ -82,7 +87,7 @@
       } else {
         $evaluation->remove();
         $this->removed = true;
-        $this->showEvaluationResults($evaluation->getProject()->getId());
+        $this->showEvaluationResults($evaluation->getProject()->getId(), true);
       }
     }
 

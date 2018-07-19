@@ -152,7 +152,7 @@
         $controller->removeEvaluation();
       } else if ($this->uri == "/my-projects/results") {
         $controller = new EvaluationController();
-        $controller->showEvaluationResults($_GET["param"]);
+        $controller->showEvaluationResults($_GET["param"], $_GET["ajax"]!="1");
       }else if ($this->uri == "/evaluation/update") {
         $controller = new EvaluationController();
         $controller->update();
