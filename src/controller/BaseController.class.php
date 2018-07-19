@@ -80,6 +80,11 @@
       exit;
     }
 
+    function renderContent() {
+      include(BASE_URI."view/".$this->content.".php");
+      exit;
+    }
+
     function getHomeContent() {
       $content = DB::queryFirstRow("SELECT content FROM content_entries WHERE ID=%s", "home");
       if ($content) {

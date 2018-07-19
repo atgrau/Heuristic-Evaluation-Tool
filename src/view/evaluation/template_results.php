@@ -50,6 +50,14 @@ function generateModalRemove($evaluationId) {
   </div>';
 }
 ?>
+<div class="row">
+  <div class="margin-lg-t"></div>
+  <nav id="breadcrumb" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <?=$this->getBreadcrumb();?>
+    </ol>
+  </nav>
+</div>
 
 <div id="content">
   <button id="topButton" title="Go to top"><span class="glyphicon glyphicon-menu-up"></span></button>

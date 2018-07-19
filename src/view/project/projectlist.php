@@ -175,7 +175,7 @@ function generateModal($project, $admin) {
 
             <?php if ($this->edit): ?>
               <td>
-                <a href="/my-projects/results/<?= $project->getId(); ?><?php if ($this->admin) echo "?admin=1"; ?>" title="View Results"><span class="glyphicon glyphicon-eye-open"></span></a>
+                <a id="btnResults_<?= $project->getId(); ?>" href="#" title="View Results"><span class="glyphicon glyphicon-eye-open"></span></a>
                 <?php if ($this->admin): ?>
                   <span class="margin-l"></span>
                   <a href="/admin/projects/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil"></span></a>
@@ -186,6 +186,22 @@ function generateModal($project, $admin) {
                 <span class="margin-l"></span>
                 <a data-toggle="modal" data-target="#deletingModal_<?= $project->getId(); ?>" href="#" title="Remove Project" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
               </td>
+              <script>
+                $("#btnResults_<?= $project->getId(); ?>").click(function(e) {
+                  $("body").loading({
+                    stoppable: false
+                  });
+
+                  $.ajax({
+                      type:'GET',
+                      url:'/my-projects/results/<?= $project->getId(); ?><?php if ($this->admin) echo "?admin=1"; ?>',
+                      success:function(msg){
+                        $("#page-wrapper").html(msg);
+                        $("body").loading('stop')
+                      }
+                  });
+                });
+              </script>
             <?php else: ?>
               <td width="15%" class="text-center">
                 <?php
@@ -266,7 +282,7 @@ function generateModal($project, $admin) {
 
               <?php if ($this->edit): ?>
                 <td width="15%">
-                  <a href="/my-projects/results/<?= $project->getId(); ?><?php if ($this->admin) echo "?admin=1"; ?>" title="View Results"><span class="glyphicon glyphicon-eye-open"></span></a>
+                  <a id="btnResults2_<?= $project->getId(); ?>" href="#" title="View Results"><span class="glyphicon glyphicon-eye-open"></span></a>
                   <?php if ($this->admin): ?>
                     <span class="margin-l"></span>
                     <a href="/admin/projects/<?= $project->getId(); ?>" title="Edit Project"><span class="glyphicon glyphicon-pencil"></span></a>
@@ -277,6 +293,22 @@ function generateModal($project, $admin) {
                   <span class="margin-l"></span>
                   <a data-toggle="modal" data-target="#deletingModal_<?= $project->getId(); ?>" href="#" title="Remove Project" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a>
                 </td>
+                <script>
+                  $("#btnResults2_<?= $project->getId(); ?>").click(function(e) {
+                    $("body").loading({
+                      stoppable: false
+                    });
+
+                    $.ajax({
+                        type:'GET',
+                        url:'/my-projects/results/<?= $project->getId(); ?><?php if ($this->admin) echo "?admin=1"; ?>',
+                        success:function(msg){
+                          $("#page-wrapper").html(msg);
+                          $("body").loading('stop')
+                        }
+                    });
+                  });
+                </script>
               <?php endif; ?>
 
             </tr>

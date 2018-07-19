@@ -48,7 +48,7 @@
       ));
 
       $this->setContentView("evaluation/template_results");
-      $this->render();
+      $this->renderContent();
     }
 
     function reOpenEvaluation() {

@@ -27,3 +27,6 @@
 
     <!-- Summernote -->
     <script src="/dist/summernote/summernote.js"></script>
+
+    <!-- Loading -->
+    <script src="/dist/js/loading.js"></script>

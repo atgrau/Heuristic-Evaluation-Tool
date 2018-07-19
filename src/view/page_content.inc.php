@@ -8,13 +8,12 @@
       </ol>
     </nav>
   </div>
-
   <?php
-  if (empty($this->content)) {
-    include("home.php");
-  } else {
-    include($this->content.".php");
-  }
-?>
+    if (empty($this->content)) {
+      include("home.php");
+    } else {
+      include($this->content.".php");
+    }
+  ?>
 </div>
 <!-- /#page-wrapper -->
