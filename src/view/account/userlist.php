@@ -165,7 +165,15 @@ return '<!-- Modal -->
             <td><?= $user->getName(); ?></td>
             <td><?= $user->getEmail(); ?></td>
             <td><?= $user->getEntity(); ?></td>
-            <td><?= getRoleName($user->getRole()); ?></td>
+            <?php
+              $style = "primary";
+              if ($user->getRole() == 2) {
+                $style = "danger";
+              } elseif ($user->getRole() == 1) {
+                $style = "info";
+              }
+            ?>
+            <td><span class="label label-<?=$style;?>"><?= getRoleName($user->getRole()); ?></span></td>
             <td>
               <?php if ($user->isActive()): ?>
                 <span class="label label-success">Actived</span>
