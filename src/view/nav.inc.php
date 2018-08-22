@@ -15,7 +15,7 @@
 
     <ul class="nav navbar-top-links navbar-right navbar-collapse">
         <!-- /.dropdown -->
-        <span class="label label-<?php if ($GLOBALS["USER_SESSION"]->getRole() == 2) {echo "danger";} else {echo "primary";} ?>  margin-lg-r"><?= getRoleName($GLOBALS["USER_SESSION"]->getRole()); ?></span>
+        <span class="label label-<?php if ($GLOBALS["USER_SESSION"]->getRole() == 2) {echo "danger";} elseif($GLOBALS["USER_SESSION"]->getRole() == 1) {echo "info";} else {echo "primary";} ?>  margin-lg-r"><?= getRoleName($GLOBALS["USER_SESSION"]->getRole()); ?></span>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Evaluations">
                 <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>
