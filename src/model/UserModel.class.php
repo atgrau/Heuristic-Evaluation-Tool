@@ -153,7 +153,7 @@
           "gender" => $this->gender,
           "entity" => $this->entity,
           "country" => $this->country->getIso(),
-          "active" => $this->active
+          "active" => boolval($this->active)
         ), "ID=%i", $this->id);
       }
     }

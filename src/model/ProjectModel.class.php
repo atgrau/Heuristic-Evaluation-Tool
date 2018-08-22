@@ -227,6 +227,7 @@
         "description" => $this->description,
         "link" => $this->link,
         "active" => false,
+        "archived" => false,
         "id_template" => $this->template->getId()
       ));
 
