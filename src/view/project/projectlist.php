@@ -211,11 +211,11 @@ function generateModal($project, $admin) {
                     $percent = 0;
                 ?>
                 <?php if ($percent == 100): ?>
-                <span class="text text-success"><?="100%";?></span>
+                <span class="label label-success"><?="100%";?></span>
               <?php elseif ($percent == 0): ?>
-                <span class="text text-danger"><?="0%";?></span>
+                <span class="label label-danger"><?="0%";?></span>
               <?php else: ?>
-                <span class="text text-warning"><?=$percent."%";?></span>
+                <span class="label label-warning"><?=$percent."%";?></span>
                 <?php endif; ?>
               </td>
               <td width="10%" class="text-center">
