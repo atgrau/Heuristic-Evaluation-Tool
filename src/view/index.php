@@ -6,10 +6,10 @@
     </div>
     <?php include("footer.inc.php"); ?>
 
+    <script>
+      $(document).ready(function(){
+        $.cookieBar();
+      });
+    </script>
 </body>
-<script>
-  $(document).ready(function(){
-    $.cookieBar();
-  });
-</script>
 </html>

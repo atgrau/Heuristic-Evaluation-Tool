@@ -113,6 +113,11 @@ thead {
 .padding {
   padding: 10px;
 }
+
+.padding-sm {
+  padding: 5px;  
+}
+
 .padding-l {
   padding-left: 10px;
 }
