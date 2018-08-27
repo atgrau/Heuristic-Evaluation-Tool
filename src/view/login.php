@@ -1,6 +1,6 @@
 <?php include("head.inc.php"); ?>
-<?php infoModal("aboutUsModal", "About Us", $this->getAboutUsContent()); ?>
 <body>
+    <?php infoModal("aboutUsModal", "About Us", $this->getAboutUsContent()); ?>
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-lg-offset-3">
@@ -10,11 +10,11 @@
                       <h3 class="panel-title text-center font-weight-bold">Recover Account</h3>
                     </div>
                   <?php else: ?>
-                    <center><img class="margin-t" src="/dist/images/logo-lg.png" title="Heuristic Evaluation Tool" /></center>
+                    <img alt="<?=APP_TITLE;?>" class="margin-t" style="display: block;margin-left: auto;margin-right: auto;width: 50%;" src="/dist/images/logo-lg.png" title="Heuristic Evaluation Tool" />
                   <?php endif; ?>
                     <div class="panel-body">
                       <?php if ($this->content == "signin"): ?>
-                        <form role="form" method="POST" action="/account/login">
+                        <form method="POST" action="/account/login">
                             <fieldset>
                               <?php if($this->required) { ?>
                                 <div class="alert alert-warning" role="alert">
@@ -41,7 +41,7 @@
                             </fieldset>
                         </form>
                       <?php elseif ($this->content == "forgot"): ?>
-                        <form role="form" method="POST" action="/forgot/send">
+                        <form method="POST" action="/forgot/send">
                             <?php if($this->recovered) { ?>
                               <div class="alert alert-info" role="alert">
                                 <?= $this->recovered; ?>
@@ -63,7 +63,7 @@
                             <?php } ?>
                         </form>
                       <?php elseif ($this->content == "reset"): ?>
-                        <form role="form" method="POST" action="/forgot/generate">
+                        <form method="POST" action="/forgot/generate">
                           <?php
                             $user = getUserByToken($this->token);
                             if ($user) {
@@ -97,8 +97,6 @@
   <?php include("JQuery.inc.php"); ?>
 </body>
 
-</html>
-
 <script>
   if (window.location.pathname == '/signin') {
     $("body").loading({
@@ -113,3 +111,5 @@
     $("#loginForm").fadeIn(700);
   }
 </script>
+
+</html>
