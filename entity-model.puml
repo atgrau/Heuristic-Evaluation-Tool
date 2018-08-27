@@ -41,9 +41,12 @@ primary_key(ID) INTEGER
 active BIT
 not_null(id_user) INTEGER
 creation_date DATETIME
+finish_date DATETIME
 not_null(name) VARCHAR[50]
 not_null(description) VARCHAR[1000]
 link VARCHAR[50]
+id_template INTEGER
+archived BIT
 }
 
 Table(evaluation, "Evaluation\n(List of Evaluations)") {
