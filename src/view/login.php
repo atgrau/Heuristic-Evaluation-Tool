@@ -95,21 +95,20 @@
         </div>
     </div>
   <?php include("JQuery.inc.php"); ?>
+
+  <script>
+    if (window.location.pathname == '/signin') {
+      $("body").loading({
+        stoppable: false
+      });
+      $("#loginForm").delay(1000).fadeIn(1000);
+      setTimeout(function (){
+        $("body").delay(1000).loading('stop');
+      }, 1000);
+      loaded = true;
+    } else {
+      $("#loginForm").fadeIn(700);
+    }
+  </script>
 </body>
-
-<script>
-  if (window.location.pathname == '/signin') {
-    $("body").loading({
-      stoppable: false
-    });
-    $("#loginForm").delay(1000).fadeIn(1000);
-    setTimeout(function (){
-      $("body").delay(1000).loading('stop');
-    }, 1000);
-    loaded = true;
-  } else {
-    $("#loginForm").fadeIn(700);
-  }
-</script>
-
 </html>
