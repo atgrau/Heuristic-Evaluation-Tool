@@ -42,6 +42,10 @@
       <tbody>
         <th colspan="2" class="thead-light text-center">Project Information</th>
         <tr>
+          <th width="15%">Owner:</th>
+          <td><?=$this->evaluation->getProject()->getUser()->getName();?></td>
+        </tr>
+        <tr>
           <th width="15%">Name:</th>
           <td><?=$this->evaluation->getProject()->getName();?></td>
         </tr>
