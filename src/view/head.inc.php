@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="A web application that allows to perform an heuristic evaluation of the interface of an interactive system.">
-    <meta name="author" content="Albert Grau and Jennifer Soliz. (UDL-EPS)">
 
     <title><?= APP_TITLE; ?></title>
 
