@@ -125,27 +125,35 @@
                 </div>
               <?php endif; ?>
 
-              <h4>Assign Evaluators</h4>
-              <div class="form-group">
-              <select name="users[]" id="users" class="form-control selectpicker" data-live-search="true" multiple>
-                <?php
-                  $users = getUsers("");
-                  foreach ($users as $user) { ?>
-                    <option
-                    <?php
-                    if ($usersProject):
-                      if (in_array($user, $usersProject)) echo " selected ";
-                    endif;
-                    ?>
-                    value="<?=$user->getId();?>"><?="(".$user->getEntity().") ".$user->getName();?></option>
-                <?php } ?>
+              <?php if(!$this->new): ?>
+                  <?php if($this->project->isActive()): ?>
+                    <h4>Assign Evaluators</h4>
+                    <div class="form-group">
+                    <select name="users[]" id="users" class="form-control selectpicker" data-live-search="true" multiple>
+                      <?php
+                        $users = getUsers("");
+                        foreach ($users as $user) { ?>
+                          <option
+                          <?php
+                          if ($usersProject):
+                            if (in_array($user, $usersProject)) echo " selected ";
+                          endif;
+                          ?>
+                          value="<?=$user->getId();?>"><?="(".$user->getEntity().") ".$user->getName();?></option>
+                      <?php } ?>
+                  <?php endif?>  
+              <?php endif?>
                 </select>
               </div>
-              <div class="form-group">
-                <input value="1" name="email" type="checkbox" class="form-check-input" id="email">
-                <?php infoModal("infoModal", "Send and e-mail reminder", "Checking this option, it will be send an e-mail reminder with the newer project information to the all assigned users."); ?>
-                <label class="form-check-label" for="email">Send an e-mail reminder</label> <a href="#" title="Send a notification to all users with project's information." class="text-blue" data-toggle="modal" data-target="#infoModal"><span class="glyphicon glyphicon-info-sign"></span></a>
-              </div>
+            <?php if(!$this->new): ?>
+              <?php if($this->project->isActive()): ?>
+                <div class="form-group">
+                  <input value="1" name="email" type="checkbox" class="form-check-input" id="email">
+                  <?php infoModal("infoModal", "Send and e-mail reminder", "Checking this option, it will be send an e-mail reminder with the newer project information to the all assigned users."); ?>
+                  <label class="form-check-label" for="email">Send an e-mail reminder</label> <a href="#" title="Send a notification to all users with project's information." class="text-blue" data-toggle="modal" data-target="#infoModal"><span class="glyphicon glyphicon-info-sign"></span></a>
+                </div>
+              <?php endif; ?>
+            <?php endif; ?>
               <?php if (($this->project) && (count($this->project->getEvaluations()) > 0)): ?>
                 <div class="alert alert-warning" role="alert">
                   <span class="glyphicon glyphicon-info-sign"></span> <strong>Please note:</strong> Modifying this project, current evaluations may be affected.
