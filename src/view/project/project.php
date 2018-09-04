@@ -141,10 +141,10 @@
                           ?>
                           value="<?=$user->getId();?>"><?="(".$user->getEntity().") ".$user->getName();?></option>
                       <?php } ?>
+                    </select>
+                  </div>
                   <?php endif?>
               <?php endif?>
-                </select>
-              </div>
             <?php if(!$this->new): ?>
               <?php if($this->project->isActive()): ?>
                 <div class="form-group">
@@ -166,7 +166,6 @@
                 <a href="/my-projects" class="btn btn-danger">Cancel</a>
               <?php endif; ?>
             </form>
-            <div class="margin"></div>
         </div>
         <!-- /.panel-body -->
     </div>
