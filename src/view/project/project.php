@@ -141,7 +141,7 @@
                           ?>
                           value="<?=$user->getId();?>"><?="(".$user->getEntity().") ".$user->getName();?></option>
                       <?php } ?>
-                  <?php endif?>  
+                  <?php endif?>
               <?php endif?>
                 </select>
               </div>
@@ -166,6 +166,7 @@
                 <a href="/my-projects" class="btn btn-danger">Cancel</a>
               <?php endif; ?>
             </form>
+            <div class="margin"></div>
         </div>
         <!-- /.panel-body -->
     </div>
