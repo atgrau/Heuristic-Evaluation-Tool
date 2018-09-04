@@ -267,10 +267,11 @@
     }
 
     function delete() {
-      // Delete Project
-      DB::delete('projects', "ID=%i", $this->id);
       // Delete Users associated with the project
       DB::delete('projects_user', "id_project=%i", $this->id);
+      // Delete Project
+      DB::delete('projects', "ID=%i", $this->id);
+
     }
   }
 
