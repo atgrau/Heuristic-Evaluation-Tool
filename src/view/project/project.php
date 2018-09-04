@@ -166,7 +166,6 @@
                 <a href="/my-projects" class="btn btn-danger">Cancel</a>
               <?php endif; ?>
             </form>
-            <div class="margin"></div>
         </div>
         <!-- /.panel-body -->
     </div>
