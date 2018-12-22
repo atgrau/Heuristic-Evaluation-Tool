@@ -16,8 +16,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 DB::$user = MYSQL_USER;
-DB::$password = MYSQL_PWD;
-DB::$dbName = MYSQL_DB;
+DB::$password = MYSQL_PASSWORD;
+DB::$dbName = MYSQL_DATABASE;
+DB::$host = MYSQL_HOST;
+DB::$port = MYSQL_PORT;
 DB::$encoding = MYSQL_ENCODING;
 
 class DB {
