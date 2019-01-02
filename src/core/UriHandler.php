@@ -5,7 +5,7 @@
   define("UPLOAD_URI", $_SERVER["DOCUMENT_ROOT"]."/upload/");
 
   // Include configuration files
-  require_once(BASE_URI."config/global.php");
+  // require_once(BASE_URI."config/global.php");
 
   // Include Libraries
   require_once(BASE_URI."config/database.php");

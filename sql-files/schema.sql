@@ -13,7 +13,7 @@
 
 
 -- Volcando estructura de base de datos para heuristic_evaluation
-CREATE DATABASE IF NOT EXISTS `heuristic_evaluation` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE IF NOT EXISTS `heuristic_evaluation` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `heuristic_evaluation`;
 
 -- Volcando estructura para tabla heuristic_evaluation.answersbytemplate
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `answersbytemplate` (
   KEY `idTemplate` (`idTemplate`),
   CONSTRAINT `FK_idAnswer` FOREIGN KEY (`idAnswer`) REFERENCES `template_answers` (`ID`),
   CONSTRAINT `FK_idTemplateAns` FOREIGN KEY (`idTemplate`) REFERENCES `templates` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- La exportación de datos fue deseleccionada.
 -- Volcando estructura para tabla heuristic_evaluation.categoriesbytemplate
@@ -37,15 +37,15 @@ CREATE TABLE IF NOT EXISTS `categoriesbytemplate` (
   KEY `idCategory` (`idCategory`),
   CONSTRAINT `FK_idCategory` FOREIGN KEY (`idCategory`) REFERENCES `template_categories` (`ID`),
   CONSTRAINT `FK_idTemplateCat` FOREIGN KEY (`idTemplate`) REFERENCES `templates` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- La exportación de datos fue deseleccionada.
 -- Volcando estructura para tabla heuristic_evaluation.content_entries
 CREATE TABLE IF NOT EXISTS `content_entries` (
-  `ID` varchar(10) COLLATE latin1_spanish_ci NOT NULL,
-  `content` longtext COLLATE latin1_spanish_ci,
+  `ID` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `content` longtext COLLATE utf8_unicode_ci,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- La exportación de datos fue deseleccionada.
 -- Volcando estructura para tabla heuristic_evaluation.countries
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `evaluations` (
   KEY `FK_idUser` (`id_user`),
   CONSTRAINT `FK_IdProject` FOREIGN KEY (`id_project`) REFERENCES `projects` (`ID`),
   CONSTRAINT `FK_idUser` FOREIGN KEY (`id_user`) REFERENCES `users` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 COMMENT='Contains all evaluations of all projects';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='Contains all evaluations of all projects';
 
 -- La exportación de datos fue deseleccionada.
 -- Volcando estructura para tabla heuristic_evaluation.evaluation_results
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `evaluation_results` (
   CONSTRAINT `FK_ANSWER` FOREIGN KEY (`id_answer`) REFERENCES `template_answers` (`ID`),
   CONSTRAINT `FK_EVALUATION` FOREIGN KEY (`id_evaluation`) REFERENCES `evaluations` (`ID`),
   CONSTRAINT `FK_QUESTION` FOREIGN KEY (`id_question`) REFERENCES `template_questions` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2450 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2450 DEFAULT CHARSET=utf8;
 
 -- La exportación de datos fue deseleccionada.
 -- Volcando estructura para tabla heuristic_evaluation.projects
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `projects` (
   KEY `FK_USER_PROJECT` (`id_user`),
   CONSTRAINT `FK_TEMPLATE` FOREIGN KEY (`id_template`) REFERENCES `templates` (`ID`),
   CONSTRAINT `FK_USER_PROJECT` FOREIGN KEY (`id_user`) REFERENCES `users` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- La exportación de datos fue deseleccionada.
 -- Volcando estructura para tabla heuristic_evaluation.projects_user
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `projects_user` (
   KEY `FK_USER` (`id_user`),
   CONSTRAINT `FKProject` FOREIGN KEY (`id_project`) REFERENCES `projects` (`ID`),
   CONSTRAINT `FKUser` FOREIGN KEY (`id_user`) REFERENCES `users` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8;
 
 -- La exportación de datos fue deseleccionada.
 -- Volcando estructura para tabla heuristic_evaluation.questionsbytemplate
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `questionsbytemplate` (
   KEY `idQuestion` (`idQuestion`),
   CONSTRAINT `FK_idQuestion` FOREIGN KEY (`idQuestion`) REFERENCES `template_questions` (`ID`),
   CONSTRAINT `FK_idTemplateQues` FOREIGN KEY (`idTemplate`) REFERENCES `templates` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- La exportación de datos fue deseleccionada.
 -- Volcando estructura para tabla heuristic_evaluation.templates
@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `templates` (
   `name` varchar(60) NOT NULL,
   `active` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- La exportación de datos fue deseleccionada.
 -- Volcando estructura para tabla heuristic_evaluation.template_answers
@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `template_answers` (
   `original` bit(1) NOT NULL,
   `color` varchar(50) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- La exportación de datos fue deseleccionada.
 -- Volcando estructura para tabla heuristic_evaluation.template_categories
@@ -159,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `template_categories` (
   `name` varchar(80) NOT NULL,
   `original` bit(1) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- La exportación de datos fue deseleccionada.
 -- Volcando estructura para tabla heuristic_evaluation.template_questions
@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `template_questions` (
   PRIMARY KEY (`ID`),
   KEY `idCategoryQuestion` (`id_category`),
   CONSTRAINT `idCategoryQuestion` FOREIGN KEY (`id_category`) REFERENCES `template_categories` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
 
 -- La exportación de datos fue deseleccionada.
 -- Volcando estructura para tabla heuristic_evaluation.users
@@ -188,7 +188,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `token` varchar(32) DEFAULT NULL,
   `active` bit(1) NOT NULL DEFAULT b'1',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- La exportación de datos fue deseleccionada.
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
